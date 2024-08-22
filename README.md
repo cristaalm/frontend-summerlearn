@@ -19,7 +19,7 @@ npm install
 ### Compile and Hot-Reload for Development
 
 ```sh
-npm run dev
+npm run dev -- --port XXXX
 ```
 
 ### Compile and Minify for Production
