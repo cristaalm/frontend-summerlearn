@@ -1,7 +1,7 @@
 export default {
   en: {
-    logIn: 'Log in',
-    singUp: 'Sing up',
+    logIn: 'Login',
+    singUp: 'Singup',
     home: 'Home',
     about: 'About',
     donatives: 'Donatives',

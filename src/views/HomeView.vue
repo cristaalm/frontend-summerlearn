@@ -1,9 +1,9 @@
 <script setup>
-import HeaderHome from '@/components/HeaderHome.vue'
+import HeaderHome from '@/components/OnePage/HeaderHome.vue'
 </script>
 
 <template>
   <div class="flex flex-col w-full">
-    <HeaderHome />
+    <HeaderHome class="" />
   </div>
 </template>
