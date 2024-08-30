@@ -76,8 +76,8 @@
 
 <script setup>
 import { ref } from 'vue'
-import Menu from '@/components/icons/menu.vue'
-import Close from '@/components/icons/close.vue'
+import Menu from '@/components/icons/IconMenu.vue'
+import Close from '@/components/icons/IconClose.vue'
 
 const topScroll = ref(true)
 const enableMenu = ref(false)

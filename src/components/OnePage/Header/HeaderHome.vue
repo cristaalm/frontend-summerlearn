@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from 'vue'
-import Navbar from '@/components/OnePage/Header/Navbar.vue'
-import NavbarResponsive from '@/components/OnePage/Header/NavbarResponsive.vue'
+import Navbar from '@/components/OnePage/Header/OnePageNavbar.vue'
+import NavbarResponsive from '@/components/OnePage/Header/OnePageNavbarMovile.vue'
 
 const topScroll = ref(true)
 

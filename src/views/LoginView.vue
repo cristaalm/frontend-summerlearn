@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import SingUp from '@/components/formsSession/SingUp.vue'
 import LogIn from '@/components/formsSession/LogIn.vue'
-import ArrowLeft from '@/components/icons/arrowLeft.vue'
+import ArrowLeft from '@/components/icons/IconArrowLeft.vue'
 
 // Define a reactive variable to toggle between sign up and log in forms
 const formSingUp = ref(true)
