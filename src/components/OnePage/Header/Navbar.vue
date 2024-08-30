@@ -18,25 +18,25 @@ window.addEventListener('scroll', () => {
         href="#home"
         :class="`h-full flex flex-row justify-center items-center px-4 transition-all duration-300 ${topScroll ? ' hover:text-emerald-600' : 'text-black hover:text-emerald-600'}`"
       >
-        {{ $t('home') }}
+        {{ $t('navbar.home') }}
       </a>
       <a
-        href="#home"
+        href="#mission"
         :class="`h-full flex flex-row justify-center items-center px-4 transition-all duration-300 ${topScroll ? ' hover:text-emerald-600' : 'text-black hover:text-emerald-600'}`"
       >
-        {{ $t('about') }}
+        {{ $t('navbar.mission') }}
       </a>
       <a
-        href="#home"
+        href="#impact"
         :class="`h-full flex flex-row justify-center items-center px-4 transition-all duration-300 ${topScroll ? ' hover:text-emerald-600' : 'text-black hover:text-emerald-600'}`"
       >
-        {{ $t('donatives') }}
+        {{ $t('navbar.impact') }}
       </a>
       <a
-        href="#home"
+        href="#volunteer"
         :class="`h-full flex flex-row justify-center items-center px-4 transition-all duration-300 ${topScroll ? ' hover:text-emerald-600' : 'text-black hover:text-emerald-600'}`"
       >
-        {{ $t('contact') }}
+        {{ $t('navbar.volunteer') }}
       </a>
     </nav>
     <div class="flex flex-row justify-center items-center">
@@ -44,12 +44,12 @@ window.addEventListener('scroll', () => {
         to="/login"
         :class="`px-6 py-2 text-lg transition-all duration-300 ${topScroll ? ' hover:text-emerald-600' : 'text-black hover:text-emerald-500'}`"
       >
-        {{ $t('logIn') }}
+        {{ $t('navbar.logIn') }}
       </RouterLink>
       <button
         class="px-6 py-2 text-xl bg-rose-500 hover:bg-rose-400 transition-all duration-300 rounded-2xl text-white"
       >
-        {{ $t('donate') }}
+        {{ $t('navbar.donate') }}
       </button>
     </div>
   </div>

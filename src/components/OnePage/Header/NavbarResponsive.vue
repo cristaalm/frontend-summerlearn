@@ -33,28 +33,28 @@
           @click="toggleMenu"
           :class="`h-full flex flex-row justify-center items-center text-4xl py-4 transition-all duration-300 text-black ${topScroll ? ' hover:text-emerald-600 hover:bg-emerald-200' : ' hover:text-emerald-600 hover:bg-emerald-200'}`"
         >
-          {{ $t('home') }}
+          {{ $t('navbar.home') }}
         </a>
         <a
-          href="#about"
+          href="#mission"
           @click="toggleMenu"
           :class="`h-full flex flex-row justify-center items-center text-4xl py-4 transition-all duration-300 text-black ${topScroll ? ' hover:text-emerald-600 hover:bg-emerald-200' : ' hover:text-emerald-600 hover:bg-emerald-200'}`"
         >
-          {{ $t('about') }}
+          {{ $t('navbar.mission') }}
         </a>
         <a
-          href="#donatives"
+          href="#impact"
           @click="toggleMenu"
           :class="`h-full flex flex-row justify-center items-center text-4xl py-4 transition-all duration-300 text-black ${topScroll ? ' hover:text-emerald-600 hover:bg-emerald-200' : ' hover:text-emerald-600 hover:bg-emerald-200'}`"
         >
-          {{ $t('donatives') }}
+          {{ $t('navbar.impact') }}
         </a>
         <a
-          href="#contact"
+          href="#volunteer"
           @click="toggleMenu"
           :class="`h-full flex flex-row justify-center items-center text-4xl py-4 transition-all duration-300 text-black ${topScroll ? ' hover:text-emerald-600 hover:bg-emerald-200' : ' hover:text-emerald-600 hover:bg-emerald-200'}`"
         >
-          {{ $t('contact') }}
+          {{ $t('navbar.volunteer') }}
         </a>
       </div>
       <div class="flex flex-col justify-center items-center gap-6">
@@ -62,12 +62,12 @@
           to="/login"
           :class="`px-6 py-2 text-2xl transition-all duration-300 ${topScroll ? ' hover:text-emerald-300' : 'text-black hover:text-emerald-500'}`"
         >
-          {{ $t('logIn') }}
+          {{ $t('navbar.logIn') }}
         </RouterLink>
         <button
           class="px-6 py-2 text-3xl bg-rose-500 hover:bg-rose-400 transition-all duration-300 rounded-2xl text-white"
         >
-          {{ $t('donate') }}
+          {{ $t('navbar.donate') }}
         </button>
       </div>
     </div>
@@ -77,7 +77,7 @@
 <script setup>
 import { ref } from 'vue'
 import Menu from '@/components/icons/menu.vue'
-import Close from '../icons/close.vue'
+import Close from '@/components/icons/close.vue'
 
 const topScroll = ref(true)
 const enableMenu = ref(false)

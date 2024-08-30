@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from 'vue'
-import Navbar from '@/components/OnePage/Navbar.vue'
-import NavbarResponsive from '@/components/OnePage/NavbarResponsive.vue'
+import Navbar from '@/components/OnePage/Header/Navbar.vue'
+import NavbarResponsive from '@/components/OnePage/Header/NavbarResponsive.vue'
 
 const topScroll = ref(true)
 
@@ -15,11 +15,12 @@ window.addEventListener('scroll', () => {
 </script>
 
 <template>
-  <header
-    :class="`flex flex-col md:flex-row w-full fixed transition-all duration-300 min-h-[80px] bg-emerald-50`"
+  <!-- flex flex-col md:flex-row w-full fixed transition-all duration-300 min-h-[80px] bg-emerald-50 z-50 -->
+  <div
+    :class="`flex flex-col md:flex-row w-full fixed transition-all duration-300 min-h-[80px] bg-opacity-50 backdrop-filter backdrop-blur-lg  z-50`"
   >
     <div class="flex flex-row w-full md:container md:m-auto justify-between">
-      <div class="m-2 lg:m-0 xl:m-2 text-4xl font-bold lg:w-full">
+      <div class="md:m-2 lg:m-0 xl:m-2 text-4xl font-bold lg:w-full">
         <a
           href="#home"
           class="hover:text-gray-400 transition-all duration-300 hover:scale-105 flex flex-row"
@@ -39,5 +40,5 @@ window.addEventListener('scroll', () => {
       <Navbar />
       <NavbarResponsive />
     </div>
-  </header>
+  </div>
 </template>
