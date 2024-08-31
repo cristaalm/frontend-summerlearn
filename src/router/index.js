@@ -1,39 +1,71 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
 const router = createRouter({
-  // Create a router instance with web history mode
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      // Define a route for the Home view with an optional language parameter
       path: '/:lang(en|es)?',
       name: 'Home',
-      component: () => import('@/views/HomeView.vue'),
+      component: () => 
+        import('@/views/HomeView.vue')
+          .catch(() => import('@/views/NotFoundView.vue')), // Manejo de errores en import()
       beforeEnter: (to, from, next) => {
-        // Get the language parameter from the route or default to 'en'
-        const lang = to.params.lang || 'en'
+        let lang;
+
+        // Intenta obtener el idioma desde la URL, localStorage o usa 'en' por defecto
+        try {
+          lang = to.params.lang || localStorage.getItem('lang') || 'en';
+        } catch (e) {
+          console.error('localStorage is not available');
+          lang = 'en';
+        }
+
+        // Verifica si el idioma es válido
         if (['en', 'es'].includes(lang)) {
-          // If the language is valid, proceed to the route
-          return next()
+          // Guarda el idioma en localStorage y continúa la navegación
+          try {
+            localStorage.setItem('lang', lang);
+          } catch (e) {
+            console.error('localStorage could not be updated');
+          }
+
+          // Si el idioma en la URL es diferente al que se determinó, redirige
+          if (lang !== to.params.lang) {
+            return next({ path: `/${lang}` });
+          }
+          
+          return next(); // Navegación permitida
         } else {
-          // If the language is invalid, redirect to the route with 'en' as the language parameter
-          return next({ params: { lang: 'en' } })
+          // Si el idioma no es válido, verifica si hay un idioma en localStorage
+          try {
+            const storedLang = localStorage.getItem('lang');
+            if (storedLang) {
+              return next({ path: `/${storedLang}` }); // Redirige al idioma guardado
+            }
+          } catch (e) {
+            console.error('localStorage retrieval failed');
+          }
+
+          // Redirige al idioma por defecto 'en' si no hay un idioma guardado
+          return next({ path: '/en' });
         }
       }
     },
     {
-      // Define a route for the Login view
       path: '/Login',
       name: 'Login',
-      component: () => import('@/views/LoginView.vue')
+      component: () => 
+        import('@/views/LoginView.vue')
+          .catch(() => import('@/views/NotFoundView.vue')) // Manejo de errores en import()
     },
     {
-      // Define a route for the NotFound view to handle any unmatched routes
       path: '/:pathMatch(.*)*',
       name: 'NotFound',
-      component: () => import('@/views/NotFoundView.vue')
+      component: () => 
+        import('@/views/NotFoundView.vue')
+          .catch(() => import('@/views/NotFoundView.vue')) // Manejo de errores en import()
     }
   ]
-})
+});
 
-export default router
+export default router;

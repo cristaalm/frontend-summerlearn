@@ -47,6 +47,19 @@ export default {
       description:
         'Be a part of our mission to provide quality education to children in need. Your time and your skills can make a significant impact.',
       button: 'Apply to Vlounteer'
+    },
+    footer: {
+      copyRight: '© 2021 SummerLearn. All rights reserved.',
+      values: {
+        activate: {
+          activate: 'en',
+          lenguage: 'English'
+        },
+        deactivate: {
+          deactivate: 'es',
+          lenguage: 'Spanish'
+        }
+        }
     }
   },
   es: {
@@ -97,6 +110,19 @@ export default {
       description:
         'Sé parte de nuestra misión de proporcionar educación de calidad a niños necesitados. Tu tiempo y tus habilidades pueden tener un impacto significativo.',
       button: 'Unirse'
+    },
+    footer: {
+      copyRight: '© 2021 SummerLearn. Todos los derechos reservados.',
+      values: {
+        activate: {
+          activate: 'es',
+          lenguage: 'Español' 
+        },
+        deactivate: {
+          deactivate: 'en',
+          lenguage: 'Inglés'
+        }
+      }
     }
   }
 }

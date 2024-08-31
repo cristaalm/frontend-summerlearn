@@ -4,6 +4,7 @@ import Hero from '@/components/OnePage/OnePageHero.vue'
 import Impact from '@/components/OnePage/OnePageImpact.vue'
 import Join from '@/components/OnePage/OnePageVolunteer.vue'
 import Mission from '@/components/OnePage/OnePageMission.vue'
+import Footer from '@/components/OnePage/OnePageFooter.vue'
 </script>
 
 <template>
@@ -22,4 +23,6 @@ import Mission from '@/components/OnePage/OnePageMission.vue'
 
     <Join />
   </main>
+
+  <Footer />
 </template>

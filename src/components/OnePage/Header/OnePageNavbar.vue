@@ -42,7 +42,7 @@ window.addEventListener('scroll', () => {
     <div class="flex flex-row justify-center items-center">
       <RouterLink
         to="/login"
-        :class="`px-6 py-2 text-lg transition-all duration-300 ${topScroll ? ' hover:text-emerald-600' : 'text-black hover:text-emerald-500'}`"
+        :class="`px-6 py-2 text-lg text-nowrap transition-all duration-300 ${topScroll ? ' hover:text-emerald-600' : 'text-black hover:text-emerald-500'}`"
       >
         {{ $t('navbar.logIn') }}
       </RouterLink>
