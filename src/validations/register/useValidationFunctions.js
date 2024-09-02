@@ -1,0 +1,98 @@
+import { status } from './useFormStatus'
+import { valid, password, password_confirm } from './useFormRefs'
+
+export const validate = () => {
+  const validForm = Object.keys(status.value).every((key) => status.value[key].value)
+  valid.value = validForm
+}
+
+export const validateText = (e) => {
+  const { name, value } = e.target
+  if (status.value[name].Regex.test(value)) {
+    status.value[name].value = true
+    status.value[name].error = false
+    status.value[name].menssage = ''
+  } else {
+    status.value[name].value = false
+    status.value[name].error = true
+    status.value[name].menssage = `El ${name} no es válido`
+  }
+  if (name === 'password_confirm') {
+    status.value.password_confirm.modified = true
+  }
+  validate()
+}
+
+export const validateDate = (e) => {
+  const { name, value } = e.target
+  if (status.value[name].Regex.test(value)) {
+    status.value[name].value = true
+    status.value[name].error = false
+    if (name === 'birthdate') {
+      const currentDate = new Date()
+      const selectedDate = new Date(value)
+      let age = currentDate.getFullYear() - selectedDate.getFullYear()
+      const monthDiff = currentDate.getMonth() - selectedDate.getMonth()
+      if (monthDiff < 0 || (monthDiff === 0 && currentDate.getDate() < selectedDate.getDate())) {
+        age--
+      }
+      if (age >= 18 && age <= 100) {
+        status.value[name].error = false
+        status.value[name].menssage = ''
+      } else {
+        status.value[name].error = true
+        status.value[name].value = false
+        status.value[name].menssage = 'Debe tener al menos 18 años'
+      }
+    }
+  } else {
+    status.value[name].value = false
+    status.value[name].error = true
+    status.value[name].menssage = 'La fecha no es válida'
+  }
+  validate()
+}
+
+export const validatePasswordComfirm = (e) => {
+  if (e.target.name === 'password_confirm' && !status.value.password_confirm.modified) {
+    status.value.password_confirm.modified = true
+  }
+  if (password.value === password_confirm.value && status.value.password_confirm.modified) {
+    status.value.password_confirm.value = true
+    status.value.password_confirm.error = false
+    status.value.password_confirm.menssage = ''
+  } else if (status.value.password_confirm.modified) {
+    status.value.password_confirm.value = false
+    status.value.password_confirm.error = true
+    status.value.password_confirm.menssage = 'Las contraseñas no coinciden'
+  }
+  validate()
+}
+
+export const validatePerfil = (e) => {
+  const { name, value } = e.target
+  if (status.value[name].Regex.test(value)) {
+    status.value[name].value = true
+    status.value[name].error = false
+    status.value[name].menssage = ''
+  } else {
+    status.value[name].value = false
+    status.value[name].error = true
+    status.value[name].menssage = `El perfil no es válido`
+  }
+  validate()
+}
+
+export const validateTerms = (e) => {
+  const { name, checked } = e.target
+  if (checked) {
+    status.value[name].value = true
+    status.value[name].error = false
+    status.value[name].menssage = ''
+  } else {
+    status.value[name].value = false
+    status.value[name].error = true
+    status.value[name].menssage = 'Debe aceptar los términos y condiciones'
+  }
+  validate()
+}
