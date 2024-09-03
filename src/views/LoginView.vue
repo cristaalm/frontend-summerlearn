@@ -8,6 +8,7 @@ import Lucide from '@/components/Base/Lucide'
 import _ from 'lodash'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { Baseurl} from '../../global.js'
 
 const router = useRouter()
 
@@ -45,12 +46,12 @@ const validateInput = (key) => {
 const loginUser = async (event) => {
   event.preventDefault() // Prevent the default form submission
   try {
-    const response = await fetch('http://localhost:8000/api/login/', {
+    const response = await fetch(Baseurl+'/users/login/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
+      body: JSON.stringify({  
         users_mail: email.value,
         users_password: password.value,
       }),
