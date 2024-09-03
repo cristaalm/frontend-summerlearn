@@ -7,8 +7,48 @@ import { password, firstName, lastName, email, birthdate, perfil, terms, passwor
 import { validateText, validateDate, validateTerms, validatePasswordComfirm, validatePerfil} from '@/validations/register/useValidationFunctions.js';
 import { validatePassword } from '@/validations/register/usePasswordSecurity.js';
 import { status } from '@/validations/register/useFormStatus.js';
+import { useRouter } from 'vue-router'
 
+const router = useRouter()
 // valid:  is a computed property that checks if all the fields are valid
+// Functions to handle API requests
+const registerUser = async () => {
+  try {
+    const response = await fetch('http://localhost:8000/api/register/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        users_mail: email.value,
+        users_password: password.value,
+        users_firstName: firstName.value,
+        users_lastName: lastName.value,
+        users_birthdate: birthdate.value,
+        users_perfil: perfil.value,
+      }),
+    });
+    const data = await response.json();
+    if (response.ok) {
+      console.log('Registration successful', data);
+      // Redirigir al dashboard
+      router.push('/Dashboard'); // Redirigir al Dashboard
+    } else {
+      console.error('Registration failed', data);
+      // Manejar errores
+    }
+  } catch (error) {
+    console.error('Error:', error);
+  }
+};
+
+
+// Handle form submission
+const handleSubmit = () => {
+  if (valid.value) {
+    registerUser()
+  }
+}
 
 </script>
 
@@ -146,6 +186,8 @@ import { status } from '@/validations/register/useFormStatus.js';
             </div>
             <div class="mt-5 text-center xl:mt-8 xl:text-left">
               <Button
+              @click="handleSubmit"
+              :disabled="!valid"
               variant="primary"
               rounded
             :class="`bg-gradient-to-r transition-all scale-105 duration-200 w-full py-3.5 xl:mr-3 ${ valid ? 'from-theme-1 to-theme-2 hover:scale-100 select-none cursor-pointer' : 'from-gray-600 to-gray-600 select-none cursor-default' }`"

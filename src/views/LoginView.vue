@@ -7,6 +7,9 @@ import Alert from '@/components/Base/Alert'
 import Lucide from '@/components/Base/Lucide'
 import _ from 'lodash'
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 
 // Define reactive variables
 const email = ref('') // Stores the value of the email input field
@@ -21,7 +24,7 @@ const status = ref({
   },
   password: {
     value: false, // Indicates whether the password input is valid or not
-    Regex: /^[a-zA-Z0-9_-]{8,}$/ // Regular expression to validate password format
+    Regex: /^[a-zA-Z0-9_-]{7,}$/ // Regular expression to validate password format
   }
 })
 
@@ -38,6 +41,38 @@ const validateInput = (key) => {
   )
   validate()
 }
+
+const loginUser = async (event) => {
+  event.preventDefault() // Prevent the default form submission
+  try {
+    const response = await fetch('http://localhost:8000/api/login/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        users_mail: email.value,
+        users_password: password.value,
+      }),
+    })
+    const data = await response.json()
+    if (response.ok) {
+      console.log('Login successful', data)
+      // Save tokens to local storage or any other preferred method
+      localStorage.setItem('access_token', data.access)
+      localStorage.setItem('refresh_token', data.refresh)
+
+      // Redirect to another view after successful login
+      router.push({ name: 'Dashboard' }) // Change 'Home' to the name of the route you want to redirect to
+    } else {
+      console.error('Login failed', data)
+      // Handle errors (e.g., show error message)
+    }
+  } catch (error) {
+    console.error('Error:', error)
+  }
+}
+
 </script>
 
 <template>
@@ -101,6 +136,8 @@ const validateInput = (key) => {
         <div class="mt-5 text-center xl:mt-8 xl:text-left">
           <!-- TODO: Implementar redirección al Dashboard en caso de que el usuario sea correcto -->
           <Button
+            @click="loginUser"
+            :disabled="!valid"
             variant="primary"
             rounded
             :class="`bg-gradient-to-r transition-all scale-105 duration-200 w-full py-3.5 xl:mr-3 ${ valid ? 'from-theme-1 to-theme-2 hover:scale-100 select-none cursor-pointer' : 'from-gray-600 to-gray-600 select-none cursor-default' }`"
