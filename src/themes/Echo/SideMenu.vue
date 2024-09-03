@@ -390,11 +390,8 @@ window.onscroll = () => {
             </div>
             <!-- BEGIN: Breadcrumb -->
             <Breadcrumb light class="flex-1 hidden xl:block">
-              <Breadcrumb.Link to="/">App</Breadcrumb.Link>
-              <Breadcrumb.Link to="/">Dashboards</Breadcrumb.Link>
-              <Breadcrumb.Link to="/" :active="true">
-                Analytics
-              </Breadcrumb.Link>
+              <Breadcrumb.Link to="/">SummerLearn</Breadcrumb.Link>
+              <Breadcrumb.Link to="/" :active="true">Dashboards</Breadcrumb.Link>
             </Breadcrumb>
             <!-- END: Breadcrumb -->
             <!-- BEGIN: Search -->
