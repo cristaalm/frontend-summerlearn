@@ -1,20 +1,19 @@
 <script setup lang="ts">
 import { FormCheck, FormInput, FormLabel } from "@/components/Base/Form";
-import Tippy from "@/components/Base/Tippy";
 import Button from "@/components/Base/Button";
-import _ from "lodash";
 import { password, firstName, lastName, email, birthdate, perfil, terms, password_confirm, valid } from '@/validations/register/useFormRefs.js';
 import { validateText, validateDate, validateTerms, validatePasswordComfirm, validatePerfil} from '@/validations/register/useValidationFunctions.js';
 import { validatePassword } from '@/validations/register/usePasswordSecurity.js';
 import { status } from '@/validations/register/useFormStatus.js';
 import { useRouter } from 'vue-router'
+import { Baseurl } from '@/../global'
 
 const router = useRouter()
 // valid:  is a computed property that checks if all the fields are valid
 // Functions to handle API requests
 const registerUser = async () => {
   try {
-    const response = await fetch('http://localhost:8000/api/register/', {
+    const response = await fetch(Baseurl+'/users/register/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -22,22 +21,24 @@ const registerUser = async () => {
       body: JSON.stringify({
         users_mail: email.value,
         users_password: password.value,
-        users_firstName: firstName.value,
-        users_lastName: lastName.value,
+        users_name: firstName.value + ' ' + lastName.value,
         users_birthdate: birthdate.value,
-        users_perfil: perfil.value,
+        users_rol: perfil.value,
+        users_tour: true, // default tour
+        users_status: 1 // default status
       }),
     });
     const data = await response.json();
     if (response.ok) {
-      console.log('Registration successful', data);
-      // Redirigir al dashboard
-      router.push('/Dashboard'); // Redirigir al Dashboard
+      console.log('Registration successful');
+      // Redirect to the login page after successful registration
+      router.push('/Login');
     } else {
+      // Log the error message if the registration fails
       console.error('Registration failed', data);
-      // Manejar errores
     }
   } catch (error) {
+    // Log the error message if the request fails
     console.error('Error:', error);
   }
 };
@@ -161,8 +162,8 @@ const handleSubmit = () => {
               @change="validatePerfil"
             >
               <option value="" selected class="text-black">Seleccionar perfil</option>
-              <option value="1" class="text-black">Beneficiario</option>
-              <option value="2" class="text-black">Voluntario</option>
+              <option value="5" class="text-black">Beneficiario</option>
+              <option value="4" class="text-black">Voluntario</option>
               <option value="3" class="text-black">Donante</option>
             </select>
             <div class="flex flex-row text-red-600 p-2" v-if="status.perfil.menssage">{{ status.perfil.menssage }}</div>

@@ -1,14 +1,9 @@
 <script setup lang="ts">
-import { FormCheck, FormInput, FormLabel } from '@/components/Base/Form'
-import Tippy from '@/components/Base/Tippy'
-import users from '@/fakers/users'
+import { FormInput, FormLabel } from '@/components/Base/Form'
 import Button from '@/components/Base/Button'
-import Alert from '@/components/Base/Alert'
-import Lucide from '@/components/Base/Lucide'
-import _ from 'lodash'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { Baseurl} from '../../global.js'
+import { Baseurl } from '@/../global'
 
 const router = useRouter()
 
@@ -58,13 +53,13 @@ const loginUser = async (event) => {
     })
     const data = await response.json()
     if (response.ok) {
-      console.log('Login successful', data)
+      console.log('Login successful')
       // Save tokens to local storage or any other preferred method
       localStorage.setItem('access_token', data.access)
       localStorage.setItem('refresh_token', data.refresh)
 
       // Redirect to another view after successful login
-      router.push({ name: 'Dashboard' }) // Change 'Home' to the name of the route you want to redirect to
+      router.push({ name: 'Dashboard' }) 
     } else {
       console.error('Login failed', data)
       // Handle errors (e.g., show error message)
