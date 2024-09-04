@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { FormCheck, FormInput, FormLabel } from "@/components/Base/Form";
 import Button from "@/components/Base/Button";
-import { password, firstName, lastName, email, birthdate, perfil, terms, password_confirm, valid } from '@/validations/register/useFormRefs.js';
+import { password, firstName, lastName, email, phone, birthdate, perfil, terms, password_confirm, valid } from '@/validations/register/useFormRefs.js';
 import { validateText, validateDate, validateTerms, validatePasswordComfirm, validatePerfil} from '@/validations/register/useValidationFunctions.js';
 import { validatePassword } from '@/validations/register/usePasswordSecurity.js';
 import { status } from '@/validations/register/useFormStatus.js';
@@ -20,6 +20,7 @@ const registerUser = async () => {
       },
       body: JSON.stringify({
         users_mail: email.value,
+        users_phone: phone.value,
         users_password: password.value,
         users_name: firstName.value + ' ' + lastName.value,
         users_birthdate: birthdate.value,
@@ -78,6 +79,7 @@ const handleSubmit = () => {
             <FormInput
               type="text"
               name="firstName"
+              data-context="Nombre"
               :class="`block px-4 py-3.5 border-[2px] rounded-[0.6rem]  ${ status.firstName.error ? 'border-red-300/80' : 'border-slate-300/80' }`"
               v-model="firstName"
               @input="validateText"
@@ -87,6 +89,7 @@ const handleSubmit = () => {
             <FormInput
               type="text"
               name="lastName"
+              data-context="Apellidos"
               :class="`block px-4 py-3.5 border-[2px] rounded-[0.6rem] ${ status.lastName.error ? 'border-red-300/80' : 'border-slate-300/80' }`"
               v-model="lastName"
               @input="validateText"
@@ -96,15 +99,27 @@ const handleSubmit = () => {
             <FormInput
               type="text"
               name="email"
+              data-context="Correo electrónico"
               :class="`block px-4 py-3.5 border-[2px] rounded-[0.6rem] ${ status.email.error ? 'border-red-300/80' : 'border-slate-300/80' }`"
               v-model="email"
               @input="validateText"
             />
             <div class="flex flex-row text-red-600 p-2" v-if="status.email.menssage">{{ status.email.menssage }}</div>
+            <FormLabel class="mt-5">Telefono*</FormLabel>
+            <FormInput
+              type="number"
+              name="phone"
+              data-context="Telefono"
+              :class="`block px-4 py-3.5 border-[2px] rounded-[0.6rem] ${ status.phone.error ? 'border-red-300/80' : 'border-slate-300/80' }`"
+              v-model="phone"
+              @input="validateText"
+            />
+            <div class="flex flex-row text-red-600 p-2" v-if="status.phone.menssage">{{ status.phone.menssage }}</div>
             <FormLabel class="mt-5">Fecha de nacimiento*</FormLabel>
             <FormInput
               type="date"
               name="birthdate"
+              data-context="Fecha de nacimiento"
               :class="`block px-4 py-3.5 border-[2px] rounded-[0.6rem] ${ status.birthdate.error ? 'border-red-300/80' : 'border-slate-300/80' }`"
               v-model="birthdate"
               @input="validateDate"
@@ -115,6 +130,7 @@ const handleSubmit = () => {
             <FormInput
               type="password"
               name="password"
+              data-context="Contraseña"
               :class="`block px-4 py-3.5 border-[2px] rounded-[0.6rem] ${ status.password.error ? 'border-red-300/80' : 'border-slate-300/80' }`"
               placeholder="************"
               v-model="password"
@@ -147,6 +163,7 @@ const handleSubmit = () => {
             <FormInput
               type="password"
               name="password_confirm"
+              data-context="Confirmación de contraseña"
               :class="`block px-4 py-3.5 border-[2px] rounded-[0.6rem] ${ status.password_confirm.error ? 'border-red-300/80' : 'border-slate-300/80' }`"
               placeholder="************"
               v-model="password_confirm"
@@ -157,6 +174,7 @@ const handleSubmit = () => {
             <FormLabel class="mt-5">Perfil*</FormLabel>
             <select
               name="perfil"
+              data-context="Perfil"
               :class="`block w-full px-4 py-3.5 border-[2px] rounded-[0.6rem] ${ status.perfil.error ? 'border-red-300/80' : 'border-slate-300/80' }`"
               v-model="perfil"
               @change="validatePerfil"
@@ -166,9 +184,9 @@ const handleSubmit = () => {
               <option value="4" class="text-black">Voluntario</option>
               <option value="3" class="text-black">Donante</option>
             </select>
-            <div class="flex flex-row text-red-600 p-2" v-if="status.perfil.menssage">{{ status.perfil.menssage }}</div>
+            <div class="flex flex-row text-red-600 p-2" v-if="status.perfil.error">{{ status.perfil.menssage }}</div>
             <div
-              class="flex items-center mt-5 text-xs text-slate-500 sm:text-sm"
+              :class="`flex items-center mt-5 text-xs  sm:text-sm ${ status.terms.error ? 'text-red-600' : 'text-slate-500' }`"
             >
               <FormCheck.Input
               name="terms"

@@ -17,6 +17,12 @@ export const status = ref({
     Regex: /^(?=.{1,100}$)[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
     menssage: ''
   },
+  phone: {
+    value: false,
+    error: false,
+    Regex: /^\d{10}$/,
+    menssage: ''
+  },
   birthdate: {
     value: false,
     error: false,
@@ -36,7 +42,9 @@ export const status = ref({
       uppercase: /^(?=.*[A-Z]).*$/,
       lowercase: /^(?=.*[a-z]).*$/,
       number: /^(?=.*[0-9]).*$/,
-      special: /^(?=.*[!@#$%^&*]).*$/
+      special: /^(?=.*[!@#$%^&*]).*$/,
+      secuentialNumbers: /^(?!.*(012|123|234|345|456|567|678|789|890|987|876|765|654|543|432|321|210)).*$/,
+      noRepeat: /^(?!^(.)\1*$).+$/
     }
   },
   password_confirm: {
@@ -49,7 +57,7 @@ export const status = ref({
   perfil: {
     value: false,
     error: false,
-    Regex: /^.{1,}$/,
+    Regex: /^[3-5]$/,
     menssage: ''
   },
   terms: {

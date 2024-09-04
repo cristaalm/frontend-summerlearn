@@ -7,7 +7,8 @@ export const validate = () => {
 }
 
 export const validateText = (e) => {
-  const { name, value } = e.target
+  const { name, value } = e.target;
+  const context = e.target.dataset.context;  
   if (status.value[name].Regex.test(value)) {
     status.value[name].value = true
     status.value[name].error = false
@@ -15,7 +16,7 @@ export const validateText = (e) => {
   } else {
     status.value[name].value = false
     status.value[name].error = true
-    status.value[name].menssage = `El ${name} no es válido`
+    status.value[name].menssage = `El campo ${context} no es válido`
   }
   if (name === 'password_confirm') {
     status.value.password_confirm.modified = true
