@@ -12,7 +12,7 @@ export default {
     hero: {
       title: 'Empowering Education For All',
       description:
-        'SummerLearn is an NGO dedicated to providing basic education to low-resource schools, with the help of passionate volunteers.',
+        'SummerLearn is an NGO committed to provide basic education to low-income schools, with the help of passionate volunteers.',
       button: 'Get Started'
     },
     impact: {
@@ -23,7 +23,7 @@ export default {
     mission: {
       title: 'Our Mission',
       description:
-        'SummerLearn is committed to providing quality basic education to children in low-resource communities. We believe that education is a fundamental human right and that every child deserves the opportunity to learn and grow.',
+        'SummerLearn is committed to provide quality basic education to children in low-resource communities. We believe that education is a fundamental human right and that every child deserves the opportunity to learn and grow.',
       values: {
         1: {
           title: 'Empowering Communities',
@@ -75,7 +75,7 @@ export default {
     hero: {
       title: 'Potenciando la educación para todos',
       description:
-        'SummerLearn es una ONG dedicada a proporcionar educación básica a escuelas de bajos recursos, con la ayuda de voluntarios apasionados.',
+        'SummerLearn es una ONG comprometida a brindar educación básica a escuelas de bajos ingresos, con la ayuda de voluntarios apasionados.',
       button: 'Empezar'
     },
     impact: {
