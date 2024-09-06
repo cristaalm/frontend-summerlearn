@@ -2,7 +2,7 @@
 import { FormCheck, FormInput, FormLabel } from "@/components/Base/Form";
 import Button from "@/components/Base/Button";
 import { password, firstName, lastName, email, phone, birthdate, perfil, terms, password_confirm, valid } from '@/validations/register/useFormRefs.js';
-import { validateText, validateDate, validateTerms, validatePasswordComfirm, validatePerfil} from '@/validations/register/useValidationFunctions.js';
+import { validateText, validateDate, validateTerms, validatePasswordComfirm, validatePerfil, validate} from '@/validations/register/useValidationFunctions.js';
 import { validatePassword } from '@/validations/register/usePasswordSecurity.js';
 import { status } from '@/validations/register/useFormStatus.js';
 import { useRouter } from 'vue-router'
@@ -12,6 +12,8 @@ const router = useRouter()
 // valid:  is a computed property that checks if all the fields are valid
 // Functions to handle API requests
 const registerUser = async () => {
+  validate()
+  if (!valid.value) return
   try {
     const response = await fetch(Baseurl+'/users/register/', {
       method: 'POST',
@@ -32,11 +34,15 @@ const registerUser = async () => {
     const data = await response.json();
     if (response.ok) {
       console.log('Registration successful');
+      // Save tokens to local storage or any other preferred method
+      localStorage.setItem('access_token', data.access)
+      localStorage.setItem('refresh_token', data.refresh)
       // Redirect to the login page after successful registration
-      router.push('/Login');
+      router.push('/Dashboard');
     } else {
       // Log the error message if the registration fails
       console.error('Registration failed', data);
+      validate()
     }
   } catch (error) {
     // Log the error message if the request fails
