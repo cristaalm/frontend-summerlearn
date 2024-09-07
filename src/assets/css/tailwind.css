@@ -5903,6 +5903,10 @@ select {
   border-color: rgb(var(--color-danger) / var(--tw-border-opacity));
 }
 
+.border-danger\/20 {
+  border-color: rgb(var(--color-danger) / 0.2);
+}
+
 .border-dark {
   --tw-border-opacity: 1;
   border-color: rgb(var(--color-dark) / var(--tw-border-opacity));
@@ -5921,10 +5925,6 @@ select {
 .border-primary {
   --tw-border-opacity: 1;
   border-color: rgb(var(--color-primary) / var(--tw-border-opacity));
-}
-
-.border-primary\/20 {
-  border-color: rgb(var(--color-primary) / 0.2);
 }
 
 .border-primary\/40 {
@@ -6022,10 +6022,6 @@ select {
   border-color: rgb(255 255 255 / 0.15);
 }
 
-.border-danger\/20 {
-  border-color: rgb(var(--color-danger) / 0.2);
-}
-
 .border-b-primary {
   --tw-border-opacity: 1;
   border-bottom-color: rgb(var(--color-primary) / var(--tw-border-opacity));
@@ -6069,6 +6065,10 @@ select {
   background-color: rgb(var(--color-danger) / var(--tw-bg-opacity));
 }
 
+.bg-danger\/5 {
+  background-color: rgb(var(--color-danger) / 0.05);
+}
+
 .bg-dark {
   --tw-bg-opacity: 1;
   background-color: rgb(var(--color-dark) / var(--tw-bg-opacity));
@@ -6106,15 +6106,6 @@ select {
 
 .bg-primary\/40 {
   background-color: rgb(var(--color-primary) / 0.4);
-}
-
-.bg-primary\/5 {
-  background-color: rgb(var(--color-primary) / 0.05);
-}
-
-.bg-red-500 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(239 68 68 / var(--tw-bg-opacity));
 }
 
 .bg-rose-500 {
@@ -6196,8 +6187,9 @@ select {
   background-color: rgb(255 255 255 / 0.95);
 }
 
-.bg-danger\/5 {
-  background-color: rgb(var(--color-danger) / 0.05);
+.bg-blue-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(59 130 246 / var(--tw-bg-opacity));
 }
 
 .bg-opacity-10 {
@@ -6273,16 +6265,12 @@ select {
   fill: #000;
 }
 
-.fill-primary\/10 {
-  fill: rgb(var(--color-primary) / 0.1);
+.fill-danger\/10 {
+  fill: rgb(var(--color-danger) / 0.1);
 }
 
 .fill-theme-1\/5 {
   fill: rgb(var(--color-theme-1) / 0.05);
-}
-
-.fill-danger\/10 {
-  fill: rgb(var(--color-danger) / 0.1);
 }
 
 .stroke-black {
@@ -6471,6 +6459,11 @@ select {
 .py-6 {
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
+}
+
+.py-8 {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
 }
 
 .py-px {
@@ -6711,6 +6704,11 @@ select {
   color: rgb(31 41 55 / var(--tw-text-opacity));
 }
 
+.text-green-500 {
+  --tw-text-opacity: 1;
+  color: rgb(34 197 94 / var(--tw-text-opacity));
+}
+
 .text-pending {
   --tw-text-opacity: 1;
   color: rgb(var(--color-pending) / var(--tw-text-opacity));
@@ -6785,6 +6783,11 @@ select {
 
 .text-white\/90 {
   color: rgb(255 255 255 / 0.9);
+}
+
+.text-red-500 {
+  --tw-text-opacity: 1;
+  color: rgb(239 68 68 / var(--tw-text-opacity));
 }
 
 .opacity-0 {
