@@ -78,7 +78,12 @@ const nestedMenu = (menu: Array<Menu | string>, route: Route) => {
 
 const linkTo = (menu: FormattedMenu, router: Router) => {
   if (menu.subMenu) {
-    menu.activeDropdown = !menu.activeDropdown;
+    setTimeout(() => {
+      menu.activeDropdown = !menu.activeDropdown;
+    }, 200);
+    router.push({
+      name: menu.pageName,
+    });
   } else {
     if (menu.pageName !== undefined) {
       router.push({

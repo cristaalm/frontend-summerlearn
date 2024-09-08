@@ -168,7 +168,7 @@ window.onscroll = () => {
             @click="(event: MouseEvent) => {
               event.preventDefault();
               router.push({
-                name: 'Dashboard',
+                name: 'dashboard',
               });
               activeMobileMenu = false;
             }"
