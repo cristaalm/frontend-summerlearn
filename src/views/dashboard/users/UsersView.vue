@@ -3,9 +3,12 @@ import Lucide from "@/components/base/Lucide";
 import { Menu, Popover } from "@/components/base/Headless";
 import Pagination from "@/components/base/Pagination";
 import { FormInput, FormSelect } from "@/components/base/Form";
+import { useRouter } from "vue-router";
 import Tippy from "@/components/base/Tippy";
 import Button from "@/components/base/Button";
 import Table from "@/components/base/Table";
+
+const router = useRouter();
 
 const exampleInformationUser = [
     {
@@ -65,6 +68,11 @@ const exampleInformationUser = [
           <Button
             variant="primary"
             class="group-[.mode--light]:!bg-white/[0.12] group-[.mode--light]:!text-slate-200 group-[.mode--light]:!border-transparent"
+            @click="() => {
+              router.push({
+                name: 'addUser',
+              });
+            }"
           >
             <Lucide icon="PenLine" class="stroke-[1.3] w-4 h-4 mr-2" /> Agregar nuevo usuario
           </Button>

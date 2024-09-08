@@ -62,7 +62,7 @@ const totalPages = computed(() => Math.ceil(areas.value.length / pageSize.value)
             class="group-[.mode--light]:!bg-white/[0.12] group-[.mode--light]:!text-slate-200 group-[.mode--light]:!border-transparent"
             @click="() => {
               router.push({
-                name: 'Dashboard',
+                name: 'addArea',
               });
             }"
           >

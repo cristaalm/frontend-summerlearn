@@ -82,7 +82,7 @@ const router = createRouter({
             )
         },
         {
-          path: '/dashboard/addUser',
+          path: '/dashboard/users/add',
           name: 'addUser',
           component: () =>
             import('@/views/dashboard/users/AddUsers.vue').catch(
@@ -98,10 +98,10 @@ const router = createRouter({
             )
         },
         {
-          path: '/dashboard/addArea',
+          path: '/dashboard/areas/add',
           name: 'addArea',
           component: () =>
-            import('@/views/dashboard/areas/AreasView.vue').catch(
+            import('@/views/dashboard/areas/AddArea.vue').catch(
               () => import('@/views/dashboard/notFoundView/NotFoundView.vue')
             )
         },

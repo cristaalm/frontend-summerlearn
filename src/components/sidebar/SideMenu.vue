@@ -369,7 +369,7 @@ window.onscroll = () => {
             <!-- BEGIN: Breadcrumb -->
             <Breadcrumb light class="flex-1 hidden xl:block">
               <Breadcrumb.Link to="/">SummerLearn</Breadcrumb.Link>
-              <Breadcrumb.Link to="/" :active="true">Dashboards</Breadcrumb.Link>
+              <Breadcrumb.Link to="/dashboard/" :active="true">Dashboards</Breadcrumb.Link>
             </Breadcrumb>
             <!-- END: Breadcrumb -->
             <!-- BEGIN: Search -->
@@ -397,27 +397,27 @@ window.onscroll = () => {
                     @click="
                       () => {
                         router.push({
-                          name: 'Ssettings',
+                          name: 'settings',
                         });
                       }
                     "
+                    class="text-primary"
                   >
                     <Lucide icon="Users" class="w-4 h-4 mr-2" />
-                    Profile Info
+                    Información Personal 
                   </Menu.Item>
                   <Menu.Item
                     @click="
                       () => {
-                        return
                         router.push({
-                          name: 'settings',
-                          query: { page: 'security' },
+                          name: 'login',
                         });
                       }
                     "
+                    class="text-danger"
                   >
                     <Lucide icon="Power" class="w-4 h-4 mr-2" />
-                    Logout
+                    Cerar Sesión
                   </Menu.Item>
                 </Menu.Items>
               </Menu>
