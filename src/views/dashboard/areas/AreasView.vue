@@ -1,50 +1,23 @@
 <script setup lang="ts">
 import { useRouter } from "vue-router";
 import Lucide from "@/components/base/Lucide";
-import { Menu } from "@/components/base/Headless";
+import { Menu, Popover } from "@/components/base/Headless";
 import Pagination from "@/components/base/Pagination";
-import { FormSelect } from "@/components/base/Form";
+import { FormInput, FormSelect } from "@/components/base/Form";
 import Table from "@/components/base/Table";
 import Button from "@/components/base/Button";
-import { useAreas } from '@/hooks/areas/useAreas'
-import { ref, computed, onMounted } from 'vue'
+import { useFilter, usePagination, useAreas } from '@/hooks/areas/'
+import { onMounted } from 'vue'
 
-const { areas, loading, error, loadAreas } = useAreas()
-const pageSize = ref(10) // Número de elementos por página
-const currentPage = ref(1) // Página actual
+const { areas, loading, error, loadAreas } = useAreas();
+const { searchQuery, selectedStatus, filteredItems, activeFilters } = useFilter(areas);
+const { currentPage, pageSize, totalPages, paginatedItems, changePage, changePageSize } = usePagination(filteredItems);
 const router = useRouter();
 
-// Cargar las áreas al iniciar el componente
 onMounted(() => {
-  loadAreas()
-})
+  loadAreas();
+});
 
-// Función para cambiar de página
-const changePage = (page) => {
-  if (page < 1) page = 1;
-  if (page > totalPages.value) page = totalPages.value;
-  currentPage.value = page;
-}
-
-// Función para cambiar el número de elementos por página
-const changePageSize = (event) => {
-  const select = event.target;
-  const size = parseInt(select.value, 10);
-  if (!isNaN(size) && size > 0) {
-    pageSize.value = size
-    currentPage.value = 1 // Reiniciar la página actual al cambiar el tamaño de página
-  }
-}
-
-// Calcular el índice inicial y final de los elementos a mostrar en la tabla
-const startIndex = computed(() => (currentPage.value - 1) * pageSize.value)
-const endIndex = computed(() => startIndex.value + pageSize.value)
-
-// Obtener los elementos a mostrar en la tabla según la página actual y el tamaño de página
-const paginatedAreas = computed(() => areas.value.slice(startIndex.value, endIndex.value))
-
-// Calcular el número total de páginas
-const totalPages = computed(() => Math.ceil(areas.value.length / pageSize.value))
 
 </script>
 
@@ -70,6 +43,48 @@ const totalPages = computed(() => Math.ceil(areas.value.length / pageSize.value)
       </div>
       <div class="mt-3.5">
         <div class="flex flex-col box box--stacked">
+          <div class="flex flex-col p-5 sm:items-center sm:flex-row gap-y-2">
+            <div>
+              <div class="relative">
+                <Lucide icon="Search"
+                  class="absolute inset-y-0 left-0 z-10 w-4 h-4 my-auto ml-3 stroke-[1.3] text-slate-500" />
+                <FormInput v-model="searchQuery" type="text" placeholder="Buscar area..."
+                  class="pl-9 sm:w-72 rounded-[0.5rem]" />
+              </div>
+            </div>
+            <div class="flex flex-col sm:flex-row gap-x-3 gap-y-2 sm:ml-auto">
+              <Popover class="inline-block" v-slot="{ close }">
+                <Popover.Button :as="Button" variant="outline-secondary" class="w-full sm:w-auto">
+                  <Lucide icon="ArrowDownWideNarrow" class="stroke-[1.3] w-4 h-4 mr-2" />
+                  Filtrar
+                  <div
+                    class="flex items-center justify-center h-5 px-1.5 ml-2 text-xs font-medium border rounded-full bg-slate-100">
+                    {{ activeFilters }}
+                  </div>
+                </Popover.Button>
+                <Popover.Panel placement="bottom-end">
+                  <div class="p-2 space-y-4">
+                    <div>
+                      <div class="text-left text-slate-500">Status</div>
+                      <FormSelect v-model="selectedStatus" class="flex-1 mt-2">
+                        <option :value="null" selected>Todos</option>
+                        <option value="1">Activo</option>
+                        <option value="0">Inactivo</option>
+                      </FormSelect>
+                    </div>
+                    <div class="flex items-center mt-4">
+                      <Button variant="secondary" @click="() => {
+                        close();
+                      }
+                        " class="w-32 ml-auto">
+                        Close
+                      </Button>
+                    </div>
+                  </div>
+                </Popover.Panel>
+              </Popover>
+            </div>
+          </div>
           <div class="overflow-auto xl:overflow-visible">
             <Table class="border-b border-slate-200/60">
               <Table.Thead>
@@ -88,7 +103,7 @@ const totalPages = computed(() => Math.ceil(areas.value.length / pageSize.value)
                 </Table.Tr>
               </Table.Thead>
 
-              <!-- Mostrar 'Cargando información...' cuando loading es true -->
+              <!--? Mostrar 'Cargando información...' cuando loading es true -->
               <Table.Tbody v-if="loading">
                 <Table.Tr>
                   <Table.Td colspan="3" class="py-8 text-center text-xl font-bold text-green-500">
@@ -97,7 +112,7 @@ const totalPages = computed(() => Math.ceil(areas.value.length / pageSize.value)
                 </Table.Tr>
               </Table.Tbody>
 
-              <!-- Mostrar mensaje de error cuando hay error -->
+              <!--? Mostrar mensaje de error cuando hay error -->
               <Table.Tbody v-if="error">
                 <Table.Tr>
                   <Table.Td colspan="3" class="py-8 text-center text-xl font-bold text-red-500">
@@ -106,9 +121,18 @@ const totalPages = computed(() => Math.ceil(areas.value.length / pageSize.value)
                 </Table.Tr>
               </Table.Tbody>
 
-              <!-- Mostrar la tabla de áreas cuando no está cargando y no existe ningun error -->
+              <!--? Mostrar mensaje de error cuando no se encuentran usuarios -->
+              <Table.Tbody v-if="!loading && totalPages <= 0 && !error">
+                <Table.Tr>
+                  <Table.Td colspan="3" class="py-8 text-center text-xl font-bold text-amber-500">
+                    No se encontraron áreas
+                  </Table.Td>
+                </Table.Tr>
+              </Table.Tbody>
+
+              <!--? Mostrar la tabla de áreas cuando no está cargando y no existe ningun error -->
               <Table.Tbody v-if="!loading">
-                <template v-for="area in paginatedAreas" :key="area.id">
+                <template v-for="area in paginatedItems" :key="area.id">
                   <Table.Tr class="[&_td]:last:border-b-0">
                     <Table.Td class="py-4 border-dashed dark:bg-darkmode-600 text-center">
                       <a href="" class="font-medium whitespace-nowrap">
@@ -117,10 +141,10 @@ const totalPages = computed(() => Math.ceil(areas.value.length / pageSize.value)
                     </Table.Td>
                     <Table.Td class="py-4 border-dashed dark:bg-darkmode-600">
                       <div
-                        :class="['flex items-center justify-center', { 'text-success': area.isActive }, { 'text-danger': !area.isActive }]">
+                        :class="['flex items-center justify-center', { 'text-success': area.status }, { 'text-danger': !area.status }]">
                         <Lucide icon="Database" class="w-3.5 h-3.5 stroke-[1.7]" />
                         <div class="ml-1.5 whitespace-nowrap">
-                          {{ area.isActive ? "Activo" : "Inactivo" }}
+                          {{ area.status ? "Activo" : "Inactivo" }}
                         </div>
                       </div>
                     </Table.Td>
@@ -135,8 +159,8 @@ const totalPages = computed(() => Math.ceil(areas.value.length / pageSize.value)
                               <Lucide icon="CheckSquare" class="w-4 h-4 mr-2" />
                               Editar
                             </Menu.Item>
-                            <Menu.Item :class="`${area.isActive ? 'text-danger' : 'text-primary'}`" @click="() => {
-                              area.isActive = !area.isActive
+                            <Menu.Item :class="`${area.status ? 'text-danger' : 'text-primary'}`" @click="() => {
+                              area.status = !area.status
                             }">
                               <Lucide icon="RefreshCw" class="w-4 h-4 mr-2" />
                               Cambiar Estado
