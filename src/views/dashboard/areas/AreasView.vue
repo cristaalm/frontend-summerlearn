@@ -6,7 +6,7 @@ import Pagination from "@/components/base/Pagination";
 import { FormSelect } from "@/components/base/Form";
 import Table from "@/components/base/Table";
 import Button from "@/components/base/Button";
-import { useAreas } from '@/hooks/useAreas'
+import { useAreas } from '@/hooks/areas/useAreas'
 import { ref, computed, onMounted } from 'vue'
 
 const { areas, loading, error, loadAreas } = useAreas()
