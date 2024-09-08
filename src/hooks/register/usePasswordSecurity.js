@@ -1,4 +1,3 @@
-import { min } from 'lodash';
 import { status } from './useFormStatus';
 import { validate } from './useValidationFunctions';
 

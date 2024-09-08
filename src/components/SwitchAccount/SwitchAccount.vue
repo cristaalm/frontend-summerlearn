@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import users from "@/fakers/users";
-import Lucide from "@/components/Base/Lucide";
-import { FormCheck } from "@/components/Base/Form";
-import { Dialog } from "@/components/Base/Headless";
+import Lucide from "@/components/base/Lucide";
+import { FormCheck } from "@/components/base/Form";
+import { Dialog } from "@/components/base/Headless";
 import { ref } from "vue";
 import _ from "lodash";
 

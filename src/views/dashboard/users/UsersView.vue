@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import Lucide from "@/components/Base/Lucide";
-import { Menu, Popover } from "@/components/Base/Headless";
-import Pagination from "@/components/Base/Pagination";
-import { FormInput, FormSelect } from "@/components/Base/Form";
-import Tippy from "@/components/Base/Tippy";
-import Button from "@/components/Base/Button";
-import Table from "@/components/Base/Table";
+import Lucide from "@/components/base/Lucide";
+import { Menu, Popover } from "@/components/base/Headless";
+import Pagination from "@/components/base/Pagination";
+import { FormInput, FormSelect } from "@/components/base/Form";
+import Tippy from "@/components/base/Tippy";
+import Button from "@/components/base/Button";
+import Table from "@/components/base/Table";
 
 const exampleInformationUser = [
     {

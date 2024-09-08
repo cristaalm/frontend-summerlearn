@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { Slideover } from "@/components/Base/Headless";
-import { Menu } from "@/components/Base/Headless";
-import Lucide from "@/components/Base/Lucide";
+import { Slideover } from "@/components/base/Headless";
+import { Menu } from "@/components/base/Headless";
+import Lucide from "@/components/base/Lucide";
 import activities from "@/fakers/activities";
-import FileIcon from "@/components/Base/FileIcon";
+import FileIcon from "@/components/base/FileIcon";
 import _ from "lodash";
 
 interface MainProps {

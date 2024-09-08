@@ -5,7 +5,7 @@ const router = createRouter({
   routes: [
     {
       path: '/:lang(en|es)?',
-      name: 'Home',
+      name: 'home',
       component: () =>
         import('@/views/HomeView.vue').catch(() => import('@/views/NotFoundView.vue')),
       beforeEnter: (to, from, next) => {
@@ -51,126 +51,137 @@ const router = createRouter({
       }
     },
     {
-      path: '/Register',
-      name: 'Register',
-      component: () =>
-        import('@/views/RegisterView.vue')
+      path: '/register',
+      name: 'register',
+      component: () => import('@/views/RegisterView.vue')
     },
     {
-      path: '/Login',
-      name: 'Login',
+      path: '/login',
+      name: 'login',
       component: () =>
         import('@/views/LoginView.vue').catch(() => import('@/views/NotFoundView.vue'))
     },
     {
-      path: '/Dashboard',
-      component: () => import('@/themes').catch(() => import('@/views/NotFoundView.vue')),
+      path: '/dashboard',
+      component: () => import('@/views/dashboard').catch(() => import('@/views/NotFoundView.vue')),
       children: [
         {
-          path: '/Dashboard',
-          name: 'Dashboard',
+          path: '/dashboard',
+          name: 'dashboard',
           component: () =>
-            import('@/components/dashboard/dasboardHome/DasboardHome.vue').catch(
-              () => import('@/views/NotFoundView.vue')
+            import('@/views/dashboard/dashboardHome/DashboardHome.vue').catch(
+              () => import('@/views/dashboard/notFoundView/NotFoundView.vue')
             )
         },
         {
-          path: '/Dashboard/users',
-          name: 'Users',
+          path: '/dashboard/users',
+          name: 'users',
           component: () =>
-            import('@/components/dashboard/usersManage/UsersManage.vue').catch(
-              () => import('@/views/NotFoundView.vue')
+            import('@/views/dashboard/users/UsersView.vue').catch(
+              () => import('@/views/dashboard/notFoundView/NotFoundView.vue')
             )
         },
         {
-          path: '/Dashboard/addUser',
-          name: 'AddUser',
+          path: '/dashboard/addUser',
+          name: 'addUser',
           component: () =>
-            import('@/components/dashboard/addUsers/AddUsers.vue').catch(
-              () => import('@/views/NotFoundView.vue')
+            import('@/views/dashboard/users/AddUsers.vue').catch(
+              () => import('@/views/dashboard/notFoundView/NotFoundView.vue')
             )
         },
         {
-          path: '/Dashboard/areas',
-          name: 'Areas',
+          path: '/dashboard/areas',
+          name: 'areas',
           component: () =>
-            import('@/components/dashboard/areasManage/AreasManage.vue').catch(
-              () => import('@/views/NotFoundView.vue')
+            import('@/views/dashboard/areas/AreasView.vue').catch(
+              () => import('@/views/dashboard/notFoundView/NotFoundView.vue')
             )
         },
         {
-          path: '/Dashboard/activities',
-          name: 'Activities',
+          path: '/dashboard/addArea',
+          name: 'addArea',
           component: () =>
-            import('@/components/dashboard/activitiesManage/ActivitiesManage.vue').catch(
-              () => import('@/views/NotFoundView.vue')
+            import('@/views/dashboard/areas/AreasView.vue').catch(
+              () => import('@/views/dashboard/notFoundView/NotFoundView.vue')
             )
         },
         {
-          path: '/Dashboard/expenses',
-          name: 'Expenses',
+          path: '/dashboard/activities',
+          name: 'activities',
           component: () =>
-            import('@/components/dashboard/expensesManage/ExpensesManage.vue').catch(
-              () => import('@/views/NotFoundView.vue')
+            import('@/views/dashboard/activities/ActivitiesView.vue').catch(
+              () => import('@/views/dashboard/notFoundView/NotFoundView.vue')
             )
         },
         {
-          path: '/Dashboard/Subscriptions',
-          name: 'Subscriptions',
+          path: '/dashboard/expenses',
+          name: 'expenses',
           component: () =>
-            import('@/components/dashboard/subscriptionsManage/SubscriptionsManage.vue').catch(
-              () => import('@/views/NotFoundView.vue')
+            import('@/views/dashboard/expenses/ExpensesView.vue').catch(
+              () => import('@/views/dashboard/notFoundView/NotFoundView.vue')
             )
         },
         {
-          path: '/Dashboard/performance',
-          name: 'Performance',
+          path: '/dashboard/Subscriptions',
+          name: 'subscriptions',
           component: () =>
-            import('@/components/dashboard/performanceManage/performanceManage.vue').catch(
-              () => import('@/views/NotFoundView.vue')
+            import('@/views/dashboard/subscriptions/SubscriptionsView.vue').catch(
+              () => import('@/views/dashboard/notFoundView/NotFoundView.vue')
             )
         },
         {
-          path: '/Dashboard/chat',
-          name: 'Chat',
+          path: '/dashboard/performance',
+          name: 'performance',
           component: () =>
-            import('@/components/dashboard/chat/Chat.vue').catch(
-              () => import('@/views/NotFoundView.vue')
+            import('@/views/dashboard/performance/performanceView.vue').catch(
+              () => import('@/views/dashboard/notFoundView/NotFoundView.vue')
             )
         },
         {
-          path: '/Dashboard/programs',
-          name: 'Programs',
+          path: '/dashboard/chat',
+          name: 'chat',
           component: () =>
-            import('@/components/dashboard/programsManage/ProgramsManage.vue').catch(
-              () => import('@/views/NotFoundView.vue')
+            import('@/views/dashboard/chat/ChatView.vue').catch(
+              () => import('@/views/dashboard/notFoundView/NotFoundView.vue')
             )
         },
         {
-          path: '/Dashboard/donations',
-          name: 'Donations',
+          path: '/dashboard/programs',
+          name: 'programs',
           component: () =>
-            import('@/components/dashboard/donationsManage/DonationsManage.vue').catch(
-              () => import('@/views/NotFoundView.vue')
+            import('@/views/dashboard/programs/ProgramsView.vue').catch(
+              () => import('@/views/dashboard/notFoundView/NotFoundView.vue')
             )
         },
         {
-          path: '/Dashboard/settings',
-          name: 'Settings',
+          path: '/dashboard/donations',
+          name: 'donations',
           component: () =>
-            import('@/components/dashboard/settings/Settings.vue').catch(
-              () => import('@/views/NotFoundView.vue')
+            import('@/views/dashboard/donations/DonationsView.vue').catch(
+              () => import('@/views/dashboard/notFoundView/NotFoundView.vue')
             )
+        },
+        {
+          path: '/dashboard/settings',
+          name: 'settings',
+          component: () =>
+            import('@/views/dashboard/settings/Settings.vue').catch(
+              () => import('@/views/dashboard/notFoundView/NotFoundView.vue')
+            )
+        },
+        {
+          path: '/dashboard/:pathMatch(.*)*',
+          name: 'notFoundDashboard',
+          component: () => import('@/views/dashboard/notFoundView/NotFoundView.vue')
         }
       ]
     },
     {
       path: '/:pathMatch(.*)*',
-      name: 'NotFound',
-      component: () =>
-        import('@/views/NotFoundView.vue').catch(() => import('@/views/NotFoundView.vue'))
+      name: 'notFound',
+      component: () => import('@/views/NotFoundView.vue')
     }
   ]
 })
 
-export default router;
+export default router

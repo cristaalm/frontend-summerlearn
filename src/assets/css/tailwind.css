@@ -4778,28 +4778,6 @@ select {
   }
 }
 
-.\!box {
-  box-shadow: 0px 3px 5px #0000000b !important;
-  background-color: white !important;
-  border: 1px solid #e2e8f0 !important;
-  border-radius: 0.6rem !important;
-  position: relative !important;
-   {
-    content: "" !important;
-    z-index: -1 !important;
-    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05) !important;
-    height: 100% !important;
-    background-color: #f8fafc !important;
-    border: 1px solid #e2e8f0 !important;
-    position: absolute !important;
-    border-radius: 0.5rem !important;
-    left: 0.875rem !important;
-    right: 0.875rem !important;
-    top: 0 !important;
-    margin-top: 0.75rem !important;
-  }
-}
-
 .box {
   box-shadow: 0px 3px 5px #0000000b;
   background-color: white;
@@ -5182,6 +5160,10 @@ select {
 
 .mt-\[100px\] {
   margin-top: 100px;
+}
+
+.mt-8 {
+  margin-top: 2rem;
 }
 
 .block {
@@ -6060,6 +6042,11 @@ select {
   background-color: rgb(0 0 0 / var(--tw-bg-opacity));
 }
 
+.bg-blue-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(59 130 246 / var(--tw-bg-opacity));
+}
+
 .bg-danger {
   --tw-bg-opacity: 1;
   background-color: rgb(var(--color-danger) / var(--tw-bg-opacity));
@@ -6185,11 +6172,6 @@ select {
 
 .bg-white\/\[0\.95\] {
   background-color: rgb(255 255 255 / 0.95);
-}
-
-.bg-blue-500 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(59 130 246 / var(--tw-bg-opacity));
 }
 
 .bg-opacity-10 {
@@ -6471,6 +6453,16 @@ select {
   padding-bottom: 1px;
 }
 
+.px-12 {
+  padding-left: 3rem;
+  padding-right: 3rem;
+}
+
+.py-32 {
+  padding-top: 8rem;
+  padding-bottom: 8rem;
+}
+
 .pb-1 {
   padding-bottom: 0.25rem;
 }
@@ -6719,6 +6711,11 @@ select {
   color: rgb(var(--color-primary) / var(--tw-text-opacity));
 }
 
+.text-red-500 {
+  --tw-text-opacity: 1;
+  color: rgb(239 68 68 / var(--tw-text-opacity));
+}
+
 .text-red-600 {
   --tw-text-opacity: 1;
   color: rgb(220 38 38 / var(--tw-text-opacity));
@@ -6785,9 +6782,9 @@ select {
   color: rgb(255 255 255 / 0.9);
 }
 
-.text-red-500 {
+.text-gray-500 {
   --tw-text-opacity: 1;
-  color: rgb(239 68 68 / var(--tw-text-opacity));
+  color: rgb(107 114 128 / var(--tw-text-opacity));
 }
 
 .opacity-0 {

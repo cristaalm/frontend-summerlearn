@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import Echo from "@/themes/Echo";
+import Echo from "@/components/sidebar/";
 
 export const themes = [
   {

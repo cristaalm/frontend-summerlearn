@@ -1,79 +1,74 @@
-import { type Icon } from "@/components/Base/Lucide/Lucide.vue";
-import { defineStore } from "pinia";
+import { type Icon } from '@/components/base/Lucide/Lucide.vue'
+import { defineStore } from 'pinia'
 
 export interface Menu {
-  icon: Icon;
-  title: string;
-  badge?: number;
-  pageName?: string;
-  subMenu?: Menu[];
-  ignore?: boolean;
+  icon: Icon
+  title: string
+  badge?: number
+  pageName?: string
+  subMenu?: Menu[]
+  ignore?: boolean
 }
 
 export interface MenuState {
-  value: Array<Menu | string>;
+  value: Array<Menu | string>
 }
 
-export const useMenuStore = defineStore("menu", {
+export const useMenuStore = defineStore('menu', {
   state: (): MenuState => ({
     value: [
-    "GESTIÓN DE USUARIOS",
+      'GESTIÓN DE USUARIOS',
       {
-        icon: "SquareUser",
-        pageName: "Users",
-        title: "Usuarios",
+        icon: 'SquareUser',
+        pageName: 'users',
+        title: 'Usuarios'
       },
+      'GESTIÓN DE PROGRAMAS',
       {
-        icon: "UserPlus",
-        pageName: "AddUser",
-        title: "Agregar Usuario",
-      },
-      "GESTIÓN DE PROGRAMAS",
-      {
-        icon: "Album",
-        pageName: "Programs",
-        title: "Programas",
-         subMenu: [
+        icon: 'Album',
+        pageName: 'programs',
+        title: 'Programas',
+        subMenu: [
           {
-            icon: "LayoutPanelTop",
-            pageName: "Areas",
-            title: "Áreas",
-           },
-           {
-             icon: "BookMarked",
-             pageName: "Activities",
-             title: "Actividades",
-           },
-        ],
-      },
-      "GESTIÓN GENERAL",
-      {
-        icon: "PiggyBank",
-        pageName: "Donations",
-        title: "Donaciones",
-         subMenu: [
-          {
-            icon: "ReceiptText",
-            pageName: "Expenses",
-            title: "Gastos",
+            icon: 'LayoutPanelTop',
+            pageName: 'areas',
+            title: 'Áreas'
           },
-        ],
+          {
+            icon: 'BookMarked',
+            pageName: 'activities',
+            title: 'Actividades'
+          }
+        ]
+      },
+      'GESTIÓN GENERAL',
+      {
+        icon: 'PiggyBank',
+        pageName: 'donations',
+        title: 'Donaciones',
+        subMenu: [
+          {
+            icon: 'ReceiptText',
+            pageName: 'expenses',
+            title: 'Gastos'
+          }
+        ]
       },
       {
-        icon: "Notebook",
-        pageName: "Subscriptions",
-        title: "Suscripciones",
+        icon: 'Notebook',
+        pageName: 'subscriptions',
+        title: 'Suscripciones'
       },
       {
-        icon: "BarChartBig",
-        pageName: "Performance",
-        title: "Desempeño",
+        icon: 'BarChartBig',
+        pageName: 'performance',
+        title: 'Desempeño'
       },
       {
-        icon: "MessagesSquare",
-        pageName: "Chat",
-        title: "Chat",
-      },
-    ],
-  }),
-});
+        icon: 'MessagesSquare',
+        pageName: 'chat',
+        title: 'Chat'
+      }
+    ]
+  })
+})

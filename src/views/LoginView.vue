@@ -3,79 +3,11 @@ import { FormInput, FormLabel } from '@/components/base/Form'
 import Button from '@/components/base/Button'
 import Alert from '@/components/base/Alert'
 import Lucide from '@/components/base/Lucide'
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
-import { Baseurl } from '@/../global'
+import { useFormValidation } from '@/hooks/login/useFormValidation'
+import { useAuth } from '@/hooks/login/useAuth'
 
-const router = useRouter()
-
-// Define reactive variables
-const email = ref('') // Stores the value of the email input field
-const password = ref('') // Stores the value of the password input field
-const valid = ref(false) // Indicates whether the form is valid or not
-const loading = ref(false) // Indicates whether the form is loading or not
-const error = ref('') // Stores the error message to be displayed
-
-// Define an object to track the validation status of each input field
-const status = ref({
-  email: {
-    value: false, // Indicates whether the email input is valid or not
-    Regex: /^(?=.{1,100}$)[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/ // Regular expression to validate email format
-  },
-  password: {
-    value: false, // Indicates whether the password input is valid or not
-    Regex: /^[a-zA-Z0-9_-]{7,}$/ // Regular expression to validate password format
-  }
-})
-
-// Function to validate the entire form
-const validate = () => {
-  error.value = '' // Clear the error message
-  const validForm = Object.keys(status.value).every((key) => status.value[key].value)
-  valid.value = validForm
-}
-
-// Function to validate individual input fields
-const validateInput = (key) => {
-  status.value[key].value = status.value[key].Regex.test(
-    key === 'email' ? email.value : password.value
-  )
-  validate()
-}
-
-const loginUser = async (event) => {
-  event.preventDefault() // Prevent the default form submission
-  error.value = '' // Clear the error message
-  loading.value = true // Set the loading state to true
-  try {
-    const response = await fetch(Baseurl + '/users/login/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        users_mail: email.value,
-        users_password: password.value,
-      }),
-    })
-    const data = await response.json()
-    if (response.ok) {
-      console.log('Login successful')
-      // Save tokens to local storage or any other preferred method
-      localStorage.setItem('access_token', data.access)
-      localStorage.setItem('refresh_token', data.refresh)
-
-      // Redirect to another view after successful login
-      router.push({ name: 'Dashboard' })
-    } else {
-      console.error('Error:', data)
-      error.value = 'Correo electrónico o contraseña incorrectos'
-      loading.value = false
-    }
-  } catch (error) {
-    console.error('Error:', error)
-  }
-}
+const { loginUser, loading, error } = useAuth()
+const { email, password, validateInput, valid } = useFormValidation({ error})
 
 </script>
 
@@ -118,7 +50,7 @@ const loginUser = async (event) => {
               <a href="">¿Olvidaste tu contraseña?</a>
             </div>
             <div class="mt-5 text-center xl:mt-8 xl:text-left">
-              <Button @click="loginUser" :disabled="valid && !loading" variant="primary" rounded
+              <Button @click="()=>{loginUser({ email, password })}" :disabled="valid && loading" variant="primary" rounded
                 :class="`bg-gradient-to-r transition-all scale-105 duration-200 w-full py-3.5 xl:mr-3 ${valid && !loading ? 'from-theme-1 to-theme-2 hover:scale-100 select-none cursor-pointer' : 'from-gray-600 to-gray-600  cursor-default'}`">
                 {{ loading ? 'Cargando...' : 'Iniciar sesión' }}
               </Button>

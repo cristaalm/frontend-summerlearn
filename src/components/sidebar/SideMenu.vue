@@ -2,9 +2,9 @@
 import "@/assets/css/vendors/simplebar.css";
 import "@/assets/css/themes/echo.css";
 import { useRoute, useRouter } from "vue-router";
-import Lucide from "@/components/Base/Lucide";
-import Breadcrumb from "@/components/Base/Breadcrumb";
-import { Menu } from "@/components/Base/Headless";
+import Lucide from "@/components/base/Lucide";
+import Breadcrumb from "@/components/base/Breadcrumb";
+import { Menu } from "@/components/base/Headless";
 import { useMenuStore } from "@/stores/menu";
 import { useCompactMenuStore } from "@/stores/compact-menu";
 import {
@@ -19,34 +19,12 @@ import {
 } from "./side-menu";
 import { watch, reactive, ref, computed, onMounted, provide } from "vue";
 import SimpleBar from "simplebar";
-// import NotificationsPanel from "@/components/NotificationsPanel";
-// import ActivitiesPanel from "@/components/ActivitiesPanel";
-// import QuickSearch from "@/components/QuickSearch";
-// import SwitchAccount from "@/components/SwitchAccount";
 
 const compactMenu = useCompactMenuStore();
 const setCompactMenu = (val: boolean) => {
   compactMenu.setCompactMenu(val);
 };
 const quickSearch = ref(false);
-// const setQuickSearch = (value: boolean) => {
-//   quickSearch.value = value;
-// };
-
-// const switchAccount = ref(false);
-// const setSwitchAccount = (value: boolean) => {
-//   switchAccount.value = value;
-// };
-
-// const notificationsPanel = ref(false);
-// const setNotificationsPanel = (value: boolean) => {
-//   notificationsPanel.value = value;
-// };
-
-// const activitiesPanel = ref(false);
-// const setActivitiesPanel = (value: boolean) => {
-//   activitiesPanel.value = value;
-// };
 
 const compactMenuOnHover = ref(false);
 const activeMobileMenu = ref(false);
@@ -403,32 +381,8 @@ window.onscroll = () => {
                 }
               "
             ></div>
-            <!-- <QuickSearch
-              :quickSearch="quickSearch"
-              :setQuickSearch="setQuickSearch"
-            /> -->
-            <!-- END: Search -->
-            <!-- BEGIN: Notification & User Menu -->
 
             <div class="flex flex-row justify-end px-4">
-              <!-- ------------------------------------------------------------- THEME MODE AND NOTIFICATION ICONS ARE COMMENTED OUT ----------------------------------------------- -->
-              <!-- <div class="flex items-center gap-1 ml-auto">
-                <a href="" class="p-2 text-white rounded-full hover:bg-white/5">
-                  <Lucide icon="Moon" class="w-[18px] h-[18px]" />
-                </a>
-                <a
-                  href=""
-                  class="p-2 text-white rounded-full hover:bg-white/5"
-                  @click="
-                    (e) => {
-                      e.preventDefault();
-                      notificationsPanel = true;
-                    }
-                  "
-                >
-                  <Lucide icon="Bell" class="w-[18px] h-[18px]" />
-                </a>
-              </div> -->
               <Menu class="ml-5">
                 <Menu.Button
                   class="overflow-hidden rounded-full w-[36px] h-[36px] border-[3px] border-white/[0.15] image-fit"
@@ -443,7 +397,7 @@ window.onscroll = () => {
                     @click="
                       () => {
                         router.push({
-                          name: 'Settings',
+                          name: 'Ssettings',
                         });
                       }
                     "

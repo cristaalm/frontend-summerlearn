@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { Slideover } from "@/components/Base/Headless";
-import Button from "@/components/Base/Button";
-import Lucide from "@/components/Base/Lucide";
+import { Slideover } from "@/components/base/Headless";
+import Button from "@/components/base/Button";
+import Lucide from "@/components/base/Lucide";
 import activities from "@/fakers/activities";
 import users from "@/fakers/users";
 import _ from "lodash";

@@ -1,16 +1,18 @@
 <script setup lang="ts">
-import Lucide from "@/components/Base/Lucide";
-import { Menu } from "@/components/Base/Headless";
-import Pagination from "@/components/Base/Pagination";
-import { FormSelect } from "@/components/Base/Form";
-import Table from "@/components/Base/Table";
-import Button from "@/components/Base/Button";
+import { useRouter } from "vue-router";
+import Lucide from "@/components/base/Lucide";
+import { Menu } from "@/components/base/Headless";
+import Pagination from "@/components/base/Pagination";
+import { FormSelect } from "@/components/base/Form";
+import Table from "@/components/base/Table";
+import Button from "@/components/base/Button";
 import { useAreas } from '@/hooks/useAreas'
 import { ref, computed, onMounted } from 'vue'
 
 const { areas, loading, error, loadAreas } = useAreas()
 const pageSize = ref(10) // Número de elementos por página
 const currentPage = ref(1) // Página actual
+const router = useRouter();
 
 // Cargar las áreas al iniciar el componente
 onMounted(() => {
@@ -58,6 +60,11 @@ const totalPages = computed(() => Math.ceil(areas.value.length / pageSize.value)
           <Button
             variant="primary"
             class="group-[.mode--light]:!bg-white/[0.12] group-[.mode--light]:!text-slate-200 group-[.mode--light]:!border-transparent"
+            @click="() => {
+              router.push({
+                name: 'Dashboard',
+              });
+            }"
           >
             <Lucide icon="PenLine" class="stroke-[1.3] w-4 h-4 mr-2" /> Agregar nueva area
           </Button>

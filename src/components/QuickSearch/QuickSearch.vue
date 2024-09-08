@@ -2,9 +2,9 @@
 // import users from "@/fakers/users";
 import departments from "@/fakers/departments";
 import products from "@/fakers/products";
-import { Menu } from "@/components/Base/Headless";
-import Lucide from "@/components/Base/Lucide";
-import { FormInput } from "@/components/Base/Form";
+import { Menu } from "@/components/base/Headless";
+import Lucide from "@/components/base/Lucide";
+import { FormInput } from "@/components/base/Form";
 import {
   Dialog as HeadlessDialog,
   DialogPanel as HeadlessDialogPanel,

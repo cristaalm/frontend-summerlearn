@@ -1,65 +1,21 @@
-<script setup lang="ts">
-import { FormCheck, FormInput, FormLabel } from "@/components/Base/Form";
-import Button from "@/components/Base/Button";
-import { password, firstName, lastName, email, phone, birthdate, perfil, terms, password_confirm, valid } from '@/validations/register/useFormRefs.js';
-import { validateText, validateDate, validateTerms, validatePasswordComfirm, validatePerfil, validate} from '@/validations/register/useValidationFunctions.js';
-import { validatePassword } from '@/validations/register/usePasswordSecurity.js';
-import { status } from '@/validations/register/useFormStatus.js';
-import { useRouter } from 'vue-router'
-import { Baseurl } from '@/../global'
+<script setup>
+import { password, firstName, lastName, email, phone, birthdate, perfil, terms, password_confirm, valid } from '@/hooks/register/useFormRefs';
+import { validateText, validateDate, validateTerms, validatePasswordComfirm, validatePerfil} from '@/hooks/register/useValidationFunctions';
+import { FormCheck, FormInput, FormLabel } from "@/components/base/Form";
+import { validatePassword } from '@/hooks/register/usePasswordSecurity';
+import { status } from '@/hooks/register/useFormStatus';
+import { useAuth } from "@/hooks/register/useAuth";
+import Button from "@/components/base/Button";
 
-const router = useRouter()
-// valid:  is a computed property that checks if all the fields are valid
-// Functions to handle API requests
-const registerUser = async () => {
-  validate()
-  if (!valid.value) return
-  try {
-    const response = await fetch(Baseurl+'/users/register/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        users_mail: email.value,
-        users_phone: phone.value,
-        users_password: password.value,
-        users_name: firstName.value + ' ' + lastName.value,
-        users_birthdate: birthdate.value,
-        users_rol: perfil.value,
-        users_tour: true, // default tour
-        users_status: 1 // default status
-      }),
-    });
-    const data = await response.json();
-    if (response.ok) {
-      console.log('Registration successful');
-      // Save tokens to local storage or any other preferred method
-      localStorage.setItem('access_token', data.access)
-      localStorage.setItem('refresh_token', data.refresh)
-      // Redirect to the login page after successful registration
-      router.push('/Dashboard');
-    } else {
-      // Log the error message if the registration fails
-      console.error('Registration failed', data);
-      validate()
-    }
-  } catch (error) {
-    // Log the error message if the request fails
-    console.error('Error:', error);
-  }
-};
+const { registerUser } = useAuth();
 
-
-// Handle form submission
 const handleSubmit = () => {
   if (valid.value) {
-    registerUser()
+    registerUser();
   }
 }
 
 </script>
-
 
 <template>
   <div
