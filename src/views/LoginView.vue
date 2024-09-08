@@ -7,7 +7,7 @@ import { useFormValidation } from '@/hooks/login/useFormValidation'
 import { useAuth } from '@/hooks/login/useAuth'
 
 const { loginUser, loading, error } = useAuth()
-const { email, password, validateInput, valid } = useFormValidation({ error})
+const { email, password, validateInput, valid } = useFormValidation({ error })
 
 </script>
 
@@ -22,7 +22,7 @@ const { email, password, validateInput, valid } = useFormValidation({ error})
           <div class="text-2xl font-medium">Iniciar sesión</div>
           <div class="mt-2.5 text-slate-600">
             ¿No tienes una cuenta?
-            <a class="font-medium text-primary" href="/Register"> Regístrate </a>
+            <a class="font-medium text-primary" href="/register"> Regístrate </a>
           </div>
 
           <Alert variant="outline-danger" v-if="error"
@@ -38,7 +38,7 @@ const { email, password, validateInput, valid } = useFormValidation({ error})
               <Lucide icon="X" class="w-5 h-5" />
             </Alert.DismissButton>
           </Alert>
-          
+
           <div class="mt-6">
             <FormLabel>Correo electrónico*</FormLabel>
             <FormInput type="text" class="block px-4 py-3.5 rounded-[0.6rem] border-slate-300/80"
@@ -50,7 +50,8 @@ const { email, password, validateInput, valid } = useFormValidation({ error})
               <a href="">¿Olvidaste tu contraseña?</a>
             </div>
             <div class="mt-5 text-center xl:mt-8 xl:text-left">
-              <Button @click="()=>{loginUser({ email, password })}" :disabled="valid && loading" variant="primary" rounded
+              <Button @click="() => { loginUser({ email, password }) }" :disabled="valid && loading" variant="primary"
+                rounded
                 :class="`bg-gradient-to-r transition-all scale-105 duration-200 w-full py-3.5 xl:mr-3 ${valid && !loading ? 'from-theme-1 to-theme-2 hover:scale-100 select-none cursor-pointer' : 'from-gray-600 to-gray-600  cursor-default'}`">
                 {{ loading ? 'Cargando...' : 'Iniciar sesión' }}
               </Button>

@@ -21,9 +21,9 @@ onMounted(() => {
 
 // Función para cambiar de página
 const changePage = (page) => {
-    if (page < 1) page = 1;
-    if (page > totalPages.value) page = totalPages.value;
-    currentPage.value = page;
+  if (page < 1) page = 1;
+  if (page > totalPages.value) page = totalPages.value;
+  currentPage.value = page;
 }
 
 // Función para cambiar el número de elementos por página
@@ -49,7 +49,7 @@ const totalPages = computed(() => Math.ceil(areas.value.length / pageSize.value)
 </script>
 
 <template>
-  
+
   <div class="grid grid-cols-12 gap-y-10 gap-x-6">
     <div class="col-span-12">
       <div class="flex flex-col md:h-10 gap-y-3 md:items-center md:flex-row">
@@ -57,15 +57,13 @@ const totalPages = computed(() => Math.ceil(areas.value.length / pageSize.value)
           Areas
         </div>
         <div class="flex flex-col sm:flex-row gap-x-3 gap-y-2 md:ml-auto">
-          <Button
-            variant="primary"
+          <Button variant="primary"
             class="group-[.mode--light]:!bg-white/[0.12] group-[.mode--light]:!text-slate-200 group-[.mode--light]:!border-transparent"
             @click="() => {
               router.push({
                 name: 'addArea',
               });
-            }"
-          >
+            }">
             <Lucide icon="PenLine" class="stroke-[1.3] w-4 h-4 mr-2" /> Agregar nueva area
           </Button>
         </div>
@@ -77,22 +75,19 @@ const totalPages = computed(() => Math.ceil(areas.value.length / pageSize.value)
               <Table.Thead>
                 <Table.Tr>
                   <Table.Td
-                    class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500"
-                  >
+                    class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500">
                     Nombre
                   </Table.Td>
                   <Table.Td
-                    class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500"
-                  >
+                    class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500">
                     Estado
                   </Table.Td>
                   <Table.Td
-                    class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500"
-                  >
+                    class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500">
                   </Table.Td>
                 </Table.Tr>
               </Table.Thead>
-              
+
               <!-- Mostrar 'Cargando información...' cuando loading es true -->
               <Table.Tbody v-if="loading">
                 <Table.Tr>
@@ -110,7 +105,7 @@ const totalPages = computed(() => Math.ceil(areas.value.length / pageSize.value)
                   </Table.Td>
                 </Table.Tr>
               </Table.Tbody>
-      
+
               <!-- Mostrar la tabla de áreas cuando no está cargando y no existe ningun error -->
               <Table.Tbody v-if="!loading">
                 <template v-for="area in paginatedAreas" :key="area.id">
@@ -122,36 +117,29 @@ const totalPages = computed(() => Math.ceil(areas.value.length / pageSize.value)
                     </Table.Td>
                     <Table.Td class="py-4 border-dashed dark:bg-darkmode-600">
                       <div
-                        :class="[ 'flex items-center justify-center', { 'text-success': area.isActive }, { 'text-danger': !area.isActive } ]"
-                      >
-                        <Lucide
-                          icon="Database"
-                          class="w-3.5 h-3.5 stroke-[1.7]"
-                        />
+                        :class="['flex items-center justify-center', { 'text-success': area.isActive }, { 'text-danger': !area.isActive }]">
+                        <Lucide icon="Database" class="w-3.5 h-3.5 stroke-[1.7]" />
                         <div class="ml-1.5 whitespace-nowrap">
                           {{ area.isActive ? "Activo" : "Inactivo" }}
                         </div>
                       </div>
                     </Table.Td>
-                    <Table.Td
-                      class="relative py-4 border-dashed dark:bg-darkmode-600"
-                    >
+                    <Table.Td class="relative py-4 border-dashed dark:bg-darkmode-600">
                       <div class="flex items-center justify-end">
                         <Menu class="h-5">
                           <Menu.Button class="w-5 h-5 text-black">
-                            <Lucide
-                              icon="MoreVertical"
-                              class="w-5 h-5 stroke-black fill-black"
-                            />
+                            <Lucide icon="MoreVertical" class="w-5 h-5 stroke-black fill-black" />
                           </Menu.Button>
                           <Menu.Items class="w-40">
                             <Menu.Item>
                               <Lucide icon="CheckSquare" class="w-4 h-4 mr-2" />
-                              Edit
+                              Editar
                             </Menu.Item>
-                            <Menu.Item class="text-danger">
-                              <Lucide icon="Trash2" class="w-4 h-4 mr-2" />
-                              Delete
+                            <Menu.Item :class="`${area.isActive ? 'text-danger' : 'text-primary'}`" @click="() => {
+                              area.isActive = !area.isActive
+                            }">
+                              <Lucide icon="RefreshCw" class="w-4 h-4 mr-2" />
+                              Cambiar Estado
                             </Menu.Item>
                           </Menu.Items>
                         </Menu>
@@ -196,4 +184,3 @@ const totalPages = computed(() => Math.ceil(areas.value.length / pageSize.value)
     </div>
   </div>
 </template>
-
