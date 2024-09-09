@@ -6,8 +6,9 @@ import { validatePassword } from '@/hooks/register/usePasswordSecurity';
 import { status } from '@/hooks/register/useFormStatus';
 import { useAuth } from "@/hooks/register/useAuth";
 import Button from "@/components/base/Button";
+import LoadingIcon from "@/components/Base/LoadingIcon";
 
-const { registerUser, loading, error } = useAuth();
+const { registerUser, loading } = useAuth();
 
 const handleSubmit = () => {
   if (valid.value) {
@@ -119,8 +120,9 @@ const handleSubmit = () => {
             </div>
             <div class="mt-5 text-center xl:mt-8 xl:text-left">
               <Button @click="handleSubmit" :disabled="!valid" variant="primary" rounded
-                :class="`bg-gradient-to-r transition-all scale-105 duration-200 w-full py-3.5 xl:mr-3 ${valid && !loading ? 'from-theme-1 to-theme-2 hover:scale-100 select-none cursor-pointer' : 'from-gray-600 to-gray-600 select-none cursor-default'}`">
-                {{ !loading ? 'Registrarse' : 'Registrando...' }}
+                :class="`flex flex-colbg-gradient-to-r transition-all scale-105 duration-200 w-full py-3.5 xl:mr-3 ${valid && !loading ? 'from-theme-1 to-theme-2 hover:scale-100 select-none cursor-pointer' : 'from-gray-600 to-gray-600 select-none cursor-default'}`">
+                <LoadingIcon v-if="loading" icon="three-dots" class="w-8 h-8" color="white" />
+                {{ loading ? '' : 'Registrarse' }}
               </Button>
             </div>
           </div>

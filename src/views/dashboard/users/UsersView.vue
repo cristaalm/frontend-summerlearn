@@ -8,6 +8,7 @@ import Lucide from "@/components/base/Lucide";
 import Button from "@/components/base/Button";
 import Table from "@/components/base/Table";
 import Tippy from "@/components/base/Tippy";
+import LoadingIcon from "@/components/base/LoadingIcon";
 import { Rols } from '@/utils/constants';
 import { calculateAge } from '@/logic/';
 import { useRouter } from "vue-router";
@@ -128,8 +129,11 @@ onMounted(() => {
               <!--? Mostrar 'Cargando información...' cuando loading es true -->
               <Table.Tbody v-if="loading">
                 <Table.Tr>
-                  <Table.Td colspan="7" class="py-8 text-center text-xl font-bold text-green-500">
-                    Cargando información...
+                  <Table.Td colspan="7" class="py-8 text-center text-xl font-bold text-green-500 ">
+                    <div class="flex flex-col w-full justify-center items-center text-nowrap">
+                      <LoadingIcon icon="tail-spin" class=" h-8" color="black" />
+                      <div class="mt-2">Cargando información...</div>
+                    </div>
                   </Table.Td>
                 </Table.Tr>
               </Table.Tbody>

@@ -5506,14 +5506,6 @@ select {
   width: 100vw;
 }
 
-.w-\[500ox\] {
-  width: 500ox;
-}
-
-.w-\[500px\] {
-  width: 500px;
-}
-
 .min-w-0 {
   min-width: 0px;
 }
@@ -5588,6 +5580,10 @@ select {
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
+.transform {
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
 @keyframes navActivate {
   0% {
     height: 0px;
@@ -5616,6 +5612,10 @@ select {
 
 .animate-navDeactivate {
   animation: navDeactivate 0.5s forwards;
+}
+
+.cursor-\[pointer\!important\] {
+  cursor: pointer !important;
 }
 
 .cursor-default {
@@ -6763,6 +6763,11 @@ select {
 .text-blue-500 {
   --tw-text-opacity: 1;
   color: rgb(59 130 246 / var(--tw-text-opacity));
+}
+
+.text-blue-600 {
+  --tw-text-opacity: 1;
+  color: rgb(37 99 235 / var(--tw-text-opacity));
 }
 
 .text-danger {
@@ -8037,6 +8042,11 @@ select {
   border-color: rgb(var(--color-darkmode-400) / var(--tw-border-opacity));
 }
 
+.dark\:border-darkmode-600:is(.dark *) {
+  --tw-border-opacity: 1;
+  border-color: rgb(var(--color-darkmode-600) / var(--tw-border-opacity));
+}
+
 .dark\:border-darkmode-800:is(.dark *) {
   --tw-border-opacity: 1;
   border-color: rgb(var(--color-darkmode-800) / var(--tw-border-opacity));
@@ -8444,6 +8454,10 @@ select {
 
   .md\:h-10 {
     height: 2.5rem;
+  }
+
+  .md\:w-1\/2 {
+    width: 50%;
   }
 
   .md\:w-36 {
