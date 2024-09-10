@@ -11,17 +11,17 @@ export function useAuth() {
     error.value = ''
     loading.value = true
     try {
-      const response = await fetch(Baseurl + '/users/login/', {
+      const response = await fetch(Baseurl + 'api/token/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          users_mail: email,
-          users_password: password
+          email: email,
+          password: password
         })
-      })
-
+      })  
+      console.log(response)
       const data = await response.json()
       if (response.ok) {
         localStorage.setItem('access_token', data.access)

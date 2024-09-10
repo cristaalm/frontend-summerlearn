@@ -28,21 +28,23 @@ export function useAuth() {
       return
     }
 
-    const response = await fetch(Baseurl + '/users/register/', {
+    const response = await fetch(Baseurl + '/register/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        users_mail: email.value,
+        email: email.value,
         users_phone: phone.value,
         users_photo: 'https://avatar.iran.liara.run/public/boy?username=Ash', // default photo
-        users_password: password.value,
-        users_name: `${firstName.value} ${lastName.value}`,
+        password: password.value,
+        first_name: firstName.value,
+        last_name: lastName.value,
+        name: `${firstName.value} ${lastName.value}`,
         users_birthdate: birthdate.value,
         users_rol: perfil.value,
-        users_tour: true, // default tour
-        users_status: 1 // default status
+        users_tour: false, // default tour
+        users_status: 2 // default status
       })
     })
 
