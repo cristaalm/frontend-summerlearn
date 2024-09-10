@@ -4,16 +4,17 @@ export const getUsers = async () => {
   const response = await fetch(`${Baseurl}users/`, {
     method: 'GET',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('access_token')}`
     }
   })
   const json = await response.json()
   const users = json
 
   return users?.map((user) => ({
-    id: user.users_id,
+    id: user.id,
     photo: user.users_photo,
-    name: user.users_name,
+    name: user.name,
     birthdate: user.users_birthdate,
     phone: user.users_phone,
     email: user.users_mail,

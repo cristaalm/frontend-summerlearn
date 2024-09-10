@@ -23,6 +23,7 @@ import { validatePassword } from '@/hooks/register/usePasswordSecurity'
 import { status } from '@/hooks/register/useFormStatus'
 import { useAuth } from '@/hooks/register/useAuth'
 import Button from '@/components/base/Button'
+import LoadingIcon from '@/components/base/LoadingIcon'
 
 const { registerUser, loading } = useAuth()
 
@@ -204,7 +205,8 @@ const handleSubmit = () => {
                 rounded
                 :class="`bg-gradient-to-r transition-all scale-105 duration-200 w-full py-3.5 xl:mr-3 ${valid && !loading ? 'from-theme-1 to-theme-2 hover:scale-100 select-none cursor-pointer' : 'from-gray-600 to-gray-600 select-none cursor-default'}`"
               >
-                {{ !loading ? 'Registrarse' : 'Registrando...' }}
+              <LoadingIcon v-if="loading" icon="three-dots" class="w-8 h-5" color="white" />
+                {{ !loading ? 'Registrarse' : '' }}
               </Button>
             </div>
           </div>
