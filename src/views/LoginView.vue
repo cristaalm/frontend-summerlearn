@@ -3,6 +3,7 @@ import { FormInput, FormLabel } from '@/components/base/Form'
 import Button from '@/components/base/Button'
 import Alert from '@/components/base/Alert'
 import Lucide from '@/components/base/Lucide'
+import LoadingIcon from '@/components/base/LoadingIcon'
 import { useFormValidation } from '@/hooks/login/useFormValidation'
 import { useAuth } from '@/hooks/login/useAuth'
 
@@ -53,7 +54,8 @@ const { email, password, validateInput, valid } = useFormValidation({ error })
               <Button @click="() => { loginUser({ email, password }) }" :disabled="valid && loading" variant="primary"
                 rounded
                 :class="`bg-gradient-to-r transition-all scale-105 duration-200 w-full py-3.5 xl:mr-3 ${valid && !loading ? 'from-theme-1 to-theme-2 hover:scale-100 select-none cursor-pointer' : 'from-gray-600 to-gray-600  cursor-default'}`">
-                {{ loading ? 'Cargando...' : 'Iniciar sesión' }}
+                <LoadingIcon v-if="loading" icon="three-dots" class="w-8 h-5" color="white" />
+                {{ loading ? '' : 'Registrarse' }}
               </Button>
             </div>
           </div>

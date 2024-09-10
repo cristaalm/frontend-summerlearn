@@ -5,6 +5,7 @@ import { Menu, Popover } from "@/components/base/Headless";
 import Pagination from "@/components/base/Pagination";
 import { FormInput, FormSelect } from "@/components/base/Form";
 import Table from "@/components/base/Table";
+import LoadingIcon from "@/components/base/LoadingIcon";
 import Button from "@/components/base/Button";
 import { useFilter, usePagination, useAreas } from '@/hooks/areas/'
 import { onMounted } from 'vue'
@@ -106,8 +107,11 @@ onMounted(() => {
               <!--? Mostrar 'Cargando información...' cuando loading es true -->
               <Table.Tbody v-if="loading">
                 <Table.Tr>
-                  <Table.Td colspan="3" class="py-8 text-center text-xl font-bold text-green-500">
-                    Cargando información...
+                  <Table.Td colspan="7" class="py-8 text-center text-xl font-bold text-green-500 ">
+                    <div class="flex flex-col w-full justify-center items-center text-nowrap">
+                      <LoadingIcon icon="tail-spin" class=" h-8" color="black" />
+                      <div class="mt-2">Cargando información...</div>
+                    </div>
                   </Table.Td>
                 </Table.Tr>
               </Table.Tbody>
@@ -135,9 +139,9 @@ onMounted(() => {
                 <template v-for="area in paginatedItems" :key="area.id">
                   <Table.Tr class="[&_td]:last:border-b-0">
                     <Table.Td class="py-4 border-dashed dark:bg-darkmode-600 text-center">
-                      <a href="" class="font-medium whitespace-nowrap">
+                      <div href="" class="font-medium whitespace-nowrap">
                         {{ area.name }}
-                      </a>
+                      </div>
                     </Table.Td>
                     <Table.Td class="py-4 border-dashed dark:bg-darkmode-600">
                       <div

@@ -24,7 +24,7 @@ import { status } from '@/hooks/register/useFormStatus'
 import { useAuth } from '@/hooks/register/useAuth'
 import Button from '@/components/base/Button'
 
-const { registerUser, loading, error } = useAuth()
+const { registerUser, loading } = useAuth()
 
 const handleSubmit = () => {
   if (valid.value) {
