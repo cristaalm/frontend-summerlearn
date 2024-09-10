@@ -17,8 +17,8 @@ export const getUsers = async () => {
     name: user.name,
     birthdate: user.users_birthdate,
     phone: user.users_phone,
-    email: user.users_mail,
+    email: user.email,
     rol: user.users_rol,
-    status: user.users_status
+    status: user.users_status ?? 0,
   }))
 }

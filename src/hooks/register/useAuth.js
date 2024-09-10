@@ -44,7 +44,7 @@ export function useAuth() {
         users_birthdate: birthdate.value,
         users_rol: perfil.value,
         users_tour: false, // default tour
-        users_status: 2 // default status
+        users_status: 1 // default status
       })
     })
 

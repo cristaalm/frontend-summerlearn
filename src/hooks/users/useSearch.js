@@ -15,7 +15,6 @@ export function useSearch(users) {
       const matchesStatus =
         selectedStatus.value === null || user.status === parseInt(selectedStatus.value)
       const matchesRole = selectedRole.value === null || user.rol === parseInt(selectedRole.value)
-
       return matchesQuery && matchesStatus && matchesRole
     })
   })
