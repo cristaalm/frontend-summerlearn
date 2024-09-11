@@ -8,6 +8,7 @@ export const getPrograms = async () => {
         }
     });
     const json = await response.json();
+
     const programs = json;
 
     return programs?.map(program => ({
