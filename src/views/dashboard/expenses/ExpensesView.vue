@@ -91,13 +91,13 @@ const products = [
         <div class="col-span-12">
             <div class="flex flex-col md:h-10 gap-y-3 md:items-center md:flex-row">
                 <div class="text-base font-medium group-[.mode--light]:text-white">
-                    Products
+                    Gastos
                 </div>
                 <div class="flex flex-col sm:flex-row gap-x-3 gap-y-2 md:ml-auto">
                     <Button variant="primary"
                         class="group-[.mode--light]:!bg-white/[0.12] group-[.mode--light]:!text-slate-200 group-[.mode--light]:!border-transparent">
-                        <Lucide icon="PenLine" class="stroke-[1.3] w-4 h-4 mr-2" /> Add New
-                        Product
+                        <Lucide icon="DollarSign" class="stroke-[1.3] w-4 h-4 mr-2" /> Nueva Donacion
+                        
                     </Button>
                 </div>
             </div>
@@ -108,7 +108,7 @@ const products = [
                             <div class="relative">
                                 <Lucide icon="Search"
                                     class="absolute inset-y-0 left-0 z-10 w-4 h-4 my-auto ml-3 stroke-[1.3] text-slate-500" />
-                                <FormInput type="text" placeholder="Search products..."
+                                <FormInput type="text" placeholder="Buscar Donacion..."
                                     class="pl-9 sm:w-64 rounded-[0.5rem]" />
                             </div>
                         </div>
@@ -129,7 +129,7 @@ const products = [
                                     </Menu.Item>
                                 </Menu.Items>
                             </Menu>
-                            <Popover class="inline-block" v-slot="{ close }">
+                            <!-- <Popover class="inline-block" v-slot="{ close }">
                                 <Popover.Button :as="Button" variant="outline-secondary" class="w-full sm:w-auto">
                                     <Lucide icon="ArrowDownWideNarrow" class="stroke-[1.3] w-4 h-4 mr-2" />
                                     Filter
@@ -168,7 +168,7 @@ const products = [
                                         </div>
                                     </div>
                                 </Popover.Panel>
-                            </Popover>
+                            </Popover> -->
                         </div>
                     </div>
                     <div class="overflow-auto xl:overflow-visible">
@@ -185,19 +185,19 @@ const products = [
                                     </Table.Td>
                                     <Table.Td
                                         class="py-4 font-medium border-t bg-slate-50 border-slate-200/60 text-slate-500">
-                                        Product Name
+                                        Nombre del Donante
                                     </Table.Td>
                                     <Table.Td
                                         class="py-4 font-medium border-t bg-slate-50 border-slate-200/60 text-slate-500">
-                                        Price
+                                        Monto
                                     </Table.Td>
                                     <Table.Td
                                         class="py-4 font-medium border-t bg-slate-50 border-slate-200/60 text-slate-500">
-                                        Link
+                                        Concepto
                                     </Table.Td>
                                     <Table.Td
                                         class="py-4 font-medium border-t bg-slate-50 border-slate-200/60 text-slate-500">
-                                        Stock
+                                        Fecha de Donacion
                                     </Table.Td>
                                     <Table.Td
                                         class="py-4 font-medium text-center border-t bg-slate-50 border-slate-200/60 text-slate-500">
@@ -285,7 +285,7 @@ const products = [
                                                     <Menu.Items class="w-40">
                                                         <Menu.Item>
                                                             <Lucide icon="CheckSquare" class="w-4 h-4 mr-2" />
-                                                            Edit
+                                                            Factura
                                                         </Menu.Item>
                                                         <Menu.Item class="text-danger">
                                                             <Lucide icon="Trash2" class="w-4 h-4 mr-2" />

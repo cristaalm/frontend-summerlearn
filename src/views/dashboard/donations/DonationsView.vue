@@ -20,7 +20,7 @@ import Button from "@/components/base/Button";
                     <Button variant="primary"
                         class="group-[.mode--light]:!bg-white/[0.12] group-[.mode--light]:!text-slate-200 group-[.mode--light]:!border-transparent">
                         <Lucide icon="DollarSign" class="stroke-[1.3] w-4 h-4 mr-2" />
-                        Ver Gastos
+                        Nueva Donacion
                     </Button>
                 </div>
             </div>
@@ -43,59 +43,17 @@ import Button from "@/components/base/Button";
                                             class="absolute top-0 right-0 w-36 h-36 -mt-5 -mr-5 text-white/20 fill-white/[0.03] transform rotate-[-10deg] stroke-[0.3]" />
                                         <div class="mt-12 mb-9">
                                             <div class="text-2xl font-medium leading-snug text-white">
-                                                New feature
+                                                Estadiscas De
                                                 <br />
-                                                unlocked!
+                                                Donaciones
                                             </div>
                                             <div class="mt-1.5 text-lg text-white/70">
-                                                Boost your performance!
+                                                Aumente su rendimiento
                                             </div>
                                         </div>
                                         <a class="flex items-center font-medium text-white" href="">
                                             Upgrade now
                                             <Lucide icon="MoveRight" class="w-4 h-4 ml-1.5" />
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="px-1">
-                                    <div
-                                        class="overflow-hidden relative flex flex-col w-full h-full p-5 rounded-[0.5rem] bg-gradient-to-b from-theme-2/90 to-theme-1/90">
-                                        <Lucide icon="Database"
-                                            class="absolute top-0 right-0 w-36 h-36 -mt-5 -mr-5 text-white/20 fill-white/[0.03] transform rotate-[-10deg] stroke-[0.3]" />
-                                        <div class="mt-12 mb-9">
-                                            <div class="text-2xl font-medium leading-snug text-white">
-                                                Stay ahead
-                                                <br />
-                                                with upgrades
-                                            </div>
-                                            <div class="mt-1.5 text-lg text-white/70">
-                                                New features and updates!
-                                            </div>
-                                        </div>
-                                        <a class="flex items-center font-medium text-white" href="">
-                                            Discover now
-                                            <Lucide icon="ArrowRight" class="w-4 h-4 ml-1.5" />
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="px-1">
-                                    <div
-                                        class="overflow-hidden relative flex flex-col w-full h-full p-5 rounded-[0.5rem] bg-gradient-to-b from-theme-2/90 to-theme-1/90">
-                                        <Lucide icon="Gauge"
-                                            class="absolute top-0 right-0 w-36 h-36 -mt-5 -mr-5 text-white/20 fill-white/[0.03] transform rotate-[-10deg] stroke-[0.3]" />
-                                        <div class="mt-12 mb-9">
-                                            <div class="text-2xl font-medium leading-snug text-white">
-                                                Supercharge
-                                                <br />
-                                                your workflow
-                                            </div>
-                                            <div class="mt-1.5 text-lg text-white/70">
-                                                Boost performance!
-                                            </div>
-                                        </div>
-                                        <a class="flex items-center font-medium text-white" href="">
-                                            Get started
-                                            <Lucide icon="ArrowRight" class="w-4 h-4 ml-1.5" />
                                         </a>
                                     </div>
                                 </div>
@@ -126,8 +84,8 @@ import Button from "@/components/base/Button";
                                 <Lucide icon="Database" class="w-6 h-6 text-primary fill-primary/10" />
                             </div>
                             <div class="ml-4">
-                                <div class="text-base font-medium">41k Products Sold</div>
-                                <div class="text-slate-500 mt-0.5">Across 21 stores</div>
+                                <div class="text-base font-medium">Picos De Donaciones</div>
+                                <div class="text-slate-500 mt-0.5">Ultimos 20 Dias</div>
                             </div>
                         </div>
                         <div class="relative mt-5 mb-6 overflow-hidden">
@@ -142,17 +100,17 @@ import Button from "@/components/base/Button";
                         <div class="flex flex-wrap items-center justify-center gap-y-3 gap-x-5">
                             <div class="flex items-center">
                                 <div class="w-2 h-2 rounded-full bg-primary/70"></div>
-                                <div class="ml-2.5">Products Sold</div>
+                                <div class="ml-2.5">Dinero</div>
                             </div>
-                            <div class="flex items-center">
+                            <!-- <div class="flex items-center">
                                 <div class="w-2 h-2 rounded-full bg-slate-400"></div>
                                 <div class="ml-2.5">Store Locations</div>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
 
                     <!--? Card -->
-
+<!-- 
                     <div class="flex flex-col col-span-12 p-5 md:col-span-6 2xl:col-span-3 box box--stacked">
                         <Menu class="absolute top-0 right-0 mt-5 mr-5">
                             <Menu.Button class="w-5 h-5 text-slate-500">
@@ -197,7 +155,7 @@ import Button from "@/components/base/Button";
                                 <div class="ml-2.5">Warehouses</div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
                     <!--? Card -->
 
@@ -222,8 +180,8 @@ import Button from "@/components/base/Button";
                                 <Lucide icon="Zap" class="w-6 h-6 text-primary fill-primary/10" />
                             </div>
                             <div class="ml-4">
-                                <div class="text-base font-medium">3.7k Orders Processed</div>
-                                <div class="text-slate-500 mt-0.5">Across 9 regions</div>
+                                <div class="text-base font-medium">Rendimiento</div>
+                                <div class="text-slate-500 mt-0.5">En 9 Dias</div>
                             </div>
                         </div>
                         <div class="relative mt-5 mb-6">
@@ -248,50 +206,30 @@ import Button from "@/components/base/Button";
                     <div class="grid grid-cols-4 gap-5">
                         <div
                             class="col-span-4 md:col-span-2 xl:col-span-1 p-5 border border-dashed rounded-[0.6rem] border-slate-300/80 box shadow-sm">
-                            <div class="text-base text-slate-500">Registered Users</div>
-                            <div class="mt-1.5 text-2xl font-medium">457,204</div>
+                            <div class="text-base text-slate-500">Total de Donaciones</div>
+                            <div class="mt-1.5 text-2xl font-medium">50 veces</div>
                             <div class="absolute inset-y-0 right-0 flex flex-col justify-center mr-5">
-                                <div
-                                    class="flex items-center border border-danger/10 bg-danger/10 rounded-full pl-[7px] pr-1 py-[2px] text-xs font-medium text-danger">
-                                    3%
-                                    <Lucide icon="ChevronDown" class="w-4 h-4 ml-px stroke-[1.5]" />
-                                </div>
                             </div>
                         </div>
                         <div
                             class="col-span-4 md:col-span-2 xl:col-span-1 p-5 border border-dashed rounded-[0.6rem] border-slate-300/80 box shadow-sm">
-                            <div class="text-base text-slate-500">Active Users</div>
-                            <div class="mt-1.5 text-2xl font-medium">122,721</div>
+                            <div class="text-base text-slate-500">Dinero Donado</div>
+                            <div class="mt-1.5 text-2xl font-medium">$ 5215</div>
                             <div class="absolute inset-y-0 right-0 flex flex-col justify-center mr-5">
-                                <div
-                                    class="flex items-center border border-success/10 bg-success/10 rounded-full pl-[7px] pr-1 py-[2px] text-xs font-medium text-success">
-                                    2%
-                                    <Lucide icon="ChevronUp" class="w-4 h-4 ml-px stroke-[1.5]" />
-                                </div>
                             </div>
                         </div>
                         <div
                             class="col-span-4 md:col-span-2 xl:col-span-1 p-5 border border-dashed rounded-[0.6rem] border-slate-300/80 box shadow-sm">
-                            <div class="text-base text-slate-500">New Users</div>
-                            <div class="mt-1.5 text-2xl font-mediumm">489,223</div>
+                            <div class="text-base text-slate-500">Ultima Cantidad Donada</div>
+                            <div class="mt-1.5 text-2xl font-mediumm">$ 300</div>
                             <div class="absolute inset-y-0 right-0 flex flex-col justify-center mr-5">
-                                <div
-                                    class="flex items-center border border-danger/10 bg-danger/10 rounded-full pl-[7px] pr-1 py-[2px] text-xs font-medium text-danger">
-                                    3%
-                                    <Lucide icon="ChevronDown" class="w-4 h-4 ml-px stroke-[1.5]" />
-                                </div>
                             </div>
                         </div>
                         <div
                             class="col-span-4 md:col-span-2 xl:col-span-1 p-5 border border-dashed rounded-[0.6rem] border-slate-300/80 box shadow-sm">
-                            <div class="text-base text-slate-500">Login Activity</div>
-                            <div class="mt-1.5 text-2xl font-mediumm">411,259</div>
+                            <div class="text-base text-slate-500">Ultima Fecha de Donacion</div>
+                            <div class="mt-1.5 text-2xl font-mediumm">9/10/2024</div>
                             <div class="absolute inset-y-0 right-0 flex flex-col justify-center mr-5">
-                                <div
-                                    class="flex items-center border border-success/10 bg-success/10 rounded-full pl-[7px] pr-1 py-[2px] text-xs font-medium text-success">
-                                    8%
-                                    <Lucide icon="ChevronUp" class="w-4 h-4 ml-px stroke-[1.5]" />
-                                </div>
                             </div>
                         </div>
                     </div>
