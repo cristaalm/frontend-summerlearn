@@ -192,7 +192,7 @@ const handleSubmit = () => {
               <label class="cursor-pointer select-none" htmlFor="remember-me">
                 Acepto los términos y condiciones
               </label>
-              <a class="ml-1 text-primary dark:text-slate-200" href="/terms">
+              <a class="ml-1 text-primary dark:text-slate-200" href="/terms" target="_blank">
                 Política de privacidad
               </a>
               .

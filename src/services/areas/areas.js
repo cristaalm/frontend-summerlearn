@@ -10,7 +10,7 @@ export const getAreas = async () => {
     });
     const json = await response.json();
     const areas = json;
-
+    
     return areas?.map(area => ({
         id: area.areas_id,
         name: area.areas_name,
