@@ -20,9 +20,9 @@ const router = useRouter()
 const key = route.params.key || ''
 
 const { password, confirm_password, valid } = useRefs()
-const { validationConfirmPassword, validate } = useValidation({ password ,confirm_password, status, valid })
+const { validationConfirmPassword, validate } = useValidation({ password, confirm_password, status, valid })
 const { validatePassword } = usePasswordSecurity({ status, validate, password })
- 
+
 const loading = false
 
 
@@ -64,53 +64,57 @@ watch(password, () => {
           </Alert> -->
 
           <div class="mt-6">
-              
-            
+
+
             <FormLabel class="mt-4">Nueva contraseña</FormLabel>
             <FormInput type="password" placeholder="**********" name="password" v-model="password" />
-                <div class="grid w-full h-1.5 grid-cols-12 gap-4 mt-3.5">
-                  <div
-                    :class="`h-full col-span-3 border rounded bg-slate-400/30 border-slate-400/20 ${status.password.color} ${status.password.secure >= 0 ? 'active' : ''}`">
-                  </div>
-                  <div
-                    :class="`h-full col-span-3 border rounded bg-slate-400/30 border-slate-400/20 ${status.password.color} ${status.password.secure >= 2 ? 'active' : ''}`">
-                  </div>
-                  <div
-                    :class="`h-full col-span-3 border rounded bg-slate-400/30 border-slate-400/20 ${status.password.color} ${status.password.secure >= 3 ? 'active' : ''}`">
-                  </div>
-                  <div
-                    :class="`h-full col-span-3 border rounded bg-slate-400/30 border-slate-400/20 ${status.password.color} ${status.password.secure >= 4 ? 'active' : ''}`">
-                  </div>
-                </div>
+            <div class="grid w-full h-1.5 grid-cols-12 gap-4 mt-3.5">
+              <div
+                :class="`h-full col-span-3 border rounded bg-slate-400/30 border-slate-400/20 ${status.password.color} ${status.password.secure >= 0 ? 'active' : ''}`">
+              </div>
+              <div
+                :class="`h-full col-span-3 border rounded bg-slate-400/30 border-slate-400/20 ${status.password.color} ${status.password.secure >= 2 ? 'active' : ''}`">
+              </div>
+              <div
+                :class="`h-full col-span-3 border rounded bg-slate-400/30 border-slate-400/20 ${status.password.color} ${status.password.secure >= 3 ? 'active' : ''}`">
+              </div>
+              <div
+                :class="`h-full col-span-3 border rounded bg-slate-400/30 border-slate-400/20 ${status.password.color} ${status.password.secure >= 4 ? 'active' : ''}`">
+              </div>
+            </div>
 
-                <div :class="`mt-2 ${status.password.error ? 'text-red-500' : 'text-blue-600'}`">{{
-                  status.password.message }}
-                </div>
-              
-              
+            <div :class="`mt-2 ${status.password.error ? 'text-red-500' : 'text-blue-600'}`">{{
+              status.password.message }}
+              <ul v-if="status.password.secure != 4">
+                <li v-for="item in status.password.list" :key="item" class="list-disc list-inside">
+                  {{ item }}
+                </li>
+              </ul>
+            </div>
+
+
             <FormLabel class="mt-4">Confirmar contraseña</FormLabel>
             <FormInput type="password" class="block px-4 py-3.5 rounded-[0.6rem] border-slate-300/80"
               placeholder="correo@mail.com" v-model="confirm_password" />
 
-            
+
             <div class="flex flex-row text-red-600 p-2" v-if="status.confirm_password.error">
               {{ status.confirm_password.message }}
             </div>
 
             <div class="flex flex-row justify-end mt-4 text-xs text-slate-500 sm:text-sm">
-              
+
               <span class=" cursor-pointer" @click="router.push({ name: 'login' })">Regresar al inicio de sesión</span>
 
             </div>
             <div class="mt-5 text-center xl:mt-8 xl:text-left">
 
-              <Button @click="() => { }" :disabled="!valid || loading" variant="primary"
-                rounded
+              <Button @click="() => { }" :disabled="!valid || loading" variant="primary" rounded
                 :class="`bg-gradient-to-r transition-all scale-105 duration-200 w-full py-3.5 xl:mr-3 ${valid && !loading ? 'from-theme-1 to-theme-2 hover:scale-100 select-none cursor-pointer' : 'from-gray-600 to-gray-600  cursor-default'}`">
                 <LoadingIcon v-if="loading" icon="three-dots" class="w-8 h-5" color="white" />
                 {{ loading ? '' : 'Restableser contraseña' }}
               </Button>
-            
+
             </div>
           </div>
 

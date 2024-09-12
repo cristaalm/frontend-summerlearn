@@ -39,6 +39,7 @@ export const status = ref({
   password: {
     name: 'Contraseña',
     message: '',
+    list: [],
     value: false,
     secure: 0,
     color: '[&.active]:bg-gray-600',

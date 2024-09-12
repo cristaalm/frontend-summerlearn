@@ -35,6 +35,7 @@ export const status = ref({
     color: '[&.active]:bg-gray-600',
     error: false,
     menssage: '',
+    list: [],
     Regex: {
       length: /^.{8,}$/,
       safeLength: /^.{15,}$/,
@@ -43,7 +44,8 @@ export const status = ref({
       lowercase: /^(?=.*[a-z]).*$/,
       number: /^(?=.*[0-9]).*$/,
       special: /^(?=.*[!@#$%^&*]).*$/,
-      secuentialNumbers: /^(?!.*(012|123|234|345|456|567|678|789|890|987|876|765|654|543|432|321|210)).*$/,
+      secuentialNumbers:
+        /^(?!.*(012|123|234|345|456|567|678|789|890|987|876|765|654|543|432|321|210)).*$/,
       noRepeat: /^(?!^(.)\1*$).+$/
     }
   },
@@ -67,4 +69,3 @@ export const status = ref({
     menssage: ''
   }
 })
-

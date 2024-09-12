@@ -6,12 +6,12 @@ export function usePasswordSecurity({ status, validate }) {
     // Validaciones requeridas para la contraseña
     const validations = {
       length: '8 caracteres',
-      uppercase: 'una letra mayúscula',
-      lowercase: 'una letra minúscula',
-      number: 'un número',
-      special: 'un caracter especial',
-      secuential: 'no puede contener secuencias de números',
-      noRepeat: 'no puede contener caracteres repetitivos'
+      uppercase: 'Una letra mayúscula',
+      lowercase: 'Una letra minúscula',
+      number: 'Un número',
+      special: 'Un caracter especial',
+      secuential: 'No puede contener secuencias de números',
+      noRepeat: 'No puede contener caracteres repetitivos'
     }
 
     let missingRequirements = []
@@ -54,7 +54,8 @@ export function usePasswordSecurity({ status, validate }) {
 
     // Mensaje final para indicar qué falta en la contraseña
     if (missingRequirements.length > 0) {
-      status.value.password.message = `La contraseña debe incluir al menos: ${missingRequirements.join(', ')}.`
+      status.value.password.message = `La contraseña debe incluir al menos:`
+      status.value.password.list = missingRequirements
     } else {
       status.value.password.message = 'La contraseña es segura.'
     }
