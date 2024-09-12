@@ -66,6 +66,22 @@ const router = createRouter({
       component: () => import('@/views/ForgotPasswordView.vue')
     },
     {
+      path: '/reset-password/:key?',
+      name: 'resetPassword',
+      component: () => import('@/views/ResetPasswordView.vue'),
+      beforeEnter: (to, from, next) => {
+        const key = to.params.key;
+    
+        // Comprueba si la key está presente
+        if (!key) {
+          return next({ name: 'login' }); // Redirige al login si no hay key
+        }
+    
+        // Continuar si la key es válida
+        next();
+      }
+    },
+    {
       path: '/login',
       name: 'login',
       component: () =>
