@@ -4962,10 +4962,6 @@ select {
   margin: auto;
 }
 
-.m-4 {
-  margin: 1rem;
-}
-
 .-mx-1 {
   margin-left: -0.25rem;
   margin-right: -0.25rem;
@@ -5716,6 +5712,14 @@ select {
   -webkit-user-select: none;
      -moz-user-select: none;
           user-select: none;
+}
+
+.list-inside {
+  list-style-position: inside;
+}
+
+.list-disc {
+  list-style-type: disc;
 }
 
 .appearance-none {

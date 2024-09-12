@@ -264,8 +264,13 @@ watch(birthdate, (value) => {
                   </div>
                 </div>
 
-                <div :class="`mt-2 ${status.password.error ? 'text-red-500' : 'text-blue-600'}`">{{
-                  status.password.message }}
+                <div :class="`mt-2 ${status.password.error ? 'text-red-500' : 'text-blue-600'}`">
+                  {{ status.password.message }}
+                  <ul v-if="status.password.secure != 4">
+                    <li v-for="item in status.password.list" :key="item" class="list-disc list-inside">
+                      {{ item }}
+                    </li>
+                  </ul>
                 </div>
               </div>
             </div>

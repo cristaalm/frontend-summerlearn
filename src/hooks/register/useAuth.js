@@ -1,4 +1,8 @@
-import {
+import { useRouter } from 'vue-router'
+import { ref } from 'vue'
+import { Baseurl } from '@/../global'
+
+export function useAuth({
   password,
   firstName,
   lastName,
@@ -6,14 +10,9 @@ import {
   phone,
   birthdate,
   perfil,
-  valid
-} from '@/hooks/register/useFormRefs'
-import { validate } from '@/hooks/register/useValidationFunctions'
-import { useRouter } from 'vue-router'
-import { ref } from 'vue'
-import { Baseurl } from '@/../global'
-
-export function useAuth() {
+  valid,
+  validate
+}) {
   const router = useRouter()
   const error = ref('')
   const loading = ref(false)
