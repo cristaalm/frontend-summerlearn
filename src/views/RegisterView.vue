@@ -50,10 +50,15 @@ const handleSubmit = () => {
           <div class="text-2xl font-medium">Registrarse</div>
           <div class="mt-2.5 text-slate-600">
             ¿Ya tienes una cuenta?
-            <span class="font-medium text-primary cursor-pointer" @click="router.push({ name: 'login' })"> Iniciar sesión </span>
+            <span
+              class="font-medium text-primary cursor-pointer"
+              @click="router.push({ name: 'login' })"
+            >
+              Iniciar sesión
+            </span>
           </div>
           <div class="mt-6">
-            <FormLabel>Nombre*</FormLabel>
+            <FormLabel>Nombre <span class="text-red-600 bold">*</span></FormLabel>
             <FormInput
               type="text"
               name="firstName"
@@ -65,7 +70,7 @@ const handleSubmit = () => {
             <div class="flex flex-row text-red-600 p-2" v-if="status.firstName.menssage">
               {{ status.firstName.menssage }}
             </div>
-            <FormLabel class="mt-5">Apellido*</FormLabel>
+            <FormLabel class="mt-5">Apellido <span class="text-red-600 bold">*</span></FormLabel>
             <FormInput
               type="text"
               name="lastName"
@@ -77,7 +82,9 @@ const handleSubmit = () => {
             <div class="flex flex-row text-red-600 p-2" v-if="status.lastName.menssage">
               {{ status.lastName.menssage }}
             </div>
-            <FormLabel class="mt-5">Correo electrónico*</FormLabel>
+            <FormLabel class="mt-5"
+              >Correo electrónico <span class="text-red-600 bold">*</span></FormLabel
+            >
             <FormInput
               type="text"
               name="email"
@@ -103,7 +110,9 @@ const handleSubmit = () => {
             <div class="flex flex-row text-red-600 p-2" v-if="status.phone.menssage">
               {{ status.phone.menssage }}
             </div>
-            <FormLabel class="mt-5">Fecha de nacimiento*</FormLabel>
+            <FormLabel class="mt-5"
+              >Fecha de nacimiento <span class="text-red-600 bold">*</span></FormLabel
+            >
             <FormInput
               type="date"
               name="birthdate"
@@ -116,7 +125,7 @@ const handleSubmit = () => {
               {{ status.birthdate.menssage }}
             </div>
 
-            <FormLabel class="mt-5">Contraseña*</FormLabel>
+            <FormLabel class="mt-5">Contraseña <span class="text-red-600 bold">*</span></FormLabel>
             <FormInput
               type="password"
               name="password"
@@ -151,7 +160,9 @@ const handleSubmit = () => {
             <a href="" class="block mt-3 text-xs text-slate-500/80 sm:text-sm">
               ¿Qué es una contraseña segura?
             </a>
-            <FormLabel class="mt-5">Confirmación de contraseña*</FormLabel>
+            <FormLabel class="mt-5"
+              >Confirmación de contraseña <span class="text-red-600 bold">*</span></FormLabel
+            >
             <FormInput
               type="password"
               name="password_confirm"
@@ -165,7 +176,7 @@ const handleSubmit = () => {
               {{ status.password_confirm.menssage }}
             </div>
             <!-- El perfil es un select -->
-            <FormLabel class="mt-5">Perfil*</FormLabel>
+            <FormLabel class="mt-5">Perfil <span class="text-red-600 bold">*</span></FormLabel>
             <select
               name="perfil"
               data-context="Perfil"
@@ -207,7 +218,7 @@ const handleSubmit = () => {
                 rounded
                 :class="`bg-gradient-to-r transition-all scale-105 duration-200 w-full py-3.5 xl:mr-3 ${valid && !loading ? 'from-theme-1 to-theme-2 hover:scale-100 select-none cursor-pointer' : 'from-gray-600 to-gray-600 select-none cursor-default'}`"
               >
-              <LoadingIcon v-if="loading" icon="three-dots" class="w-8 h-5" color="white" />
+                <LoadingIcon v-if="loading" icon="three-dots" class="w-8 h-5" color="white" />
                 {{ !loading ? 'Registrarse' : '' }}
               </Button>
             </div>

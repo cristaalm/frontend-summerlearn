@@ -28,7 +28,7 @@ export function useAuth() {
       return
     }
 
-    const response = await fetch(Baseurl + '/register/', {
+    const response = await fetch(Baseurl + 'register/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
