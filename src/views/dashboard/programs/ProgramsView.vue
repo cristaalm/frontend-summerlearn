@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 import { useRouter } from "vue-router";
 import Lucide from "@/components/base/Lucide";
 import { Menu, Popover } from "@/components/base/Headless";
@@ -17,6 +17,7 @@ const router = useRouter();
 
 onMounted(() => {
   loadPrograms();
+  console.log(loadPrograms());
 });
 
 
@@ -35,7 +36,7 @@ onMounted(() => {
             class="group-[.mode--light]:!bg-white/[0.12] group-[.mode--light]:!text-slate-200 group-[.mode--light]:!border-transparent"
             @click="() => {
               router.push({
-                name: 'addArea',
+                name: 'addProgram',
               });
             }">
             <Lucide icon="PenLine" class="stroke-[1.3] w-4 h-4 mr-2" /> Agregar nuevo programa
@@ -49,7 +50,7 @@ onMounted(() => {
               <div class="relative">
                 <Lucide icon="Search"
                   class="absolute inset-y-0 left-0 z-10 w-4 h-4 my-auto ml-3 stroke-[1.3] text-slate-500" />
-                <FormInput v-model="searchQuery" type="text" placeholder="Buscar area..."
+                <FormInput v-model="searchQuery" type="text" placeholder="Buscar por responsable"
                   class="pl-9 sm:w-72 rounded-[0.5rem]" />
               </div>
             </div>
@@ -92,15 +93,15 @@ onMounted(() => {
                 <Table.Tr>
                   <Table.Td
                     class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500">
+                    Usuario responsable
+                  </Table.Td>
+                  <Table.Td
+                    class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500">
                     Inicio de programa
                   </Table.Td>
                   <Table.Td
                     class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500">
                     Fin de programa
-                  </Table.Td>
-                  <Table.Td
-                    class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500">
-                    Usuario responsable
                   </Table.Td>
                   <Table.Td
                     class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500">
@@ -146,6 +147,11 @@ onMounted(() => {
               <Table.Tbody v-if="!loading">
                 <template v-for="program in paginatedItems" :key="program.id">
                   <Table.Tr class="[&_td]:last:border-b-0">
+                    <Table.Td class="py-4 border-dashed dark:bg-darkmode-600 text-center">
+                      <div href="" class="font-medium whitespace-nowrap">
+                        {{ program.user.name }}
+                      </div>
+                    </Table.Td>
                     <Table.Td class="py-4 border-dashed dark:bg-darkmode-600 text-center">
                       <div href="" class="font-medium whitespace-nowrap">
                         {{ program.start }}
