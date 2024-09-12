@@ -24,8 +24,10 @@ import { status } from '@/hooks/register/useFormStatus'
 import { useAuth } from '@/hooks/register/useAuth'
 import Button from '@/components/base/Button'
 import LoadingIcon from '@/components/base/LoadingIcon'
+import { useRouter } from 'vue-router'
 
 const { registerUser, loading } = useAuth()
+const router = useRouter()
 
 const handleSubmit = () => {
   if (valid.value) {
@@ -48,7 +50,7 @@ const handleSubmit = () => {
           <div class="text-2xl font-medium">Registrarse</div>
           <div class="mt-2.5 text-slate-600">
             ¿Ya tienes una cuenta?
-            <a class="font-medium text-primary" href="/login"> Iniciar sesión </a>
+            <span class="font-medium text-primary cursor-pointer" @click="router.push({ name: 'login' })"> Iniciar sesión </span>
           </div>
           <div class="mt-6">
             <FormLabel>Nombre*</FormLabel>

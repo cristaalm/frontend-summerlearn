@@ -1,15 +1,13 @@
 <script setup lang="ts">
 import { FormInput, FormLabel } from '@/components/base/Form'
 import Button from '@/components/base/Button'
-import Alert from '@/components/base/Alert'
-import Lucide from '@/components/base/Lucide'
+// import Alert from '@/components/base/Alert'
+// import Lucide from '@/components/base/Lucide'
 import LoadingIcon from '@/components/base/LoadingIcon'
-import { useFormValidation } from '@/hooks/login/useFormValidation'
-import { useAuth } from '@/hooks/login/useAuth'
+import { useValidation } from '@/hooks/forgotPassword/useValidation'
 import { useRouter } from 'vue-router'
 
-const { loginUser, loading, error } = useAuth()
-const { email, password, validateInput, valid } = useFormValidation({ error })
+const { email, error, status } = useValidation()
 const router = useRouter()
 
 </script>
@@ -22,13 +20,14 @@ const router = useRouter()
     ]">
       <div class="relative z-10 flex flex-col justify-center w-full h-full py-2 lg:py-32">
         <div class="mt-10">
-          <div class="text-2xl font-medium">Iniciar sesión</div>
-          <div class="mt-2.5 text-slate-600">
-            ¿No tienes una cuenta?
-            <span class="font-medium text-primary cursor-pointer" @click="router.push({ name: 'register' })"> Regístrate </span>
+          <div class="text-2xl font-medium">Recuperar Contraseña</div>
+          <div class="mt-2.5 text-slate-600 flex flex-col gap-2">
+            <p>¿Olvidaste tu contraseña?</p>
+            <p> No te preocupes, te enviaremos un correo electrónico con un enlace para restablecer tu contraseña.</p>
           </div>
 
-          <Alert variant="outline-danger" v-if="error"
+          <!-- TODO: Implementar el error que active el componente de Alert, necesita conexión al backend -->
+          <!-- <Alert variant="outline-danger" v-if="false"
             class="flex items-center px-4 py-3 my-7 bg-danger/5 border-danger/20 rounded-[0.6rem] leading-[1.7]"
             v-slot="{ dismiss }">
             <div class="">
@@ -40,25 +39,27 @@ const router = useRouter()
             <Alert.DismissButton type="button" class="btn-close text-danger" @click="dismiss" aria-label="Cerrar">
               <Lucide icon="X" class="w-5 h-5" />
             </Alert.DismissButton>
-          </Alert>
+          </Alert> -->
 
           <div class="mt-6">
+
             <FormLabel>Correo electrónico*</FormLabel>
             <FormInput type="text" class="block px-4 py-3.5 rounded-[0.6rem] border-slate-300/80"
-              placeholder="correo@mail.com" v-model="email" @input="validateInput('email')" />
-            <FormLabel class="mt-4">Contraseña*</FormLabel>
-            <FormInput type="password" class="block px-4 py-3.5 rounded-[0.6rem] border-slate-300/80"
-              placeholder="************" v-model="password" @input="validateInput('password')" />
+              placeholder="correo@mail.com" v-model="email" />
+            <div class="flex flex-row text-red-600 p-2" v-if="error">
+              {{ error }}
+            </div>
             <div class="flex flex-row justify-end mt-4 text-xs text-slate-500 sm:text-sm">
-              <span class=" cursor-pointer" @click="router.push({ name: 'forgotPassword' })">¿Olvidaste tu contraseña?</span>
+              <span class=" cursor-pointer" @click="router.push({ name: 'login' })">Regresar al inicio de sesión</span>
             </div>
             <div class="mt-5 text-center xl:mt-8 xl:text-left">
-              <Button @click="() => { loginUser({ email, password }) }" :disabled="!valid || loading" variant="primary"
-                rounded
-                :class="`bg-gradient-to-r transition-all scale-105 duration-200 w-full py-3.5 xl:mr-3 ${valid && !loading ? 'from-theme-1 to-theme-2 hover:scale-100 select-none cursor-pointer' : 'from-gray-600 to-gray-600  cursor-default'}`">
-                <LoadingIcon v-if="loading" icon="three-dots" class="w-8 h-5" color="white" />
-                {{ loading ? '' : 'Iniciar Sesión' }}
+
+              <Button variant="primary" rounded :disabled="!status"
+                 :class="`bg-gradient-to-r transition-all scale-105 duration-200 w-full py-3.5 xl:mr-3 ${status ? 'from-theme-1 to-theme-2 hover:scale-100 select-none cursor-pointer' : 'from-gray-600 to-gray-600  cursor-default'}`">
+                <LoadingIcon v-if="false" icon="three-dots" class="w-8 h-5" color="white" />
+                Siguiente
               </Button>
+
             </div>
           </div>
         </div>
