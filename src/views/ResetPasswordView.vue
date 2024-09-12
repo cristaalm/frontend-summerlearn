@@ -1,28 +1,41 @@
-<script setup lang="ts">
+<script setup>
 import { FormInput, FormLabel } from '@/components/base/Form'
 import Button from '@/components/base/Button'
 import Alert from '@/components/base/Alert'
 import Lucide from '@/components/base/Lucide'
 import LoadingIcon from '@/components/base/LoadingIcon'
 import { useRoute, useRouter } from 'vue-router'
-import { ref } from 'vue'
+import { useRefs } from '@/hooks/recovery/useRefs'
+import { status } from '@/hooks/recovery/useStatus'
+import { useValidation } from '@/hooks/recovery/useValidation'
+import { usePasswordSecurity } from '@/hooks/recovery/usePasswordSecurity'
+import { watch } from 'vue'
 
 // Recupera la ruta actual
 const route = useRoute()
+const router = useRouter()
 
 // Recupera la key de los parámetros de la URL
+// TODO: hacer la valicación de la key
 const key = route.params.key || ''
 
-// TODO hacer comprobación de key
+const { password, confirm_password, valid } = useRefs()
+const { validationConfirmPassword, validate } = useValidation({ password ,confirm_password, status, valid })
+const { validatePassword } = usePasswordSecurity({ status, validate, password })
+ 
+const loading = false
 
-// variables de prueba
-const confirmPassword = ref('')
-const password = ref('')
-const loading = ref(false)
-const error = ref('')
-const valid = ref(false)
 
-const router = useRouter()
+watch([password, confirm_password], () => {
+  validationConfirmPassword()
+})
+
+watch(password, () => {
+  validationConfirmPassword()
+  validatePassword()
+})
+
+
 
 </script>
 
@@ -36,7 +49,7 @@ const router = useRouter()
         <div class="mt-10">
           <div class="text-2xl font-medium">Reiniciar Contraseña</div>
 
-          <Alert variant="outline-danger" v-if="error"
+          <!-- <Alert variant="outline-danger" v-if="error"
             class="flex items-center px-4 py-3 my-7 bg-danger/5 border-danger/20 rounded-[0.6rem] leading-[1.7]"
             v-slot="{ dismiss }">
             <div class="">
@@ -48,27 +61,59 @@ const router = useRouter()
             <Alert.DismissButton type="button" class="btn-close text-danger" @click="dismiss" aria-label="Cerrar">
               <Lucide icon="X" class="w-5 h-5" />
             </Alert.DismissButton>
-          </Alert>
+          </Alert> -->
 
           <div class="mt-6">
-              <FormLabel class="mt-4">Nueva contraseña</FormLabel>
-              <FormInput type="password" class="block px-4 py-3.5 rounded-[0.6rem] border-slate-300/80"
-              placeholder="************" v-model="password" />
-              <FormLabel class="mt-4">Confirmar contraseña</FormLabel>
-              <FormInput type="text" class="block px-4 py-3.5 rounded-[0.6rem] border-slate-300/80"
-                placeholder="correo@mail.com" v-model="confirmPassword" />
+              
+            
+            <FormLabel class="mt-4">Nueva contraseña</FormLabel>
+            <FormInput type="password" placeholder="**********" name="password" v-model="password" />
+                <div class="grid w-full h-1.5 grid-cols-12 gap-4 mt-3.5">
+                  <div
+                    :class="`h-full col-span-3 border rounded bg-slate-400/30 border-slate-400/20 ${status.password.color} ${status.password.secure >= 0 ? 'active' : ''}`">
+                  </div>
+                  <div
+                    :class="`h-full col-span-3 border rounded bg-slate-400/30 border-slate-400/20 ${status.password.color} ${status.password.secure >= 2 ? 'active' : ''}`">
+                  </div>
+                  <div
+                    :class="`h-full col-span-3 border rounded bg-slate-400/30 border-slate-400/20 ${status.password.color} ${status.password.secure >= 3 ? 'active' : ''}`">
+                  </div>
+                  <div
+                    :class="`h-full col-span-3 border rounded bg-slate-400/30 border-slate-400/20 ${status.password.color} ${status.password.secure >= 4 ? 'active' : ''}`">
+                  </div>
+                </div>
+
+                <div :class="`mt-2 ${status.password.error ? 'text-red-500' : 'text-blue-600'}`">{{
+                  status.password.message }}
+                </div>
+              
+              
+            <FormLabel class="mt-4">Confirmar contraseña</FormLabel>
+            <FormInput type="password" class="block px-4 py-3.5 rounded-[0.6rem] border-slate-300/80"
+              placeholder="correo@mail.com" v-model="confirm_password" />
+
+            
+            <div class="flex flex-row text-red-600 p-2" v-if="status.confirm_password.error">
+              {{ status.confirm_password.message }}
+            </div>
+
             <div class="flex flex-row justify-end mt-4 text-xs text-slate-500 sm:text-sm">
+              
               <span class=" cursor-pointer" @click="router.push({ name: 'login' })">Regresar al inicio de sesión</span>
+
             </div>
             <div class="mt-5 text-center xl:mt-8 xl:text-left">
+
               <Button @click="() => { }" :disabled="!valid || loading" variant="primary"
                 rounded
                 :class="`bg-gradient-to-r transition-all scale-105 duration-200 w-full py-3.5 xl:mr-3 ${valid && !loading ? 'from-theme-1 to-theme-2 hover:scale-100 select-none cursor-pointer' : 'from-gray-600 to-gray-600  cursor-default'}`">
                 <LoadingIcon v-if="loading" icon="three-dots" class="w-8 h-5" color="white" />
                 {{ loading ? '' : 'Restableser contraseña' }}
               </Button>
+            
             </div>
           </div>
+
         </div>
       </div>
     </div>
