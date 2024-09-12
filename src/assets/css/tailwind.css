@@ -5603,6 +5603,10 @@ select {
   max-width: 900px;
 }
 
+.max-w-4xl {
+  max-width: 56rem;
+}
+
 .flex-1 {
   flex: 1 1 0%;
 }
