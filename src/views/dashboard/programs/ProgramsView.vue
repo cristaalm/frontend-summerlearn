@@ -8,17 +8,23 @@ import Table from "@/components/base/Table";
 import LoadingIcon from "@/components/base/LoadingIcon";
 import Button from "@/components/base/Button";
 import { useFilter, usePagination, usePrograms } from '@/hooks/programs/'
-import { onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
+import { formatDate } from "@/utils/helper";
 
 const { programs, loading, error, loadPrograms } = usePrograms();
 const { searchQuery, selectedStatus, filteredItems, activeFilters } = useFilter(programs);
 const { currentPage, pageSize, totalPages, paginatedItems, changePage, changePageSize } = usePagination(filteredItems);
 const router = useRouter();
 
+
 onMounted(() => {
   loadPrograms();
-  console.log(loadPrograms());
 });
+
+function formatDateToDDMMYYYY(dateString) {
+  const [year, month, day] = dateString.split('-');
+  return `${day}-${month}-${year}`;
+}
 
 
 </script>
@@ -154,12 +160,12 @@ onMounted(() => {
                     </Table.Td>
                     <Table.Td class="py-4 border-dashed dark:bg-darkmode-600 text-center">
                       <div href="" class="font-medium whitespace-nowrap">
-                        {{ program.start }}
+                        {{ formatDateToDDMMYYYY(program.start) }}
                       </div>
                     </Table.Td>
                     <Table.Td class="py-4 border-dashed dark:bg-darkmode-600 text-center">
                       <div href="" class="font-medium whitespace-nowrap">
-                        {{ program.end }}
+                        {{ formatDateToDDMMYYYY(program.end) }}
                       </div>
                     </Table.Td>
                     <Table.Td class="py-4 border-dashed dark:bg-darkmode-600">
