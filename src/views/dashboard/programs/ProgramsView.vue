@@ -134,7 +134,7 @@ function formatDateToDDMMYYYY(dateString) {
               <!--? Mostrar mensaje de error cuando hay error -->
               <Table.Tbody v-if="error">
                 <Table.Tr>
-                  <Table.Td colspan="3" class="py-8 text-center text-xl font-bold text-red-500">
+                  <Table.Td colspan="4" class="py-8 text-center text-xl font-bold text-red-500">
                     Error al cargar la información, Inténtelo más tarde
                   </Table.Td>
                 </Table.Tr>
@@ -143,7 +143,7 @@ function formatDateToDDMMYYYY(dateString) {
               <!--? Mostrar mensaje de error cuando no se encuentran programas -->
               <Table.Tbody v-if="!loading && totalPages <= 0 && !error">
                 <Table.Tr>
-                  <Table.Td colspan="3" class="py-8 text-center text-xl font-bold text-amber-500">
+                  <Table.Td colspan="4" class="py-8 text-center text-xl font-bold text-amber-500">
                     No se encontraron programas
                   </Table.Td>
                 </Table.Tr>
@@ -188,7 +188,7 @@ function formatDateToDDMMYYYY(dateString) {
                               <Lucide icon="CheckSquare" class="w-4 h-4 mr-2" />
                               Editar
                             </Menu.Item>
-                            <Menu.Item :class="`${program.status ? 'text-danger' : 'text-primary'}`" @click="() => {
+                            <Menu.Item :class="`${!program.status ? 'text-danger' : 'text-primary'}`" @click="() => {
                               program.status = !program.status
                             }">
                               <Lucide icon="RefreshCw" class="w-4 h-4 mr-2" />
