@@ -6,6 +6,17 @@ import { getColor } from "@/utils/colors";
 import ReportLineChart from "@/components/ReportLineChart";
 import ReportDonutChart3 from "@/components/ReportDonutChart3";
 import Button from "@/components/base/Button";
+import { onMounted } from 'vue'
+import { useDonations } from '@/hooks/donations/'
+
+const { barDonations, donations, loading, loadDonations } = useDonations();
+
+
+onMounted(() => {
+  loadDonations();
+});
+
+
 </script>
 
 <template>
@@ -89,14 +100,19 @@ import Button from "@/components/base/Button";
                             </div>
                         </div>
                         <div class="relative mt-5 mb-6 overflow-hidden">
+                            
                             <div
                                 class="absolute inset-0 h-px my-auto tracking-widest text-slate-400/60 whitespace-nowrap leading-[0] text-xs">
                                 .......................................................................
                             </div>
-                            <ReportLineChart class="relative z-10 -ml-1.5" :height="100" :index="2"
+
+                            <ReportLineChart class="relative z-10 -ml-1.5" 
+                                :height="100" 
+                                :index="2"
                                 :borderColor="() => getColor('primary')"
                                 :backgroundColor="() => getColor('primary', 0.3)" />
-                        </div>
+                            </div>
+
                         <div class="flex flex-wrap items-center justify-center gap-y-3 gap-x-5">
                             <div class="flex items-center">
                                 <div class="w-2 h-2 rounded-full bg-primary/70"></div>
@@ -207,28 +223,28 @@ import Button from "@/components/base/Button";
                         <div
                             class="col-span-4 md:col-span-2 xl:col-span-1 p-5 border border-dashed rounded-[0.6rem] border-slate-300/80 box shadow-sm">
                             <div class="text-base text-slate-500">Total de Donaciones</div>
-                            <div class="mt-1.5 text-2xl font-medium">50 veces</div>
+                            <div class="mt-1.5 text-2xl font-medium">{{ !loading ? `${barDonations.totalDonated} veces` : 'Cargando...'  }}</div>
                             <div class="absolute inset-y-0 right-0 flex flex-col justify-center mr-5">
                             </div>
                         </div>
                         <div
                             class="col-span-4 md:col-span-2 xl:col-span-1 p-5 border border-dashed rounded-[0.6rem] border-slate-300/80 box shadow-sm">
                             <div class="text-base text-slate-500">Dinero Donado</div>
-                            <div class="mt-1.5 text-2xl font-medium">$ 5215</div>
+                            <div class="mt-1.5 text-2xl font-medium"> {{ !loading ? `$ ${barDonations.totalDonations}` : 'Cargando...' }} </div>
                             <div class="absolute inset-y-0 right-0 flex flex-col justify-center mr-5">
                             </div>
                         </div>
                         <div
                             class="col-span-4 md:col-span-2 xl:col-span-1 p-5 border border-dashed rounded-[0.6rem] border-slate-300/80 box shadow-sm">
                             <div class="text-base text-slate-500">Ultima Cantidad Donada</div>
-                            <div class="mt-1.5 text-2xl font-mediumm">$ 300</div>
+                            <div class="mt-1.5 text-2xl font-mediumm"> {{ !loading ? `$ ${barDonations.lastDonationAmount}` : 'Cargando...' }}</div>
                             <div class="absolute inset-y-0 right-0 flex flex-col justify-center mr-5">
                             </div>
                         </div>
                         <div
                             class="col-span-4 md:col-span-2 xl:col-span-1 p-5 border border-dashed rounded-[0.6rem] border-slate-300/80 box shadow-sm">
                             <div class="text-base text-slate-500">Ultima Fecha de Donacion</div>
-                            <div class="mt-1.5 text-2xl font-mediumm">9/10/2024</div>
+                            <div class="mt-1.5 text-2xl font-mediumm"> {{ !loading ? barDonations.lastDonationDate : 'Cargando...' }} </div>
                             <div class="absolute inset-y-0 right-0 flex flex-col justify-center mr-5">
                             </div>
                         </div>

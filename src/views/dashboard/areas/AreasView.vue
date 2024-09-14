@@ -11,8 +11,11 @@ import { useFilter, usePagination, useAreas } from '@/hooks/areas/' // error are
 import { onMounted } from 'vue'
 
 const { areas, loading, error, loadAreas } = useAreas();
+
 const { searchQuery, selectedStatus, filteredItems, activeFilters } = useFilter(areas);
+
 const { currentPage, pageSize, totalPages, paginatedItems, changePage, changePageSize } = usePagination(filteredItems);
+
 const router = useRouter();
 
 onMounted(() => {
