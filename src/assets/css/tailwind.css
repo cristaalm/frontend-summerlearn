@@ -4336,6 +4336,18 @@ select {
   --color-danger: 220 38 38;
   --color-light: 209 250 229;
   --color-dark: 6 78 59;
+  --color-blue-light: 123 211 234;
+  --color-blue: 91 163 184;
+  --color-blue-dark: 58 115 134;
+  --color-green-light: 161 238 189;
+  --color-green: 127 204 149;
+  --color-green-dark: 94 170 109;
+  --color-yellow-light: 246 247 196;
+  --color-yellow: 210 212 155;
+  --color-yellow-dark: 174 175 115;
+  --color-red-light: 246 214 214;
+  --color-red: 210 174 174;
+  --color-red-dark: 174 135 135;
 }
 
 .dark {
@@ -5079,10 +5091,6 @@ select {
   margin-bottom: 0.75rem;
 }
 
-.mb-4 {
-  margin-bottom: 1rem;
-}
-
 .mb-6 {
   margin-bottom: 1.5rem;
 }
@@ -5157,6 +5165,10 @@ select {
 
 .mr-2 {
   margin-right: 0.5rem;
+}
+
+.mr-4 {
+  margin-right: 1rem;
 }
 
 .mr-5 {
@@ -5367,6 +5379,10 @@ select {
   height: 36px;
 }
 
+.h-\[50px\] {
+  height: 50px;
+}
+
 .h-\[550\] {
   height: 550;
 }
@@ -5511,16 +5527,16 @@ select {
   width: 100px;
 }
 
+.w-\[150px\] {
+  width: 150px;
+}
+
 .w-\[18px\] {
   width: 18px;
 }
 
 .w-\[20px\] {
   width: 20px;
-}
-
-.w-\[250px\] {
-  width: 250px;
 }
 
 .w-\[275px\] {
@@ -5577,14 +5593,6 @@ select {
 
 .min-w-\[100px\] {
   min-width: 100px;
-}
-
-.min-w-\[50px\] {
-  min-width: 50px;
-}
-
-.max-w-4xl {
-  max-width: 56rem;
 }
 
 .max-w-5xl {
@@ -6562,6 +6570,10 @@ select {
 
 .p-5 {
   padding: 1.25rem;
+}
+
+.p-6 {
+  padding: 1.5rem;
 }
 
 .p-7 {
@@ -8831,6 +8843,14 @@ select {
     padding: 0px;
   }
 
+  .lg\:p-10 {
+    padding: 2.5rem;
+  }
+
+  .lg\:p-8 {
+    padding: 2rem;
+  }
+
   .lg\:py-0 {
     padding-top: 0px;
     padding-bottom: 0px;
@@ -8856,6 +8876,11 @@ select {
 
   .lg\:pr-12 {
     padding-right: 3rem;
+  }
+
+  .lg\:text-base {
+    font-size: 1rem;
+    line-height: 1.5rem;
   }
 
   .lg\:text-base\/relaxed {
@@ -8905,11 +8930,6 @@ select {
 
   .xl\:m-2 {
     margin: 0.5rem;
-  }
-
-  .xl\:-my-\[0px\] {
-    margin-top: -0px;
-    margin-bottom: -0px;
   }
 
   .xl\:-my-\[20px\] {
@@ -8971,6 +8991,10 @@ select {
 
   .xl\:w-60 {
     width: 15rem;
+  }
+
+  .xl\:w-\[250px\] {
+    width: 250px;
   }
 
   .xl\:grid-cols-\[1fr_600px\] {

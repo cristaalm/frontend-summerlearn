@@ -8,6 +8,7 @@ import Button from "@/components/base/Button";
 import { formatCurrency } from "@/utils/helper";
 import Table from "@/components/base/Table";
 
+
 const products = [
     {
         name: "Tailwise - Admin Dashboard Template",
@@ -108,7 +109,7 @@ const products = [
                             <div class="relative">
                                 <Lucide icon="Search"
                                     class="absolute inset-y-0 left-0 z-10 w-4 h-4 my-auto ml-3 stroke-[1.3] text-slate-500" />
-                                <FormInput type="text" placeholder="Buscar Donacion..."
+                                <FormInput type="text" placeholder="Buscar..."
                                     class="pl-9 sm:w-64 rounded-[0.5rem]" />
                             </div>
                         </div>
@@ -175,14 +176,14 @@ const products = [
                         <Table class="border-b border-slate-200/60">
                             <Table.Thead>
                                 <Table.Tr>
-                                    <Table.Td
+                                    <!-- <Table.Td
                                         class="w-5 py-4 font-medium border-t bg-slate-50 border-slate-200/60 text-slate-500">
                                         <FormCheck.Input type="checkbox" />
-                                    </Table.Td>
-                                    <Table.Td
+                                    </Table.Td> -->
+                                    <!-- <Table.Td
                                         class="py-4 font-medium border-t bg-slate-50 border-slate-200/60 text-slate-500">
                                         Images
-                                    </Table.Td>
+                                    </Table.Td> -->
                                     <Table.Td
                                         class="py-4 font-medium border-t bg-slate-50 border-slate-200/60 text-slate-500">
                                         Nombre del Donante
@@ -199,10 +200,10 @@ const products = [
                                         class="py-4 font-medium border-t bg-slate-50 border-slate-200/60 text-slate-500">
                                         Fecha de Donacion
                                     </Table.Td>
-                                    <Table.Td
+                                    <!-- <Table.Td
                                         class="py-4 font-medium text-center border-t bg-slate-50 border-slate-200/60 text-slate-500">
                                         Status
-                                    </Table.Td>
+                                    </Table.Td> -->
                                     <Table.Td
                                         class="py-4 font-medium text-center border-t w-36 bg-slate-50 border-slate-200/60 text-slate-500">
                                         Action

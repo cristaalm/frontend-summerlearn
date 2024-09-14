@@ -10,6 +10,7 @@ export function usePrograms() {
     loading.value = true
     try {
       programs.value = await getPrograms()
+      console.log(programs.value)
     } catch (e) {
       error.value = e
     } finally {

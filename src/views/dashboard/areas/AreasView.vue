@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 import { useRouter } from "vue-router";
 import Lucide from "@/components/base/Lucide";
 import { Menu, Popover } from "@/components/base/Headless";
@@ -7,16 +7,20 @@ import { FormInput, FormSelect } from "@/components/base/Form";
 import Table from "@/components/base/Table";
 import LoadingIcon from "@/components/base/LoadingIcon";
 import Button from "@/components/base/Button";
-import { useFilter, usePagination, useAreas } from '@/hooks/areas/'
+import { useFilter, usePagination, useAreas } from '@/hooks/areas/' // error areglado ><
 import { onMounted } from 'vue'
 
 const { areas, loading, error, loadAreas } = useAreas();
+
 const { searchQuery, selectedStatus, filteredItems, activeFilters } = useFilter(areas);
+
 const { currentPage, pageSize, totalPages, paginatedItems, changePage, changePageSize } = usePagination(filteredItems);
+
 const router = useRouter();
 
 onMounted(() => {
   loadAreas();
+  console.log(loadAreas())
 });
 
 

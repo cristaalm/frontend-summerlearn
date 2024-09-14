@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 import { useRouter } from "vue-router";
 import Lucide from "@/components/base/Lucide";
 import { Menu, Popover } from "@/components/base/Headless";
@@ -8,16 +8,23 @@ import Table from "@/components/base/Table";
 import LoadingIcon from "@/components/base/LoadingIcon";
 import Button from "@/components/base/Button";
 import { useFilter, usePagination, usePrograms } from '@/hooks/programs/'
-import { onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
+import { formatDate } from "@/utils/helper";
 
 const { programs, loading, error, loadPrograms } = usePrograms();
 const { searchQuery, selectedStatus, filteredItems, activeFilters } = useFilter(programs);
 const { currentPage, pageSize, totalPages, paginatedItems, changePage, changePageSize } = usePagination(filteredItems);
 const router = useRouter();
 
+
 onMounted(() => {
   loadPrograms();
 });
+
+function formatDateToDDMMYYYY(dateString) {
+  const [year, month, day] = dateString.split('-');
+  return `${day}-${month}-${year}`;
+}
 
 
 </script>
@@ -35,7 +42,7 @@ onMounted(() => {
             class="group-[.mode--light]:!bg-white/[0.12] group-[.mode--light]:!text-slate-200 group-[.mode--light]:!border-transparent"
             @click="() => {
               router.push({
-                name: 'addArea',
+                name: 'addProgram',
               });
             }">
             <Lucide icon="PenLine" class="stroke-[1.3] w-4 h-4 mr-2" /> Agregar nuevo programa
@@ -49,7 +56,7 @@ onMounted(() => {
               <div class="relative">
                 <Lucide icon="Search"
                   class="absolute inset-y-0 left-0 z-10 w-4 h-4 my-auto ml-3 stroke-[1.3] text-slate-500" />
-                <FormInput v-model="searchQuery" type="text" placeholder="Buscar area..."
+                <FormInput v-model="searchQuery" type="text" placeholder="Buscar por responsable"
                   class="pl-9 sm:w-72 rounded-[0.5rem]" />
               </div>
             </div>
@@ -92,15 +99,15 @@ onMounted(() => {
                 <Table.Tr>
                   <Table.Td
                     class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500">
+                    Usuario responsable
+                  </Table.Td>
+                  <Table.Td
+                    class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500">
                     Inicio de programa
                   </Table.Td>
                   <Table.Td
                     class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500">
                     Fin de programa
-                  </Table.Td>
-                  <Table.Td
-                    class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500">
-                    Usuario responsable
                   </Table.Td>
                   <Table.Td
                     class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500">
@@ -127,7 +134,7 @@ onMounted(() => {
               <!--? Mostrar mensaje de error cuando hay error -->
               <Table.Tbody v-if="error">
                 <Table.Tr>
-                  <Table.Td colspan="3" class="py-8 text-center text-xl font-bold text-red-500">
+                  <Table.Td colspan="4" class="py-8 text-center text-xl font-bold text-red-500">
                     Error al cargar la información, Inténtelo más tarde
                   </Table.Td>
                 </Table.Tr>
@@ -136,7 +143,7 @@ onMounted(() => {
               <!--? Mostrar mensaje de error cuando no se encuentran programas -->
               <Table.Tbody v-if="!loading && totalPages <= 0 && !error">
                 <Table.Tr>
-                  <Table.Td colspan="3" class="py-8 text-center text-xl font-bold text-amber-500">
+                  <Table.Td colspan="4" class="py-8 text-center text-xl font-bold text-amber-500">
                     No se encontraron programas
                   </Table.Td>
                 </Table.Tr>
@@ -148,12 +155,17 @@ onMounted(() => {
                   <Table.Tr class="[&_td]:last:border-b-0">
                     <Table.Td class="py-4 border-dashed dark:bg-darkmode-600 text-center">
                       <div href="" class="font-medium whitespace-nowrap">
-                        {{ program.start }}
+                        {{ program.user.name }}
                       </div>
                     </Table.Td>
                     <Table.Td class="py-4 border-dashed dark:bg-darkmode-600 text-center">
                       <div href="" class="font-medium whitespace-nowrap">
-                        {{ program.end }}
+                        {{ formatDateToDDMMYYYY(program.start) }}
+                      </div>
+                    </Table.Td>
+                    <Table.Td class="py-4 border-dashed dark:bg-darkmode-600 text-center">
+                      <div href="" class="font-medium whitespace-nowrap">
+                        {{ formatDateToDDMMYYYY(program.end) }}
                       </div>
                     </Table.Td>
                     <Table.Td class="py-4 border-dashed dark:bg-darkmode-600">
@@ -176,7 +188,7 @@ onMounted(() => {
                               <Lucide icon="CheckSquare" class="w-4 h-4 mr-2" />
                               Editar
                             </Menu.Item>
-                            <Menu.Item :class="`${program.status ? 'text-danger' : 'text-primary'}`" @click="() => {
+                            <Menu.Item :class="`${!program.status ? 'text-danger' : 'text-primary'}`" @click="() => {
                               program.status = !program.status
                             }">
                               <Lucide icon="RefreshCw" class="w-4 h-4 mr-2" />

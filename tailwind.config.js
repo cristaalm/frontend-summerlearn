@@ -97,7 +97,24 @@ module.exports = {
           '--color-pending': toRGB(colors.orange['600']),
           '--color-danger': toRGB(colors.red['600']),
           '--color-light': toRGB(colors.emerald['100']), // Tonalidad más suave de esmeralda
-          '--color-dark': toRGB(colors.emerald['900']) // Tonalidad muy oscura de esmeralda
+          '--color-dark': toRGB(colors.emerald['900']), // Tonalidad muy oscura de esmeralda
+
+          // Tonalidades agregadas
+          '--color-blue-light': toRGB('#7BD3EA'), // Azul claro
+          '--color-blue': toRGB('#5BA3B8'), // Azul intermedio
+          '--color-blue-dark': toRGB('#3A7386'), // Azul oscuro
+
+          '--color-green-light': toRGB('#A1EEBD'), // Verde claro
+          '--color-green': toRGB('#7FCC95'), // Verde intermedio
+          '--color-green-dark': toRGB('#5EAA6D'), // Verde oscuro
+
+          '--color-yellow-light': toRGB('#F6F7C4'), // Amarillo claro
+          '--color-yellow': toRGB('#D2D49B'), // Amarillo intermedio
+          '--color-yellow-dark': toRGB('#AEAF73'), // Amarillo oscuro
+
+          '--color-red-light': toRGB('#F6D6D6'), // Rojo claro
+          '--color-red': toRGB('#D2AEAE'), // Rojo intermedio
+          '--color-red-dark': toRGB('#AE8787') // Rojo oscuro
         },
         // Default dark-mode colors
         '.dark': {
