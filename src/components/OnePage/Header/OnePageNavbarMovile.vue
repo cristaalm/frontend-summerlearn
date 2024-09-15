@@ -2,71 +2,41 @@
   <div class="md:hidden flex flex-col w-full text-black">
     <div class="w-full flex flex-row justify-between px-10">
       <div class="w-[100px]">
-        <img
-          src="/LogoPI.png"
-          alt="Logo"
-          class="w-[100px] m-auto hover:scale-105 transition-all duration-300"
-        />
+        <img src="/LogoPI.png" alt="Logo" class="w-[100px] m-auto hover:scale-105 transition-all duration-300" />
       </div>
       <div class="flex flex-row justify-center items-center">
         <button>
-          <Menu
-            class="w-12 hover:scale-105 transition-all duration-300"
-            v-if="!enableMenu"
-            @click="toggleMenu"
-          />
-          <Close
-            class="w-12 hover:scale-105 transition-all duration-300"
-            v-else
-            @click="toggleMenu"
-          />
+          <Menu class="w-12 hover:scale-105 transition-all duration-300" v-if="!enableMenu" @click="toggleMenu" />
+          <Close class="w-12 hover:scale-105 transition-all duration-300" v-else @click="toggleMenu" />
         </button>
       </div>
     </div>
-    <div
-      class="w-full h-[0px] overflow-hidden flex flex-col gap-5 justify-between"
-      ref="navbarMenu"
-    >
+    <div class="w-full h-[0px] overflow-hidden flex flex-col gap-5 justify-between" ref="navbarMenu">
       <div class="flex flex-col gap-4">
-        <a
-          href="#home"
-          @click="toggleMenu"
-          :class="`h-full flex flex-row justify-center items-center text-4xl py-4 transition-all duration-300 text-black ${topScroll ? ' hover:text-emerald-600 hover:bg-emerald-200' : ' hover:text-emerald-600 hover:bg-emerald-200'}`"
-        >
+        <a href="#home" @click="toggleMenu"
+          :class="`h-full flex flex-row justify-center items-center text-4xl py-4 transition-all duration-300 text-black hover:text-blue hover:bg-blue/10`">
           {{ $t('navbar.home') }}
         </a>
-        <a
-          href="#mission"
-          @click="toggleMenu"
-          :class="`h-full flex flex-row justify-center items-center text-4xl py-4 transition-all duration-300 text-black ${topScroll ? ' hover:text-emerald-600 hover:bg-emerald-200' : ' hover:text-emerald-600 hover:bg-emerald-200'}`"
-        >
+        <a href="#mission" @click="toggleMenu"
+          :class="`h-full flex flex-row justify-center items-center text-4xl py-4 transition-all duration-300 text-black hover:text-green hover:bg-green/10`">
           {{ $t('navbar.mission') }}
         </a>
-        <a
-          href="#impact"
-          @click="toggleMenu"
-          :class="`h-full flex flex-row justify-center items-center text-4xl py-4 transition-all duration-300 text-black ${topScroll ? ' hover:text-emerald-600 hover:bg-emerald-200' : ' hover:text-emerald-600 hover:bg-emerald-200'}`"
-        >
+        <a href="#impact" @click="toggleMenu"
+          :class="`h-full flex flex-row justify-center items-center text-4xl py-4 transition-all duration-300 text-black hover:text-yellow hover:bg-yellow/10`">
           {{ $t('navbar.impact') }}
         </a>
-        <a
-          href="#volunteer"
-          @click="toggleMenu"
-          :class="`h-full flex flex-row justify-center items-center text-4xl py-4 transition-all duration-300 text-black ${topScroll ? ' hover:text-emerald-600 hover:bg-emerald-200' : ' hover:text-emerald-600 hover:bg-emerald-200'}`"
-        >
+        <a href="#volunteer" @click="toggleMenu"
+          :class="`h-full flex flex-row justify-center items-center text-4xl py-4 transition-all duration-300 text-black hover:text-red hover:bg-red/10`">
           {{ $t('navbar.volunteer') }}
         </a>
       </div>
       <div class="flex flex-col justify-center items-center gap-6">
-        <RouterLink
-          to="/login"
-          :class="`px-6 py-2 text-2xl transition-all duration-300 ${topScroll ? ' hover:text-emerald-300' : 'text-black hover:text-emerald-500'}`"
-        >
+        <RouterLink to="/login"
+          :class="`px-6 py-2 text-2xl transition-all duration-300 ${topScroll ? ' hover:text-emerald-300' : 'text-black hover:text-emerald-500'}`">
           {{ $t('navbar.logIn') }}
         </RouterLink>
         <button
-          class="px-6 py-2 text-3xl bg-rose-500 hover:bg-rose-400 transition-all duration-300 rounded-2xl text-white"
-        >
+          class="px-6 py-2 text-3xl bg-rose-500 hover:bg-rose-400 transition-all duration-300 rounded-2xl text-white">
           {{ $t('navbar.donate') }}
         </button>
       </div>

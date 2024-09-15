@@ -60,6 +60,26 @@ module.exports = {
           700: 'rgb(var(--color-darkmode-700) / <alpha-value>)',
           800: 'rgb(var(--color-darkmode-800) / <alpha-value>)',
           900: 'rgb(var(--color-darkmode-900) / <alpha-value>)'
+        },
+        blue: {
+          light: 'rgb(var(--color-blue-light) / <alpha-value>)',
+          DEFAULT: 'rgb(var(--color-blue) / <alpha-value>)',
+          dark: 'rgb(var(--color-blue-dark) / <alpha-value>)'
+        },
+        green: {
+          light: 'rgb(var(--color-green-light) / <alpha-value>)',
+          DEFAULT: 'rgb(var(--color-green) / <alpha-value>)',
+          dark: 'rgb(var(--color-green-dark) / <alpha-value>)'
+        },
+        yellow: {
+          light: 'rgb(var(--color-yellow-light) / <alpha-value>)',
+          DEFAULT: 'rgb(var(--color-yellow) / <alpha-value>)',
+          dark: 'rgb(var(--color-yellow-dark) / <alpha-value>)'
+        },
+        red: {
+          light: 'rgb(var(--color-red-light) / <alpha-value>)',
+          DEFAULT: 'rgb(var(--color-red) / <alpha-value>)',
+          dark: 'rgb(var(--color-red-dark) / <alpha-value>)'
         }
       },
       fontFamily: {

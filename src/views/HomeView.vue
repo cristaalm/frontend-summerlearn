@@ -12,7 +12,7 @@ import Footer from '@/components/OnePage/OnePageFooter.vue'
     <HeaderHome />
   </header>
 
-  <main class="flex flex-col w-full mt-[100px] md:mt-0">
+  <main class="flex flex-col w-full mt-[100px] md:mt-0 ">
     <!-- Here we are importing the components and rendering them in the main section of the HomeView component. -->
 
     <Hero />
