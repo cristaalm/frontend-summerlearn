@@ -1,12 +1,42 @@
-export function useValidationFunctions({ valid, password, password_confirm, status }) {
+import { watch } from 'vue'
+import { usePasswordSecurity } from '@/hooks/register/usePasswordSecurity'
+
+export function useValidationFunctions({
+  firstName,
+  lastName,
+  email,
+  phone,
+  birthdate,
+  perfil,
+  terms,
+  password,
+  password_confirm,
+  valid,
+  status
+}) {
   const validate = () => {
     const validForm = Object.keys(status.value).every((key) => status.value[key].value)
     valid.value = validForm
   }
 
+  const { validatePassword } = usePasswordSecurity({ status, validate })
+
   const validateText = (e) => {
     const { name, value } = e.target
-    const context = e.target.dataset.context
+
+    if (name === 'phone') {
+      if (!/^[0-9]+$/.test(value)) {
+        if (value === '') {
+          status.value.phone.lastPhone = ''
+          return
+        }
+        phone.value = status.value.phone.lastPhone
+        return
+      } else {
+        status.value.phone.lastPhone = value
+      }
+    }
+
     if (status.value[name].Regex.test(value)) {
       status.value[name].value = true
       status.value[name].error = false
@@ -14,7 +44,7 @@ export function useValidationFunctions({ valid, password, password_confirm, stat
     } else {
       status.value[name].value = false
       status.value[name].error = true
-      status.value[name].menssage = `El campo ${context} no es válido`
+      status.value[name].menssage = `El campo ${status.value[name].name} no es válido.`
     }
     if (name === 'password_confirm') {
       status.value.password_confirm.modified = true
@@ -41,13 +71,14 @@ export function useValidationFunctions({ valid, password, password_confirm, stat
         } else {
           status.value[name].error = true
           status.value[name].value = false
-          status.value[name].menssage = 'Debe tener al menos 18 años'
+          const message = age < 18 ? 'Debe ser mayor de edad.' : 'La fecha no es válida.'
+          status.value[name].menssage = message
         }
       }
     } else {
       status.value[name].value = false
       status.value[name].error = true
-      status.value[name].menssage = 'La fecha no es válida'
+      status.value[name].menssage = 'La fecha no es válida.'
     }
     validate()
   }
@@ -63,7 +94,7 @@ export function useValidationFunctions({ valid, password, password_confirm, stat
     } else if (status.value.password_confirm.modified) {
       status.value.password_confirm.value = false
       status.value.password_confirm.error = true
-      status.value.password_confirm.menssage = 'Las contraseñas no coinciden'
+      status.value.password_confirm.menssage = 'Las contraseñas no coinciden.'
     }
     validate()
   }
@@ -77,7 +108,7 @@ export function useValidationFunctions({ valid, password, password_confirm, stat
     } else {
       status.value[name].value = false
       status.value[name].error = true
-      status.value[name].menssage = `El perfil no es válido`
+      status.value[name].menssage = `El perfil no es válido.`
     }
     validate()
   }
@@ -91,10 +122,89 @@ export function useValidationFunctions({ valid, password, password_confirm, stat
     } else {
       status.value[name].value = false
       status.value[name].error = true
-      status.value[name].menssage = 'Debe aceptar los términos y condiciones'
+      status.value[name].menssage = 'Debe aceptar los términos y condiciones.'
     }
     validate()
   }
+
+  watch(
+    [firstName, lastName, email, phone, birthdate, perfil, terms, password, password_confirm],
+    () => {
+      validate()
+    }
+  )
+
+  watch(
+    () => status.value.password_confirm.modified,
+    () => {
+      validatePasswordComfirm({ target: { name: 'password_confirm' } })
+    }
+  )
+
+  watch(
+    () => password.value,
+    () => {
+      validatePassword({ target: { name: 'password', value: password.value } })
+      validatePasswordComfirm({ target: { name: 'password_confirm' } })
+    }
+  )
+
+  watch(
+    () => password_confirm.value,
+    () => {
+      validatePassword({ target: { name: 'password', value: password.value } })
+      validatePasswordComfirm({ target: { name: 'password_confirm' } })
+    }
+  )
+
+  watch(
+    () => terms.value,
+    () => {
+      validateTerms({ target: { name: 'terms', checked: terms.value } })
+    }
+  )
+
+  watch(
+    () => birthdate.value,
+    () => {
+      validateDate({ target: { name: 'birthdate', value: birthdate.value } })
+    }
+  )
+
+  watch(
+    () => perfil.value,
+    () => {
+      validatePerfil({ target: { name: 'perfil', value: perfil.value } })
+    }
+  )
+
+  watch(
+    () => email.value,
+    () => {
+      validateText({ target: { name: 'email', value: email.value } })
+    }
+  )
+
+  watch(
+    () => firstName.value,
+    () => {
+      validateText({ target: { name: 'firstName', value: firstName.value } })
+    }
+  )
+
+  watch(
+    () => lastName.value,
+    () => {
+      validateText({ target: { name: 'lastName', value: lastName.value } })
+    }
+  )
+
+  watch(
+    () => status.value,
+    () => {
+      validate()
+    }
+  )
 
   return {
     validate,

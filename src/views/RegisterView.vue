@@ -1,6 +1,5 @@
 <script setup>
 import { useValidationFunctions } from '@/hooks/register/useValidationFunctions'
-import { usePasswordSecurity } from '@/hooks/register/usePasswordSecurity'
 import { FormCheck, FormInput, FormLabel } from '@/components/base/Form'
 import { status } from '@/hooks/register/useStatus'
 import LoadingIcon from '@/components/base/LoadingIcon'
@@ -10,10 +9,11 @@ import Button from '@/components/base/Button'
 import { useRouter } from 'vue-router'
 
 const { password, firstName, lastName, email, phone, birthdate, perfil, terms, password_confirm, valid } = useRefs()
-const { validateText, validateDate, validateTerms, validatePasswordComfirm, validatePerfil, validate } = useValidationFunctions({ valid, password, password_confirm, status })
-const { validatePassword } = usePasswordSecurity({ status, validate })
+const { validateText, validate } = useValidationFunctions({ firstName, lastName, email, phone, birthdate, perfil, terms, password, password_confirm, valid, status })
 const { registerUser, loading } = useAuth({ password, firstName, lastName, email, phone, birthdate, perfil, valid, validate })
 const router = useRouter()
+
+
 
 const handleSubmit = () => {
   if (valid.value) {
@@ -39,49 +39,45 @@ const handleSubmit = () => {
           </div>
           <div class="mt-6">
             <FormLabel>Nombre <span class="text-red-600 bold">*</span></FormLabel>
-            <FormInput type="text" name="firstName" data-context="Nombre"
+            <FormInput type="text" name="firstName"
               :class="`block px-4 py-3.5 border-[2px] rounded-[0.6rem]  ${status.firstName.error ? 'border-red-300/80' : 'border-slate-300/80'}`"
-              v-model="firstName" @input="validateText" />
+              v-model="firstName" />
             <div class="flex flex-row text-red-600 p-2" v-if="status.firstName.menssage">
               {{ status.firstName.menssage }}
             </div>
             <FormLabel class="mt-5">Apellido <span class="text-red-600 bold">*</span></FormLabel>
-            <FormInput type="text" name="lastName" data-context="Apellidos"
+            <FormInput type="text" name="lastName"
               :class="`block px-4 py-3.5 border-[2px] rounded-[0.6rem] ${status.lastName.error ? 'border-red-300/80' : 'border-slate-300/80'}`"
-              v-model="lastName" @input="validateText" />
+              v-model="lastName" />
             <div class="flex flex-row text-red-600 p-2" v-if="status.lastName.menssage">
               {{ status.lastName.menssage }}
             </div>
             <FormLabel class="mt-5">Correo electrónico <span class="text-red-600 bold">*</span></FormLabel>
-            <FormInput type="text" name="email" data-context="Correo electrónico"
+            <FormInput type="text" name="email"
               :class="`block px-4 py-3.5 border-[2px] rounded-[0.6rem] ${status.email.error ? 'border-red-300/80' : 'border-slate-300/80'}`"
-              v-model="email" @input="validateText" />
+              v-model="email" />
             <div class="flex flex-row text-red-600 p-2" v-if="status.email.menssage">
               {{ status.email.menssage }}
             </div>
             <FormLabel class="mt-5">Teléfono celular <span class="text-red-600 bold">*</span></FormLabel>
-            <FormInput type="number" name="phone" data-context="Telefono"
+            <FormInput type="text" name="phone"
               :class="`block px-4 py-3.5 border-[2px] rounded-[0.6rem] ${status.phone.error ? 'border-red-300/80' : 'border-slate-300/80'}`"
               v-model="phone" @input="validateText" />
             <div class="flex flex-row text-red-600 p-2" v-if="status.phone.menssage">
               {{ status.phone.menssage }}
             </div>
             <FormLabel class="mt-5">Fecha de nacimiento <span class="text-red-600 bold">*</span></FormLabel>
-            <FormInput type="date" name="birthdate" data-context="Fecha de nacimiento"
+            <FormInput type="date" name="birthdate"
               :class="`block px-4 py-3.5 border-[2px] rounded-[0.6rem] ${status.birthdate.error ? 'border-red-300/80' : 'border-slate-300/80'}`"
-              v-model="birthdate" @input="validateDate" />
+              v-model="birthdate" />
             <div class="flex flex-row text-red-600 p-2" v-if="status.birthdate.menssage">
               {{ status.birthdate.menssage }}
             </div>
 
             <FormLabel class="mt-5">Contraseña <span class="text-red-600 bold">*</span></FormLabel>
-            <FormInput type="password" name="password" data-context="Contraseña"
+            <FormInput type="password" name="password"
               :class="`block px-4 py-3.5 border-[2px] rounded-[0.6rem] ${status.password.error ? 'border-red-300/80' : 'border-slate-300/80'}`"
-              placeholder="************" v-model="password" @input="(e) => {
-                validatePassword(e)
-                validatePasswordComfirm(e)
-              }
-                " />
+              placeholder="************" v-model="password" />
             <div class="flex flex-row text-red-600 p-2" v-if="status.password.menssage">
               {{ status.password.menssage }}
             </div>
@@ -108,17 +104,17 @@ const handleSubmit = () => {
               </ul>
             </div>
             <FormLabel class="mt-5">Confirmación de contraseña <span class="text-red-600 bold">*</span></FormLabel>
-            <FormInput type="password" name="password_confirm" data-context="Confirmación de contraseña"
+            <FormInput type="password" name="password_confirm"
               :class="`block px-4 py-3.5 border-[2px] rounded-[0.6rem] ${status.password_confirm.error ? 'border-red-300/80' : 'border-slate-300/80'}`"
-              placeholder="************" v-model="password_confirm" @input="validatePasswordComfirm" />
+              placeholder="************" v-model="password_confirm" />
             <div class="flex flex-row text-red-600 p-2" v-if="status.password_confirm.menssage">
               {{ status.password_confirm.menssage }}
             </div>
             <!-- El perfil es un select -->
             <FormLabel class="mt-5">Perfil <span class="text-red-600 bold">*</span></FormLabel>
-            <select name="perfil" data-context="Perfil"
+            <select name="perfil"
               :class="`block w-full px-4 py-3.5 border-[2px] rounded-[0.6rem] ${status.perfil.error ? 'border-red-300/80' : 'border-slate-300/80'}`"
-              v-model="perfil" @change="validatePerfil">
+              v-model="perfil">
               <option value="" selected class="text-gray-700">Seleccionar perfil</option>
               <option value="5" class="text-black">Beneficiario</option>
               <option value="4" class="text-black">Voluntario</option>
@@ -129,8 +125,7 @@ const handleSubmit = () => {
             </div>
             <div
               :class="`flex items-center mt-5 text-xs  sm:text-sm ${status.terms.error ? 'text-red-600' : 'text-slate-500'}`">
-              <FormCheck.Input name="terms" type="checkbox" class="mr-2 border" v-model="terms"
-                @change="validateTerms" />
+              <FormCheck.Input name="terms" type="checkbox" class="mr-2 border" v-model="terms" />
               <label class="cursor-pointer select-none" htmlFor="remember-me">
                 Acepto los términos y condiciones
               </label>
@@ -141,7 +136,7 @@ const handleSubmit = () => {
             </div>
             <div class="mt-5 text-center xl:mt-8 xl:text-left">
               <Button @click="handleSubmit" :disabled="!valid" variant="primary" rounded
-                :class="`bg-gradient-to-r transition-all scale-105 duration-200 w-full py-3.5 xl:mr-3 ${valid && !loading ? 'from-theme-1 to-theme-2 hover:scale-100 select-none cursor-pointer' : 'from-gray-600 to-gray-600 select-none cursor-default'}`">
+                :class="`bg-gradient-to-r transition-all border-none scale-105 duration-200 w-full py-3.5 xl:mr-3 ${valid && !loading ? 'from-green-dark to-green hover:scale-100 select-none cursor-pointer' : 'from-gray-600 to-gray-600  cursor-default'}`">
                 <LoadingIcon v-if="loading" icon="three-dots" class="w-8 h-5" color="white" />
                 {{ !loading ? 'Registrarse' : '' }}
               </Button>
@@ -160,7 +155,7 @@ const handleSubmit = () => {
     ]"></div>
     <div :class="[
       'h-full col-span-7 2xl:col-span-8 lg:relative',
-      'before:content-[\'\'] before:absolute before:lg:-ml-10 before:left-0 before:inset-y-0 before:bg-gradient-to-b before:from-theme-1 before:to-theme-2 before:w-screen before:lg:w-[800%]',
+      'before:content-[\'\'] before:absolute before:lg:-ml-10 before:left-0 before:inset-y-0 before:bg-gradient-to-b before:from-green-dark before:to-green-dark before:w-screen before:lg:w-[800%]',
       'after:content-[\'\'] after:absolute after:inset-y-0 after:left-0 after:w-screen after:lg:w-[800%] after:bg-texture-white after:bg-fixed after:bg-center after:lg:bg-[25rem_-25rem] after:bg-no-repeat'
     ]">
       <div class="sticky top-0 z-10 flex-col justify-center hidden h-screen ml-16 lg:flex xl:ml-28 2xl:ml-36">
