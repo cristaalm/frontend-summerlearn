@@ -20,7 +20,6 @@ const router = useRouter();
 
 onMounted(() => {
   loadAreas();
-  console.log(loadAreas())
 });
 
 
