@@ -6,12 +6,14 @@ import { FormInput, FormSelect } from "@/components/base/Form";
 import Button from "@/components/base/Button";
 import Table from "@/components/base/Table";
 import { onMounted } from 'vue'
+import { useRouter } from "vue-router";
 import { useBills } from "@/hooks/bills/useBills";
 
+const router = useRouter();
 const { bills, loading, loadBills } = useBills();
 
 onMounted(() => {
-  loadBills();
+    loadBills();
 });
 
 
@@ -25,10 +27,10 @@ onMounted(() => {
                     Gastos
                 </div>
                 <div class="flex flex-col sm:flex-row gap-x-3 gap-y-2 md:ml-auto">
-                    <Button variant="primary"
+                    <Button variant="primary" @click="router.push({ name: 'addExpense' })"
                         class="group-[.mode--light]:!bg-white/[0.12] group-[.mode--light]:!text-slate-200 group-[.mode--light]:!border-transparent">
                         <Lucide icon="DollarSign" class="stroke-[1.3] w-4 h-4 mr-2" /> Nueva Donacion
-                        
+
                     </Button>
                 </div>
             </div>
@@ -39,8 +41,7 @@ onMounted(() => {
                             <div class="relative">
                                 <Lucide icon="Search"
                                     class="absolute inset-y-0 left-0 z-10 w-4 h-4 my-auto ml-3 stroke-[1.3] text-slate-500" />
-                                <FormInput type="text" placeholder="Buscar..."
-                                    class="pl-9 sm:w-64 rounded-[0.5rem]" />
+                                <FormInput type="text" placeholder="Buscar..." class="pl-9 sm:w-64 rounded-[0.5rem]" />
                             </div>
                         </div>
                         <div class="flex flex-col sm:flex-row gap-x-3 gap-y-2 sm:ml-auto">
@@ -90,14 +91,14 @@ onMounted(() => {
                             </Table.Thead>
 
 
-                            <Table.Tbody v-if="loading" >
+                            <Table.Tbody v-if="loading">
                                 <Table.Tr class="[&_td]:last:border-b-0">
                                     <Table.Td colspan="8" class="py-8 text-center text-xl font-bold text-green-500">
                                         Cargando...
                                     </Table.Td>
                                 </Table.Tr>
                             </Table.Tbody>
-                            
+
                             <!-- <Table.Tbody v-if="!loading" >
                                 <template v-for="(product, Key) in products" :key="Key">
                                     <Table.Tr class="[&_td]:last:border-b-0">
@@ -106,10 +107,10 @@ onMounted(() => {
                                         </Table.Td>
                                     </Table.Tr>
                                 </template>
-                            </Table.Tbody> -->
+</Table.Tbody> -->
 
 
-                            <Table.Tbody v-if="!loading" >
+                            <Table.Tbody v-if="!loading">
                                 <template v-for="(bill, Key) in bills" :key="Key">
                                     <Table.Tr class="[&_td]:last:border-b-0">
                                         <Table.Td class="py-4 border-dashed dark:bg-darkmode-600">

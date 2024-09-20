@@ -148,6 +148,14 @@ const router = createRouter({
             )
         },
         {
+          path: '/dashboard/expenses/add',
+          name: 'addExpense',
+          component: () =>
+            import('@/views/dashboard/expenses/addExpense.vue').catch(
+              () => import('@/views/dashboard/notFoundView/NotFoundView.vue')
+            )
+        },
+        {
           path: '/dashboard/Subscriptions',
           name: 'subscriptions',
           component: () =>
