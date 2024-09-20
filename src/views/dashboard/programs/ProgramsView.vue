@@ -8,8 +8,7 @@ import Table from "@/components/base/Table";
 import LoadingIcon from "@/components/base/LoadingIcon";
 import Button from "@/components/base/Button";
 import { useFilter, usePagination, usePrograms } from '@/hooks/programs/'
-import { onMounted, ref } from 'vue'
-import { formatDate } from "@/utils/helper";
+import { onMounted } from 'vue'
 
 const { programs, loading, error, loadPrograms } = usePrograms();
 const { searchQuery, selectedStatus, filteredItems, activeFilters } = useFilter(programs);
@@ -76,8 +75,8 @@ function formatDateToDDMMYYYY(dateString) {
                       <div class="text-left text-slate-500">Status</div>
                       <FormSelect v-model="selectedStatus" class="flex-1 mt-2">
                         <option :value="null" selected>Todos</option>
-                        <option value="1">Activo</option>
-                        <option value="0">Inactivo</option>
+                        <option :value="1">Activo</option>
+                        <option :value="0">Inactivo</option>
                       </FormSelect>
                     </div>
                     <div class="flex items-center mt-4">
