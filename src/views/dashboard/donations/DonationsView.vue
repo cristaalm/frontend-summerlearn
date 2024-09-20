@@ -7,13 +7,15 @@ import ReportLineChart from "@/components/ReportLineChart";
 import ReportDonutChart3 from "@/components/ReportDonutChart3";
 import Button from "@/components/base/Button";
 import { onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 import { useDonations } from '@/hooks/donations/'
+import LoadingIcon from '@/components/base/LoadingIcon'
 
+const router = useRouter()
 const { barDonations, donations, loading, loadDonations } = useDonations();
 
-
 onMounted(() => {
-  loadDonations();
+    loadDonations();
 });
 
 
@@ -28,7 +30,7 @@ onMounted(() => {
                 </div>
 
                 <div class="flex flex-col sm:flex-row gap-x-3 gap-y-2 md:ml-auto">
-                    <Button variant="primary"
+                    <Button variant="primary" @click="() => router.push({ name: 'addDonation' })"
                         class="group-[.mode--light]:!bg-white/[0.12] group-[.mode--light]:!text-slate-200 group-[.mode--light]:!border-transparent">
                         <Lucide icon="DollarSign" class="stroke-[1.3] w-4 h-4 mr-2" />
                         Nueva Donacion
@@ -100,18 +102,16 @@ onMounted(() => {
                             </div>
                         </div>
                         <div class="relative mt-5 mb-6 overflow-hidden">
-                            
+
                             <div
                                 class="absolute inset-0 h-px my-auto tracking-widest text-slate-400/60 whitespace-nowrap leading-[0] text-xs">
                                 .......................................................................
                             </div>
 
-                            <ReportLineChart class="relative z-10 -ml-1.5" 
-                                :height="100" 
-                                :index="2"
+                            <ReportLineChart class="relative z-10 -ml-1.5" :height="100" :index="2"
                                 :borderColor="() => getColor('primary')"
                                 :backgroundColor="() => getColor('primary', 0.3)" />
-                            </div>
+                        </div>
 
                         <div class="flex flex-wrap items-center justify-center gap-y-3 gap-x-5">
                             <div class="flex items-center">
@@ -126,7 +126,7 @@ onMounted(() => {
                     </div>
 
                     <!--? Card -->
-<!-- 
+                    <!-- 
                     <div class="flex flex-col col-span-12 p-5 md:col-span-6 2xl:col-span-3 box box--stacked">
                         <Menu class="absolute top-0 right-0 mt-5 mr-5">
                             <Menu.Button class="w-5 h-5 text-slate-500">
@@ -223,28 +223,48 @@ onMounted(() => {
                         <div
                             class="col-span-4 md:col-span-2 xl:col-span-1 p-5 border border-dashed rounded-[0.6rem] border-slate-300/80 box shadow-sm">
                             <div class="text-base text-slate-500">Total de Donaciones</div>
-                            <div class="mt-1.5 text-2xl font-medium">{{ !loading ? `${barDonations.totalDonated} veces` : 'Cargando...'  }}</div>
+                            <div class="mt-1.5 text-2xl font-medium">
+                                <div v-if="loading" class="w-full h-4 mt-4">
+                                    <LoadingIcon icon="three-dots" color="gray" />
+                                </div>
+                                {{ !loading ? `${barDonations.totalDonated} veces` : '' }}
+                            </div>
                             <div class="absolute inset-y-0 right-0 flex flex-col justify-center mr-5">
                             </div>
                         </div>
                         <div
                             class="col-span-4 md:col-span-2 xl:col-span-1 p-5 border border-dashed rounded-[0.6rem] border-slate-300/80 box shadow-sm">
                             <div class="text-base text-slate-500">Dinero Donado</div>
-                            <div class="mt-1.5 text-2xl font-medium"> {{ !loading ? `$ ${barDonations.totalDonations}` : 'Cargando...' }} </div>
+                            <div class="mt-1.5 text-2xl font-medium">
+                                <div v-if="loading" class="w-full h-4 mt-4">
+                                    <LoadingIcon icon="three-dots" color="gray" />
+                                </div>
+                                {{ !loading ? `$ ${barDonations.totalDonations}` : '' }}
+                            </div>
                             <div class="absolute inset-y-0 right-0 flex flex-col justify-center mr-5">
                             </div>
                         </div>
                         <div
                             class="col-span-4 md:col-span-2 xl:col-span-1 p-5 border border-dashed rounded-[0.6rem] border-slate-300/80 box shadow-sm">
                             <div class="text-base text-slate-500">Ultima Cantidad Donada</div>
-                            <div class="mt-1.5 text-2xl font-mediumm"> {{ !loading ? `$ ${barDonations.lastDonationAmount}` : 'Cargando...' }}</div>
+                            <div class="mt-1.5 text-2xl font-medium">
+                                <div v-if="loading" class="w-full h-4 mt-4">
+                                    <LoadingIcon icon="three-dots" color="gray" />
+                                </div>
+                                {{ !loading ? `$ ${barDonations.lastDonationAmount}` : '' }}
+                            </div>
                             <div class="absolute inset-y-0 right-0 flex flex-col justify-center mr-5">
                             </div>
                         </div>
                         <div
                             class="col-span-4 md:col-span-2 xl:col-span-1 p-5 border border-dashed rounded-[0.6rem] border-slate-300/80 box shadow-sm">
                             <div class="text-base text-slate-500">Ultima Fecha de Donacion</div>
-                            <div class="mt-1.5 text-2xl font-mediumm"> {{ !loading ? barDonations.lastDonationDate : 'Cargando...' }} </div>
+                            <div class="mt-1.5 text-2xl font-medium">
+                                <div v-if="loading" class="w-full h-4 mt-4">
+                                    <LoadingIcon icon="three-dots" color="gray" />
+                                </div>
+                                {{ !loading ? barDonations.lastDonationDate : '' }}
+                            </div>
                             <div class="absolute inset-y-0 right-0 flex flex-col justify-center mr-5">
                             </div>
                         </div>

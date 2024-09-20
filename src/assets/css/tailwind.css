@@ -5039,10 +5039,6 @@ select {
   margin-left: -0.5rem;
 }
 
-.-ml-3 {
-  margin-left: -0.75rem;
-}
-
 .-ml-\[275px\] {
   margin-left: -275px;
 }
@@ -5593,6 +5589,10 @@ select {
 
 .w-screen {
   width: 100vw;
+}
+
+.w-\[32px\!important\] {
+  width: 32px !important;
 }
 
 .min-w-0 {
@@ -6187,6 +6187,16 @@ select {
   border-color: rgb(255 255 255 / 0.15);
 }
 
+.border-gray-500 {
+  --tw-border-opacity: 1;
+  border-color: rgb(107 114 128 / var(--tw-border-opacity));
+}
+
+.border-green {
+  --tw-border-opacity: 1;
+  border-color: rgb(var(--color-green) / var(--tw-border-opacity));
+}
+
 .border-b-primary {
   --tw-border-opacity: 1;
   border-bottom-color: rgb(var(--color-primary) / var(--tw-border-opacity));
@@ -6424,6 +6434,12 @@ select {
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
 }
 
+.from-green-dark {
+  --tw-gradient-from: rgb(var(--color-green-dark) / 1) var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(var(--color-green-dark) / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
 .from-slate-200\/70 {
   --tw-gradient-from: rgb(226 232 240 / 0.7) var(--tw-gradient-from-position);
   --tw-gradient-to: rgb(226 232 240 / 0) var(--tw-gradient-to-position);
@@ -6448,18 +6464,6 @@ select {
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
 }
 
-.from-green-light {
-  --tw-gradient-from: rgb(var(--color-green-light) / 1) var(--tw-gradient-from-position);
-  --tw-gradient-to: rgb(var(--color-green-light) / 0) var(--tw-gradient-to-position);
-  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
-}
-
-.from-green-dark {
-  --tw-gradient-from: rgb(var(--color-green-dark) / 1) var(--tw-gradient-from-position);
-  --tw-gradient-to: rgb(var(--color-green-dark) / 0) var(--tw-gradient-to-position);
-  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
-}
-
 .via-theme-2\/50 {
   --tw-gradient-to: rgb(var(--color-theme-2) / 0)  var(--tw-gradient-to-position);
   --tw-gradient-stops: var(--tw-gradient-from), rgb(var(--color-theme-2) / 0.5) var(--tw-gradient-via-position), var(--tw-gradient-to);
@@ -6473,8 +6477,8 @@ select {
   --tw-gradient-to: #4b5563 var(--tw-gradient-to-position);
 }
 
-.to-green-light {
-  --tw-gradient-to: rgb(var(--color-green-light) / 1) var(--tw-gradient-to-position);
+.to-green {
+  --tw-gradient-to: rgb(var(--color-green) / 1) var(--tw-gradient-to-position);
 }
 
 .to-slate-50 {
@@ -6485,16 +6489,8 @@ select {
   --tw-gradient-to: rgb(var(--color-theme-1) / 0.85) var(--tw-gradient-to-position);
 }
 
-.to-theme-2 {
-  --tw-gradient-to: rgb(var(--color-theme-2) / 1) var(--tw-gradient-to-position);
-}
-
 .to-theme-2\/80 {
   --tw-gradient-to: rgb(var(--color-theme-2) / 0.8) var(--tw-gradient-to-position);
-}
-
-.to-green {
-  --tw-gradient-to: rgb(var(--color-green) / 1) var(--tw-gradient-to-position);
 }
 
 .fill-black {
@@ -7112,6 +7108,11 @@ select {
   color: rgb(107 114 128 / var(--tw-text-opacity));
 }
 
+.text-green {
+  --tw-text-opacity: 1;
+  color: rgb(var(--color-green) / var(--tw-text-opacity));
+}
+
 .opacity-0 {
   opacity: 0;
 }
@@ -7573,13 +7574,6 @@ select {
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
 }
 
-.before\:from-theme-1::before {
-  content: var(--tw-content);
-  --tw-gradient-from: rgb(var(--color-theme-1) / 1) var(--tw-gradient-from-position);
-  --tw-gradient-to: rgb(var(--color-theme-1) / 0) var(--tw-gradient-to-position);
-  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
-}
-
 .before\:from-theme-1\/80::before {
   content: var(--tw-content);
   --tw-gradient-from: rgb(var(--color-theme-1) / 0.8) var(--tw-gradient-from-position);
@@ -7591,13 +7585,6 @@ select {
   content: var(--tw-content);
   --tw-gradient-from: rgb(255 255 255 / 0.1) var(--tw-gradient-from-position);
   --tw-gradient-to: rgb(255 255 255 / 0) var(--tw-gradient-to-position);
-  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
-}
-
-.before\:from-green::before {
-  content: var(--tw-content);
-  --tw-gradient-from: rgb(var(--color-green) / 1) var(--tw-gradient-from-position);
-  --tw-gradient-to: rgb(var(--color-green) / 0) var(--tw-gradient-to-position);
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
 }
 
