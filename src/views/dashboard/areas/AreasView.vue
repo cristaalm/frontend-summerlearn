@@ -100,6 +100,10 @@ onMounted(() => {
                   </Table.Td>
                   <Table.Td
                     class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500">
+                    Encargado de area
+                  </Table.Td>
+                  <Table.Td
+                    class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500">
                     Estado
                   </Table.Td>
                   <Table.Td
@@ -145,6 +149,11 @@ onMounted(() => {
                     <Table.Td class="py-4 border-dashed dark:bg-darkmode-600 text-center">
                       <div href="" class="font-medium whitespace-nowrap">
                         {{ area.name }}
+                      </div>
+                    </Table.Td>
+                    <Table.Td class="py-4 border-dashed dark:bg-darkmode-600 text-center">
+                      <div href="" class="font-medium whitespace-nowrap">
+                        {{ area.user.name }}
                       </div>
                     </Table.Td>
                     <Table.Td class="py-4 border-dashed dark:bg-darkmode-600">
