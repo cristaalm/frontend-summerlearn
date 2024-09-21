@@ -1,31 +1,96 @@
 <script setup>
 import { useRouter } from 'vue-router'
 import Lucide from '@/components/base/Lucide'
-import { Menu, Popover } from '@/components/base/Headless'
+import { Menu, Popover, Dialog } from '@/components/base/Headless'
 import Pagination from '@/components/base/Pagination'
 import { FormInput, FormSelect } from '@/components/base/Form'
 import Table from '@/components/base/Table'
 import LoadingIcon from '@/components/base/LoadingIcon'
 import Button from '@/components/base/Button'
 import { useFilter, usePagination, useActividades } from '@/hooks/actividades/'
-import { onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
+import { deleteActividad } from '@/services/actividades/deleteActivities' // Import your API function
 
 const { actividades, loading, error, loadActividades } = useActividades()
-
 const { searchQuery, selectedStatus, filteredItems, activeFilters } = useFilter(actividades)
-
 const { currentPage, pageSize, totalPages, paginatedItems, changePage, changePageSize } =
   usePagination(filteredItems)
-
 const router = useRouter()
 
 onMounted(() => {
   loadActividades()
   console.log(loadActividades())
 })
+
+// Modal State
+const deleteModalPreview = ref(false)
+const actividadToDelete = ref(null) // activity ID to be deleted
+
+// Function to open the modal and set the ID of the activity to delete
+const openDeleteModal = (actividadId) => {
+  actividadToDelete.value = actividadId
+  deleteModalPreview.value = true
+}
+
+// Function to call the API and delete the activity
+const confirmDeleteActividad = async () => {
+  try {
+    await deleteActividad(actividadToDelete.value)
+    deleteModalPreview.value = false // Close modal after deleting
+    loadActividades() // Reload activities after successful deletion
+  } catch (error) {
+    console.error('Error deleting activity:', error)
+  }
+}
+const closeDeleteActividad = async () => {
+  deleteModalPreview.value = false // Close modal after deleting
+}
 </script>
 
 <template>
+  <!-- BEGIN: Modal Content -->
+  <Dialog
+    :open="deleteModalPreview"
+    @close="
+      () => {
+        deleteModalPreview.value = false
+      }
+    "
+    :initialFocus="deleteButtonRef"
+  >
+    <Dialog.Panel>
+      <div class="p-5 text-center">
+        <Lucide icon="XCircle" class="w-16 h-16 mx-auto mt-3 text-danger" />
+        <div class="mt-5 text-3xl">¿Está seguro?</div>
+        <div class="mt-2 text-slate-500">
+          ¿Realmente desea eliminar este registros?
+          <br />
+          Este proceso no puede deshacerse.
+        </div>
+      </div>
+      <div class="px-5 pb-8 text-center space-x-8">
+        <Button
+          type="button"
+          variant="outline-secondary"
+          @click="closeDeleteActividad"
+          class="w-24 mr-1"
+        >
+          Cancelar
+        </Button>
+        <Button
+          type="button"
+          variant="danger"
+          class="w-24"
+          @click="confirmDeleteActividad"
+          ref="deleteButtonRef"
+        >
+          Eliminar
+        </Button>
+      </div>
+    </Dialog.Panel>
+  </Dialog>
+  <!-- END: Modal Content -->
+
   <div class="grid grid-cols-12 gap-y-10 gap-x-6">
     <div class="col-span-12">
       <div class="flex flex-col md:h-10 gap-y-3 md:items-center md:flex-row">
@@ -213,12 +278,23 @@ onMounted(() => {
                             <Lucide icon="MoreVertical" class="w-5 h-5 stroke-black fill-black" />
                           </Menu.Button>
                           <Menu.Items class="w-40">
-                            <Menu.Item>
+                            <Menu.Item class="text-warning">
                               <Lucide icon="CheckSquare" class="w-4 h-4 mr-2" />
                               Editar
                             </Menu.Item>
                             <Menu.Item
-                              :class="`${actividades.status ? 'text-danger' : 'text-primary'}`"
+                              class="text-danger"
+                              @click="
+                                () => {
+                                  openDeleteModal(actividades.id)
+                                }
+                              "
+                            >
+                              <Lucide icon="Trash" class="w-4 h-4 mr-2" />
+                              Eliminar
+                            </Menu.Item>
+                            <Menu.Item
+                              :class="`${actividades.status ? 'text-red-dark' : 'text-primary'}`"
                               @click="
                                 () => {
                                   actividades.status = !actividades.status
@@ -226,7 +302,7 @@ onMounted(() => {
                               "
                             >
                               <Lucide icon="RefreshCw" class="w-4 h-4 mr-2" />
-                              Cambiar estado
+                              {{ actividades.status ? 'Desactivar' : 'Activar' }}
                             </Menu.Item>
                           </Menu.Items>
                         </Menu>

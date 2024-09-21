@@ -2,7 +2,7 @@ import { createApp } from 'vue'
 import App from '@/App.vue'
 import router from '@/router'
 import i18n from '@/assets/js/i18n.js'
-import '@/assets/css/tailwind.css' // Import Tailwind CSS
+// import '@/assets/css/tailwind.css' // Import Tailwind CSS
 import '@/assets/css/input.css' // Import custom styles
 import AOS from 'aos'
 import 'aos/dist/aos.css' // Import AOS styles
