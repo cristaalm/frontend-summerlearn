@@ -3,17 +3,33 @@ import Lucide from "@/components/base/Lucide";
 import Button from "@/components/base/Button";
 import { FormInput, InputGroup } from "@/components/base/Form";
 import { useStatus, useValidations, useRefs } from "@/hooks/donations/addDonation";
+import { useSetDonation } from "@/hooks/donations/addDonation/useSetDonation";
+import { useRouter } from "vue-router";
 
 const { concept, amount } = useRefs();
 const { status } = useStatus();
 const { valid, validateInputAmount } = useValidations({ status, concept, amount });
+const {  addDonation } = useSetDonation(); 
+const router = useRouter();
 
-const handleRegister = () => {
+const handleRegister = async () => {
     if (valid.value) {
-        console.log("Registrando donación...");
+        const donationData = {
+            concept: concept.value,
+            amount: amount.value,
+        };
+
+        // Llama a tu hook para agregar la donación
+        const result = await addDonation(donationData);
+        
+        if (result) {
+
+            router.push({ name: 'donations' }); 
+        } else {
+            console.error("Error al registrar la donación");
+        }
     }
 };
-
 </script>
 
 <template>

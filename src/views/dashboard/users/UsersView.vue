@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 import { FormInput, FormSelect } from "@/components/base/Form";
 import Pagination from "@/components/base/Pagination";
 import { Menu, Popover } from "@/components/base/Headless";
