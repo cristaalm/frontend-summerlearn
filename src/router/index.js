@@ -140,6 +140,14 @@ const router = createRouter({
             )
         },
         {
+          path: '/dashboard/activities/add',
+          name: 'addActividades',
+          component: () =>
+            import('@/views/dashboard/activities/addActividades.vue').catch(
+              () => import('@/views/dashboard/notFoundView/NotFoundView.vue')
+            )
+        },
+        {
           path: '/dashboard/expenses',
           name: 'expenses',
           component: () =>
