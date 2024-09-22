@@ -1,11 +1,16 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { Baseurl } from '@/../global'
+import getIdByToken from '@/logic/getIdByToken'
 
 export function useSetDonation() {
   const router = useRouter()
   const setDonationLoading = ref(false)
   const setDonationError = ref('')
+  const access_token = localStorage.getItem('access_token')
+
+  // ! Obtiene el id del usuario desde el token almacenado en localStorage
+  const userId = getIdByToken(access_token).user_id
 
   const addDonation = async ({ donation }) => {
     setDonationLoading.value = true
@@ -15,12 +20,13 @@ export function useSetDonation() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('access_token')}`
+          Authorization: `Bearer ${access_token}`
         },
         body: JSON.stringify({
-          concept: donation.concept,
-          amount: donation.amount,
-          date: new Date().toISOString().split('T')[0], // fecha en formato YYYY-MM-DD
+          donations_concept: donation.concept,
+          donations_quantity: donation.amount,
+          donations_date: new Date().toISOString().split('T')[0], // fecha en formato YYYY-MM-DD
+          donations_user: userId
         })
       })
       const data = await response.json()

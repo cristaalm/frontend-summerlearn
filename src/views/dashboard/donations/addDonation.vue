@@ -1,6 +1,8 @@
 <script setup>
 import Lucide from "@/components/base/Lucide";
 import Button from "@/components/base/Button";
+import Alert from '@/components/base/Alert'
+import LoadingIcon from "@/components/base/LoadingIcon";
 import { FormInput, InputGroup } from "@/components/base/Form";
 import { useStatus, useValidations, useRefs } from "@/hooks/donations/addDonation";
 import { useSetDonation } from "@/hooks/donations/addDonation/useSetDonation";
@@ -9,25 +11,16 @@ import { useRouter } from "vue-router";
 const { concept, amount } = useRefs();
 const { status } = useStatus();
 const { valid, validateInputAmount } = useValidations({ status, concept, amount });
-const {  addDonation } = useSetDonation(); 
+const { setDonationLoading, setDonationError, addDonation } = useSetDonation(); 
 const router = useRouter();
 
-const handleRegister = async () => {
+const handleRegister = () => {
     if (valid.value) {
-        const donationData = {
+        const donation = {
             concept: concept.value,
             amount: amount.value,
         };
-
-        // Llama a tu hook para agregar la donación
-        const result = await addDonation(donationData);
-        
-        if (result) {
-
-            router.push({ name: 'donations' }); 
-        } else {
-            console.error("Error al registrar la donación");
-        }
+        addDonation({ donation });
     }
 };
 </script>
@@ -39,10 +32,39 @@ const handleRegister = async () => {
                 <div class="text-base font-medium group-[.mode--light]:text-white">
                     Agregar Donación
                 </div>
+                <div class="flex flex-col sm:flex-row gap-x-3 gap-y-2 md:ml-auto">
+                    <Button variant="primary"
+                        class="group-[.mode--light]:!bg-white/[0.12] group-[.mode--light]:!text-slate-200 group-[.mode--light]:!border-transparent"
+                        @click="() => {
+                            router.push({
+                                name: 'donations',
+                            })
+                        }">
+                        <Lucide icon="ArrowLeft" class="stroke-[1.3] w-4 h-4 mr-2" /> Regresar
+                    </Button>
+                </div>
             </div>
             <div class="mt-7">
                 <div class="flex flex-col box box--stacked">
                     <div class="p-7">
+
+                        <!--? ######################### ALERTA DE ERROR ######################### -->
+
+                        <Alert variant="outline-danger" v-if="setDonationError"
+                            class="flex items-center px-4 py-3 my-7 bg-danger/5 border-danger/20 rounded-[0.6rem] leading-[1.7]"
+                            v-slot="{ dismiss }">
+                            <div class="">
+                                <Lucide icon="AlertTriangle"
+                                    class="stroke-[0.8] stroke-danger w-7 h-7 mr-2 fill-danger/10" />
+                            </div>
+                            <div class="ml-1 mr-8">
+                                <span class="text-danger">{{ setDonationError }}</span>
+                            </div>
+                            <Alert.DismissButton type="button" class="btn-close text-danger" @click="dismiss"
+                                aria-label="Cerrar">
+                                <Lucide icon="X" class="w-5 h-5" />
+                            </Alert.DismissButton>
+                        </Alert>
 
                         <!--? ######################### INPUTS ######################### -->
 
@@ -103,10 +125,15 @@ const handleRegister = async () => {
 
                     <div class="flex py-5 border-t md:justify-end px-7 border-slate-200/80">
                         <Button
-                            :class="`w-full px-10 md:w-auto font-bold ${!valid ? 'border-gray-500 text-gray-500' : 'border-green text-green'}`"
-                            @click="handleRegister" :disabled="!valid">
-                            <Lucide icon="Check" class="stroke-[1.3] w-4 h-4 mr-2" />
-                            Registrar
+                            :class="`w-full px-10 md:w-auto font-bold ${setDonationLoading || !valid ? 'border-gray-500 text-gray-500' : 'border-green text-green'}`"
+                            @click="handleRegister" :disabled="!valid || setDonationLoading">
+
+                            <LoadingIcon v-if="setDonationLoading" icon="tail-spin" class="stroke-[1.3] w-4 h-4 mr-2 -ml-2"
+                                color="black" />
+
+                            <Lucide v-if="!setDonationLoading" icon="Check" class="stroke-[1.3] w-4 h-4 mr-2" />
+                            {{ setDonationLoading ? 'Registrando...' : 'Registrar' }}
+
                         </Button>
                     </div>
                 </div>
