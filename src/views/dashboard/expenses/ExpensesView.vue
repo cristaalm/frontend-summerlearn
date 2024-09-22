@@ -29,7 +29,7 @@ onMounted(() => {
                 <div class="flex flex-col sm:flex-row gap-x-3 gap-y-2 md:ml-auto">
                     <Button variant="primary" @click="router.push({ name: 'addExpense' })"
                         class="group-[.mode--light]:!bg-white/[0.12] group-[.mode--light]:!text-slate-200 group-[.mode--light]:!border-transparent">
-                        <Lucide icon="DollarSign" class="stroke-[1.3] w-4 h-4 mr-2" /> Nueva Donacion
+                        <Lucide icon="DollarSign" class="stroke-[1.3] w-4 h-4 mr-2" /> Nuevo Gasto
                     </Button>
                 </div>
             </div>
