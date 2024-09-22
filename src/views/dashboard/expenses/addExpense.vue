@@ -2,24 +2,14 @@
 import Lucide from "@/components/base/Lucide";
 import Button from "@/components/base/Button";
 import { FormInput, FormSelect, InputGroup } from "@/components/base/Form";
-import { useStatus, useValidations, useRefs } from "@/hooks/bills/addBill";
 import { useDonations } from "@/hooks/donations/";
 import { onMounted } from "vue";
 
-const { concept, amount, donation } = useRefs();
-const { status } = useStatus();
-const { valid, validateInputAmount } = useValidations({ status, concept, amount, donation });
 const { donations, loading, error, loadDonations } = useDonations();
 
 onMounted(() => {
     loadDonations();
 });
-
-const handleRegister = () => {
-    if (valid.value) {
-        console.log("Registrando gasto...");
-    }
-};
 
 </script>
 
@@ -50,7 +40,7 @@ const handleRegister = () => {
                             </label>
 
                             <div class="flex-1 w-full mt-3 xl:mt-0">
-                                <FormSelect v-model="donation">
+                                <FormSelect>
 
                                     <template v-if="loading">
                                         <option value="" disabled selected>
@@ -76,9 +66,6 @@ const handleRegister = () => {
                                     </template>
 
                                 </FormSelect>
-                                <div class="mt-1 text-xs text-red-500 h-4">
-                                    {{ status.donation.message }}
-                                </div>
                             </div>
                         </div>
 
@@ -98,10 +85,7 @@ const handleRegister = () => {
                                 </div>
                             </label>
                             <div class="flex-1 w-full mt-3 xl:mt-0">
-                                <FormInput type="text" placeholder="Concepto del gasto..." v-model="concept" />
-                                <div class="mt-1 text-xs text-red-500 h-4">
-                                    {{ status.concept.message }}
-                                </div>
+                                <FormInput type="text" placeholder="Concepto del gasto..." />
                             </div>
                         </div>
 
@@ -123,13 +107,8 @@ const handleRegister = () => {
                             <div class="flex-1 w-full mt-3 xl:mt-0">
                                 <InputGroup>
                                     <InputGroup.Text> $ </InputGroup.Text>
-                                    <FormInput type="text" placeholder="Monto a gastar" v-model="amount"
-                                        @input="validateInputAmount" />
+                                    <FormInput type="text" placeholder="Monto a gastar" />
                                 </InputGroup>
-
-                                <div class="mt-1 text-xs text-red-500 h-4">
-                                    {{ status.amount.message }}
-                                </div>
                             </div>
                         </div>
 
@@ -138,9 +117,7 @@ const handleRegister = () => {
                     <!--? ######################### BUTTON ######################### -->
 
                     <div class="flex py-5 border-t md:justify-end px-7 border-slate-200/80">
-                        <Button
-                            :class="`w-full px-10 md:w-auto font-bold ${!valid ? 'border-gray-500 text-gray-500' : 'border-green text-green'}`"
-                            @click="handleRegister" :disabled="!valid">
+                        <Button :class="`w-full px-10 md:w-auto font-bold border-green text-green`">
                             <Lucide icon="Check" class="stroke-[1.3] w-4 h-4 mr-2" />
                             Registrar
                         </Button>
