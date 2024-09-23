@@ -9,11 +9,13 @@ import Button from "@/components/base/Button";
 import Table from "@/components/base/Table";
 import Tippy from "@/components/base/Tippy";
 import LoadingIcon from "@/components/base/LoadingIcon";
-import { Rols } from '@/utils/constants';
+import { useRoles } from '@/hooks/roles/useRoles';
 import { calculateAge } from '@/logic/';
 import { useRouter } from "vue-router";
+import { Baseurl } from '@/../global';
 
 const { users, loading, error, loadUsers } = useUsers();
+const { roles, loadingRoles, errorRoles, loadRoles } = useRoles();
 const { searchQuery, selectedStatus, selectedRole, filteredUsers, filtersCount } = useSearch(users);
 const { currentPage, pageSize, totalPages, paginatedUsers, changePage, changePageSize } = usePagination(filteredUsers);
 const router = useRouter();
@@ -21,6 +23,7 @@ const router = useRouter();
 // Cargar las áreas al iniciar el componente
 onMounted(() => {
   loadUsers()
+  loadRoles()
 })
 
 </script>
@@ -79,10 +82,25 @@ onMounted(() => {
                     <div>
                       <div class="text-left text-slate-500">Rol</div>
                       <FormSelect v-model="selectedRole" class="flex-1 mt-2">
-                        <option :value="null">Todos</option>
-                        <template v-for="(rol, index) in Rols" :key="index">
-                          <option :value="index">{{ rol }}</option>
+
+                        <!--? Mostrar 'Cargando roles...' cuando loadingRoles es true -->
+                        <template v-if="loadingRoles">
+                          <option>Cargando roles...</option>
                         </template>
+
+                        <!--? Mostrar mensaje de error cuando hay errorRoles -->
+                        <template v-if="errorRoles">
+                          <option>Error al cargar roles</option>
+                        </template>
+
+                        <!--? Mostrar los roles cuando no está cargando y no existe ningun errorRoles -->
+                        <template v-if="!loadingRoles">
+                          <option :value="null">Todos</option>
+                          <template v-for="rol in roles" :key="rol.id">
+                            <option :value="rol.id">{{ rol.name }}</option>
+                          </template>
+                        </template>
+
                       </FormSelect>
                     </div>
                     <div class="flex items-center mt-4">
@@ -165,8 +183,7 @@ onMounted(() => {
                         <div class="w-9 h-9 image-fit zoom-in">
                           <Tippy as="img" alt="Tailwise - Admin Dashboard Template"
                             class="rounded-full cursor-default shadow-[0px_0px_0px_2px_#fff,_1px_1px_5px_rgba(0,0,0,0.32)] dark:shadow-[0px_0px_0px_2px_#3f4865,_1px_1px_5px_rgba(0,0,0,0.32)]"
-                            src="https://avatar.iran.liara.run/public/boy?username=Ash" :disable="true"
-                            :content="`Image User`" />
+                            :src="`${Baseurl}${user.photo}`" :disable="true" :content="`Image User`" />
                         </div>
                       </div>
                     </Table.Td>
@@ -191,7 +208,7 @@ onMounted(() => {
                     </Table.Td>
                     <Table.Td class="py-4 border-dashed dark:bg-darkmode-600">
                       <div class="whitespace-nowrap">
-                        {{ Rols[user.rol] }}
+                        {{ roles[user.rol - 1].name }}
                       </div>
                     </Table.Td>
                     <Table.Td class="py-4 border-dashed dark:bg-darkmode-600">
