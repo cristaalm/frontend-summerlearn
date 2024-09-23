@@ -4,15 +4,17 @@ import Button from "@/components/base/Button";
 import Litepicker from "@/components/base/Litepicker";
 import LoadingIcon from "@/components/base/LoadingIcon";
 import { FormInput, FormSelect } from "@/components/base/Form";
-import { Rols } from '@/utils/constants';
-import { watch } from "vue";
+import { watch, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { useValidationImage } from "@/hooks/users/addUser/useValidationImage";
 import { useRefs } from "@/hooks/users/addUser/useRefs";
 import { status } from "@/hooks/users/addUser/useStatus";
 import { usePasswordSecurity } from "@/hooks/users/addUser/usePasswordSecurity";
 import { useValidateFunctions } from "@/hooks/users/addUser/useValidationFunctions";
+import { useRoles } from "@/hooks/roles/useRoles";
 import { useAuth } from "@/hooks/users/addUser/useAuth";
+
+
 
 const router = useRouter();
 const { firstName, lastName, email, phone, birthdate, password, password_confirm, rol, valid } = useRefs();
@@ -20,9 +22,14 @@ const { validateText, validateDate, validatePasswordComfirm, validateRol, valida
 const { profileImage, errorMessagePhoto, validateImage, triggerFileSelect, removeImage } = useValidationImage({ status, validate });
 const { validatePassword } = usePasswordSecurity({ status, validate });
 const { loading, addUser } = useAuth({ email, phone, password, firstName, lastName, birthdate, rol, profileImage, valid, validate });
+const { roles, loadingRoles, errorRoles, loadRoles } = useRoles();
 
 // Año mínimo para la fecha de nacimiento
 const minYear = new Date().getFullYear() - 18;
+
+onMounted(() => {
+  loadRoles();
+});
 
 watch(birthdate, (value) => {
   validateDate(value);
@@ -62,7 +69,7 @@ watch(birthdate, (value) => {
                     <div class="font-medium">Foto de perfil</div>
                   </div>
                   <div class="mt-1.5 xl:mt-3 text-xs leading-relaxed text-slate-500/80">
-                    Sube una foto de perfil para identificar al usuario.
+                    Por favor, Sube una foto de perfil para identificar al usuario.
                   </div>
                 </div>
               </label>
@@ -104,11 +111,11 @@ watch(birthdate, (value) => {
                     <div class="font-medium">Nombre Completo</div>
                     <div
                       class="ml-2.5 px-2 py-0.5 bg-slate-100 text-slate-500 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md border border-slate-200">
-                      Obligatorio
+                      Requerido
                     </div>
                   </div>
                   <div class="mt-1.5 xl:mt-3 text-xs leading-relaxed text-slate-500/80">
-                    Ingresa el nombre completo del usuario.
+                    Por favor, Ingresa el nombre completo del usuario.
                   </div>
                 </div>
               </label>
@@ -116,10 +123,10 @@ watch(birthdate, (value) => {
                 <div class="flex flex-col items-center md:flex-row">
                   <FormInput type="text" name="firstName" v-model="firstName" @input="validateText"
                     class="first:rounded-b-none first:md:rounded-bl-md first:md:rounded-r-none [&:not(:first-child):not(:last-child)]:-mt-px [&:not(:first-child):not(:last-child)]:md:mt-0 [&:not(:first-child):not(:last-child)]:md:-ml-px [&:not(:first-child):not(:last-child)]:rounded-none last:rounded-t-none last:md:rounded-l-none last:md:rounded-tr-md last:-mt-px last:md:mt-0 last:md:-ml-px focus:z-10"
-                    placeholder="Nombre..." />
+                    placeholder="Escriba aqui su nombre..." />
                   <FormInput type="text" name="lastName" v-model="lastName" @input="validateText"
                     class="first:rounded-b-none first:md:rounded-bl-md first:md:rounded-r-none [&:not(:first-child):not(:last-child)]:-mt-px [&:not(:first-child):not(:last-child)]:md:mt-0 [&:not(:first-child):not(:last-child)]:md:-ml-px [&:not(:first-child):not(:last-child)]:rounded-none last:rounded-t-none last:md:rounded-l-none last:md:rounded-tr-md last:-mt-px last:md:mt-0 last:md:-ml-px focus:z-10"
-                    placeholder="Apellido..." />
+                    placeholder="Escriba aqui su apellido..." />
                 </div>
                 <div class="text-red-500 mt-2 flex flex-col items-center md:flex-row">
                   <div v-if="status.firstName.error" class="text-xs w-full md:w-1/2">{{ status.firstName.message }}
@@ -136,11 +143,11 @@ watch(birthdate, (value) => {
                     <div class="font-medium">Fecha de nacimiento</div>
                     <div
                       class="ml-2.5 px-2 py-0.5 bg-slate-100 text-slate-500 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md border border-slate-200">
-                      Obligatorio
+                      Requerido
                     </div>
                   </div>
                   <div class="mt-1.5 xl:mt-3 text-xs leading-relaxed text-slate-500/80">
-                    Ingresa la fecha de nacimiento del usuario.
+                    Por favor, Ingresa la fecha de nacimiento del usuario.
                   </div>
                 </div>
               </label>
@@ -153,7 +160,7 @@ watch(birthdate, (value) => {
                     months: true,
                     years: true,
                   },
-                  format: 'YYYY-MM-DD',
+                  format: 'DD/MM/YYYY',
                 }" />
                 <div class="text-red-500 mt-2">{{ status.birthdate.message }}</div>
               </div>
@@ -163,19 +170,19 @@ watch(birthdate, (value) => {
               <label class="inline-block mb-2 sm:mb-0 sm:mr-5 sm:text-right xl:w-60 xl:mr-14">
                 <div class="text-left">
                   <div class="flex items-center">
-                    <div class="font-medium">Email</div>
+                    <div class="font-medium">Correo electrónico</div>
                     <div
                       class="ml-2.5 px-2 py-0.5 bg-slate-100 text-slate-500 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md border border-slate-200">
-                      Obligatorio
+                      Requerido
                     </div>
                   </div>
                   <div class="mt-1.5 xl:mt-3 text-xs leading-relaxed text-slate-500/80">
-                    Ingresa el correo electrónico del usuario.
+                    Por favor, Ingresa el correo electrónico del usuario.
                   </div>
                 </div>
               </label>
               <div class="flex-1 w-full mt-3 xl:mt-0">
-                <FormInput type="email" name="email" v-model="email" placeholder="example@example.example"
+                <FormInput type="email" name="email" v-model="email" placeholder="Escriba aqui su correo..."
                   @input="validateText" />
                 <div class="text-red-500 mt-2">{{ status.email.message }}</div>
               </div>
@@ -185,19 +192,20 @@ watch(birthdate, (value) => {
               <label class="inline-block mb-2 sm:mb-0 sm:mr-5 sm:text-right xl:w-60 xl:mr-14">
                 <div class="text-left">
                   <div class="flex items-center">
-                    <div class="font-medium">Numero de telefono</div>
+                    <div class="font-medium">Numero de teléfono</div>
                     <div
                       class="ml-2.5 px-2 py-0.5 bg-slate-100 text-slate-500 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md border border-slate-200">
-                      Obligatorio
+                      Requerido
                     </div>
                   </div>
                   <div class="mt-1.5 xl:mt-3 text-xs leading-relaxed text-slate-500/80">
-                    Ingresa el número de teléfono del usuario.
+                    Por favor, Ingresa el número de teléfono del usuario.
                   </div>
                 </div>
               </label>
               <div class="flex-1 w-full mt-3 xl:mt-0">
-                <FormInput type="number" placeholder="1234567890" name="phone" v-model="phone" @input="validateText" />
+                <FormInput type="number" placeholder="Escriba aqui su Teléfono" name="phone" v-model="phone"
+                  @input="validateText" />
                 <div class="text-red-500 mt-2">{{ status.phone.message }}</div>
               </div>
             </div>
@@ -209,21 +217,41 @@ watch(birthdate, (value) => {
                     <div class="font-medium">Rol</div>
                     <div
                       class="ml-2.5 px-2 py-0.5 bg-slate-100 text-slate-500 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md border border-slate-200">
-                      Obligatorio
+                      Requerido
                     </div>
                   </div>
                   <div class="mt-1.5 xl:mt-3 text-xs leading-relaxed text-slate-500/80">
-                    Selecciona el rol del usuario.
+                    Por favor, Selecciona el rol del usuario.
                   </div>
                 </div>
               </label>
               <div class="flex-1 w-full mt-3 xl:mt-0">
                 <FormSelect name="rol" v-model="rol" @change="validateRol">
-                  <template v-for="(rol, key) in Rols" :key="key">
-                    <option :value="key">
-                      {{ rol }}
+
+                  <template v-if="loadingRoles">
+                    <option value="" disabled selected>
+                      Cargando...
                     </option>
                   </template>
+
+                  <template v-else-if="errorRoles">
+                    <option value="" disabled selected>
+                      Error al cargar los responsables
+                    </option>
+                  </template>
+
+                  <template v-else>
+                    <option value="" disabled selected>
+                      Seleccione un rol...
+                    </option>
+                    <template v-for="rol in roles" :key="rol.id">
+                      <option :value="rol.id">
+                        {{ rol.name }}
+                      </option>
+                    </template>
+                  </template>
+
+
                 </FormSelect>
                 <div class="text-red-500 mt-2">{{ status.rol.message }}</div>
               </div>
@@ -236,19 +264,20 @@ watch(birthdate, (value) => {
                     <div class="font-medium">Contraseña</div>
                     <div
                       class="ml-2.5 px-2 py-0.5 bg-slate-100 text-slate-500 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md border border-slate-200">
-                      Obligatorio
+                      Requerido
                     </div>
                   </div>
                   <div class="mt-1.5 xl:mt-3 text-xs leading-relaxed text-slate-500/80">
-                    Ingresa la contraseña del usuario.
+                    Por favor, Ingresa la contraseña del usuario.
                   </div>
                 </div>
               </label>
               <div class="flex-1 w-full mt-3 xl:mt-0">
-                <FormInput type="password" placeholder="**********" name="password" v-model="password" @input="(e) => {
-                  validatePassword(e)
-                  validatePasswordComfirm(e)
-                }" />
+                <FormInput type="password" placeholder="Escriba aqui su contraseña..." name="password"
+                  v-model="password" @input="(e) => {
+                    validatePassword(e)
+                    validatePasswordComfirm(e)
+                  }" />
                 <div class="grid w-full h-1.5 grid-cols-12 gap-4 mt-3.5">
                   <div
                     :class="`h-full col-span-3 border rounded bg-slate-400/30 border-slate-400/20 ${status.password.color} ${status.password.secure >= 0 ? 'active' : ''}`">
@@ -282,17 +311,17 @@ watch(birthdate, (value) => {
                     <div class="font-medium text-nowrap">Confirmar Contraseña</div>
                     <div
                       class="ml-2.5 px-2 py-0.5 bg-slate-100 text-slate-500 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md border border-slate-200">
-                      Obligatorio
+                      Requerido
                     </div>
                   </div>
                   <div class="mt-1.5 xl:mt-3 text-xs leading-relaxed text-slate-500/80">
-                    Ingresa la contraseña del usuario nuevamente.
+                    Por favor, Ingresa la contraseña del usuario nuevamente.
                   </div>
                 </div>
               </label>
               <div class="flex-1 w-full mt-3 xl:mt-0">
-                <FormInput type="password" placeholder="**********" name="password_confirm" v-model="password_confirm"
-                  @input="validatePasswordComfirm" />
+                <FormInput type="password" placeholder="Escriba nuevamente aqui su contraseña..."
+                  name="password_confirm" v-model="password_confirm" @input="validatePasswordComfirm" />
                 <div class="text-red-500 mt-2">{{ status.password_confirm.message }}</div>
               </div>
             </div>

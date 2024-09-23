@@ -25,6 +25,13 @@ export function useValidateFunctions({ valid, password, password_confirm }) {
   }
 
   const validateDate = (value) => {
+    // El value viene como DD/MM/YYYY, tenemos que cambiarlo a YYYY-MM-DD
+
+    const date = value.split('/')
+    value = `${date[2]}-${date[1]}-${date[0]}`
+
+    // validamos la fecha
+
     if (status.value.birthdate.Regex.test(value)) {
       status.value.birthdate.value = true
       status.value.birthdate.error = false
