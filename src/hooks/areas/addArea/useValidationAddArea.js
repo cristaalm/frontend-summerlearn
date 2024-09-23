@@ -14,7 +14,7 @@ export function useValidationAddArea() {
       success: false,
       message: '',
       name: 'Responsable',
-      Regex: /^[0-9]+$/
+      Regex: /^\d+$/
     }
   })
 

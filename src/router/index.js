@@ -70,15 +70,15 @@ const router = createRouter({
       name: 'resetPassword',
       component: () => import('@/views/ResetPasswordView.vue'),
       beforeEnter: (to, from, next) => {
-        const key = to.params.key;
-    
+        const key = to.params.key
+
         // Comprueba si la key está presente
         if (!key) {
-          return next({ name: 'login' }); // Redirige al login si no hay key
+          return next({ name: 'login' }) // Redirige al login si no hay key
         }
-    
+
         // Continuar si la key es válida
-        next();
+        next()
       }
     },
     {
@@ -140,10 +140,26 @@ const router = createRouter({
             )
         },
         {
+          path: '/dashboard/activities/add',
+          name: 'addActividades',
+          component: () =>
+            import('@/views/dashboard/activities/addActividades.vue').catch(
+              () => import('@/views/dashboard/notFoundView/NotFoundView.vue')
+            )
+        },
+        {
           path: '/dashboard/expenses',
           name: 'expenses',
           component: () =>
             import('@/views/dashboard/expenses/ExpensesView.vue').catch(
+              () => import('@/views/dashboard/notFoundView/NotFoundView.vue')
+            )
+        },
+        {
+          path: '/dashboard/expenses/add',
+          name: 'addExpense',
+          component: () =>
+            import('@/views/dashboard/expenses/addExpense.vue').catch(
               () => import('@/views/dashboard/notFoundView/NotFoundView.vue')
             )
         },
@@ -192,6 +208,14 @@ const router = createRouter({
           name: 'donations',
           component: () =>
             import('@/views/dashboard/donations/DonationsView.vue').catch(
+              () => import('@/views/dashboard/notFoundView/NotFoundView.vue')
+            )
+        },
+        {
+          path: '/dashboard/donations/add',
+          name: 'addDonation',
+          component: () =>
+            import('@/views/dashboard/donations/addDonation.vue').catch(
               () => import('@/views/dashboard/notFoundView/NotFoundView.vue')
             )
         },

@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 import { FormInput, FormSelect } from "@/components/base/Form";
 import Pagination from "@/components/base/Pagination";
 import { Menu, Popover } from "@/components/base/Headless";
@@ -52,7 +52,7 @@ onMounted(() => {
               <div class="relative">
                 <Lucide icon="Search"
                   class="absolute inset-y-0 left-0 z-10 w-4 h-4 my-auto ml-3 stroke-[1.3] text-slate-500" />
-                <FormInput v-model="searchQuery" type="text" placeholder="Buscar usuario por nombre o email"
+                <FormInput v-model="searchQuery" type="text" placeholder="Buscar usuario..."
                   class="pl-9 sm:w-72 rounded-[0.5rem]" />
               </div>
             </div>
@@ -69,7 +69,7 @@ onMounted(() => {
                 <Popover.Panel placement="bottom-end">
                   <div class="p-2 space-y-4">
                     <div>
-                      <div class="text-left text-slate-500">Status</div>
+                      <div class="text-left text-slate-500">Estado</div>
                       <FormSelect v-model="selectedStatus" class="flex-1 mt-2">
                         <option :value="null">Todos</option>
                         <option value="1">Activo</option>
@@ -112,7 +112,7 @@ onMounted(() => {
                     Edad
                   </Table.Td>
                   <Table.Td class="py-4 font-medium border-t bg-slate-50 border-slate-200/60 text-slate-500">
-                    Telefono
+                    Teléfono
                   </Table.Td>
                   <Table.Td class="py-4 font-medium border-t bg-slate-50 border-slate-200/60 text-slate-500">
                     Rol

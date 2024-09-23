@@ -10,7 +10,6 @@ export function useAreas() {
     loading.value = true
     try {
       areas.value = await getAreas()
-      // console.log(areas.value)
     } catch (e) {
       error.value = e
     } finally {

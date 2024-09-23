@@ -8,7 +8,7 @@ export function useRefs() {
   const birthdate = ref('1950-01-01')
   const password = ref('')
   const password_confirm = ref('')
-  const rol = ref(1)
+  const rol = ref('')
   const valid = ref(false)
 
   return {
