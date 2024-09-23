@@ -22,7 +22,7 @@ onMounted(() => {
 
 function formatDateToDDMMYYYY(dateString) {
   const [year, month, day] = dateString.split('-');
-  return `${day}-${month}-${year}`;
+  return `${day}/${month}/${year}`;
 }
 
 
@@ -55,7 +55,7 @@ function formatDateToDDMMYYYY(dateString) {
               <div class="relative">
                 <Lucide icon="Search"
                   class="absolute inset-y-0 left-0 z-10 w-4 h-4 my-auto ml-3 stroke-[1.3] text-slate-500" />
-                <FormInput v-model="searchQuery" type="text" placeholder="Buscar por responsable"
+                <FormInput v-model="searchQuery" type="text" placeholder="Buscar programa..."
                   class="pl-9 sm:w-72 rounded-[0.5rem]" />
               </div>
             </div>

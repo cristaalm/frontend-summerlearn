@@ -15,15 +15,20 @@ import { FormInput, FormSelect } from "@/components/base/Form";
 import Table from "@/components/base/Table";
 
 const router = useRouter();
-const { barDonations, donations, loading, loadDonations, deleteDonation, errorDonations } = useDonations();
+const { barDonations, donations, loading, loadDonations, errorDonations } = useDonations();
 const { searchQuery, filteredItems } = useDonationSearch(donations);
 const { currentPage, pageSize, totalPages, paginatedItems, changePage, changePageSize } = usePagination(filteredItems);
+
+function formatDateToDDMMYYYY(dateString) {
+    if (!dateString) return ''; // Verifica si dateString es undefined, null o vacío.
+    const [year, month, day] = dateString.split('-');
+    return `${day}/${month}/${year}`;
+}
 
 
 onMounted(() => {
     loadDonations();
 });
-
 
 </script>
 
@@ -38,8 +43,8 @@ onMounted(() => {
                 <div class="flex flex-col sm:flex-row gap-x-3 gap-y-2 md:ml-auto">
                     <Button variant="primary" @click="() => router.push({ name: 'addDonation' })"
                         class="group-[.mode--light]:!bg-white/[0.12] group-[.mode--light]:!text-slate-200 group-[.mode--light]:!border-transparent">
-                        <Lucide icon="DollarSign" class="stroke-[1.3] w-4 h-4 mr-2" />
-                        Nueva Donacion
+                        <Lucide icon="PenLine" class="stroke-[1.3] w-4 h-4 mr-2" />
+                        Nueva Donación
                     </Button>
                 </div>
             </div>
@@ -158,14 +163,14 @@ onMounted(() => {
                                 <div v-if="loading" class="w-full h-4 mt-4">
                                     <LoadingIcon icon="three-dots" color="gray" />
                                 </div>
-                                {{ !loading ? `${barDonations.totalDonated} veces` : '' }}
+                                {{ !loading ? `${barDonations.totalDonated}` : '' }}
                             </div>
                             <div class="absolute inset-y-0 right-0 flex flex-col justify-center mr-5">
                             </div>
                         </div>
                         <div
                             class="col-span-4 md:col-span-2 xl:col-span-1 p-5 border border-dashed rounded-[0.6rem] border-slate-300/80 box shadow-sm">
-                            <div class="text-base text-slate-500">Dinero Donado</div>
+                            <div class="text-base text-slate-500">Dinero Total Donado</div>
                             <div class="mt-1.5 text-2xl font-medium">
                                 <div v-if="loading" class="w-full h-4 mt-4">
                                     <LoadingIcon icon="three-dots" color="gray" />
@@ -189,12 +194,14 @@ onMounted(() => {
                         </div>
                         <div
                             class="col-span-4 md:col-span-2 xl:col-span-1 p-5 border border-dashed rounded-[0.6rem] border-slate-300/80 box shadow-sm">
-                            <div class="text-base text-slate-500">Ultima Fecha de Donacion</div>
+                            <div class="text-base text-slate-500">Ultima Fecha de Donación</div>
                             <div class="mt-1.5 text-2xl font-medium">
                                 <div v-if="loading" class="w-full h-4 mt-4">
                                     <LoadingIcon icon="three-dots" color="gray" />
                                 </div>
-                                {{ !loading ? barDonations.lastDonationDate : '' }}
+                                <div v-if="!loading && barDonations.lastDonationDate">
+                                    {{ formatDateToDDMMYYYY(barDonations.lastDonationDate) }}
+                                </div>
                             </div>
                             <div class="absolute inset-y-0 right-0 flex flex-col justify-center mr-5">
                             </div>
@@ -205,9 +212,7 @@ onMounted(() => {
                 <div v-if="errorDonations" class="flex flex-col p-5 box box--stacked">
                     <div class="flex flex-row w-full">
                         <div class="text-center text-3xl w-full text-red-500">
-
                             A ocurrido un error...
-
                         </div>
                     </div>
                 </div>
@@ -247,11 +252,7 @@ onMounted(() => {
                                             </Table.Td>
                                             <Table.Td
                                                 class="py-4 font-medium border-t bg-slate-50 border-slate-200/60 text-slate-500">
-                                                Fecha de Donacion
-                                            </Table.Td>
-                                            <Table.Td
-                                                class="py-4 font-medium text-center border-t w-36 bg-slate-50 border-slate-200/60 text-slate-500">
-                                                Action
+                                                Fecha de Donación
                                             </Table.Td>
                                         </Table.Tr>
                                     </Table.Thead>
@@ -297,34 +298,15 @@ onMounted(() => {
                                                 {{ donations.user.name }}
                                             </Table.Td>
                                             <Table.Td class="py-4 border-dashed dark:bg-darkmode-600">
-                                                {{ donations.quanty }}
+                                                {{ new Intl.NumberFormat('es-MX', {
+                                                    style: 'currency', currency: 'MXN'
+                                                }).format(donations.quanty) }}
                                             </Table.Td>
                                             <Table.Td class="py-4 border-dashed dark:bg-darkmode-600">
                                                 {{ donations.concept }}
                                             </Table.Td>
                                             <Table.Td class="py-4 border-dashed dark:bg-darkmode-600">
-                                                {{ donations.date }}
-                                            </Table.Td>
-                                            <Table.Td class="relative py-4 border-dashed dark:bg-darkmode-600">
-                                                <div class="flex items-center justify-center">
-                                                    <Menu class="h-5">
-                                                        <Menu.Button class="w-5 h-5 text-slate-500">
-                                                            <Lucide icon="MoreVertical"
-                                                                class="w-5 h-5 stroke-slate-400/70 fill-slate-400/70" />
-                                                        </Menu.Button>
-                                                        <Menu.Items class="w-40">
-                                                            <Menu.Item>
-                                                                <Lucide icon="CheckSquare" class="w-4 h-4 mr-2" />
-                                                                Factura
-                                                            </Menu.Item>
-                                                            <Menu.Item class="text-danger"
-                                                                @click="deleteDonation(donations.id)">
-                                                                <Lucide icon="Trash2" class="w-4 h-4 mr-2" />
-                                                                Eliminar
-                                                            </Menu.Item>
-                                                        </Menu.Items>
-                                                    </Menu>
-                                                </div>
+                                                {{ formatDateToDDMMYYYY(donations.date) }}
                                             </Table.Td>
                                         </Table.Tr>
                                     </Table.Tbody>
