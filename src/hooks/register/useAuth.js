@@ -35,7 +35,7 @@ export function useAuth({
       body: JSON.stringify({
         email: email.value,
         users_phone: phone.value,
-        users_photo: 'https://avatar.iran.liara.run/public/boy?username=Ash', // default photo
+        users_photo: 'media/imagesUsers/placeholderUser.jpg', // default photo
         password: password.value,
         first_name: firstName.value,
         last_name: lastName.value,
