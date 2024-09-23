@@ -160,14 +160,14 @@ const handleSubmit = () => {
     ]">
       <div class="sticky top-0 z-10 flex-col justify-center hidden h-screen ml-16 lg:flex xl:ml-28 2xl:ml-36">
         <div class="leading-[1.4] text-[2.6rem] xl:text-5xl font-medium xl:leading-[1.2] text-white">
-          Abraza la Excelencia<br />
-          en el Desarrollo del Panel de Control
+          Únete a nuestra causa <br />
+          y marca la diferencia
         </div>
         <div class="mt-5 text-base leading-relaxed xl:text-lg text-white/70">
-          Desbloquea el potencial de Tailwise, donde los desarrolladores crean paneles de control
-          meticulosamente estructurados y visualmente impresionantes con módulos ricos en funciones.
-          Únete hoy para dar forma al futuro del desarrollo de tu aplicación.
+          Regístrate como voluntario y ayúdanos a llevar educación y esperanza a las comunidades que más lo necesitan.
+          ¡Tu compromiso puede transformar vidas!
         </div>
+
       </div>
     </div>
   </div>

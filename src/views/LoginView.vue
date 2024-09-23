@@ -81,15 +81,14 @@ const router = useRouter()
     ]">
       <div class="sticky top-0 z-10 flex-col justify-center hidden h-screen ml-16 lg:flex xl:ml-28 2xl:ml-36">
         <div class="leading-[1.4] text-[2.6rem] xl:text-5xl font-medium xl:leading-[1.2] text-white">
-          <!-- TODO: Cambiar el texto y descripción de este apartado por algo que tenga que ver con la ONG -->
-          Abraza la excelencia <br />
-          en el desarrollo de paneles de control
+          Transformemos vidas <br />
+          con educación y solidaridad
         </div>
         <div class="mt-5 text-base leading-relaxed xl:text-lg text-white/70">
-          Desbloquea el potencial de Tailwise, donde los desarrolladores crean paneles de control meticulosamente
-          estructurados y visualmente impresionantes con módulos ricos en funciones. Únete a nosotros hoy para dar forma
-          al futuro del desarrollo de tu aplicación.
+          Únete a nuestro equipo de voluntarios y sé parte del cambio. Juntos, llevamos oportunidades educativas a las
+          comunidades que más lo necesitan. ¡Construyamos un futuro más brillante!
         </div>
+
       </div>
     </div>
   </div>
