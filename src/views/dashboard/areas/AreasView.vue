@@ -1,7 +1,7 @@
 <script setup>
 import { useRouter } from "vue-router";
 import Lucide from "@/components/base/Lucide";
-import { Menu, Popover } from "@/components/base/Headless";
+import { Menu } from "@/components/base/Headless";
 import Pagination from "@/components/base/Pagination";
 import { FormInput, FormSelect } from "@/components/base/Form";
 import Table from "@/components/base/Table";
@@ -11,11 +11,8 @@ import { useFilter, usePagination, useAreas } from '@/hooks/areas/' // error are
 import { onMounted } from 'vue'
 
 const { areas, loading, error, loadAreas } = useAreas();
-
-const { searchQuery, selectedStatus, filteredItems, activeFilters } = useFilter(areas);
-
+const { searchQuery, filteredItems } = useFilter(areas);
 const { currentPage, pageSize, totalPages, paginatedItems, changePage, changePageSize } = usePagination(filteredItems);
-
 const router = useRouter();
 
 onMounted(() => {
@@ -31,7 +28,7 @@ onMounted(() => {
     <div class="col-span-12">
       <div class="flex flex-col md:h-10 gap-y-3 md:items-center md:flex-row">
         <div class="text-base font-medium group-[.mode--light]:text-white">
-          Areas
+          Áreas
         </div>
         <div class="flex flex-col sm:flex-row gap-x-3 gap-y-2 md:ml-auto">
           <Button variant="primary"
@@ -41,7 +38,7 @@ onMounted(() => {
                 name: 'addArea',
               });
             }">
-            <Lucide icon="PenLine" class="stroke-[1.3] w-4 h-4 mr-2" /> Agregar nueva area
+            <Lucide icon="PenLine" class="stroke-[1.3] w-4 h-4 mr-2" /> Agregar nueva área
           </Button>
         </div>
       </div>
@@ -52,41 +49,9 @@ onMounted(() => {
               <div class="relative">
                 <Lucide icon="Search"
                   class="absolute inset-y-0 left-0 z-10 w-4 h-4 my-auto ml-3 stroke-[1.3] text-slate-500" />
-                <FormInput v-model="searchQuery" type="text" placeholder="Buscar area..."
+                <FormInput v-model="searchQuery" type="text" placeholder="Buscar área..."
                   class="pl-9 sm:w-72 rounded-[0.5rem]" />
               </div>
-            </div>
-            <div class="flex flex-col sm:flex-row gap-x-3 gap-y-2 sm:ml-auto">
-              <Popover class="inline-block" v-slot="{ close }">
-                <Popover.Button :as="Button" variant="outline-secondary" class="w-full sm:w-auto">
-                  <Lucide icon="ArrowDownWideNarrow" class="stroke-[1.3] w-4 h-4 mr-2" />
-                  Filtrar
-                  <div
-                    class="flex items-center justify-center h-5 px-1.5 ml-2 text-xs font-medium border rounded-full bg-slate-100">
-                    {{ activeFilters }}
-                  </div>
-                </Popover.Button>
-                <Popover.Panel placement="bottom-end">
-                  <div class="p-2 space-y-4">
-                    <div>
-                      <div class="text-left text-slate-500">Status</div>
-                      <FormSelect v-model="selectedStatus" class="flex-1 mt-2">
-                        <option :value="null" selected>Todos</option>
-                        <option value="1">Activo</option>
-                        <option value="0">Inactivo</option>
-                      </FormSelect>
-                    </div>
-                    <div class="flex items-center mt-4">
-                      <Button variant="secondary" @click="() => {
-                        close();
-                      }
-                        " class="w-32 ml-auto">
-                        Close
-                      </Button>
-                    </div>
-                  </div>
-                </Popover.Panel>
-              </Popover>
             </div>
           </div>
           <div class="overflow-auto xl:overflow-visible">
@@ -99,11 +64,7 @@ onMounted(() => {
                   </Table.Td>
                   <Table.Td
                     class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500">
-                    Encargado de area
-                  </Table.Td>
-                  <Table.Td
-                    class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500">
-                    Estado
+                    Encargado del área
                   </Table.Td>
                   <Table.Td
                     class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500">
@@ -155,15 +116,6 @@ onMounted(() => {
                         {{ area.user.name }}
                       </div>
                     </Table.Td>
-                    <Table.Td class="py-4 border-dashed dark:bg-darkmode-600">
-                      <div
-                        :class="['flex items-center justify-center', { 'text-success': area.status }, { 'text-danger': !area.status }]">
-                        <Lucide icon="Database" class="w-3.5 h-3.5 stroke-[1.7]" />
-                        <div class="ml-1.5 whitespace-nowrap">
-                          {{ area.status ? "Activo" : "Inactivo" }}
-                        </div>
-                      </div>
-                    </Table.Td>
                     <Table.Td class="relative py-4 border-dashed dark:bg-darkmode-600">
                       <div class="flex items-center justify-end">
                         <Menu class="h-5">
@@ -175,11 +127,9 @@ onMounted(() => {
                               <Lucide icon="CheckSquare" class="w-4 h-4 mr-2" />
                               Editar
                             </Menu.Item>
-                            <Menu.Item :class="`${area.status ? 'text-danger' : 'text-primary'}`" @click="() => {
-                              area.status = !area.status
-                            }">
+                            <Menu.Item :class="`${area.status ? 'text-danger' : 'text-primary'}`">
                               <Lucide icon="RefreshCw" class="w-4 h-4 mr-2" />
-                              Cambiar Estado
+                              Eliminar
                             </Menu.Item>
                           </Menu.Items>
                         </Menu>

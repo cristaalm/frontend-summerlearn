@@ -37,7 +37,7 @@ const handleRegister = () => {
         <div class="col-span-12 sm:col-span-10 sm:col-start-2">
             <div class="flex flex-col md:h-10 gap-y-3 md:items-center md:flex-row">
                 <div class="text-base font-medium group-[.mode--light]:text-white">
-                    Agregar Area
+                    Agregar Área
                 </div>
                 <div class="flex flex-col sm:flex-row gap-x-3 gap-y-2 md:ml-auto">
                     <Button variant="primary"
@@ -79,14 +79,14 @@ const handleRegister = () => {
                             <label class="inline-block mb-2 sm:mb-0 sm:mr-5 sm:text-right xl:w-60 xl:mr-14">
                                 <div class="text-left">
                                     <div class="flex items-center">
-                                        <div class="font-medium">Nombre del area</div>
+                                        <div class="font-medium">Nombre del área</div>
                                         <div
                                             class="ml-2.5 px-2 py-0.5 bg-slate-100 text-slate-500 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md border border-slate-200">
-                                            Required
+                                            Requerido
                                         </div>
                                     </div>
                                     <div class="mt-1.5 xl:mt-3 text-xs leading-relaxed text-slate-500/80">
-                                        Porfavor ingrese el nombre del area
+                                        Por favor, ingrese el nombre del área
                                     </div>
                                 </div>
                             </label>
@@ -104,9 +104,13 @@ const handleRegister = () => {
                                 <div class="text-left">
                                     <div class="flex items-center">
                                         <div class="font-medium">Responsabe</div>
+                                        <div
+                                            class="ml-2.5 px-2 py-0.5 bg-slate-100 text-slate-500 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md border border-slate-200">
+                                            Requerido
+                                        </div>
                                     </div>
                                     <div class="mt-1.5 xl:mt-3 text-xs leading-relaxed text-slate-500/80">
-                                        Porfavor seleccione el responsable del area
+                                        Por favor, seleccione el responsable del área
                                     </div>
                                 </div>
                             </label>
