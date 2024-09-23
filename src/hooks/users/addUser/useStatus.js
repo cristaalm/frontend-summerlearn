@@ -2,42 +2,42 @@ import { ref } from 'vue'
 
 export const status = ref({
   firstName: {
-    name: 'Nombre',
+    name: 'nombre',
     message: '',
     value: false,
     error: false,
     Regex: /^[a-zA-Z\u00C0-\u017F\s]{1,49}[a-zA-Z\u00C0-\u017F]$/
   },
   lastName: {
-    name: 'Apellido',
+    name: 'apellido',
     message: '',
     value: false,
     error: false,
     Regex: /^[a-zA-Z\u00C0-\u017F\s]{1,49}[a-zA-Z\u00C0-\u017F]$/
   },
   email: {
-    name: 'Correo electrónico',
+    name: 'correo electrónico',
     message: '',
     value: false,
     error: false,
     Regex: /^(?=.{1,100}$)[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
   },
   phone: {
-    name: 'Número de teléfono',
+    name: 'número de teléfono',
     message: '',
     value: false,
     error: false,
     Regex: /^\d{10}$/
   },
   birthdate: {
-    name: 'Fecha de nacimiento',
+    name: 'fecha de nacimiento',
     message: '',
     value: false,
     error: false,
     Regex: /^\d{4}-\d{2}-\d{2}$/
   },
   password: {
-    name: 'Contraseña',
+    name: 'contraseña',
     message: '',
     list: [],
     value: false,
@@ -58,7 +58,7 @@ export const status = ref({
     }
   },
   password_confirm: {
-    name: 'Confirmar contraseña',
+    name: 'confirmar contraseña',
     message: '',
     value: false,
     error: false,
