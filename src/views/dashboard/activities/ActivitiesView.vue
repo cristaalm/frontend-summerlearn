@@ -10,6 +10,7 @@ import Button from '@/components/base/Button'
 import { useFilter, usePagination, useActividades } from '@/hooks/actividades/'
 import { ref, onMounted } from 'vue'
 import { deleteActividad } from '@/services/actividades/deleteActivities' // Import your API function
+import ToastNotification from '@/components/ToastNotification.vue' // Asegúrate de usar el nuevo nombre
 
 const { actividades, loading, error, loadActividades } = useActividades()
 const { searchQuery, selectedStatus, filteredItems, activeFilters } = useFilter(actividades)
@@ -31,15 +32,27 @@ const openDeleteModal = (actividadId) => {
   actividadToDelete.value = actividadId
   deleteModalPreview.value = true
 }
+const toastMessages = ref([])
 
-// Function to call the API and delete the activity
+// Function to show the toast
+const showToast = (message) => {
+  toastMessages.value.push(message)
+
+  // Remueve el mensaje después de 3 segundos
+  setTimeout(() => {
+    toastMessages.value.shift() // Elimina el primer mensaje en la lista
+  }, 3000)
+}
+
 const confirmDeleteActividad = async () => {
   try {
     await deleteActividad(actividadToDelete.value)
-    deleteModalPreview.value = false // Close modal after deleting
-    loadActividades() // Reload activities after successful deletion
+    deleteModalPreview.value = false
+    loadActividades()
+    showToast('Actividad eliminada con éxito!') // Use showToast to display the message
   } catch (error) {
     console.error('Error deleting activity:', error)
+    showToast('Error al eliminar la actividad.') // Use showToast for error message
   }
 }
 const closeDeleteActividad = async () => {
@@ -48,6 +61,18 @@ const closeDeleteActividad = async () => {
 </script>
 
 <template>
+  <!-- <Button @click="showToast('Este es un mensaje de toast!')" variant="primary"> Show Toast </Button> -->
+
+  <div>
+    <ToastNotification
+      v-for="(message, index) in toastMessages"
+      :key="index"
+      :message="message"
+      :index="index"
+    >
+    </ToastNotification>
+  </div>
+
   <!-- BEGIN: Modal Content -->
   <Dialog
     :open="deleteModalPreview"
@@ -63,7 +88,7 @@ const closeDeleteActividad = async () => {
         <Lucide icon="XCircle" class="w-16 h-16 mx-auto mt-3 text-danger" />
         <div class="mt-5 text-3xl">¿Está seguro?</div>
         <div class="mt-2 text-slate-500">
-          ¿Realmente desea eliminar este registros?
+          ¿Realmente desea eliminar este registro?
           <br />
           Este proceso no puede deshacerse.
         </div>
@@ -90,7 +115,6 @@ const closeDeleteActividad = async () => {
     </Dialog.Panel>
   </Dialog>
   <!-- END: Modal Content -->
-
   <div class="grid grid-cols-12 gap-y-10 gap-x-6">
     <div class="col-span-12">
       <div class="flex flex-col md:h-10 gap-y-3 md:items-center md:flex-row">
@@ -191,11 +215,11 @@ const closeDeleteActividad = async () => {
                   >
                     Área
                   </Table.Td>
-                  <!-- <Table.Td
+                  <Table.Td
                     class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500"
                   >
-                    Estatus
-                  </Table.Td> -->
+                    Suscritos
+                  </Table.Td>
                   <Table.Td
                     class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500"
                   >
@@ -257,8 +281,9 @@ const closeDeleteActividad = async () => {
                         {{ actividades.area_name }}
                       </div>
                     </Table.Td>
-                    <!-- <Table.Td class="py-4 border-dashed dark:bg-darkmode-600">
-                      <div
+                    <Table.Td class="py-4 border-dashed dark:bg-darkmode-600">
+                      <div href="" class="font-medium whitespace-nowrap text-center">0</div>
+                      <!-- <div
                         :class="[
                           'flex items-center justify-center',
                           { 'text-success': actividades.status },
@@ -269,8 +294,8 @@ const closeDeleteActividad = async () => {
                         <div class="ml-1.5 whitespace-nowrap">
                           {{ actividades.status ? 'Activo' : 'Inactivo' }}
                         </div>
-                      </div>
-                    </Table.Td> -->
+                      </div> -->
+                    </Table.Td>
                     <Table.Td class="relative py-4 border-dashed dark:bg-darkmode-600">
                       <div class="flex items-center justify-end">
                         <Menu class="h-5">
@@ -281,6 +306,14 @@ const closeDeleteActividad = async () => {
                             <Menu.Item class="text-warning">
                               <Lucide icon="CheckSquare" class="w-4 h-4 mr-2" />
                               Editar
+                            </Menu.Item>
+                            <Menu.Item class="text-green">
+                              <Lucide icon="CircleCheckBig" class="w-4 h-4 mr-2" />
+                              Agregar horario
+                            </Menu.Item>
+                            <Menu.Item class="text-blue">
+                              <Lucide icon="CircleCheckBig" class="w-4 h-4 mr-2" />
+                              Agregar objetivos
                             </Menu.Item>
                             <Menu.Item
                               class="text-danger"
@@ -293,7 +326,7 @@ const closeDeleteActividad = async () => {
                               <Lucide icon="Trash" class="w-4 h-4 mr-2" />
                               Eliminar
                             </Menu.Item>
-                            <Menu.Item
+                            <!-- <Menu.Item
                               :class="`${actividades.status ? 'text-red-dark' : 'text-primary'}`"
                               @click="
                                 () => {
@@ -303,7 +336,7 @@ const closeDeleteActividad = async () => {
                             >
                               <Lucide icon="RefreshCw" class="w-4 h-4 mr-2" />
                               {{ actividades.status ? 'Desactivar' : 'Activar' }}
-                            </Menu.Item>
+                            </Menu.Item> -->
                           </Menu.Items>
                         </Menu>
                       </div>

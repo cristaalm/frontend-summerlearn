@@ -150,7 +150,7 @@ onMounted(async () => {
                     </div>
                   </div>
                   <div class="mt-1.5 xl:mt-3 text-xs text-slate-500/80">
-                    Seleccione el nombre del responsable.
+                    Por favor, seleccione el nombre del responsable.
                   </div>
                 </div>
               </label>
@@ -165,7 +165,7 @@ onMounted(async () => {
                   </template>
 
                   <template v-else>
-                    <option value="" disabled selected>Seleccione un responsable</option>
+                    <option value="" disabled selected>Seleccione aquí un responsable...</option>
                     <template v-for="user in users" :key="user.id">
                       <option :value="user.id">{{ user.name }}</option>
                     </template>
@@ -190,7 +190,7 @@ onMounted(async () => {
                     </div>
                   </div>
                   <div class="mt-1.5 xl:mt-3 text-xs text-slate-500/80">
-                    Seleccione el programa relacionado.
+                    Por favor, seleccione el programa relacionado.
                   </div>
                 </div>
               </label>
@@ -205,7 +205,7 @@ onMounted(async () => {
                   </template>
 
                   <template v-else>
-                    <option value="" disabled selected>Seleccione un programa</option>
+                    <option value="" disabled selected>Seleccione aquí un programa...</option>
                     <template v-for="program in programs" :key="program.id">
                       <option :value="program.id">{{ program.name }}</option>
                     </template>
