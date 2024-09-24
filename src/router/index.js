@@ -1,4 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { useMenuStore } from '@/stores/menu'
+import { getRoleFromToken } from '@/utils/getRolFromToken'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -83,8 +85,7 @@ const router = createRouter({
     {
       path: '/login',
       name: 'login',
-      component: () =>
-        import('@/views/LoginView.vue').catch(() => import('@/views/NotFoundView.vue'))
+      component: () => import('@/views/LoginView.vue').catch()
     },
     {
       path: '/dashboard',
@@ -246,6 +247,17 @@ const router = createRouter({
       component: () => import('@/views/NotFoundView.vue')
     }
   ]
+})
+
+router.beforeEach(async (to, from, next) => {
+  const menuStore = useMenuStore()
+  const role = await getRoleFromToken()
+
+  if (role) {
+    menuStore.loadMenu(role) // Actualiza el menú según el rol
+  }
+
+  next() // Continúa con la navegación
 })
 
 export default router
