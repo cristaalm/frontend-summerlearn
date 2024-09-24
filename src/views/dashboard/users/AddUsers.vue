@@ -12,16 +12,16 @@ import { status } from "@/hooks/users/addUser/useStatus";
 import { usePasswordSecurity } from "@/hooks/users/addUser/usePasswordSecurity";
 import { useValidateFunctions } from "@/hooks/users/addUser/useValidationFunctions";
 import { useRoles } from "@/hooks/roles/useRoles";
-import { useAuth } from "@/hooks/users/addUser/useAuth";
+import { useSetUser } from "@/hooks/users/addUser/useSetUser";
 
 
 
 const router = useRouter();
 const { firstName, lastName, email, phone, birthdate, password, password_confirm, rol, valid } = useRefs();
-const { validateText, validateDate, validatePasswordComfirm, validateRol, validate } = useValidateFunctions({ valid, password, password_confirm });
-const { profileImage, errorMessagePhoto, validateImage, triggerFileSelect, removeImage } = useValidationImage({ status, validate });
+const { validateText, validateDate, validatePasswordComfirm, validateInputPhone, validateRol, validate } = useValidateFunctions({ valid, password, password_confirm });
+const { profileImage, errorMessagePhoto, validateImage, triggerFileSelect, removeImage, imageFile } = useValidationImage({ status, validate });
 const { validatePassword } = usePasswordSecurity({ status, validate });
-const { loading, addUser } = useAuth({ email, phone, password, firstName, lastName, birthdate, rol, profileImage, valid, validate });
+const { loading, addUser } = useSetUser({ email, phone, password, firstName, lastName, birthdate, rol, imageFile, valid, validate });
 const { roles, loadingRoles, errorRoles, loadRoles } = useRoles();
 
 // Año mínimo para la fecha de nacimiento
@@ -35,6 +35,9 @@ watch(birthdate, (value) => {
   validateDate(value);
 })
 
+watch(profileImage, () => {
+  console.log(imageFile.value);
+})
 
 </script>
 
@@ -192,7 +195,7 @@ watch(birthdate, (value) => {
               <label class="inline-block mb-2 sm:mb-0 sm:mr-5 sm:text-right xl:w-60 xl:mr-14">
                 <div class="text-left">
                   <div class="flex items-center">
-                    <div class="font-medium">Numero de teléfono</div>
+                    <div class="font-medium">Número de teléfono</div>
                     <div
                       class="ml-2.5 px-2 py-0.5 bg-slate-100 text-slate-500 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md border border-slate-200">
                       Requerido
@@ -204,8 +207,10 @@ watch(birthdate, (value) => {
                 </div>
               </label>
               <div class="flex-1 w-full mt-3 xl:mt-0">
-                <FormInput type="number" placeholder="Escriba aqui su Teléfono" name="phone" v-model="phone"
-                  @input="validateText" />
+                <FormInput type="text" placeholder="Escriba aqui su Teléfono..." name="phone" v-model="phone" @input="(e) => {
+                  validateInputPhone(e)
+                  validateText(e)
+                }" />
                 <div class="text-red-500 mt-2">{{ status.phone.message }}</div>
               </div>
             </div>
@@ -236,7 +241,7 @@ watch(birthdate, (value) => {
 
                   <template v-else-if="errorRoles">
                     <option value="" disabled selected>
-                      Error al cargar los responsables
+                      Error al cargar los roles
                     </option>
                   </template>
 

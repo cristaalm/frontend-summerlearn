@@ -11,7 +11,7 @@ import { useRouter } from "vue-router";
 const { concept, amount } = useRefs();
 const { status } = useStatus();
 const { valid, validateInputAmount } = useValidations({ status, concept, amount });
-const { setDonationLoading, setDonationError, addDonation } = useSetDonation(); 
+const { setDonationLoading, setDonationError, addDonation } = useSetDonation();
 const router = useRouter();
 
 const handleRegister = () => {
@@ -128,8 +128,8 @@ const handleRegister = () => {
                             :class="`w-full px-10 md:w-auto font-bold ${setDonationLoading || !valid ? 'border-gray-500 text-gray-500' : 'border-green text-green'}`"
                             @click="handleRegister" :disabled="!valid || setDonationLoading">
 
-                            <LoadingIcon v-if="setDonationLoading" icon="tail-spin" class="stroke-[1.3] w-4 h-4 mr-2 -ml-2"
-                                color="black" />
+                            <LoadingIcon v-if="setDonationLoading" icon="tail-spin"
+                                class="stroke-[1.3] w-4 h-4 mr-2 -ml-2" color="black" />
 
                             <Lucide v-if="!setDonationLoading" icon="Check" class="stroke-[1.3] w-4 h-4 mr-2" />
                             {{ setDonationLoading ? 'Registrando...' : 'Registrar' }}

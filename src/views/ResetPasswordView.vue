@@ -136,15 +136,14 @@ watch(password, () => {
     ]">
       <div class="sticky top-0 z-10 flex-col justify-center hidden h-screen ml-16 lg:flex xl:ml-28 2xl:ml-36">
         <div class="leading-[1.4] text-[2.6rem] xl:text-5xl font-medium xl:leading-[1.2] text-white">
-          <!-- TODO: Cambiar el texto y descripción de este apartado por algo que tenga que ver con la ONG -->
-          Abraza la excelencia <br />
-          en el desarrollo de paneles de control
+          Establece tu nueva contraseña <br />
+          y sigue adelante con nuestra misión
         </div>
         <div class="mt-5 text-base leading-relaxed xl:text-lg text-white/70">
-          Desbloquea el potencial de Tailwise, donde los desarrolladores crean paneles de control meticulosamente
-          estructurados y visualmente impresionantes con módulos ricos en funciones. Únete a nosotros hoy para dar forma
-          al futuro del desarrollo de tu aplicación.
+          Protege tu cuenta y asegura tu acceso para continuar ayudando a transformar vidas a través de la educación.
+          Ingresa tu nueva contraseña para seguir siendo parte de nuestra comunidad.
         </div>
+
       </div>
     </div>
   </div>

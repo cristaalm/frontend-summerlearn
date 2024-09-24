@@ -76,7 +76,6 @@ const router = createRouter({
         if (!key) {
           return next({ name: 'login' }) // Redirige al login si no hay key
         }
-
         // Continuar si la key es válida
         next()
       }
@@ -90,6 +89,13 @@ const router = createRouter({
     {
       path: '/dashboard',
       component: () => import('@/views/dashboard').catch(() => import('@/views/NotFoundView.vue')),
+      beforeEnter: (to, from, next) => {
+        const isAuth = !!localStorage.getItem('access_token') // Verifica si hay un token
+        if (!isAuth) {
+          return next({ name: 'login' }) //Redirige en caso de que no esté autenticado
+        }
+        next() // Permite acceso
+      },
       children: [
         {
           path: '/dashboard',

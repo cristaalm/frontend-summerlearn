@@ -1,6 +1,9 @@
 import { status } from './useStatus'
+import { ref } from 'vue'
 
 export function useValidateFunctions({ valid, password, password_confirm }) {
+  const lastPhone = ref('')
+
   const validate = () => {
     const validForm = Object.keys(status.value).every((key) => status.value[key].value)
     valid.value = validForm
@@ -16,12 +19,22 @@ export function useValidateFunctions({ valid, password, password_confirm }) {
     } else {
       status.value[name].value = false
       status.value[name].error = true
-      status.value[name].message = `El campo ${nameComponent} no es válido`
+      status.value[name].message = `El campo "${nameComponent}" no es válido`
     }
     if (name === 'password_confirm') {
       status.value.password_confirm.modified = true
     }
     validate()
+  }
+
+  const validateInputPhone = (e) => {
+    const { value } = e.target
+    const regex = /^$|^\d{0,10}$/
+    if (regex.test(value)) {
+      lastPhone.value = value
+    } else {
+      e.target.value = lastPhone.value
+    }
   }
 
   const validateDate = (value) => {
@@ -93,6 +106,7 @@ export function useValidateFunctions({ valid, password, password_confirm }) {
     validateDate,
     validatePasswordComfirm,
     validateRol,
+    validateInputPhone,
     validate
   }
 }

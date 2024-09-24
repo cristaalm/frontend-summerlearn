@@ -1,7 +1,8 @@
 import { ref } from 'vue'
 
 export function useValidationImage({ status, validate }) {
-  const profileImage = ref(null) // File
+  const profileImage = ref(null) // Object URL de la imagen seleccionada
+  const imageFile = ref(null) // Archivo seleccionado
   const errorMessagePhoto = ref('')
   const maxFileSize = 2 * 1024 * 1024
 
@@ -34,6 +35,7 @@ export function useValidationImage({ status, validate }) {
       status.value.profileImage.value = true
       status.value.profileImage.error = false
       profileImage.value = URL.createObjectURL(file)
+      imageFile.value = file
       errorMessagePhoto.value = '' // Limpiar mensaje de error si la validación es exitosa
     }
     validate()
@@ -52,6 +54,7 @@ export function useValidationImage({ status, validate }) {
     status.value.profileImage.value = false
     status.value.profileImage.error = true
     profileImage.value = null
+    imageFile.value = null
     errorMessagePhoto.value = ''
     validate()
   }
@@ -61,6 +64,7 @@ export function useValidationImage({ status, validate }) {
     errorMessagePhoto,
     validateImage,
     triggerFileSelect,
-    removeImage
+    removeImage,
+    imageFile
   }
 }

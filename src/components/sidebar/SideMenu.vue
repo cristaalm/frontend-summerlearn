@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import "@/assets/css/vendors/simplebar.css";
-import "@/assets/css/themes/echo.css";
-import { useRoute, useRouter } from "vue-router";
-import Lucide from "@/components/base/Lucide";
-import Breadcrumb from "@/components/base/Breadcrumb";
-import { Menu } from "@/components/base/Headless";
-import { useMenuStore } from "@/stores/menu";
-import { useCompactMenuStore } from "@/stores/compact-menu";
+import '@/assets/css/vendors/simplebar.css'
+import '@/assets/css/themes/echo.css'
+import { useRoute, useRouter } from 'vue-router'
+import Lucide from '@/components/base/Lucide'
+import Breadcrumb from '@/components/base/Breadcrumb'
+import { Menu } from '@/components/base/Headless'
+import { useMenuStore } from '@/stores/menu'
+import { useCompactMenuStore } from '@/stores/compact-menu'
 import {
   type ProvideForceActiveMenu,
   forceActiveMenu,
@@ -15,90 +15,94 @@ import {
   nestedMenu,
   linkTo,
   enter,
-  leave,
-} from "./side-menu";
-import { watch, reactive, ref, computed, onMounted, provide } from "vue";
-import SimpleBar from "simplebar";
+  leave
+} from './side-menu'
+import { watch, reactive, ref, computed, onMounted, provide } from 'vue'
+import SimpleBar from 'simplebar'
 
-const compactMenu = useCompactMenuStore();
+const compactMenu = useCompactMenuStore()
 const setCompactMenu = (val: boolean) => {
-  compactMenu.setCompactMenu(val);
-};
-const quickSearch = ref(false);
+  compactMenu.setCompactMenu(val)
+}
+const quickSearch = ref(false)
 
-const compactMenuOnHover = ref(false);
-const activeMobileMenu = ref(false);
-const route: Route = useRoute();
-const router = useRouter();
-let formattedMenu = reactive<Array<FormattedMenu | string>>([]);
-const setFormattedMenu = (
-  computedFormattedMenu: Array<FormattedMenu | string>
-) => {
-  Object.assign(formattedMenu, computedFormattedMenu);
-};
-const menuStore = useMenuStore();
-const menu = computed(() => nestedMenu(menuStore.value, route));
+const compactMenuOnHover = ref(false)
+const activeMobileMenu = ref(false)
+const route: Route = useRoute()
+const router = useRouter()
+let formattedMenu = reactive<Array<FormattedMenu | string>>([])
+const setFormattedMenu = (computedFormattedMenu: Array<FormattedMenu | string>) => {
+  Object.assign(formattedMenu, computedFormattedMenu)
+}
+const menuStore = useMenuStore()
+const menu = computed(() => nestedMenu(menuStore.value, route))
 
-provide<ProvideForceActiveMenu>("forceActiveMenu", (pageName: string) => {
-  forceActiveMenu(route, pageName);
-  setFormattedMenu(menu.value);
-});
+provide<ProvideForceActiveMenu>('forceActiveMenu', (pageName: string) => {
+  forceActiveMenu(route, pageName)
+  setFormattedMenu(menu.value)
+})
 
-const scrollableRef = ref<HTMLDivElement>();
+const scrollableRef = ref<HTMLDivElement>()
 
-const topBarActive = ref(false);
+const topBarActive = ref(false)
 
 const toggleCompactMenu = (event: MouseEvent) => {
-  event.preventDefault();
-  setCompactMenu(!compactMenu.value);
-};
+  event.preventDefault()
+  setCompactMenu(!compactMenu.value)
+}
 
 const compactLayout = () => {
   if (window.innerWidth <= 1600) {
-    setCompactMenu(true);
+    setCompactMenu(true)
   }
-};
+}
 
 const requestFullscreen = () => {
-  const el = document.documentElement;
+  const el = document.documentElement
   if (el.requestFullscreen) {
-    el.requestFullscreen();
+    el.requestFullscreen()
   }
-};
+}
 
 watch(menu, () => {
-  setFormattedMenu(menu.value);
-});
+  setFormattedMenu(menu.value)
+})
 
 watch(
   computed(() => route.path),
   () => {
-    delete route.forceActiveMenu;
+    delete route.forceActiveMenu
   }
-);
+)
+
+const clearLocalStorage = () => {
+  if (typeof window !== 'undefined' && window.localStorage) {
+    localStorage.removeItem('access_token')
+  }
+}
 
 onMounted(() => {
   if (scrollableRef.value) {
-    new SimpleBar(scrollableRef.value);
+    new SimpleBar(scrollableRef.value)
   }
 
-  setFormattedMenu(menu.value);
+  setFormattedMenu(menu.value)
 
-  compactLayout();
+  compactLayout()
 
   window.onresize = () => {
-    compactLayout();
-  };
-});
+    compactLayout()
+  }
+})
 
 window.onscroll = () => {
   // Topbar
   if (document.body.scrollTop > 0 || document.documentElement.scrollTop > 0) {
-    topBarActive.value = true;
+    topBarActive.value = true
   } else {
-    topBarActive.value = false;
+    topBarActive.value = false
   }
-};
+}
 </script>
 
 <template>
@@ -107,7 +111,7 @@ window.onscroll = () => {
       'echo group bg-gradient-to-b from-slate-200/70 to-slate-50 background relative min-h-screen',
       'before:content-[\'\'] before:h-[370px] before:w-screen before:bg-gradient-to-t before:from-theme-1/80 before:to-theme-2 [&.background--hidden]:before:opacity-0 before:transition-[opacity,height] before:ease-in-out before:duration-300 before:top-0 before:fixed',
       'after:content-[\'\'] after:h-[370px] after:w-screen [&.background--hidden]:after:opacity-0 after:transition-[opacity,height] after:ease-in-out after:duration-300 after:top-0 after:fixed after:bg-texture-white after:bg-contain after:bg-fixed after:bg-[center_-13rem] after:bg-no-repeat',
-      { 'background--hidden': topBarActive },
+      { 'background--hidden': topBarActive }
     ]"
   >
     <div
@@ -117,22 +121,22 @@ window.onscroll = () => {
         { 'side-menu--collapsed': compactMenu.value },
         { 'side-menu--on-hover': compactMenuOnHover },
         { 'ml-0 after:block': activeMobileMenu },
-        { '-ml-[275px] after:hidden': !activeMobileMenu },
+        { '-ml-[275px] after:hidden': !activeMobileMenu }
       ]"
     >
       <div
         :class="[
           'fixed ml-[275px] w-10 h-10 items-center justify-center xl:hidden z-50',
           { flex: activeMobileMenu },
-          { hidden: !activeMobileMenu },
+          { hidden: !activeMobileMenu }
         ]"
       >
         <a
           href=""
           @click="
             (event) => {
-              event.preventDefault();
-              activeMobileMenu = false;
+              event.preventDefault()
+              activeMobileMenu = false
             }
           "
           class="mt-5 ml-5"
@@ -142,36 +146,38 @@ window.onscroll = () => {
       </div>
       <div
         :class="[
-          'h-full box bg-white/[0.95] rounded-none xl:rounded-xl z-20 relative w-[275px] duration-300 transition-[width] group-[.side-menu--collapsed]:xl:w-[91px] group-[.side-menu--collapsed.side-menu--on-hover]:xl:shadow-[6px_0_12px_-4px_#0000000f] group-[.side-menu--collapsed.side-menu--on-hover]:xl:w-[275px] overflow-hidden flex flex-col',
+          'h-full box bg-white/[0.95] rounded-none xl:rounded-xl z-20 relative w-[275px] duration-300 transition-[width] group-[.side-menu--collapsed]:xl:w-[91px] group-[.side-menu--collapsed.side-menu--on-hover]:xl:shadow-[6px_0_12px_-4px_#0000000f] group-[.side-menu--collapsed.side-menu--on-hover]:xl:w-[275px] overflow-hidden flex flex-col'
         ]"
         @mouseover="
           (event) => {
-            event.preventDefault();
-            compactMenuOnHover = true;
+            event.preventDefault()
+            compactMenuOnHover = true
           }
         "
         @mouseleave="
           (event) => {
-            event.preventDefault();
-            compactMenuOnHover = false;
+            event.preventDefault()
+            compactMenuOnHover = false
           }
         "
       >
         <div
           :class="[
-            'flex items-center z-10 px-5 h-[65px] w-[275px] overflow-hidden relative duration-300 xl:group-[.side-menu--collapsed]:w-[91px] group-[.side-menu--collapsed.side-menu--on-hover]:w-[275px]',
+            'flex items-center z-10 px-5 h-[65px] w-[275px] overflow-hidden relative duration-300 xl:group-[.side-menu--collapsed]:w-[91px] group-[.side-menu--collapsed.side-menu--on-hover]:w-[275px]'
           ]"
         >
           <a
             href=""
             class="flex items-center transition-[margin] duration-300 group-[.side-menu--collapsed]:xl:ml-2 group-[.side-menu--collapsed.side-menu--on-hover]:xl:ml-0"
-            @click="(event: MouseEvent) => {
-              event.preventDefault();
-              router.push({
-                name: 'dashboard',
-              });
-              activeMobileMenu = false;
-            }"
+            @click="
+              (event: MouseEvent) => {
+                event.preventDefault()
+                router.push({
+                  name: 'dashboard'
+                })
+                activeMobileMenu = false
+              }
+            "
           >
             <div
               class="flex items-center justify-center w-[34px] rounded-lg h-[34px] bg-gradient-to-b from-theme-1 to-theme-2/80 transition-transform ease-in-out group-[.side-menu--collapsed.side-menu--on-hover]:xl:-rotate-360"
@@ -197,7 +203,7 @@ window.onscroll = () => {
           ref="scrollableRef"
           :class="[
             'w-full h-full z-20 px-5 overflow-y-auto overflow-x-hidden pb-3 [-webkit-mask-image:-webkit-linear-gradient(top,rgba(0,0,0,0),black_30px)] [&:-webkit-scrollbar]:w-0 [&:-webkit-scrollbar]:bg-transparent',
-            '[&_.simplebar-content]:p-0 [&_.simplebar-track.simplebar-vertical]:w-[10px] [&_.simplebar-track.simplebar-vertical]:mr-0.5 [&_.simplebar-track.simplebar-vertical_.simplebar-scrollbar]:before:bg-slate-400/30',
+            '[&_.simplebar-content]:p-0 [&_.simplebar-track.simplebar-vertical]:w-[10px] [&_.simplebar-track.simplebar-vertical]:mr-0.5 [&_.simplebar-track.simplebar-vertical_.simplebar-scrollbar]:before:bg-slate-400/30'
           ]"
         >
           <ul class="scrollable">
@@ -217,64 +223,54 @@ window.onscroll = () => {
                     'side-menu__link',
                     { 'side-menu__link--active': menu.active },
                     {
-                      'side-menu__link--active-dropdown': menu.activeDropdown,
-                    },
-                  ]"
-                  @click="(event: MouseEvent) => {
-                    event.preventDefault();
-                    if (!menu.subMenu) {
-                      activeMobileMenu = false;
+                      'side-menu__link--active-dropdown': menu.activeDropdown
                     }
-                    linkTo(menu, router);
-                    setFormattedMenu([...formattedMenu]);
-                  }"
+                  ]"
+                  @click="
+                    (event: MouseEvent) => {
+                      event.preventDefault()
+                      if (!menu.subMenu) {
+                        activeMobileMenu = false
+                      }
+                      linkTo(menu, router)
+                      setFormattedMenu([...formattedMenu])
+                    }
+                  "
                 >
                   <Lucide :icon="menu.icon" class="side-menu__link__icon" />
                   <div class="side-menu__link__title">{{ menu.title }}</div>
                   <div v-if="menu.badge" class="side-menu__link__badge">
                     {{ menu.badge }}
                   </div>
-                  <Lucide
-                    v-if="menu.subMenu"
-                    icon="ChevronDown"
-                    class="side-menu__link__chevron"
-                  />
+                  <Lucide v-if="menu.subMenu" icon="ChevronDown" class="side-menu__link__chevron" />
                 </a>
                 <!-- BEGIN: Second Child -->
                 <Transition @enter="enter" @leave="leave">
                   <ul v-if="menu.subMenu && menu.activeDropdown">
-                    <li
-                      v-for="(subMenu, subMenuKey) in menu.subMenu"
-                      :key="subMenuKey"
-                    >
+                    <li v-for="(subMenu, subMenuKey) in menu.subMenu" :key="subMenuKey">
                       <a
                         href=""
                         :class="[
                           'side-menu__link',
                           { 'side-menu__link--active': subMenu.active },
                           {
-                            'side-menu__link--active-dropdown':
-                              subMenu.activeDropdown,
-                          },
+                            'side-menu__link--active-dropdown': subMenu.activeDropdown
+                          }
                         ]"
-                        @click="(event: MouseEvent) => {
-                          event.preventDefault();
-                          activeMobileMenu = false;
-                          linkTo(subMenu, router);
-                          setFormattedMenu([...formattedMenu]);
-                        }"
+                        @click="
+                          (event: MouseEvent) => {
+                            event.preventDefault()
+                            activeMobileMenu = false
+                            linkTo(subMenu, router)
+                            setFormattedMenu([...formattedMenu])
+                          }
+                        "
                       >
-                        <Lucide
-                          :icon="subMenu.icon"
-                          class="side-menu__link__icon"
-                        />
+                        <Lucide :icon="subMenu.icon" class="side-menu__link__icon" />
                         <div class="side-menu__link__title">
                           {{ subMenu.title }}
                         </div>
-                        <div
-                          v-if="subMenu.badge"
-                          class="side-menu__link__badge"
-                        >
+                        <div v-if="subMenu.badge" class="side-menu__link__badge">
                           {{ subMenu.badge }}
                         </div>
                         <Lucide
@@ -287,9 +283,7 @@ window.onscroll = () => {
                       <Transition @enter="enter" @leave="leave">
                         <ul v-if="subMenu.subMenu && subMenu.activeDropdown">
                           <li
-                            v-for="(
-                              lastSubMenu, lastSubMenuKey
-                            ) in subMenu.subMenu"
+                            v-for="(lastSubMenu, lastSubMenuKey) in subMenu.subMenu"
                             :key="lastSubMenuKey"
                           >
                             <a
@@ -297,30 +291,25 @@ window.onscroll = () => {
                               :class="[
                                 'side-menu__link',
                                 {
-                                  'side-menu__link--active': lastSubMenu.active,
+                                  'side-menu__link--active': lastSubMenu.active
                                 },
                                 {
-                                  'side-menu__link--active-dropdown':
-                                    lastSubMenu.activeDropdown,
-                                },
+                                  'side-menu__link--active-dropdown': lastSubMenu.activeDropdown
+                                }
                               ]"
-                              @click="(event: MouseEvent) => {
-                                event.preventDefault();
-                                linkTo(lastSubMenu, router);
-                                setFormattedMenu([...formattedMenu]);
-                              }"
+                              @click="
+                                (event: MouseEvent) => {
+                                  event.preventDefault()
+                                  linkTo(lastSubMenu, router)
+                                  setFormattedMenu([...formattedMenu])
+                                }
+                              "
                             >
-                              <Lucide
-                                :icon="lastSubMenu.icon"
-                                class="side-menu__link__icon"
-                              />
+                              <Lucide :icon="lastSubMenu.icon" class="side-menu__link__icon" />
                               <div class="side-menu__link__title">
                                 {{ lastSubMenu.title }}
                               </div>
-                              <div
-                                v-if="lastSubMenu.badge"
-                                class="side-menu__link__badge"
-                              >
+                              <div v-if="lastSubMenu.badge" class="side-menu__link__badge">
                                 {{ lastSubMenu.badge }}
                               </div>
                             </a>
@@ -345,7 +334,7 @@ window.onscroll = () => {
           :class="[
             'top-bar absolute left-0 xl:left-3.5 right-0 h-full mx-5 group',
             'before:content-[\'\'] before:absolute before:top-0 before:inset-x-0 before:-mt-[15px] before:h-[20px] before:backdrop-blur',
-            { 'top-bar--active': topBarActive },
+            { 'top-bar--active': topBarActive }
           ]"
         >
           <div
@@ -356,20 +345,19 @@ window.onscroll = () => {
                 href=""
                 @click="
                   (event) => {
-                    event.preventDefault();
-                    activeMobileMenu = true;
+                    event.preventDefault()
+                    activeMobileMenu = true
                   }
                 "
                 class="p-2 text-white rounded-full hover:bg-white/5"
               >
                 <Lucide icon="AlignJustify" class="w-[18px] h-[18px]" />
               </a>
-              
             </div>
             <!-- BEGIN: Breadcrumb -->
             <Breadcrumb light class="flex-1 hidden xl:block">
               <Breadcrumb.Link to="/">SummerLearn</Breadcrumb.Link>
-              <Breadcrumb.Link to="/dashboard/" :active="true">Dashboards</Breadcrumb.Link>
+              <Breadcrumb.Link to="/dashboard/" :active="true">Dashboard</Breadcrumb.Link>
             </Breadcrumb>
             <!-- END: Breadcrumb -->
             <!-- BEGIN: Search -->
@@ -377,7 +365,7 @@ window.onscroll = () => {
               class="relative justify-center flex-1 hidden xl:flex"
               @click="
                 () => {
-                  quickSearch = true;
+                  quickSearch = true
                 }
               "
             ></div>
@@ -397,27 +385,28 @@ window.onscroll = () => {
                     @click="
                       () => {
                         router.push({
-                          name: 'settings',
-                        });
+                          name: 'settings'
+                        })
                       }
                     "
                     class="text-primary"
                   >
                     <Lucide icon="Users" class="w-4 h-4 mr-2" />
-                    Información Personal 
+                    Información Personal
                   </Menu.Item>
                   <Menu.Item
                     @click="
                       () => {
+                        clearLocalStorage()
                         router.push({
-                          name: 'login',
-                        });
+                          name: 'login'
+                        })
                       }
                     "
                     class="text-danger"
                   >
                     <Lucide icon="Power" class="w-4 h-4 mr-2" />
-                    Cerar Sesión
+                    Cerrar Sesión
                   </Menu.Item>
                 </Menu.Items>
               </Menu>
@@ -444,7 +433,7 @@ window.onscroll = () => {
         'transition-[margin,width] duration-100 xl:pl-3.5 pt-[54px] pb-16 relative z-10 group mode',
         { 'xl:ml-[275px]': !compactMenu.value },
         { 'xl:ml-[91px]': compactMenu.value },
-        { 'mode--light': !topBarActive },
+        { 'mode--light': !topBarActive }
       ]"
     >
       <div class="px-5 mt-16">
