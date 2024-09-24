@@ -1,13 +1,16 @@
 <script setup>
 import Lucide from "@/components/base/Lucide";
 import Button from "@/components/base/Button";
+import TomSelect from "@/components/base/TomSelect";
 import { FormInput, FormSelect, InputGroup } from "@/components/base/Form";
 import { useStatus, useValidations, useRefs } from "@/hooks/bills/addBill";
 import { useDonations } from "@/hooks/donations/";
 import { onMounted } from "vue";
 import { useRouter } from "vue-router";
+import { ref } from "vue";
 
 const router = useRouter();
+const selectMultiple = ref([]);
 const { concept, amount, donation } = useRefs();
 const { status } = useStatus();
 const { valid, validateInputAmount } = useValidations({ status, concept, amount, donation });
@@ -54,6 +57,38 @@ const handleRegister = () => {
                             <label class="inline-block mb-2 sm:mb-0 sm:mr-5 sm:text-right xl:w-60 xl:mr-14">
                                 <div class="text-left">
                                     <div class="flex items-center">
+                                        <div class="font-medium">Donación Fuente</div>
+                                        <div
+                                            class="ml-2.5 px-2 py-0.5 bg-slate-100 text-slate-500 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md border border-slate-200">
+                                            Obligatorio
+                                        </div>
+                                    </div>
+                                    <div class="mt-1.5 xl:mt-3 text-xs leading-relaxed text-slate-500/80">
+                                        Por favor, seleccione la donación de la cual se obtiene el gasto.
+                                    </div>
+                                </div>
+                            </label>
+                            <div class="flex-1 w-full mt-3 xl:mt-0">
+                                <TomSelect v-model="selectMultiple" :options="{
+                                    placeholder: 'Select your favorite actors',
+                                }" class="w-full" multiple>
+                                    <option value="1">Leonardo DiCaprio</option>
+                                    <option value="2">Johnny Deep</option>
+                                    <option value="3">Robert Downey, Jr</option>
+                                    <option value="4">Samuel L. Jackson</option>
+                                    <option value="5">Morgan Freeman</option>
+                                </TomSelect>
+
+                                <div class="mt-1 text-xs text-red-500 h-4">
+                                    {{ status.amount.message }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- <div class="flex-col block pt-5 mt-5 xl:items-center sm:flex xl:flex-row first:mt-0 first:pt-0">
+                            <label class="inline-block mb-2 sm:mb-0 sm:mr-5 sm:text-right xl:w-60 xl:mr-14">
+                                <div class="text-left">
+                                    <div class="flex items-center">
                                         <div class="font-medium">Donacion Fuente</div>
                                     </div>
                                     <div class="mt-1.5 xl:mt-3 text-xs leading-relaxed text-slate-500/80">
@@ -71,13 +106,13 @@ const handleRegister = () => {
                                         </option>
                                     </template>
 
-                                    <template v-else-if="error">
+<template v-else-if="error">
                                         <option value="" disabled selected>
                                             Error al cargar las donaciones
                                         </option>
                                     </template>
 
-                                    <template v-else>
+<template v-else>
                                         <option value="" disabled selected>
                                             Seleccione una donacion
                                         </option>
@@ -86,14 +121,14 @@ const handleRegister = () => {
                                                 {{ donation.concept }} ($ {{ donation.quanty }})
                                             </option>
                                         </template>
-                                    </template>
+</template>
 
-                                </FormSelect>
-                                <div class="mt-1 text-xs text-red-500 h-4">
-                                    {{ status.donation.message }}
-                                </div>
-                            </div>
-                        </div>
+</FormSelect>
+<div class="mt-1 text-xs text-red-500 h-4">
+    {{ status.donation.message }}
+</div>
+</div>
+</div> -->
 
                         <div class="flex-col block pt-5 mt-5 xl:items-center sm:flex xl:flex-row first:mt-0 first:pt-0">
                             <label class="inline-block mb-2 sm:mb-0 sm:mr-5 sm:text-right xl:w-60 xl:mr-14">
