@@ -18,7 +18,7 @@
             </RouterLink>
           </div>
         </div>
-        <img src="https://placehold.co/550x550" alt="Hero"
+        <img src="/src/assets/img/Photo2.jpg" alt="Hero"
           class="mx-auto aspect-video overflow-hidden rounded-xl object-cover sm:w-full lg:order-last lg:aspect-square w-[550] h-[550]"
           data-aos="fade-left" data-aos-delay="100" />
       </div>
