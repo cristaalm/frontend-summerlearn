@@ -1,82 +1,83 @@
-import { ref, watch } from 'vue'
+import { ref, watch } from 'vue';
 
-export function useValidations({ status, concept, amount, donation }) {
-  const valid = ref(false)
-  const lastAmount = ref('')
+export function useValidations({ status, concept, amount, selectMultiple }) {
+  const valid = ref(false);
+  const lastAmount = ref('');
 
   //? ################################### METHODS ###################################
 
-  const validateInputAmount = (e) => {
-    const { value } = e.target
-    const regex = /^$|^\d+(\.\d{1,2})?$/
-    if (regex.test(value)) {
-      lastAmount.value = value
+  const validateSelectMultiple = () => {
+    if (!selectMultiple.value || selectMultiple.value.length === 0) {
+      status.value.selectMultiple.message = "Por favor, seleccione al menos una donación.";
+      status.value.selectMultiple.error = true;
+      valid.value = false; // Si hay error, el botón debe estar desactivado
     } else {
-      amount.value = lastAmount.value
+      status.value.selectMultiple.message = "";
+      status.value.selectMultiple.error = false;
     }
-  }
+  };
+
+  const validateInputAmount = (e) => {
+    const { value } = e.target;
+    const regex = /^$|^\d+(\.\d{1,2})?$/;
+    if (regex.test(value)) {
+      lastAmount.value = value;
+    } else {
+      amount.value = lastAmount.value;
+    }
+  };
 
   const validateAmount = (value) => {
-    const { Regex } = status.value.amount
+    const { Regex } = status.value.amount;
     if (Regex.test(value)) {
-      status.value.amount.success = true
-      status.value.amount.error = false
-      status.value.amount.message = ''
+      status.value.amount.success = true;
+      status.value.amount.error = false;
+      status.value.amount.message = '';
     } else {
-      status.value.amount.success = false
-      status.value.amount.error = true
-      status.value.amount.message = `El monto no es válido`
+      status.value.amount.success = false;
+      status.value.amount.error = true;
+      status.value.amount.message = `El monto no es válido`;
     }
-  }
+  };
 
   const validateConcept = (value) => {
-    const { Regex } = status.value.concept
+    const { Regex } = status.value.concept;
     if (Regex.test(value)) {
-      status.value.concept.success = true
-      status.value.concept.error = false
-      status.value.concept.message = ''
+      status.value.concept.success = true;
+      status.value.concept.error = false;
+      status.value.concept.message = '';
     } else {
-      status.value.concept.success = false
-      status.value.concept.error = true
-      status.value.concept.message = `El concepto no es válido`
+      status.value.concept.success = false;
+      status.value.concept.error = true;
+      status.value.concept.message = `El concepto no es válido`;
     }
-  }
-
-  const validateDonation = (value) => {
-    const { Regex } = status.value.donation
-    if (Regex.test(value)) {
-      status.value.donation.success = true
-      status.value.donation.error = false
-      status.value.donation.message = ''
-    } else {
-      status.value.donation.success = false
-      status.value.donation.error = true
-      status.value.donation.message = `La donación seleccionada no es válida`
-    }
-  }
+  };
 
   const validate = () => {
-    const { concept, amount, donation } = status.value
-    valid.value = concept.success && amount.success && donation.success ? true : false
-  }
+    const { concept, amount } = status.value;
+    // Incluye validación para selectMultiple
+    validateSelectMultiple(); // Llama a la función para validar selectMultiple
+    valid.value = concept.success && amount.success && !status.value.selectMultiple.error;
+  };
 
   //? ################################### WATCHERS ###################################
 
   watch(concept, (newValue) => {
-    validateConcept(newValue)
-  })
+    validateConcept(newValue);
+  });
 
   watch(amount, (newValue) => {
-    validateAmount(newValue)
-  })
+    validateAmount(newValue);
+  });
 
-  watch(donation, (newValue) => {
-    validateDonation(newValue)
-  })
+  watch(selectMultiple, (newValue) => {
+    validateSelectMultiple(newValue);
+    validate(); // Asegúrate de validar después de cambiar el selectMultiple
+  });
 
   watch(status.value, () => {
-    validate()
-  })
+    validate();
+  });
 
-  return { valid, validateInputAmount }
+  return { valid, validateInputAmount };
 }

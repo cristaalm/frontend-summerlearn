@@ -1,14 +1,14 @@
 <script setup>
 import Lucide from "@/components/base/Lucide";
-import { Menu } from "@/components/base/Headless";
+// import { Menu } from "@/components/base/Headless";
 import TinySlider from "@/components/base/TinySlider";
 // import { getColor } from "@/utils/colors";
 import ReportBarChart3 from "@/components/ReportBarChart3";
-import ReportDonutChart3 from "@/components/ReportDonutChart3";
+// import ReportDonutChart3 from "@/components/ReportDonutChart3";
 import Button from "@/components/base/Button";
 import { onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import { useDonations, useDonationSearch, usePagination } from '@/hooks/donations/';
+import { useDonations, useDonationSearch, usePagination, useWeeklyDonations } from '@/hooks/donations/';
 import LoadingIcon from '@/components/base/LoadingIcon';
 import Pagination from "@/components/base/Pagination";
 import { FormInput, FormSelect } from "@/components/base/Form";
@@ -18,6 +18,8 @@ const router = useRouter();
 const { barDonations, donations, loading, loadDonations, errorDonations } = useDonations();
 const { searchQuery, filteredItems } = useDonationSearch(donations);
 const { currentPage, pageSize, totalPages, paginatedItems, changePage, changePageSize } = usePagination(filteredItems);
+const { donationsWeek, loadingWeek , loadDonationsWeek, errorWeek, totalDonationsWeek } = useWeeklyDonations();
+
 
 function formatDateToDDMMYYYY(dateString) {
     if (!dateString) return ''; // Verifica si dateString es undefined, null o vacío.
@@ -26,9 +28,13 @@ function formatDateToDDMMYYYY(dateString) {
 }
 
 
+
+
 onMounted(() => {
     loadDonations();
+    loadDonationsWeek();
 });
+
 
 </script>
 
@@ -88,26 +94,13 @@ onMounted(() => {
                     <!--? Card -->
 
                     <div class="flex flex-col col-span-12 p-5 md:col-span-6 2xl:col-span-3 box box--stacked">
-                        <Menu class="absolute top-0 right-0 mt-5 mr-5">
-                            <Menu.Button class="w-5 h-5 text-slate-500">
-                                <Lucide icon="MoreVertical" class="w-6 h-6 stroke-slate-400/70 fill-slate-400/70" />
-                            </Menu.Button>
-                            <Menu.Items class="w-40">
-                                <Menu.Item>
-                                    <Lucide icon="Copy" class="w-4 h-4 mr-2" /> Copy Link
-                                </Menu.Item>
-                                <Menu.Item>
-                                    <Lucide icon="Trash" class="w-4 h-4 mr-2" />
-                                    Delete
-                                </Menu.Item>
-                            </Menu.Items>
-                        </Menu>
+                        
                         <div class="pb-5 mb-5 border-b border-dashed border-slate-300/70">
                             <div class="text-base text-slate-500">Total received</div>
                             <div class="flex items-center mt-1">
-                                <div class="flex items-center text-xl font-medium">
-                                    <span class="mr-px">$</span>2,176,221
-                                    <span class="ml-1.5 text-sm">USD</span>
+                                <div class="flex items-center text-xl font-medium" >
+                                    <span class="mr-px">$</span>{{ totalDonationsWeek}}
+                                    <span class="ml-1.5 text-sm">MXN</span>
                                 </div>
                             </div>
                         </div>
@@ -120,7 +113,7 @@ onMounted(() => {
 
                     <!--? Card -->
 
-                    <div class="flex flex-col col-span-12 p-5 md:col-span-6 2xl:col-span-3 box box--stacked">
+                    <!-- <div class="flex flex-col col-span-12 p-5 md:col-span-6 2xl:col-span-3 box box--stacked">
                         <Menu class="absolute top-0 right-0 mt-5 mr-5">
                             <Menu.Button class="w-5 h-5 text-slate-500">
                                 <Lucide icon="MoreVertical" class="w-6 h-6 stroke-slate-400/70 fill-slate-400/70" />
@@ -149,7 +142,7 @@ onMounted(() => {
                                 <div class="ml-2.5">Coverage Area</div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
 
                 <!--? contenedor de las estadisticas de usuarios -->

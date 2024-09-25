@@ -4,8 +4,9 @@ export const getDonations = async () => {
   const response = await fetch(`${Baseurl}donations/`, {
     method: 'GET',
     headers: {
-      'content-type': 'application/json',
-    },
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('access_token')}`
+    }
   });
 
   const json = await response.json();
@@ -13,7 +14,9 @@ export const getDonations = async () => {
     id: donation.donations_id,
     concept: donation.donations_concept,
     quanty: donation.donations_quantity,
+    spent: donation.donations_spent,
     date: donation.donations_date,
     user: donation.donations_user,
   })) || []; // Asegúrate de devolver un array vacío si no hay datos
 };
+

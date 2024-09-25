@@ -1,27 +1,34 @@
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, onMounted } from "vue";
 import { type ChartData, type ChartOptions } from "chart.js/auto";
 import { useColorSchemeStore } from "@/stores/color-scheme";
 import { useDarkModeStore } from "@/stores/dark-mode";
 import Chart from "@/components/Base/Chart";
 import { getColor } from "@/utils/colors";
+import { useWeeklyDonations } from '@/hooks/donations/';
 
 const props = defineProps<{
   width?: number;
   height?: number;
 }>();
 
+const { donationsWeek, loadingWeek , loadDonationsWeek, errorWeek } = useWeeklyDonations();
 const colorScheme = computed(() => useColorSchemeStore().colorScheme);
 const darkMode = computed(() => useDarkModeStore().darkMode);
 
+onMounted(() => {
+  loadDonationsWeek();
+});
+
+
 const data = computed<ChartData>(() => {
   return {
-    labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+    labels: ["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"],
     datasets: [
       {
         barPercentage: 0.38,
         borderRadius: 2,
-        data: [4, 7, 5, 4, 9, 7, 5],
+        data: donationsWeek.value,  // Verifica que donationsWeek.value esté bien alineado
         borderWidth: 1,
         borderColor: colorScheme.value ? getColor("theme.1", 0.7) : "",
         backgroundColor: colorScheme.value ? getColor("theme.1", 0.3) : "",
@@ -75,4 +82,8 @@ const options = computed<ChartOptions>(() => {
     :data="data"
     :options="options"
   />
+
+  <!-- <div v-if="!loading && donations && donations.length > 0"> 
+    {{ !loading ? donations : "Loading..." }} 
+  </div> -->
 </template>

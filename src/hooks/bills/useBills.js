@@ -11,7 +11,6 @@ export function useBills() {
     loading.value = true
     try {
       bills.value = await getBills()
-      console.log(bills.value)
     } catch (e) {
       errorBills.value = e
     } finally {
