@@ -195,6 +195,14 @@ const router = createRouter({
             )
         },
         {
+          path: '/dashboard/programs/add',
+          name: 'addProgram',
+          component: () =>
+            import('@/views/dashboard/programs/addProgram.vue').catch(
+              () => import('@/views/dashboard/notFoundView/NotFoundView.vue')
+            )
+        },
+        {
           path: '/dashboard/programs',
           name: 'programs',
           component: () =>
