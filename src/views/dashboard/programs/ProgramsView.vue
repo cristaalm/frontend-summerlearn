@@ -1,37 +1,75 @@
 <script setup>
-import { useRouter } from "vue-router";
-import Lucide from "@/components/base/Lucide";
-import { Menu, Popover } from "@/components/base/Headless";
-import Pagination from "@/components/base/Pagination";
+import { useFilter, usePagination, usePrograms, useDialogDelete, useToast, useStatusProgram } from '@/hooks/programs/'
+import formatDate from '@/logic/formatDate'
 import { FormInput, FormSelect } from "@/components/base/Form";
-import Table from "@/components/base/Table";
-import LoadingIcon from "@/components/base/LoadingIcon";
-import Button from "@/components/base/Button";
-import { useFilter, usePagination, usePrograms } from '@/hooks/programs/'
+import { Menu, Popover, Dialog } from "@/components/base/Headless";
+import { useRouter } from "vue-router";
 import { onMounted } from 'vue'
+import LoadingIcon from "@/components/base/LoadingIcon";
+import Pagination from "@/components/base/Pagination";
+import Button from "@/components/base/Button";
+import Lucide from "@/components/base/Lucide";
+import Table from "@/components/base/Table";
+import ToastNotification from '@/components/ToastNotification'
 
 const { programs, loading, error, loadPrograms } = usePrograms();
 const { searchQuery, selectedStatus, filteredItems, activeFilters } = useFilter(programs);
 const { currentPage, pageSize, totalPages, paginatedItems, changePage, changePageSize } = usePagination(filteredItems);
+const { toastMessages, showToast } = useToast();
+const { dialogStatusDelete, openDeleteModal, confirmDeleteProgram, closeDeleteProgram } = useDialogDelete({ showToast, programs });
+const { updateStatus } = useStatusProgram({ showToast });
 const router = useRouter();
-
 
 onMounted(() => {
   loadPrograms();
 });
 
-function formatDateToDDMMYYYY(dateString) {
-  const [year, month, day] = dateString.split('-');
-  return `${day}/${month}/${year}`;
-}
-
-
 </script>
 
 <template>
 
+  <!--? ######################## TOAST NOTIFICATION ######################## -->
+
+  <div>
+    <ToastNotification v-for="(message, index) in toastMessages" :key="index" :message="message" :index="index">
+    </ToastNotification>
+  </div>
+
+  <!--? ######################## DIALOG DELETE PROGRAM ######################## -->
+
+  <!-- BEGIN: Modal Content -->
+  <Dialog :open="dialogStatusDelete" @close="() => {
+    dialogStatusDelete.value = false
+  }
+    ">
+    <Dialog.Panel>
+      <div class="p-5 text-center">
+        <Lucide icon="XCircle" class="w-16 h-16 mx-auto mt-3 text-danger" />
+        <div class="mt-5 text-3xl">¿Está seguro?</div>
+        <div class="mt-2 text-slate-500">
+          ¿Realmente desea eliminar este registro?
+          <br />
+          Este proceso eliminara las actividades asociadas a este programa.
+        </div>
+      </div>
+      <div class="px-5 pb-8 text-center space-x-8">
+        <Button type="button" variant="outline-secondary" @click="closeDeleteProgram" class="w-24 mr-1">
+          Cancelar
+        </Button>
+        <Button type="button" variant="danger" class="w-24" @click="confirmDeleteProgram" ref="deleteButtonRef">
+          Eliminar
+        </Button>
+      </div>
+    </Dialog.Panel>
+  </Dialog>
+  <!-- END: Modal Content -->
+
+
   <div class="grid grid-cols-12 gap-y-10 gap-x-6">
     <div class="col-span-12">
+
+      <!--? ######################## HEADER ######################## -->
+
       <div class="flex flex-col md:h-10 gap-y-3 md:items-center md:flex-row">
         <div class="text-base font-medium group-[.mode--light]:text-white">
           Programas
@@ -48,8 +86,13 @@ function formatDateToDDMMYYYY(dateString) {
           </Button>
         </div>
       </div>
+
+
       <div class="mt-3.5">
         <div class="flex flex-col box box--stacked">
+
+          <!--? ######################## SEARCH AND FILTER ######################## -->
+
           <div class="flex flex-col p-5 sm:items-center sm:flex-row gap-y-2">
             <div>
               <div class="relative">
@@ -72,11 +115,11 @@ function formatDateToDDMMYYYY(dateString) {
                 <Popover.Panel placement="bottom-end">
                   <div class="p-2 space-y-4">
                     <div>
-                      <div class="text-left text-slate-500">Status</div>
+                      <div class="text-left text-slate-500">Estado</div>
                       <FormSelect v-model="selectedStatus" class="flex-1 mt-2">
                         <option :value="null" selected>Todos</option>
                         <option :value="1">Activo</option>
-                        <option :value="0">Inactivo</option>
+                        <option :value="2">Inactivo</option>
                       </FormSelect>
                     </div>
                     <div class="flex items-center mt-4">
@@ -92,21 +135,24 @@ function formatDateToDDMMYYYY(dateString) {
               </Popover>
             </div>
           </div>
+
+          <!--? ######################## TABLE ######################## -->
+
           <div class="overflow-auto xl:overflow-visible">
             <Table class="border-b border-slate-200/60">
               <Table.Thead>
                 <Table.Tr>
                   <Table.Td
                     class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500">
+                    Nombre del programa
+                  </Table.Td>
+                  <Table.Td
+                    class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500">
                     Usuario responsable
                   </Table.Td>
                   <Table.Td
                     class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500">
-                    Inicio de programa
-                  </Table.Td>
-                  <Table.Td
-                    class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500">
-                    Fin de programa
+                    Duración del programa
                   </Table.Td>
                   <Table.Td
                     class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500">
@@ -154,25 +200,32 @@ function formatDateToDDMMYYYY(dateString) {
                   <Table.Tr class="[&_td]:last:border-b-0">
                     <Table.Td class="py-4 border-dashed dark:bg-darkmode-600 text-center">
                       <div href="" class="font-medium whitespace-nowrap">
+                        {{ program.name }}
+                      </div>
+                    </Table.Td>
+                    <Table.Td class="py-4 border-dashed dark:bg-darkmode-600 text-center">
+                      <div href="" class="font-medium whitespace-nowrap">
                         {{ program.user.name }}
                       </div>
                     </Table.Td>
                     <Table.Td class="py-4 border-dashed dark:bg-darkmode-600 text-center">
-                      <div href="" class="font-medium whitespace-nowrap">
-                        {{ formatDateToDDMMYYYY(program.start) }}
-                      </div>
-                    </Table.Td>
-                    <Table.Td class="py-4 border-dashed dark:bg-darkmode-600 text-center">
-                      <div href="" class="font-medium whitespace-nowrap">
-                        {{ formatDateToDDMMYYYY(program.end) }}
+                      <div href="" class="font-medium text-center whitespace-nowrap">
+                        {{ formatDate(program.start) }} <span class="font-bold">-</span> {{
+                          formatDate(program.end) }}
                       </div>
                     </Table.Td>
                     <Table.Td class="py-4 border-dashed dark:bg-darkmode-600">
                       <div
-                        :class="['flex items-center justify-center', { 'text-success': program.status }, { 'text-danger': !program.status }]">
-                        <Lucide icon="Database" class="w-3.5 h-3.5 stroke-[1.7]" />
-                        <div class="ml-1.5 whitespace-nowrap">
-                          {{ program.status ? "Activo" : "Inactivo" }}
+                        :class="['flex items-center justify-center', { 'text-success': program.status == 1 }, { 'text-danger': program.status !== 1 }, { 'text-[#FFA500]': program.status == 0 }]">
+                        <Lucide v-if="program.status == 1 || program.status == 2" icon="Database"
+                          class="w-3.5 h-3.5 stroke-[1.7]" />
+                        <div class="ml-1.5 whitespace-nowrap max-h-8 flex flex-row items-center justify-center gap-2">
+                          <div class="w-4 h-4" v-if="program.status == 0">
+                            <LoadingIcon icon="bars" class=" w-8 h-8" color="#FFA500" />
+                          </div>
+                          <span v-if="program.status == 0" class="text-amber-500">Cambiando....</span>
+                          <span v-else-if="program.status == 1" class="text-success">Activo</span>
+                          <span v-else class="text-danger">Inactivo</span>
                         </div>
                       </div>
                     </Table.Td>
@@ -183,15 +236,26 @@ function formatDateToDDMMYYYY(dateString) {
                             <Lucide icon="MoreVertical" class="w-5 h-5 stroke-black fill-black" />
                           </Menu.Button>
                           <Menu.Items class="w-40">
-                            <Menu.Item>
+                            <Menu.Item class="text-warning">
                               <Lucide icon="CheckSquare" class="w-4 h-4 mr-2" />
                               Editar
                             </Menu.Item>
-                            <Menu.Item :class="`${!program.status ? 'text-danger' : 'text-primary'}`" @click="() => {
-                              program.status = !program.status
+                            <Menu.Item :class="`${program.status !== 1 ? 'text-blue' : 'text-[#ff6f0f]'}`" @click="() => {
+                              updateStatus({ program }).then((updatedProgram) => {
+                                const index = programs.findIndex(p => p.id === updatedProgram.id);
+                                if (index !== -1) {
+                                  programs[index] = updatedProgram;
+                                }
+                              });
                             }">
                               <Lucide icon="RefreshCw" class="w-4 h-4 mr-2" />
-                              Cambiar Estado
+                              {{ program.status !== 1 ? 'Activar' : 'Desactivar' }}
+                            </Menu.Item>
+                            <Menu.Item class="text-danger" @click="() => {
+                              openDeleteModal(program.id)
+                            }">
+                              <Lucide icon="CheckSquare" class="w-4 h-4 mr-2" />
+                              Eliminar
                             </Menu.Item>
                           </Menu.Items>
                         </Menu>
@@ -202,6 +266,9 @@ function formatDateToDDMMYYYY(dateString) {
               </Table.Tbody>
             </Table>
           </div>
+
+          <!--? ######################## PAGINATION TABLE ######################## -->
+
           <div class="flex flex-col-reverse flex-wrap items-center p-5 flex-reverse gap-y-2 sm:flex-row">
             <Pagination class="flex-1 w-full mr-auto sm:w-auto">
               <Pagination.Link @click="changePage(1)">
