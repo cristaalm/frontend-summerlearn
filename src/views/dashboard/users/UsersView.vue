@@ -13,6 +13,7 @@ import { useRoles } from '@/hooks/roles/useRoles';
 import { calculateAge } from '@/logic/';
 import { useRouter } from "vue-router";
 import { Baseurl } from '@/../global';
+import { formatPhone } from '@/logic/formatNumber'
 
 const { users, loading, error, loadUsers } = useUsers();
 const { roles, loadingRoles, errorRoles, loadRoles } = useRoles();
@@ -203,7 +204,7 @@ onMounted(() => {
                     <Table.Td class="py-4 border-dashed dark:bg-darkmode-600">
                       <div class="flex items-center text-primary">
                         <Lucide icon="Phone" class="w-4 h-4 mr-2" />
-                        {{ user.phone }}
+                        {{ formatPhone(user.phone) }}
                       </div>
                     </Table.Td>
                     <Table.Td class="py-4 border-dashed dark:bg-darkmode-600">

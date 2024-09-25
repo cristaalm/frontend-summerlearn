@@ -196,7 +196,7 @@ watch(profileImage, () => {
               <label class="inline-block mb-2 sm:mb-0 sm:mr-5 sm:text-right xl:w-60 xl:mr-14">
                 <div class="text-left">
                   <div class="flex items-center">
-                    <div class="font-medium">Número de teléfono</div>
+                    <div class="font-medium">Número de teléfono celular</div>
                     <div
                       class="ml-2.5 px-2 py-0.5 bg-slate-100 text-slate-500 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md border border-slate-200">
                       Requerido
@@ -208,7 +208,7 @@ watch(profileImage, () => {
                 </div>
               </label>
               <div class="flex-1 w-full mt-3 xl:mt-0">
-                <FormInput type="text" placeholder="Escriba aquí su Teléfono..." name="phone" v-model="phone" @input="(e) => {
+                <FormInput type="text" placeholder="Escriba aquí su teléfono celular..." name="phone" v-model="phone" @input="(e) => {
                   validateInputPhone(e)
                   validateText(e)
                 }" />

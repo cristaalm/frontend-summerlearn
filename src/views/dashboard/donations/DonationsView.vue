@@ -18,7 +18,7 @@ const router = useRouter();
 const { barDonations, donations, loading, loadDonations, errorDonations } = useDonations();
 const { searchQuery, filteredItems } = useDonationSearch(donations);
 const { currentPage, pageSize, totalPages, paginatedItems, changePage, changePageSize } = usePagination(filteredItems);
-const { donationsWeek, loadingWeek , loadDonationsWeek, errorWeek, totalDonationsWeek } = useWeeklyDonations();
+const { donationsWeek, loadingWeek, loadDonationsWeek, errorWeek, totalDonationsWeek } = useWeeklyDonations();
 
 
 function formatDateToDDMMYYYY(dateString) {
@@ -94,12 +94,12 @@ onMounted(() => {
                     <!--? Card -->
 
                     <div class="flex flex-col col-span-12 p-5 md:col-span-6 2xl:col-span-3 box box--stacked">
-                        
+
                         <div class="pb-5 mb-5 border-b border-dashed border-slate-300/70">
                             <div class="text-base text-slate-500">Total received</div>
                             <div class="flex items-center mt-1">
-                                <div class="flex items-center text-xl font-medium" >
-                                    <span class="mr-px">$</span>{{ totalDonationsWeek}}
+                                <div class="flex items-center text-xl font-medium">
+                                    <span class="mr-px">$</span>{{ totalDonationsWeek }}
                                     <span class="ml-1.5 text-sm">MXN</span>
                                 </div>
                             </div>
@@ -168,7 +168,9 @@ onMounted(() => {
                                 <div v-if="loading" class="w-full h-4 mt-4">
                                     <LoadingIcon icon="three-dots" color="gray" />
                                 </div>
-                                {{ !loading ? `$ ${barDonations.totalDonations}` : '' }}
+                                {{ !loading ? `${new Intl.NumberFormat('es-MX', {
+                                    style: 'currency', currency: 'MXN'
+                                }).format(barDonations.totalDonations)}` : '' }}
                             </div>
                             <div class="absolute inset-y-0 right-0 flex flex-col justify-center mr-5">
                             </div>
@@ -180,7 +182,9 @@ onMounted(() => {
                                 <div v-if="loading" class="w-full h-4 mt-4">
                                     <LoadingIcon icon="three-dots" color="gray" />
                                 </div>
-                                {{ !loading ? `$ ${barDonations.lastDonationAmount}` : '' }}
+                                {{ !loading ? `${new Intl.NumberFormat('es-MX', {
+                                    style: 'currency', currency: 'MXN'
+                                }).format(barDonations.lastDonationAmount)}` : '' }}
                             </div>
                             <div class="absolute inset-y-0 right-0 flex flex-col justify-center mr-5">
                             </div>

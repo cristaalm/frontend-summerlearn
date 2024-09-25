@@ -1,5 +1,6 @@
 import { status } from './useStatus'
 import { ref } from 'vue'
+import { unformatPhone } from '@/logic/formatNumber'
 
 export function useValidateFunctions({ valid, password, password_confirm }) {
   const lastPhone = ref('')
@@ -10,7 +11,14 @@ export function useValidateFunctions({ valid, password, password_confirm }) {
   }
 
   const validateText = (e) => {
-    const { name, value } = e.target
+    let { name, value } = e.target
+
+    // Si el campo es el teléfono, lo desformateamos
+    if (name == 'phone') {
+      value = unformatPhone(value)
+      console.log(value)
+    }
+
     const nameComponent = status.value[name].name
     if (status.value[name].Regex.test(value)) {
       status.value[name].value = true
@@ -28,13 +36,47 @@ export function useValidateFunctions({ valid, password, password_confirm }) {
   }
 
   const validateInputPhone = (e) => {
-    const { value } = e.target
-    const regex = /^$|^\d{0,10}$/
-    if (regex.test(value)) {
-      lastPhone.value = value
-    } else {
-      e.target.value = lastPhone.value
+    let { value } = e.target
+
+    // Guardamos el valor sin formatear, eliminando todo lo que no sea un número
+    const rawValue = value.replace(/\D/g, '')
+
+    // Si el usuario está eliminando, permitimos continuar sin formatear
+    if (rawValue.length <= lastPhone.value.replace(/\D/g, '').length) {
+      lastPhone.value = rawValue
+      e.target.value = formatPhone(rawValue)
+      return
     }
+
+    // Si el valor supera los 10 dígitos, no permitimos más entradas
+    if (rawValue.length > 10) {
+      return
+    }
+
+    // Aplicamos el formato a medida que se va escribiendo
+    value = formatPhone(rawValue)
+
+    // Establecemos el valor formateado y lo guardamos
+    e.target.value = value
+    lastPhone.value = value
+  }
+
+  // Función auxiliar para formatear el número de teléfono
+  const formatPhone = (value) => {
+    // Formateamos el número a medida que crece
+    let formattedValue = ''
+
+    if (value.length > 0) {
+      formattedValue = `(${value.slice(0, 3)}` // Añadir paréntesis
+    }
+    if (value.length >= 4) {
+      formattedValue += `) ${value.slice(3, 6)}` // Añadir cierre del paréntesis y el primer bloque de números
+    }
+    if (value.length >= 7) {
+      formattedValue += ` ${value.slice(6, 10)}` // Añadir el segundo bloque de números
+    }
+
+    return formattedValue
   }
 
   const validateDate = (value) => {
