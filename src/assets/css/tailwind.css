@@ -5427,6 +5427,10 @@ select {
   max-height: 0px;
 }
 
+.max-h-8 {
+  max-height: 2rem;
+}
+
 .max-h-\[2000px\] {
   max-height: 2000px;
 }
@@ -6972,6 +6976,16 @@ select {
 
 .tracking-tighter {
   letter-spacing: -0.05em;
+}
+
+.text-\[\#FFA500\] {
+  --tw-text-opacity: 1;
+  color: rgb(255 165 0 / var(--tw-text-opacity));
+}
+
+.text-\[\#ff6f0f\] {
+  --tw-text-opacity: 1;
+  color: rgb(255 111 15 / var(--tw-text-opacity));
 }
 
 .text-amber-500 {

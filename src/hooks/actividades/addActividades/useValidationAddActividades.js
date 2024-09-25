@@ -6,7 +6,7 @@ export function useValidationAddActividades() {
       success: false,
       message: '',
       name: 'nombre de actividad',
-      Regex: /^[a-zA-Z\s]+$/ // Solo letras y espacios
+      Regex: /^[a-zA-Z0-9\sáéíóúÁÉÍÓÚñÑ]+$/ // Solo letras y espacios
     },
     description: {
       error: false,
