@@ -29,7 +29,7 @@ const filteredDonations = ref([]); // Donaciones filtradas
 
 onMounted(async () => {
     loadDonations();
-    
+
     // Cargar donaciones filtradas al montarse el componente
     try {
         const result = await getDonationsFilter();
@@ -91,7 +91,8 @@ const handleRegister = async () => {
                                 <div class="text-left">
                                     <div class="flex items-center">
                                         <div class="font-medium">Donación Fuente</div>
-                                        <div class="ml-2.5 px-2 py-0.5 bg-slate-100 text-slate-500 text-xs rounded-md border border-slate-200">
+                                        <div
+                                            class="ml-2.5 px-2 py-0.5 bg-slate-100 text-slate-500 text-xs rounded-md border border-slate-200">
                                             Obligatorio
                                         </div>
                                     </div>
@@ -100,14 +101,12 @@ const handleRegister = async () => {
                                     </div>
                                 </div>
                             </label>
-                            <div class="flex flex-col-reverse">
-                                <TomSelect 
-                                    v-model="selectMultiple" 
-                                    :options="{ placeholder: 'Selecciona las donaciones' }" 
-                                    class="w-full" 
-                                    multiple>
+                            <div class="flex-1 w-full mt-3 xl:mt-0">
+                                <TomSelect v-model="selectMultiple"
+                                    :options="{ placeholder: 'Selecciona las donaciones' }" class="w-full" multiple>
                                     <template v-for="(donation) in filteredDonations" :key="donation.id">
-                                        <option :value="donation.id">{{ donation.concept }} ($ {{ donation.remaining }})</option>
+                                        <option :value="donation.id">{{ donation.concept }} ($ {{ donation.remaining }})
+                                        </option>
                                     </template>
                                 </TomSelect>
 
@@ -123,7 +122,8 @@ const handleRegister = async () => {
                                 <div class="text-left">
                                     <div class="flex items-center">
                                         <div class="font-medium text-nowrap">Concepto de gasto</div>
-                                        <div class="ml-2.5 px-2 py-0.5 bg-slate-100 text-slate-500 text-xs rounded-md border border-slate-200">
+                                        <div
+                                            class="ml-2.5 px-2 py-0.5 bg-slate-100 text-slate-500 text-xs rounded-md border border-slate-200">
                                             Obligatorio
                                         </div>
                                     </div>
@@ -146,7 +146,8 @@ const handleRegister = async () => {
                                 <div class="text-left">
                                     <div class="flex items-center">
                                         <div class="font-medium">Monto</div>
-                                        <div class="ml-2.5 px-2 py-0.5 bg-slate-100 text-slate-500 text-xs rounded-md border border-slate-200">
+                                        <div
+                                            class="ml-2.5 px-2 py-0.5 bg-slate-100 text-slate-500 text-xs rounded-md border border-slate-200">
                                             Obligatorio
                                         </div>
                                     </div>
@@ -158,7 +159,8 @@ const handleRegister = async () => {
                             <div class="flex-1 w-full mt-3 xl:mt-0">
                                 <InputGroup>
                                     <InputGroup.Text> $ </InputGroup.Text>
-                                    <FormInput type="text" placeholder="Monto a gastar" v-model="amount" @input="validateInputAmount" />
+                                    <FormInput type="text" placeholder="Monto a gastar" v-model="amount"
+                                        @input="validateInputAmount" />
                                 </InputGroup>
                                 <div class="mt-1 text-xs text-red-500 h-4">
                                     {{ status.amount.message }}
@@ -171,8 +173,7 @@ const handleRegister = async () => {
                     <div class="flex py-5 border-t md:justify-end px-7 border-slate-200/80">
                         <Button
                             :class="`w-full px-10 md:w-auto font-bold ${!valid || !isValid ? 'border-gray-500 text-gray-500' : 'border-green text-green'}`"
-                            @click="handleRegister" 
-                            :disabled="!valid || !isValid">
+                            @click="handleRegister" :disabled="!valid || !isValid">
                             <Lucide icon="Check" class="stroke-[1.3] w-4 h-4 mr-2" />
                             Registrar
                         </Button>

@@ -1,4 +1,5 @@
 import { type Icon } from '@/components/base/Lucide/Lucide.vue'
+import { Baseurl } from '@/../global'
 import { defineStore } from 'pinia'
 
 // Función para obtener el rol del token desencriptado
@@ -17,7 +18,7 @@ async function getRoleFromToken(): Promise<string | null> {
       if (encryptedRole) {
         try {
           // Prepare the request for decryption
-          const response = await fetch('http://127.0.0.1:8001/api/decrypt/', {
+          const response = await fetch(`${Baseurl}api/decrypt/`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',

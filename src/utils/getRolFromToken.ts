@@ -1,3 +1,5 @@
+import { Baseurl } from '@/../global'
+
 export async function getRoleFromToken(): Promise<string | null> {
   const encryptedToken = localStorage.getItem('access_token')
 
@@ -13,7 +15,7 @@ export async function getRoleFromToken(): Promise<string | null> {
       if (encryptedRole) {
         try {
           // Prepare the request for decryption
-          const response = await fetch('http://127.0.0.1:8001/api/decrypt/', {
+          const response = await fetch(`${Baseurl}api/decrypt/`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
