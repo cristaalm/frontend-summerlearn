@@ -6,7 +6,7 @@ export function useFilter(items) {
 
   const filteredItems = computed(() => {
     return items.value.filter((item) => {
-      const matchesQuery = item.user.name.toLowerCase().includes(searchQuery.value.toLowerCase())
+      const matchesQuery = item.name.toLowerCase().includes(searchQuery.value.toLowerCase())
       const matchesStatus = selectedStatus.value === null || item.status === selectedStatus.value
 
       return matchesQuery && matchesStatus
