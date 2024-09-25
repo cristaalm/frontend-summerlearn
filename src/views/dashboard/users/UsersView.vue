@@ -124,7 +124,7 @@ onMounted(() => {
                     Foto
                   </Table.Td>
                   <Table.Td class="py-4 font-medium border-t bg-slate-50 border-slate-200/60 text-slate-500">
-                    Nombre / Email
+                    Nombre / Correo electrónico
                   </Table.Td>
                   <Table.Td class="py-4 font-medium border-t bg-slate-50 border-slate-200/60 text-slate-500">
                     Edad

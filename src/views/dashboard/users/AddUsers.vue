@@ -111,14 +111,14 @@ watch(profileImage, () => {
               <label class="inline-block mb-2 sm:mb-0 sm:mr-5 sm:text-right xl:w-60 xl:mr-14">
                 <div class="text-left">
                   <div class="flex items-center">
-                    <div class="font-medium">Nombre Completo</div>
+                    <div class="font-medium">Nombre completo</div>
                     <div
                       class="ml-2.5 px-2 py-0.5 bg-slate-100 text-slate-500 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md border border-slate-200">
                       Requerido
                     </div>
                   </div>
                   <div class="mt-1.5 xl:mt-3 text-xs leading-relaxed text-slate-500/80">
-                    Por favor, Ingresa el nombre completo del usuario.
+                    Por favor, ingrese el nombre completo del usuario.
                   </div>
                 </div>
               </label>
@@ -126,10 +126,10 @@ watch(profileImage, () => {
                 <div class="flex flex-col items-center md:flex-row">
                   <FormInput type="text" name="firstName" v-model="firstName" @input="validateText"
                     class="first:rounded-b-none first:md:rounded-bl-md first:md:rounded-r-none [&:not(:first-child):not(:last-child)]:-mt-px [&:not(:first-child):not(:last-child)]:md:mt-0 [&:not(:first-child):not(:last-child)]:md:-ml-px [&:not(:first-child):not(:last-child)]:rounded-none last:rounded-t-none last:md:rounded-l-none last:md:rounded-tr-md last:-mt-px last:md:mt-0 last:md:-ml-px focus:z-10"
-                    placeholder="Escriba aqui su nombre..." />
+                    placeholder="Escriba aquí su nombre..." />
                   <FormInput type="text" name="lastName" v-model="lastName" @input="validateText"
                     class="first:rounded-b-none first:md:rounded-bl-md first:md:rounded-r-none [&:not(:first-child):not(:last-child)]:-mt-px [&:not(:first-child):not(:last-child)]:md:mt-0 [&:not(:first-child):not(:last-child)]:md:-ml-px [&:not(:first-child):not(:last-child)]:rounded-none last:rounded-t-none last:md:rounded-l-none last:md:rounded-tr-md last:-mt-px last:md:mt-0 last:md:-ml-px focus:z-10"
-                    placeholder="Escriba aqui su apellido..." />
+                    placeholder="Escriba aquí su apellido..." />
                 </div>
                 <div class="text-red-500 mt-2 flex flex-col items-center md:flex-row">
                   <div v-if="status.firstName.error" class="text-xs w-full md:w-1/2">{{ status.firstName.message }}
@@ -150,7 +150,7 @@ watch(profileImage, () => {
                     </div>
                   </div>
                   <div class="mt-1.5 xl:mt-3 text-xs leading-relaxed text-slate-500/80">
-                    Por favor, Ingresa la fecha de nacimiento del usuario.
+                    Por favor, ingrese la fecha de nacimiento del usuario.
                   </div>
                 </div>
               </label>
@@ -164,7 +164,8 @@ watch(profileImage, () => {
                     years: true,
                   },
                   format: 'DD/MM/YYYY',
-                }" />
+                }" placeholder="DD/MM/YYYY" />
+
                 <div class="text-red-500 mt-2">{{ status.birthdate.message }}</div>
               </div>
             </div>
@@ -180,12 +181,12 @@ watch(profileImage, () => {
                     </div>
                   </div>
                   <div class="mt-1.5 xl:mt-3 text-xs leading-relaxed text-slate-500/80">
-                    Por favor, Ingresa el correo electrónico del usuario.
+                    Por favor, ingrese el correo electrónico del usuario.
                   </div>
                 </div>
               </label>
               <div class="flex-1 w-full mt-3 xl:mt-0">
-                <FormInput type="email" name="email" v-model="email" placeholder="Escriba aqui su correo..."
+                <FormInput type="email" name="email" v-model="email" placeholder="Escriba aquí su correo electrónico..."
                   @input="validateText" />
                 <div class="text-red-500 mt-2">{{ status.email.message }}</div>
               </div>
@@ -202,12 +203,12 @@ watch(profileImage, () => {
                     </div>
                   </div>
                   <div class="mt-1.5 xl:mt-3 text-xs leading-relaxed text-slate-500/80">
-                    Por favor, Ingresa el número de teléfono del usuario.
+                    Por favor, ingrese el número de teléfono del usuario.
                   </div>
                 </div>
               </label>
               <div class="flex-1 w-full mt-3 xl:mt-0">
-                <FormInput type="text" placeholder="Escriba aqui su Teléfono..." name="phone" v-model="phone" @input="(e) => {
+                <FormInput type="text" placeholder="Escriba aquí su Teléfono..." name="phone" v-model="phone" @input="(e) => {
                   validateInputPhone(e)
                   validateText(e)
                 }" />
@@ -273,12 +274,12 @@ watch(profileImage, () => {
                     </div>
                   </div>
                   <div class="mt-1.5 xl:mt-3 text-xs leading-relaxed text-slate-500/80">
-                    Por favor, Ingresa la contraseña del usuario.
+                    Por favor, ingrese la contraseña del usuario.
                   </div>
                 </div>
               </label>
               <div class="flex-1 w-full mt-3 xl:mt-0">
-                <FormInput type="password" placeholder="Escriba aqui su contraseña..." name="password"
+                <FormInput type="password" placeholder="Escriba aquí su contraseña..." name="password"
                   v-model="password" @input="(e) => {
                     validatePassword(e)
                     validatePasswordComfirm(e)
@@ -313,19 +314,19 @@ watch(profileImage, () => {
               <label class="inline-block mb-2 sm:mb-0 sm:mr-5 sm:text-right xl:w-60 xl:mr-14">
                 <div class="text-left">
                   <div class="flex items-center">
-                    <div class="font-medium text-nowrap">Confirmar Contraseña</div>
+                    <div class="font-medium text-nowrap">Confirmar contraseña</div>
                     <div
                       class="ml-2.5 px-2 py-0.5 bg-slate-100 text-slate-500 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md border border-slate-200">
                       Requerido
                     </div>
                   </div>
                   <div class="mt-1.5 xl:mt-3 text-xs leading-relaxed text-slate-500/80">
-                    Por favor, Ingresa la contraseña del usuario nuevamente.
+                    Por favor, ingrese la contraseña del usuario nuevamente.
                   </div>
                 </div>
               </label>
               <div class="flex-1 w-full mt-3 xl:mt-0">
-                <FormInput type="password" placeholder="Escriba nuevamente aqui su contraseña..."
+                <FormInput type="password" placeholder="Escriba nuevamente aquí su contraseña..."
                   name="password_confirm" v-model="password_confirm" @input="validatePasswordComfirm" />
                 <div class="text-red-500 mt-2">{{ status.password_confirm.message }}</div>
               </div>
