@@ -14,9 +14,11 @@ export const getPrograms = async () => {
 
   return programs?.map((program) => ({
     id: program.programs_id,
+    name: program.programs_name,
     start: program.programs_start,
     end: program.programs_end,
     user: program.programs_user,
+    area: program.programs_area,
     status: program.programs_status
   }))
 }
