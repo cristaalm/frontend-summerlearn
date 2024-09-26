@@ -2,13 +2,14 @@
 import { FormInput, FormSelect } from "@/components/base/Form";
 import Pagination from "@/components/base/Pagination";
 import { Menu, Popover } from "@/components/base/Headless";
-import { useUsers, useSearch, usePagination } from '@/hooks/users/';
+import { useUsers, useSearch, usePagination, useStatusUser, useToast } from '@/hooks/users/';
 import { onMounted } from "vue";
 import Lucide from "@/components/base/Lucide";
 import Button from "@/components/base/Button";
 import Table from "@/components/base/Table";
 import Tippy from "@/components/base/Tippy";
 import LoadingIcon from "@/components/base/LoadingIcon";
+import ToastNotification from '@/components/ToastNotification'
 import { useRoles } from '@/hooks/roles/useRoles';
 import { calculateAge } from '@/logic/';
 import { useRouter } from "vue-router";
@@ -19,6 +20,8 @@ const { users, loading, error, loadUsers } = useUsers();
 const { roles, loadingRoles, errorRoles, loadRoles } = useRoles();
 const { searchQuery, selectedStatus, selectedRole, filteredUsers, filtersCount } = useSearch(users);
 const { currentPage, pageSize, totalPages, paginatedUsers, changePage, changePageSize } = usePagination(filteredUsers);
+const { toastMessages, showToast } = useToast();
+const { updateStatus } = useStatusUser({ showToast });
 const router = useRouter();
 
 // Cargar las áreas al iniciar el componente
@@ -30,6 +33,13 @@ onMounted(() => {
 </script>
 
 <template>
+
+  <!--? ######################## TOAST NOTIFICATION ######################## -->
+
+  <div>
+    <ToastNotification v-for="(message, index) in toastMessages" :key="index" :message="message" :index="index">
+    </ToastNotification>
+  </div>
 
   <div class="grid grid-cols-12 gap-y-10 gap-x-6">
     <div class="col-span-12">
@@ -76,8 +86,8 @@ onMounted(() => {
                       <div class="text-left text-slate-500">Estado</div>
                       <FormSelect v-model="selectedStatus" class="flex-1 mt-2">
                         <option :value="null">Todos</option>
-                        <option value="1">Activo</option>
-                        <option value="0">Inactivo</option>
+                        <option :value="1">Activo</option>
+                        <option :value="2">Inactivo</option>
                       </FormSelect>
                     </div>
                     <div>
@@ -214,10 +224,16 @@ onMounted(() => {
                     </Table.Td>
                     <Table.Td class="py-4 border-dashed dark:bg-darkmode-600">
                       <div
-                        :class="['flex items-center justify-start', { 'text-success': user.status }, { 'text-danger': !user.status }]">
-                        <Lucide icon="Database" class="w-3.5 h-3.5 stroke-[1.7]" />
-                        <div class="ml-1.5 whitespace-nowrap">
-                          {{ user.status ? 'Activo' : 'Inactivo' }}
+                        :class="['flex items-center justify-start', { 'text-success': user.status == 1 }, { 'text-danger': user.status !== 1 }, { 'text-[#FFA500]': user.status == 0 }]">
+                        <Lucide v-if="user.status == 1 || user.status == 2" icon="Database"
+                          class="w-3.5 h-3.5 stroke-[1.7]" />
+                        <div class="ml-1.5 whitespace-nowrap max-h-8 flex flex-row items-center justify-center gap-2">
+                          <div class="w-4 h-4" v-if="user.status == 0">
+                            <LoadingIcon icon="bars" class=" w-8 h-8" color="#FFA500" />
+                          </div>
+                          <span v-if="user.status == 0" class="text-amber-500">Cambiando....</span>
+                          <span v-else-if="user.status == 1" class="text-success">Activo</span>
+                          <span v-else class="text-danger">Inactivo</span>
                         </div>
                       </div>
                     </Table.Td>
@@ -232,8 +248,14 @@ onMounted(() => {
                               <Lucide icon="CheckSquare" class="w-4 h-4 mr-2" />
                               Editar
                             </Menu.Item>
-                            <Menu.Item :class="`${user.status ? 'text-danger' : 'text-primary'}`"
-                              @click="user.status = !user.status">
+                            <Menu.Item :class="`${user.status == 1 ? 'text-blue' : 'text-[#ff6f0f]'}`" @click="() => {
+                              updateStatus({ user }).then((updatedUser) => {
+                                const index = users.findIndex(u => u.id == updatedUser.id);
+                                if (index !== -1) {
+                                  users[index] = updatedUser;
+                                }
+                              });
+                            }">
                               <Lucide icon="RefreshCw" class="w-4 h-4 mr-2" />
                               Cambiar Estado
                             </Menu.Item>

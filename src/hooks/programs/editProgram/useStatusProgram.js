@@ -15,18 +15,13 @@ export function useStatusProgram({ showToast }) {
 
     try {
       const response = await fetch(Baseurl + 'programs/' + programRef.id + '/', {
-        method: 'PUT',
+        method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${localStorage.getItem('access_token')}`
         },
         body: JSON.stringify({
-          programs_name: programRef.name,
-          programs_start: programRef.start,
-          programs_end: programRef.end,
-          programs_user: programRef.user.id,
-          programs_status: programRef.status,
-          programs_area: programRef.area.id
+          programs_status: programRef.status
         })
       })
       if (!response.ok) {
