@@ -1,8 +1,7 @@
-import { status } from './useStatus'
 import { ref } from 'vue'
 import { unformatPhone } from '@/logic/formatNumber'
 
-export function useValidateFunctions({ valid, password, password_confirm }) {
+export function useValidateFunctions({ valid, password, password_confirm, status }) {
   const lastPhone = ref('')
 
   const validate = () => {

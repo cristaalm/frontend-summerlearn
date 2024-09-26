@@ -12,7 +12,8 @@ export function useSetUser({
   rol,
   imageFile, // archivo de imagen
   valid,
-  validate
+  validate,
+  resetFields
 }) {
   const router = useRouter()
   const error = ref('')
@@ -61,6 +62,16 @@ export function useSetUser({
       const data = await response.json()
 
       if (response.ok) {
+        // reiniciamos todos los campos
+        email.value = ''
+        phone.value = ''
+        password.value = ''
+        firstName.value = ''
+        lastName.value = ''
+        birthdate.value = 'DD/MM/YYYY'
+        rol.value = ''
+        imageFile.value = null
+        resetFields()
         router.push({ name: 'users' })
       } else {
         console.error('Registration failed', data)

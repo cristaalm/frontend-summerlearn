@@ -5,11 +5,13 @@ export function useRefs() {
   const lastName = ref('')
   const email = ref('')
   const phone = ref('')
-  const birthdate = ref('1950-01-01')
+  const birthdate = ref('DD/MM/YYYY')
   const password = ref('')
   const password_confirm = ref('')
   const rol = ref('')
   const valid = ref(false)
+  const showPassword = ref(false)
+  const showPasswordConfirm = ref(false)
 
   return {
     firstName,
@@ -20,6 +22,8 @@ export function useRefs() {
     password,
     password_confirm,
     rol,
-    valid
+    valid,
+    showPassword,
+    showPasswordConfirm
   }
 }
