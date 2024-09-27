@@ -19,6 +19,7 @@ export const getBills = async () => {
         id: bill.bills_id,
         concept: bill.bills_concept,
         date: bill.bills_date,
+        amount: bill.bills_amount,
         donation: bill.bills_donations,
     }));   
 }

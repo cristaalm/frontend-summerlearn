@@ -126,10 +126,10 @@ onMounted(() => {
                                             {{ bill.donation.name }}
                                         </Table.Td>
                                         <Table.Td class="py-4 border-dashed dark:bg-darkmode-600">
-                                            Monto.......
+                                            $ {{ bill.amount }}
                                         </Table.Td>
                                         <Table.Td class="py-4 border-dashed dark:bg-darkmode-600">
-                                            {{ bill.concept }}
+                                           {{ bill.concept }}
                                         </Table.Td>
                                         <Table.Td class="py-4 border-dashed dark:bg-darkmode-600">
                                             {{ formatDateToDDMMYYYY(bill.date) }}

@@ -29,12 +29,14 @@ export function useSetBill() {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    Authorization: `Bearer ${access_token}`
                 },
                 body: JSON.stringify({
                     bills_concept: billData.concept,
                     bills_date: billData.date,
-                    bills_donations: userId, // Envía el ID de usuario
+                    bills_user: userId, // Envía el ID de usuario
                     bills_amount: amount,
+                    bills_donations: billData.donations[0].id, // Solo se envía el ID de la primera donación
                 }),
             });
 
@@ -48,7 +50,7 @@ export function useSetBill() {
             const data = await response.json();
 
             // Comienza la lógica para actualizar el spent en las donaciones
-            let remainingAmount = amount;  // Esta es la variable que guardará el residuo del gasto
+            let remainingAmount = amount;  // Variable que guardará el residuo del gasto
 
             const updatePromises = billData.donations.map(async (donation) => {
                 if (remainingAmount <= 0) {
@@ -59,7 +61,6 @@ export function useSetBill() {
                 const availableAmount = donation.quanty - donation.spent; // Cantidad disponible para gastar
                 const amountToUpdate = Math.min(remainingAmount, availableAmount); // La cantidad a asignar
 
-
                 // Restar la cantidad aplicada al restante
                 remainingAmount -= amountToUpdate;
                 // Actualizamos el 'spent' de la donación
@@ -67,6 +68,7 @@ export function useSetBill() {
                     method: 'PATCH', 
                     headers: {
                         'Content-Type': 'application/json',
+                        Authorization: `Bearer ${access_token}` // Incluir el token de acceso
                     },
                     body: JSON.stringify({
                         donations_spent: donation.spent + amountToUpdate, // Sumar el gasto a lo que ya tenía gastado

@@ -90,10 +90,10 @@ const handleRegister = async () => {
                             <label class="inline-block mb-2 sm:mb-0 sm:mr-5 sm:text-right xl:w-60 xl:mr-14">
                                 <div class="text-left">
                                     <div class="flex items-center">
-                                        <div class="font-medium">Donación Fuente</div>
+                                        <div class="font-medium">Donaciónes</div>
                                         <div
                                             class="ml-2.5 px-2 py-0.5 bg-slate-100 text-slate-500 text-xs rounded-md border border-slate-200">
-                                            Obligatorio
+                                            Requerido
                                         </div>
                                     </div>
                                     <div class="mt-1.5 xl:mt-3 text-xs leading-relaxed text-slate-500/80">
@@ -121,10 +121,10 @@ const handleRegister = async () => {
                             <label class="inline-block mb-2 sm:mb-0 sm:mr-5 sm:text-right xl:w-60 xl:mr-14">
                                 <div class="text-left">
                                     <div class="flex items-center">
-                                        <div class="font-medium text-nowrap">Concepto de gasto</div>
+                                        <div class="font-medium text-nowrap">Concepto</div>
                                         <div
                                             class="ml-2.5 px-2 py-0.5 bg-slate-100 text-slate-500 text-xs rounded-md border border-slate-200">
-                                            Obligatorio
+                                            Requerido
                                         </div>
                                     </div>
                                     <div class="mt-1.5 xl:mt-3 text-xs leading-relaxed text-slate-500/80">
@@ -148,11 +148,11 @@ const handleRegister = async () => {
                                         <div class="font-medium">Monto</div>
                                         <div
                                             class="ml-2.5 px-2 py-0.5 bg-slate-100 text-slate-500 text-xs rounded-md border border-slate-200">
-                                            Obligatorio
+                                            Requerido
                                         </div>
                                     </div>
                                     <div class="mt-1.5 xl:mt-3 text-xs leading-relaxed text-slate-500/80">
-                                        Por favor, proporcione el monto que se gastará de la donación.
+                                        Por favor, proporcione el monto que se gastará.
                                     </div>
                                 </div>
                             </label>
