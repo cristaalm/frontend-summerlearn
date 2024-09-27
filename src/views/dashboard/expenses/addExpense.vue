@@ -3,13 +3,14 @@ import { ref, onMounted } from "vue";
 import Lucide from "@/components/base/Lucide";
 import Button from "@/components/base/Button";
 import TomSelect from "@/components/base/TomSelect";
+import LoadingIcon from "@/components/base/LoadingIcon";
 import { FormInput, InputGroup } from "@/components/base/Form";
 import { useStatus, useValidations, useRefs, useMultiDonations, getDonationsFilter } from "@/hooks/bills/addBill";
 import { useDonations } from "@/hooks/donations/";
 import { useRouter } from "vue-router";
 import { useSetBill } from "@/hooks/bills/addBill/useSetBills";
 
-const { addBill, setBillError } = useSetBill();
+const { addBill, setBillError, loadingSetBill } = useSetBill();
 const router = useRouter();
 const { concept, amount, selectMultiple } = useRefs();
 const { status } = useStatus();
@@ -174,8 +175,10 @@ const handleRegister = async () => {
                         <Button
                             :class="`w-full px-10 md:w-auto font-bold ${!valid || !isValid ? 'border-gray-500 text-gray-500' : 'border-green text-green'}`"
                             @click="handleRegister" :disabled="!valid || !isValid">
-                            <Lucide icon="Check" class="stroke-[1.3] w-4 h-4 mr-2" />
-                            Registrar
+                            <Lucide v-if="!loadingSetBill" icon="Check" class="stroke-[1.3] w-4 h-4 mr-2 -ml-2" />
+                            <LoadingIcon v-if="loadingSetBill" icon="tail-spin" class="stroke-[1.3] w-4 h-4 mr-2 -ml-2"
+                                color="black" />
+                            {{ loadingSetBill ? 'Registrando...' : 'Registrar' }}
                         </Button>
                     </div>
                 </div>
