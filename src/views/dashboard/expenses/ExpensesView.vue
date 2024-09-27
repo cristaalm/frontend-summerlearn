@@ -2,17 +2,21 @@
 import Lucide from "@/components/base/Lucide";
 import { Menu } from "@/components/base/Headless";
 import Pagination from "@/components/base/Pagination";
+import LoadingIcon from "@/components/base/LoadingIcon";
+import ToastNotification from '@/components/ToastNotification'
 import { FormInput, FormSelect } from "@/components/base/Form";
 import Button from "@/components/base/Button";
 import Table from "@/components/base/Table";
 import { onMounted } from 'vue';
 import { useRouter } from "vue-router";
-import { useBills, useBillSearch, usePagination } from "@/hooks/bills";
+import { useBills, usePagination, useBillSearch, useExportExcel, useToast } from "@/hooks/bills";
 
 const router = useRouter();
 const { bills, loading, loadBills, errorBills } = useBills();
 const { searchQuery, filteredBills } = useBillSearch(bills);
 const { currentPage, pageSize, totalPages, paginatedItems, changePage, changePageSize } = usePagination(filteredBills);
+const { toastMessages, showToast } = useToast();
+const { loadExportExcel, loadingExportExcel, errorExportExcel } = useExportExcel({ showToast });
 
 function formatDateToDDMMYYYY(dateString) {
     if (!dateString) return ''; // Verifica si dateString es undefined, null o vacío.
@@ -26,6 +30,14 @@ onMounted(() => {
 </script>
 
 <template>
+
+    <!--? ######################## TOAST NOTIFICATION ######################## -->
+
+    <div>
+        <ToastNotification v-for="(message, index) in toastMessages" :key="index" :message="message" :index="index">
+        </ToastNotification>
+    </div>
+
     <div class="grid grid-cols-12 gap-y-10 gap-x-6">
         <div class="col-span-12">
             <div class="flex flex-col md:h-10 gap-y-3 md:items-center md:flex-row">
@@ -53,18 +65,27 @@ onMounted(() => {
                         </div>
                         <div class="flex flex-col sm:flex-row gap-x-3 gap-y-2 sm:ml-auto">
                             <Menu>
-                                <Menu.Button :as="Button" variant="outline-secondary" class="w-full sm:w-auto">
-                                    <Lucide icon="Download" class="stroke-[1.3] w-4 h-4 mr-2" />
-                                    Export
+                                <Menu.Button :as="Button" variant="outline-secondary"
+                                    :class="`w-full sm:w-auto ${loadingExportExcel ? 'text-amber-500' : ' text-black'}`"
+                                    :disabled="loadingExportExcel">
+                                    <Lucide v-if="!loadingExportExcel" icon="Download"
+                                        class="stroke-[1.3] w-4 h-4 mr-2" />
+                                    <LoadingIcon v-if="loadingExportExcel" icon="tail-spin"
+                                        class="stroke-[1.3] w-4 h-4 mr-2" color="black" />
+                                    Exportar
                                     <Lucide icon="ChevronDown" class="stroke-[1.3] w-4 h-4 ml-2" />
                                 </Menu.Button>
                                 <Menu.Items class="w-40">
                                     <Menu.Item>
-                                        <Lucide icon="FileBarChart" class="w-4 h-4 mr-2" /> PDF
-                                    </Menu.Item>
-                                    <Menu.Item>
-                                        <Lucide icon="FileBarChart" class="w-4 h-4 mr-2" />
-                                        CSV
+                                        <Button @click="loadExportExcel"
+                                            :class="`w-full ${loadingExportExcel ? 'text-amber-500' : ' text-black'}`"
+                                            :disabled="loadingExportExcel">
+                                            <Lucide v-if="!loadingExportExcel" icon="FileSpreadsheet"
+                                                class="stroke-[1.3] w-4 h-4 mr-2" />
+                                            <LoadingIcon v-if="loadingExportExcel" icon="tail-spin"
+                                                class="stroke-[1.3] w-4 h-4 mr-2" color="black" />
+                                            Excel
+                                        </Button>
                                     </Menu.Item>
                                 </Menu.Items>
                             </Menu>
@@ -96,7 +117,10 @@ onMounted(() => {
                             <Table.Tbody v-if="loading">
                                 <Table.Tr class="[&_td]:last:border-b-0">
                                     <Table.Td colspan="8" class="py-8 text-center text-xl font-bold text-green-500">
-                                        Cargando...
+                                        <div class="flex flex-col w-full justify-center items-center text-nowrap">
+                                            <LoadingIcon icon="tail-spin" class=" h-8" color="black" />
+                                            <div class="mt-2">Cargando información...</div>
+                                        </div>
                                     </Table.Td>
                                 </Table.Tr>
                             </Table.Tbody>
