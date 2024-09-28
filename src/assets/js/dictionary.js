@@ -6,7 +6,7 @@ export default {
       home: 'Home',
       mission: 'Mission',
       impact: 'Impact',
-      volunteer: 'Volunteer',
+      joinOurTeam: 'Join Our Team',
       donate: 'Donate'
     },
     hero: {
@@ -42,14 +42,40 @@ export default {
         }
       }
     },
-    volunteer: {
-      title: 'Join Our Volunteer Team',
+    joinOurTeam: {
+      volunteer: {
+        title: 'Volunteer Team',
+        description:
+          'Be a part of our mission to provide quality education to children in need. Your time and your skills can make a significant impact.',
+        button: 'Apply to Volunteer'
+      },
+      beneficiary: {
+        title: 'Beneficiary Program',
+        description:
+          'Be a part of our mission to provide quality education to children in need. Your time and your skills can make a significant impact.',
+        button: 'Apply to Beneficiary'
+      },
+      donor: {
+        title: 'Donor Team',
+        description:
+          'Be a part of our mission to provide quality education to children in need. Your time and your skills can make a significant impact.',
+        button: 'Apply to Donor'
+      },
+    },
+    beneficiary: {
+      title: 'Join Our Beneficiary Program',
       description:
         'Be a part of our mission to provide quality education to children in need. Your time and your skills can make a significant impact.',
-      button: 'Apply to Vlounteer'
+      button: 'Apply to Beneficiary'
+    },
+    donor: {
+      title: 'Join Our Donor Team',
+      description:
+        'Be a part of our mission to provide quality education to children in need. Your time and your skills can make a significant impact.',
+      button: 'Apply to Donor'
     },
     footer: {
-      copyRight: '© 2021 SummerLearn. All rights reserved.',
+      copyRight: '© 2024 SummerLearn. All rights reserved.',
       values: {
         activate: {
           activate: 'en',
@@ -69,7 +95,7 @@ export default {
       home: 'Inicio',
       mission: 'Misión',
       impact: 'Impacto',
-      volunteer: 'Voluntariado',
+      volunteer: 'Únete a nuestro equipo',
       donate: 'Donar'
     },
     hero: {
@@ -112,7 +138,7 @@ export default {
       button: 'Unirse'
     },
     footer: {
-      copyRight: '© 2021 SummerLearn. Todos los derechos reservados.',
+      copyRight: '© 2024 SummerLearn. Todos los derechos reservados.',
       values: {
         activate: {
           activate: 'es',
