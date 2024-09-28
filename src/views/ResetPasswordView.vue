@@ -1,30 +1,28 @@
 <script setup>
 import { FormInput, FormLabel } from '@/components/base/Form'
 import Button from '@/components/base/Button'
-import Alert from '@/components/base/Alert'
-import Lucide from '@/components/base/Lucide'
 import LoadingIcon from '@/components/base/LoadingIcon'
 import { useRoute, useRouter } from 'vue-router'
 import { useRefs } from '@/hooks/recovery/useRefs'
 import { status } from '@/hooks/recovery/useStatus'
 import { useValidation } from '@/hooks/recovery/useValidation'
 import { usePasswordSecurity } from '@/hooks/recovery/usePasswordSecurity'
-import { watch } from 'vue'
+import { watch, ref } from 'vue'
+import { recoveryPassword } from '@/hooks/recovery/useRecovery'
 
 // Recupera la ruta actual
 const route = useRoute()
 const router = useRouter()
 
 // Recupera la key de los parámetros de la URL
-// TODO: hacer la valicación de la key
 const key = route.params.key || ''
 
 const { password, confirm_password, valid } = useRefs()
 const { validationConfirmPassword, validate } = useValidation({ password, confirm_password, status, valid })
 const { validatePassword } = usePasswordSecurity({ status, validate, password })
 
-const loading = false
-
+const loading = ref(false)
+const error = ref(null) // Para manejar errores
 
 watch([password, confirm_password], () => {
   validationConfirmPassword()
@@ -35,8 +33,30 @@ watch(password, () => {
   validatePassword()
 })
 
+// Función para manejar el envío de la nueva contraseña
+const handleSubmit = async () => {
+  if (valid.value && !loading.value) {
+    loading.value = true
+    error.value = null
 
+    try {
+      // Llama a la función de recuperación de contraseña
+      const response = await recoveryPassword(key, password.value)
 
+      if (response) {
+        // Redirige o muestra un mensaje de éxito
+        router.push({ name: 'login' }) // Cambia a la ruta que desees
+      } else {
+        error.value = 'Error al restablecer la contraseña' // Manejo de errores
+      }
+    } catch (err) {
+      error.value = 'Error al restablecer la contraseña'
+      console.error(err)
+    } finally {
+      loading.value = false
+    }
+  }
+}
 </script>
 
 <template>
@@ -109,7 +129,7 @@ watch(password, () => {
             </div>
             <div class="mt-5 text-center xl:mt-8 xl:text-left">
 
-              <Button @click="() => { }" :disabled="!valid || loading" variant="primary" rounded
+              <Button @click="handleSubmit" :disabled="!valid || loading" variant="primary" rounded
                 :class="`bg-gradient-to-r transition-all border-none scale-105 duration-200 w-full py-3.5 xl:mr-3 ${valid && !loading ? 'from-green-dark to-green hover:scale-100 select-none cursor-pointer' : 'from-gray-600 to-gray-600  cursor-default'}`">
                 <LoadingIcon v-if="loading" icon="three-dots" class="w-8 h-5" color="white" />
                 {{ loading ? '' : 'Restableser contraseña' }}

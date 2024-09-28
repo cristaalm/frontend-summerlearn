@@ -82,7 +82,7 @@ onMounted(() => {
                                             </div>
                                         </div>
                                         <a class="flex items-center font-medium text-white" href="">
-                                            Upgrade now
+                                            Actualizar ahora
                                             <Lucide icon="MoveRight" class="w-4 h-4 ml-1.5" />
                                         </a>
                                     </div>
@@ -96,7 +96,7 @@ onMounted(() => {
                     <div class="flex flex-col col-span-12 p-5 md:col-span-6 2xl:col-span-3 box box--stacked">
 
                         <div class="pb-5 mb-5 border-b border-dashed border-slate-300/70">
-                            <div class="text-base text-slate-500">Total received</div>
+                            <div class="text-base text-slate-500">Donacion Semanal</div>
                             <div class="flex items-center mt-1">
                                 <div class="flex items-center text-xl font-medium">
                                     <span class="mr-px">$</span>{{ totalDonationsWeek }}
@@ -105,10 +105,9 @@ onMounted(() => {
                             </div>
                         </div>
                         <ReportBarChart3 class="relative z-10 -ml-1" :height="80" />
-                        <a class="flex items-center mt-6 font-medium text-primary" href="">
-                            Request Money
-                            <Lucide icon="MoveRight" class="w-4 h-4 ml-1.5" />
-                        </a>
+
+                        <span class="flex items-center mt-6 font-medium text-primary">Donaciones Diarias.</span>
+
                     </div>
 
                     <!--? Card -->
@@ -151,7 +150,7 @@ onMounted(() => {
                     <div class="grid grid-cols-4 gap-5">
                         <div
                             class="col-span-4 md:col-span-2 xl:col-span-1 p-5 border border-dashed rounded-[0.6rem] border-slate-300/80 box shadow-sm">
-                            <div class="text-base text-slate-500">Total de Donaciones</div>
+                            <div class="text-base text-slate-500">Cantidad de donaciones</div>
                             <div class="mt-1.5 text-2xl font-medium">
                                 <div v-if="loading" class="w-full h-4 mt-4">
                                     <LoadingIcon icon="three-dots" color="gray" />
@@ -225,7 +224,7 @@ onMounted(() => {
                                     <div class="relative">
                                         <Lucide icon="Search"
                                             class="absolute inset-y-0 left-0 z-10 w-4 h-4 my-auto ml-3 stroke-[1.3] text-slate-500" />
-                                        <FormInput v-model="searchQuery" type="text" placeholder="Buscar por concepto"
+                                        <FormInput v-model="searchQuery" type="text" placeholder="Buscar por concepto..."
                                             class="pl-9 sm:w-64 rounded-[0.5rem]" />
                                     </div>
                                 </div>

@@ -75,7 +75,7 @@ const handleRegister = () => {
                                         <div class="font-medium text-nowrap">Concepto de donación</div>
                                         <div
                                             class="ml-2.5 px-2 py-0.5 bg-slate-100 text-slate-500 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md border border-slate-200">
-                                            Obligatorio
+                                            Requerido
                                         </div>
                                     </div>
                                     <div class="mt-1.5 xl:mt-3 text-xs leading-relaxed text-slate-500/80">
@@ -98,7 +98,7 @@ const handleRegister = () => {
                                         <div class="font-medium">Monto</div>
                                         <div
                                             class="ml-2.5 px-2 py-0.5 bg-slate-100 text-slate-500 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md border border-slate-200">
-                                            Obligatorio
+                                            Requerido
                                         </div>
                                     </div>
                                     <div class="mt-1.5 xl:mt-3 text-xs leading-relaxed text-slate-500/80">
