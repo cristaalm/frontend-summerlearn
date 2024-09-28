@@ -1,8 +1,9 @@
 import { Baseurl } from '@/../global'
 
-export const deleteActividad = async (actividadId) => {
+export const deleteArea = async (areasId) => {
+  console.log(areasId)
   try {
-    const response = await fetch(`${Baseurl}areas/${actividadId}/`, {
+    const response = await fetch(`${Baseurl}areas/${areasId}/`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -12,15 +13,15 @@ export const deleteActividad = async (actividadId) => {
 
     if (response.status === 204 || response.status === 200) {
       // 204 No Content is common for successful DELETE
-      console.log('Actividad eliminada con éxito')
+      console.log('Área eliminada con éxito')
       return true // Successfully deleted
     } else {
       const errorResponse = await response.json()
-      console.error('Error al eliminar la actividad:', errorResponse)
+      console.error('Hay un programa relacionado, no se puede eliminar', errorResponse)
       return false // Failed to delete
     }
   } catch (error) {
-    console.error('Error al eliminar la actividad:', error)
+    console.error('Hay un programa relacionado, no se puede eliminar', error)
     return false // Exception occurred
   }
 }

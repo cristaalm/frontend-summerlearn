@@ -7,37 +7,50 @@ import { FormInput, FormSelect } from '@/components/base/Form'
 import Table from '@/components/base/Table'
 import LoadingIcon from '@/components/base/LoadingIcon'
 import Button from '@/components/base/Button'
-import { useFilter, usePagination, useActividades, useDialogDelete, useToast } from '@/hooks/actividades/'
+import {
+  useFilter,
+  usePagination,
+  useActividades,
+  useDialogDelete,
+  useToast
+} from '@/hooks/actividades/'
 import { onMounted } from 'vue'
 import ToastNotification from '@/components/ToastNotification/' // Asegúrate de usar el nuevo nombre
 
 const { actividades, loading, error, loadActividades } = useActividades()
 const { searchQuery, selectedStatus, filteredItems, activeFilters } = useFilter(actividades)
-const { currentPage, pageSize, totalPages, paginatedItems, changePage, changePageSize } = usePagination(filteredItems)
+const { currentPage, pageSize, totalPages, paginatedItems, changePage, changePageSize } =
+  usePagination(filteredItems)
 const { toastMessages, showToast } = useToast()
-const { dialogStatusDelete, openDeleteModal, confirmDeleteActividad, closeDeleteActividad } = useDialogDelete({ showToast, actividades })
+const { dialogStatusDelete, openDeleteModal, confirmDeleteActividad, closeDeleteActividad } =
+  useDialogDelete({ showToast, actividades })
 const router = useRouter()
 
 onMounted(() => {
   loadActividades()
 })
-
-
 </script>
 
 <template>
-  <!-- <Button @click="showToast('Este es un mensaje de toast!')" variant="primary"> Show Toast </Button> -->
-
   <div>
-    <ToastNotification v-for="(message, index) in toastMessages" :key="index" :message="message" :index="index">
+    <ToastNotification
+      v-for="(message, index) in toastMessages"
+      :key="index"
+      :message="message"
+      :index="index"
+    >
     </ToastNotification>
   </div>
 
   <!-- BEGIN: Modal Content -->
-  <Dialog :open="dialogStatusDelete" @close="() => {
-    dialogStatusDelete.value = false
-  }
-    ">
+  <Dialog
+    :open="dialogStatusDelete"
+    @close="
+      () => {
+        dialogStatusDelete.value = false
+      }
+    "
+  >
     <Dialog.Panel>
       <div class="p-5 text-center">
         <Lucide icon="XCircle" class="w-16 h-16 mx-auto mt-3 text-danger" />
@@ -49,29 +62,44 @@ onMounted(() => {
         </div>
       </div>
       <div class="px-5 pb-8 text-center space-x-8">
-        <Button type="button" variant="outline-secondary" @click="closeDeleteActividad" class="w-24 mr-1">
+        <Button
+          type="button"
+          variant="outline-secondary"
+          @click="closeDeleteActividad"
+          class="w-24 mr-1"
+        >
           Cancelar
         </Button>
-        <Button type="button" variant="danger" class="w-24" @click="confirmDeleteActividad" ref="deleteButtonRef">
+        <Button
+          type="button"
+          variant="danger"
+          class="w-24"
+          @click="confirmDeleteActividad"
+          ref="deleteButtonRef"
+        >
           Eliminar
         </Button>
       </div>
     </Dialog.Panel>
   </Dialog>
   <!-- END: Modal Content -->
+
   <div class="grid grid-cols-12 gap-y-10 gap-x-6">
     <div class="col-span-12">
       <div class="flex flex-col md:h-10 gap-y-3 md:items-center md:flex-row">
         <div class="text-base font-medium group-[.mode--light]:text-white">Actividades</div>
         <div class="flex flex-col sm:flex-row gap-x-3 gap-y-2 md:ml-auto">
-          <Button variant="primary"
+          <Button
+            variant="primary"
             class="group-[.mode--light]:!bg-white/[0.12] group-[.mode--light]:!text-slate-200 group-[.mode--light]:!border-transparent"
-            @click="() => {
-              router.push({
-                name: 'addActividades'
-              })
-            }
-              ">
+            @click="
+              () => {
+                router.push({
+                  name: 'addActividades'
+                })
+              }
+            "
+          >
             <Lucide icon="PenLine" class="stroke-[1.3] w-4 h-4 mr-2" /> Agregar nueva actividad
           </Button>
         </div>
@@ -81,19 +109,43 @@ onMounted(() => {
           <div class="flex flex-col p-5 sm:items-center sm:flex-row gap-y-2">
             <div>
               <div class="relative">
-                <Lucide icon="Search"
-                  class="absolute inset-y-0 left-0 z-10 w-4 h-4 my-auto ml-3 stroke-[1.3] text-slate-500" />
-                <FormInput v-model="searchQuery" type="text" placeholder="Buscar actividad..."
-                  class="pl-9 sm:w-72 rounded-[0.5rem]" />
+                <Lucide
+                  icon="Search"
+                  class="absolute inset-y-0 left-0 z-10 w-4 h-4 my-auto ml-3 stroke-[1.3] text-slate-500"
+                />
+                <FormInput
+                  v-model="searchQuery"
+                  type="text"
+                  placeholder="Buscar nombre de actividad..."
+                  class="pl-9 sm:w-72 rounded-[0.5rem]"
+                />
               </div>
             </div>
             <div class="flex flex-col sm:flex-row gap-x-3 gap-y-2 sm:ml-auto">
+              <Menu>
+                <Menu.Button :as="Button" variant="outline-secondary" class="w-full sm:w-auto">
+                  <Lucide icon="Download" class="stroke-[1.3] w-4 h-4 mr-2" />
+                  Exportar
+                  <Lucide icon="ChevronDown" class="stroke-[1.3] w-4 h-4 ml-2" />
+                </Menu.Button>
+                <Menu.Items class="w-40">
+                  <Menu.Item>
+                    <Lucide icon="FileBarChart" class="w-4 h-4 mr-2" />
+                    PDF
+                  </Menu.Item>
+                  <Menu.Item>
+                    <Lucide icon="FileBarChart" class="w-4 h-4 mr-2" />
+                    Excel
+                  </Menu.Item>
+                </Menu.Items>
+              </Menu>
               <Popover class="inline-block" v-slot="{ close }">
                 <Popover.Button :as="Button" variant="outline-secondary" class="w-full sm:w-auto">
                   <Lucide icon="ArrowDownWideNarrow" class="stroke-[1.3] w-4 h-4 mr-2" />
                   Filtrar
                   <div
-                    class="flex items-center justify-center h-5 px-1.5 ml-2 text-xs font-medium border rounded-full bg-slate-100">
+                    class="flex items-center justify-center h-5 px-1.5 ml-2 text-xs font-medium border rounded-full bg-slate-100"
+                  >
                     {{ activeFilters }}
                   </div>
                 </Popover.Button>
@@ -108,10 +160,15 @@ onMounted(() => {
                       </FormSelect>
                     </div>
                     <div class="flex items-center mt-4">
-                      <Button variant="secondary" @click="() => {
-                        close()
-                      }
-                        " class="w-32 ml-auto">
+                      <Button
+                        variant="secondary"
+                        @click="
+                          () => {
+                            close()
+                          }
+                        "
+                        class="w-32 ml-auto"
+                      >
                         Cerrar
                       </Button>
                     </div>
@@ -125,27 +182,38 @@ onMounted(() => {
               <Table.Thead>
                 <Table.Tr>
                   <Table.Td
-                    class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500">
+                    class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500"
+                  >
                     Nombre
                   </Table.Td>
                   <Table.Td
-                    class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500">
+                    class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500"
+                  >
                     Fecha
                   </Table.Td>
                   <Table.Td
-                    class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500">
+                    class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500"
+                  >
                     Programa
                   </Table.Td>
                   <Table.Td
-                    class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500">
+                    class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500"
+                  >
                     Área
                   </Table.Td>
                   <Table.Td
-                    class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500">
-                    Suscritos
+                    class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500"
+                  >
+                    # Voluntario
                   </Table.Td>
                   <Table.Td
-                    class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500">
+                    class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500"
+                  >
+                    # Beneficiario
+                  </Table.Td>
+                  <Table.Td
+                    class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500"
+                  >
                   </Table.Td>
                 </Table.Tr>
               </Table.Thead>
@@ -205,7 +273,10 @@ onMounted(() => {
                       </div>
                     </Table.Td>
                     <Table.Td class="py-4 border-dashed dark:bg-darkmode-600">
-                      <div class="font-medium whitespace-nowrap text-center">0</div>
+                      <div href="" class="font-medium whitespace-nowrap text-center">0</div>
+                    </Table.Td>
+                    <Table.Td class="py-4 border-dashed dark:bg-darkmode-600">
+                      <div href="" class="font-medium whitespace-nowrap text-center">0</div>
                     </Table.Td>
                     <Table.Td class="relative py-4 border-dashed dark:bg-darkmode-600">
                       <div class="flex items-center justify-end">
@@ -226,10 +297,14 @@ onMounted(() => {
                               <Lucide icon="CircleCheckBig" class="w-4 h-4 mr-2" />
                               Agregar objetivos
                             </Menu.Item>
-                            <Menu.Item class="text-danger" @click="() => {
-                              openDeleteModal(actividades.id)
-                            }
-                              ">
+                            <Menu.Item
+                              class="text-danger"
+                              @click="
+                                () => {
+                                  openDeleteModal(actividades.id)
+                                }
+                              "
+                            >
                               <Lucide icon="Trash" class="w-4 h-4 mr-2" />
                               Eliminar
                             </Menu.Item>
@@ -253,7 +328,9 @@ onMounted(() => {
               </Table.Tbody>
             </Table>
           </div>
-          <div class="flex flex-col-reverse flex-wrap items-center p-5 flex-reverse gap-y-2 sm:flex-row">
+          <div
+            class="flex flex-col-reverse flex-wrap items-center p-5 flex-reverse gap-y-2 sm:flex-row"
+          >
             <Pagination class="flex-1 w-full mr-auto sm:w-auto">
               <Pagination.Link @click="changePage(1)">
                 <Lucide icon="ChevronsLeft" class="w-4 h-4" />
@@ -273,7 +350,11 @@ onMounted(() => {
                 <Lucide icon="ChevronsRight" class="w-4 h-4" />
               </Pagination.Link>
             </Pagination>
-            <FormSelect class="sm:w-20 rounded-[0.5rem]" v-model="pageSize" @change="changePageSize">
+            <FormSelect
+              class="sm:w-20 rounded-[0.5rem]"
+              v-model="pageSize"
+              @change="changePageSize"
+            >
               <option value="10">10</option>
               <option value="20">20</option>
               <option value="30">30</option>

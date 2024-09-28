@@ -93,6 +93,18 @@ export const useMenuStore = defineStore('menu', {
             },
             'GESTIÓN DE PROGRAMAS',
             {
+              icon: 'Notebook',
+              pageName: 'subscriptions',
+              title: 'Suscripciones',
+              subMenu: [
+                {
+                  icon: 'GalleryVerticalEnd',
+                  pageName: 'request_subscriptions',
+                  title: 'Solicitudes'
+                }
+              ]
+            },
+            {
               icon: 'Album',
               pageName: 'programs',
               title: 'Programas',
@@ -109,7 +121,12 @@ export const useMenuStore = defineStore('menu', {
                 }
               ]
             },
-            'GESTIÓN GENERAL',
+            {
+              icon: 'BarChartBig',
+              pageName: 'performance',
+              title: 'Desempeño'
+            },
+            'GESTIÓN ECONÓMICA',
             {
               icon: 'PiggyBank',
               pageName: 'donations',
@@ -122,16 +139,7 @@ export const useMenuStore = defineStore('menu', {
                 }
               ]
             },
-            {
-              icon: 'Notebook',
-              pageName: 'subscriptions',
-              title: 'Suscripciones'
-            },
-            {
-              icon: 'BarChartBig',
-              pageName: 'performance',
-              title: 'Desempeño'
-            },
+            'CONTÁCTANOS',
             {
               icon: 'MessagesSquare',
               pageName: 'chat',
@@ -143,15 +151,22 @@ export const useMenuStore = defineStore('menu', {
           menuItems = [
             'GESTIÓN DE PROGRAMAS',
             {
+              icon: 'Notebook',
+              pageName: 'subscriptions',
+              title: 'Suscripciones',
+              subMenu: [
+                {
+                  icon: 'GalleryVerticalEnd',
+                  pageName: 'request_subscriptions',
+                  title: 'Solicitudes'
+                }
+              ]
+            },
+            {
               icon: 'Album',
               pageName: 'programs',
               title: 'Programas',
               subMenu: [
-                {
-                  icon: 'LayoutPanelTop',
-                  pageName: 'areas',
-                  title: 'Áreas'
-                },
                 {
                   icon: 'BookMarked',
                   pageName: 'activities',
@@ -160,10 +175,11 @@ export const useMenuStore = defineStore('menu', {
               ]
             },
             {
-              icon: 'Notebook',
-              pageName: 'subscriptions',
-              title: 'Suscripciones'
+              icon: 'BarChartBig',
+              pageName: 'performance',
+              title: 'Desempeño'
             },
+            'CONTÁCTANOS',
             {
               icon: 'MessagesSquare',
               pageName: 'chat',
@@ -173,7 +189,7 @@ export const useMenuStore = defineStore('menu', {
           break
         case '3':
           menuItems = [
-            'GESTIÓN GENERAL',
+            'GESTIÓN ECONÓMICA',
             {
               icon: 'PiggyBank',
               pageName: 'donations',
@@ -186,6 +202,7 @@ export const useMenuStore = defineStore('menu', {
                 }
               ]
             },
+            'CONTÁCTANOS',
             {
               icon: 'MessagesSquare',
               pageName: 'chat',
@@ -195,17 +212,18 @@ export const useMenuStore = defineStore('menu', {
           break
         case '4':
           menuItems = [
-            'GESTIÓN GENERAL',
+            'GESTIÓN DE PROGRAMAS',
             {
               icon: 'BookMarked',
-              pageName: 'activities',
+              pageName: 'activities_view',
               title: 'Actividades-Vista'
             },
             {
-              icon: 'Notebook',
-              pageName: 'subscriptions',
-              title: 'Suscripciones'
+              icon: 'BarChartBig',
+              pageName: 'performance',
+              title: 'Desempeño'
             },
+            'CONTÁCTANOS',
             {
               icon: 'MessagesSquare',
               pageName: 'chat',
@@ -215,17 +233,18 @@ export const useMenuStore = defineStore('menu', {
           break
         case '5':
           menuItems = [
-            'GESTIÓN GENERAL',
+            'GESTIÓN DE PROGRAMAS',
             {
               icon: 'BookMarked',
-              pageName: 'activities',
+              pageName: 'activities_view',
               title: 'Actividades-Vista'
             },
             {
-              icon: 'Notebook',
-              pageName: 'subscriptions',
-              title: 'Suscripciones'
+              icon: 'BarChartBig',
+              pageName: 'performance_view',
+              title: 'Desempeño'
             },
+            'CONTÁCTANOS',
             {
               icon: 'MessagesSquare',
               pageName: 'chat',

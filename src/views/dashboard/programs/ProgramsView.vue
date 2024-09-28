@@ -1,47 +1,63 @@
 <script setup>
-import { useFilter, usePagination, usePrograms, useDialogDelete, useToast, useStatusProgram } from '@/hooks/programs/'
+import {
+  useFilter,
+  usePagination,
+  usePrograms,
+  useDialogDelete,
+  useToast,
+  useStatusProgram
+} from '@/hooks/programs/'
 import formatDate from '@/logic/formatDate'
-import { FormInput, FormSelect } from "@/components/base/Form";
-import { Menu, Popover, Dialog } from "@/components/base/Headless";
-import { useRouter } from "vue-router";
+import { FormInput, FormSelect } from '@/components/base/Form'
+import { Menu, Popover, Dialog } from '@/components/base/Headless'
+import { useRouter } from 'vue-router'
 import { onMounted } from 'vue'
-import LoadingIcon from "@/components/base/LoadingIcon";
-import Pagination from "@/components/base/Pagination";
-import Button from "@/components/base/Button";
-import Lucide from "@/components/base/Lucide";
-import Table from "@/components/base/Table";
+import LoadingIcon from '@/components/base/LoadingIcon'
+import Pagination from '@/components/base/Pagination'
+import Button from '@/components/base/Button'
+import Lucide from '@/components/base/Lucide'
+import Table from '@/components/base/Table'
 import ToastNotification from '@/components/ToastNotification'
 
-const { programs, loading, error, loadPrograms } = usePrograms();
-const { searchQuery, selectedStatus, filteredItems, activeFilters } = useFilter(programs);
-const { currentPage, pageSize, totalPages, paginatedItems, changePage, changePageSize } = usePagination(filteredItems);
-const { toastMessages, showToast } = useToast();
-const { dialogStatusDelete, openDeleteModal, confirmDeleteProgram, closeDeleteProgram } = useDialogDelete({ showToast, programs });
-const { updateStatus } = useStatusProgram({ showToast });
-const router = useRouter();
+const { programs, loading, error, loadPrograms } = usePrograms()
+const { searchQuery, selectedStatus, filteredItems, activeFilters } = useFilter(programs)
+const { currentPage, pageSize, totalPages, paginatedItems, changePage, changePageSize } =
+  usePagination(filteredItems)
+const { toastMessages, showToast } = useToast()
+const { dialogStatusDelete, openDeleteModal, confirmDeleteProgram, closeDeleteProgram } =
+  useDialogDelete({ showToast, programs })
+const { updateStatus } = useStatusProgram({ showToast })
+const router = useRouter()
 
 onMounted(() => {
-  loadPrograms();
-});
-
+  loadPrograms()
+})
 </script>
 
 <template>
-
   <!--? ######################## TOAST NOTIFICATION ######################## -->
 
   <div>
-    <ToastNotification v-for="(message, index) in toastMessages" :key="index" :message="message" :index="index">
+    <ToastNotification
+      v-for="(message, index) in toastMessages"
+      :key="index"
+      :message="message"
+      :index="index"
+    >
     </ToastNotification>
   </div>
 
   <!--? ######################## DIALOG DELETE PROGRAM ######################## -->
 
   <!-- BEGIN: Modal Content -->
-  <Dialog :open="dialogStatusDelete" @close="() => {
-    dialogStatusDelete.value = false
-  }
-    ">
+  <Dialog
+    :open="dialogStatusDelete"
+    @close="
+      () => {
+        dialogStatusDelete.value = false
+      }
+    "
+  >
     <Dialog.Panel>
       <div class="p-5 text-center">
         <Lucide icon="XCircle" class="w-16 h-16 mx-auto mt-3 text-danger" />
@@ -53,10 +69,21 @@ onMounted(() => {
         </div>
       </div>
       <div class="px-5 pb-8 text-center space-x-8">
-        <Button type="button" variant="outline-secondary" @click="closeDeleteProgram" class="w-24 mr-1">
+        <Button
+          type="button"
+          variant="outline-secondary"
+          @click="closeDeleteProgram"
+          class="w-24 mr-1"
+        >
           Cancelar
         </Button>
-        <Button type="button" variant="danger" class="w-24" @click="confirmDeleteProgram" ref="deleteButtonRef">
+        <Button
+          type="button"
+          variant="danger"
+          class="w-24"
+          @click="confirmDeleteProgram"
+          ref="deleteButtonRef"
+        >
           Eliminar
         </Button>
       </div>
@@ -64,42 +91,46 @@ onMounted(() => {
   </Dialog>
   <!-- END: Modal Content -->
 
-
   <div class="grid grid-cols-12 gap-y-10 gap-x-6">
     <div class="col-span-12">
-
       <!--? ######################## HEADER ######################## -->
 
       <div class="flex flex-col md:h-10 gap-y-3 md:items-center md:flex-row">
-        <div class="text-base font-medium group-[.mode--light]:text-white">
-          Programas
-        </div>
+        <div class="text-base font-medium group-[.mode--light]:text-white">Programas</div>
         <div class="flex flex-col sm:flex-row gap-x-3 gap-y-2 md:ml-auto">
-          <Button variant="primary"
+          <Button
+            variant="primary"
             class="group-[.mode--light]:!bg-white/[0.12] group-[.mode--light]:!text-slate-200 group-[.mode--light]:!border-transparent"
-            @click="() => {
-              router.push({
-                name: 'addProgram',
-              });
-            }">
+            @click="
+              () => {
+                router.push({
+                  name: 'addProgram'
+                })
+              }
+            "
+          >
             <Lucide icon="PenLine" class="stroke-[1.3] w-4 h-4 mr-2" /> Agregar nuevo programa
           </Button>
         </div>
       </div>
 
-
       <div class="mt-3.5">
         <div class="flex flex-col box box--stacked">
-
           <!--? ######################## SEARCH AND FILTER ######################## -->
 
           <div class="flex flex-col p-5 sm:items-center sm:flex-row gap-y-2">
             <div>
               <div class="relative">
-                <Lucide icon="Search"
-                  class="absolute inset-y-0 left-0 z-10 w-4 h-4 my-auto ml-3 stroke-[1.3] text-slate-500" />
-                <FormInput v-model="searchQuery" type="text" placeholder="Buscar programa..."
-                  class="pl-9 sm:w-72 rounded-[0.5rem]" />
+                <Lucide
+                  icon="Search"
+                  class="absolute inset-y-0 left-0 z-10 w-4 h-4 my-auto ml-3 stroke-[1.3] text-slate-500"
+                />
+                <FormInput
+                  v-model="searchQuery"
+                  type="text"
+                  placeholder="Buscar nombre de programa..."
+                  class="pl-9 sm:w-72 rounded-[0.5rem]"
+                />
               </div>
             </div>
             <div class="flex flex-col sm:flex-row gap-x-3 gap-y-2 sm:ml-auto">
@@ -108,7 +139,8 @@ onMounted(() => {
                   <Lucide icon="ArrowDownWideNarrow" class="stroke-[1.3] w-4 h-4 mr-2" />
                   Filtrar
                   <div
-                    class="flex items-center justify-center h-5 px-1.5 ml-2 text-xs font-medium border rounded-full bg-slate-100">
+                    class="flex items-center justify-center h-5 px-1.5 ml-2 text-xs font-medium border rounded-full bg-slate-100"
+                  >
                     {{ activeFilters }}
                   </div>
                 </Popover.Button>
@@ -123,11 +155,16 @@ onMounted(() => {
                       </FormSelect>
                     </div>
                     <div class="flex items-center mt-4">
-                      <Button variant="secondary" @click="() => {
-                        close();
-                      }
-                        " class="w-32 ml-auto">
-                        Close
+                      <Button
+                        variant="secondary"
+                        @click="
+                          () => {
+                            close()
+                          }
+                        "
+                        class="w-32 ml-auto"
+                      >
+                        Cerrar
                       </Button>
                     </div>
                   </div>
@@ -143,23 +180,28 @@ onMounted(() => {
               <Table.Thead>
                 <Table.Tr>
                   <Table.Td
-                    class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500">
-                    Nombre del programa
+                    class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500"
+                  >
+                    Nombre
                   </Table.Td>
                   <Table.Td
-                    class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500">
-                    Usuario responsable
+                    class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500"
+                  >
+                    Responsable
                   </Table.Td>
                   <Table.Td
-                    class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500">
-                    Duración del programa
+                    class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500"
+                  >
+                    Duración
                   </Table.Td>
                   <Table.Td
-                    class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500">
+                    class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500"
+                  >
                     Estado
                   </Table.Td>
                   <Table.Td
-                    class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500">
+                    class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500"
+                  >
                   </Table.Td>
                 </Table.Tr>
               </Table.Thead>
@@ -167,9 +209,9 @@ onMounted(() => {
               <!--? Mostrar 'Cargando información...' cuando loading es true -->
               <Table.Tbody v-if="loading">
                 <Table.Tr>
-                  <Table.Td colspan="7" class="py-8 text-center text-xl font-bold text-green-500 ">
+                  <Table.Td colspan="7" class="py-8 text-center text-xl font-bold text-green-500">
                     <div class="flex flex-col w-full justify-center items-center text-nowrap">
-                      <LoadingIcon icon="tail-spin" class=" h-8" color="black" />
+                      <LoadingIcon icon="tail-spin" class="h-8" color="black" />
                       <div class="mt-2">Cargando información...</div>
                     </div>
                   </Table.Td>
@@ -210,20 +252,33 @@ onMounted(() => {
                     </Table.Td>
                     <Table.Td class="py-4 border-dashed dark:bg-darkmode-600 text-center">
                       <div href="" class="font-medium text-center whitespace-nowrap">
-                        {{ formatDate(program.start) }} <span class="font-bold">-</span> {{
-                          formatDate(program.end) }}
+                        {{ formatDate(program.start) }} <span class="font-bold">-</span>
+                        {{ formatDate(program.end) }}
                       </div>
                     </Table.Td>
                     <Table.Td class="py-4 border-dashed dark:bg-darkmode-600">
                       <div
-                        :class="['flex items-center justify-center', { 'text-success': program.status == 1 }, { 'text-danger': program.status !== 1 }, { 'text-[#FFA500]': program.status == 0 }]">
-                        <Lucide v-if="program.status == 1 || program.status == 2" icon="Database"
-                          class="w-3.5 h-3.5 stroke-[1.7]" />
-                        <div class="ml-1.5 whitespace-nowrap max-h-8 flex flex-row items-center justify-center gap-2">
+                        :class="[
+                          'flex items-center justify-center',
+                          { 'text-success': program.status == 1 },
+                          { 'text-danger': program.status !== 1 },
+                          { 'text-[#FFA500]': program.status == 0 }
+                        ]"
+                      >
+                        <Lucide
+                          v-if="program.status == 1 || program.status == 2"
+                          icon="Database"
+                          class="w-3.5 h-3.5 stroke-[1.7]"
+                        />
+                        <div
+                          class="ml-1.5 whitespace-nowrap max-h-8 flex flex-row items-center justify-center gap-2"
+                        >
                           <div class="w-4 h-4" v-if="program.status == 0">
-                            <LoadingIcon icon="bars" class=" w-8 h-8" color="#FFA500" />
+                            <LoadingIcon icon="bars" class="w-8 h-8" color="#FFA500" />
                           </div>
-                          <span v-if="program.status == 0" class="text-amber-500">Cambiando....</span>
+                          <span v-if="program.status == 0" class="text-amber-500"
+                            >Cambiando....</span
+                          >
                           <span v-else-if="program.status == 1" class="text-success">Activo</span>
                           <span v-else class="text-danger">Inactivo</span>
                         </div>
@@ -240,20 +295,32 @@ onMounted(() => {
                               <Lucide icon="CheckSquare" class="w-4 h-4 mr-2" />
                               Editar
                             </Menu.Item>
-                            <Menu.Item :class="`${program.status !== 1 ? 'text-blue' : 'text-[#ff6f0f]'}`" @click="() => {
-                              updateStatus({ program }).then((updatedProgram) => {
-                                const index = programs.findIndex(p => p.id === updatedProgram.id);
-                                if (index !== -1) {
-                                  programs[index] = updatedProgram;
+                            <Menu.Item
+                              :class="`${program.status !== 1 ? 'text-blue' : 'text-[#ff6f0f]'}`"
+                              @click="
+                                () => {
+                                  updateStatus({ program }).then((updatedProgram) => {
+                                    const index = programs.findIndex(
+                                      (p) => p.id === updatedProgram.id
+                                    )
+                                    if (index !== -1) {
+                                      programs[index] = updatedProgram
+                                    }
+                                  })
                                 }
-                              });
-                            }">
+                              "
+                            >
                               <Lucide icon="RefreshCw" class="w-4 h-4 mr-2" />
                               {{ program.status !== 1 ? 'Activar' : 'Desactivar' }}
                             </Menu.Item>
-                            <Menu.Item class="text-danger" @click="() => {
-                              openDeleteModal(program.id)
-                            }">
+                            <Menu.Item
+                              class="text-danger"
+                              @click="
+                                () => {
+                                  openDeleteModal(program.id)
+                                }
+                              "
+                            >
                               <Lucide icon="CheckSquare" class="w-4 h-4 mr-2" />
                               Eliminar
                             </Menu.Item>
@@ -269,7 +336,9 @@ onMounted(() => {
 
           <!--? ######################## PAGINATION TABLE ######################## -->
 
-          <div class="flex flex-col-reverse flex-wrap items-center p-5 flex-reverse gap-y-2 sm:flex-row">
+          <div
+            class="flex flex-col-reverse flex-wrap items-center p-5 flex-reverse gap-y-2 sm:flex-row"
+          >
             <Pagination class="flex-1 w-full mr-auto sm:w-auto">
               <Pagination.Link @click="changePage(1)">
                 <Lucide icon="ChevronsLeft" class="w-4 h-4" />
@@ -289,7 +358,11 @@ onMounted(() => {
                 <Lucide icon="ChevronsRight" class="w-4 h-4" />
               </Pagination.Link>
             </Pagination>
-            <FormSelect class="sm:w-20 rounded-[0.5rem]" v-model="pageSize" @change="changePageSize">
+            <FormSelect
+              class="sm:w-20 rounded-[0.5rem]"
+              v-model="pageSize"
+              @change="changePageSize"
+            >
               <option value="10">10</option>
               <option value="20">20</option>
               <option value="30">30</option>
@@ -298,7 +371,6 @@ onMounted(() => {
             </FormSelect>
           </div>
         </div>
-
       </div>
     </div>
   </div>

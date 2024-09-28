@@ -1,7 +1,7 @@
 import { Baseurl } from '@/../global'
 
 export const getUsers = async () => {
-  const response = await fetch(`${Baseurl}users/by-id-rol/?id_rol=4`, {
+  const response = await fetch(`${Baseurl}users/by-id-rol/?id_rol=2`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',

@@ -6,15 +6,15 @@ export function useValidationAddArea() {
       error: false,
       success: false,
       message: '',
-      name: 'Nombre del area',
-      Regex: /^[a-zA-Z\s]+$/
+      name: 'nombre del área',
+      Regex: /^[a-zA-Z0-9\sáéíóúÁÉÍÓÚñÑ]+$/ // Solo letras y espacios
     },
     responsable: {
       error: false,
       success: false,
       message: '',
-      name: 'Responsable',
-      Regex: /^\d+$/
+      name: 'responsable',
+      Regex: /^[0-9]+$/ // Solo números
     }
   })
 
@@ -36,7 +36,7 @@ export function useValidationAddArea() {
     if (!Regex.test(value)) {
       status.value[field].error = true
       status.value[field].success = false
-      status.value[field].message = `El campo ${name} es inválido`
+      status.value[field].message = `El campo "${name}" es inválido.`
     } else {
       status.value[field].error = false
       status.value[field].success = true
