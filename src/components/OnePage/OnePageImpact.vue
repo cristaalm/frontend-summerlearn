@@ -3,7 +3,7 @@
     className="w-full py-10 md:py-12 lg:py-16 flex flex-col justify-center items-center bg-esmerald-100/50 bg-yellow/20">
     <div className="container px-4 md:px-6">
       <div className="mx-auto grid max-w-5xl items-center gap-6 py-12 lg:grid-cols-2 lg:gap-12">
-        <img src="#" width="550" height="310" alt="About"
+        <img src="/src/assets/img/Photo3.jpg" width="550" height="310" alt="About"
           className="mx-auto aspect-video overflow-hidden rounded-xl object-cover object-center sm:w-full"
           data-aos="fade-right" data-aos-delay="100" />
         <div className="flex flex-col justify-center space-y-4" data-aos="fade-left" data-aos-delay="100">

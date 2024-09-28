@@ -2,7 +2,7 @@
 import HeaderHome from '@/components/OnePage/Header/HeaderHome.vue'
 import Hero from '@/components/OnePage/OnePageHero.vue'
 import Impact from '@/components/OnePage/OnePageImpact.vue'
-import Join from '@/components/OnePage/OnePageVolunteer.vue'
+import JoinOurTeam from '@/components/OnePage/OnePageJoinOurTeam.vue'
 import Mission from '@/components/OnePage/OnePageMission.vue'
 import Footer from '@/components/OnePage/OnePageFooter.vue'
 </script>
@@ -21,7 +21,7 @@ import Footer from '@/components/OnePage/OnePageFooter.vue'
 
     <Impact />
 
-    <Join />
+    <JoinOurTeam />
   </main>
 
   <Footer />

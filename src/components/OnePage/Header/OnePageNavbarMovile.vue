@@ -25,9 +25,9 @@
           :class="`h-full flex flex-row justify-center items-center text-4xl py-4 transition-all duration-300 text-black hover:text-yellow hover:bg-yellow/10`">
           {{ $t('navbar.impact') }}
         </a>
-        <a href="#volunteer" @click="toggleMenu"
+        <a href="#joinOurTeam" @click="toggleMenu"
           :class="`h-full flex flex-row justify-center items-center text-4xl py-4 transition-all duration-300 text-black hover:text-red hover:bg-red/10`">
-          {{ $t('navbar.volunteer') }}
+          {{ $t('navbar.joinOurTeam') }}
         </a>
       </div>
       <div class="flex flex-col justify-center items-center gap-6">

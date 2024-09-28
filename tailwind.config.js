@@ -80,7 +80,8 @@ module.exports = {
           light: 'rgb(var(--color-red-light) / <alpha-value>)',
           DEFAULT: 'rgb(var(--color-red) / <alpha-value>)',
           dark: 'rgb(var(--color-red-dark) / <alpha-value>)'
-        }
+        },
+        'footerColor': '#F6F6EB',
       },
       fontFamily: {
         'public-sans': ['Public Sans'],
