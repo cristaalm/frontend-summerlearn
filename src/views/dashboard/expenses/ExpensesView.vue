@@ -9,41 +9,39 @@ import Button from '@/components/base/Button'
 import Table from '@/components/base/Table'
 import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { useBills, usePagination, useBillSearch, useExportExcel, useToast } from '@/hooks/bills'
+import { useBills, usePagination, useBillSearch, useExportExcel, useExportPDF, useToast } from '@/hooks/bills'
 
 const router = useRouter()
 const { bills, loading, loadBills, errorBills } = useBills()
 const { searchQuery, filteredBills } = useBillSearch(bills)
 const { currentPage, pageSize, totalPages, paginatedItems, changePage, changePageSize } = usePagination(filteredBills)
 const { toastMessages, showToast } = useToast()
-const { loadExportExcel, loadingExportExcel, errorExportExcel } = useExportExcel({ showToast })
+const { loadExportExcel, loadingExportExcel } = useExportExcel({ showToast })
+const { loadExportPDF, loadingExportPDF } = useExportPDF({ showToast })
 
 function formatDateToDDMMYYYY(dateString) {
-  if (!dateString) return '' // Verifica si dateString es undefined, null o vacío.
-  const [year, month, day] = dateString.split('-')
-  return `${day}/${month}/${year}`
+    if (!dateString) return '' // Verifica si dateString es undefined, null o vacío.
+    const [year, month, day] = dateString.split('-')
+    return `${day}/${month}/${year}`
 }
 
 onMounted(() => {
-  loadBills()
+    loadBills()
 })
 </script>
 
 <template>
-  <!--? ######################## TOAST NOTIFICATION ######################## -->
-  <div class="fixed top-0 right-0 p-4">
-    <ToastNotification v-for="(message, index) in toastMessages" 
-    :key="index" 
-    :message="message" 
-    :index="index" />
-  </div>
+    <!--? ######################## TOAST NOTIFICATION ######################## -->
+
+    <div>
+        <ToastNotification v-for="(message, index) in toastMessages" :key="index" :message="message" :index="index">
+        </ToastNotification>
+    </div>
 
     <div class="grid grid-cols-12 gap-y-10 gap-x-6">
         <div class="col-span-12">
             <div class="flex flex-col md:h-10 gap-y-3 md:items-center md:flex-row">
-                <div class="text-base font-medium group-[.mode--light]:text-white">
-                    Gastos
-                </div>
+                <div class="text-base font-medium group-[.mode--light]:text-white">Gastos</div>
                 <div class="flex flex-col sm:flex-row gap-x-3 gap-y-2 md:ml-auto">
                     <Button variant="primary" @click="router.push({ name: 'addExpense' })"
                         class="group-[.mode--light]:!bg-white/[0.12] group-[.mode--light]:!text-slate-200 group-[.mode--light]:!border-transparent">
@@ -65,18 +63,38 @@ onMounted(() => {
                         </div>
                         <div class="flex flex-col sm:flex-row gap-x-3 gap-y-2 sm:ml-auto">
                             <Menu>
-                                <Menu.Button :as="Button" variant="outline-secondary" class="w-full sm:w-auto">
-                                    <Lucide icon="Download" class="stroke-[1.3] w-4 h-4 mr-2" />
-                                    Export
+                                <Menu.Button :as="Button" variant="outline-secondary"
+                                    :class="`w-full sm:w-auto ${loadingExportExcel ? 'text-amber-500' : ' text-black'}`"
+                                    :disabled="loadingExportExcel">
+                                    <Lucide v-if="!loadingExportExcel" icon="Download"
+                                        class="stroke-[1.3] w-4 h-4 mr-2" />
+                                    <LoadingIcon v-if="loadingExportExcel" icon="tail-spin"
+                                        class="stroke-[1.3] w-4 h-4 mr-2" color="black" />
+                                    Exportar
                                     <Lucide icon="ChevronDown" class="stroke-[1.3] w-4 h-4 ml-2" />
                                 </Menu.Button>
                                 <Menu.Items class="w-40">
                                     <Menu.Item>
-                                        <Lucide icon="FileBarChart" class="w-4 h-4 mr-2" /> PDF
+                                        <Button @click="loadExportExcel"
+                                            :class="`w-full ${loadingExportExcel ? 'text-amber-500' : ' text-black'}`"
+                                            :disabled="loadingExportExcel">
+                                            <Lucide v-if="!loadingExportExcel" icon="FileSpreadsheet"
+                                                class="stroke-[1.3] w-4 h-4 mr-2" />
+                                            <LoadingIcon v-if="loadingExportExcel" icon="tail-spin"
+                                                class="stroke-[1.3] w-4 h-4 mr-2" color="black" />
+                                            Excel
+                                        </Button>
                                     </Menu.Item>
                                     <Menu.Item>
-                                        <Lucide icon="FileBarChart" class="w-4 h-4 mr-2" />
-                                        CSV
+                                        <Button @click="loadExportPDF"
+                                            :class="`w-full ${loadingExportPDF ? 'text-amber-500' : ' text-black'}`"
+                                            :disabled="loadingExportPDF">
+                                            <Lucide v-if="!loadingExportPDF" icon="File"
+                                                class="stroke-[1.3] w-4 h-4 mr-2" />
+                                            <LoadingIcon v-if="loadingExportPDF" icon="tail-spin"
+                                                class="stroke-[1.3] w-4 h-4 mr-2" color="black" />
+                                            PDF
+                                        </Button>
                                     </Menu.Item>
                                 </Menu.Items>
                             </Menu>
@@ -108,7 +126,10 @@ onMounted(() => {
                             <Table.Tbody v-if="loading">
                                 <Table.Tr class="[&_td]:last:border-b-0">
                                     <Table.Td colspan="8" class="py-8 text-center text-xl font-bold text-green-500">
-                                        Cargando...
+                                        <div class="flex flex-col w-full justify-center items-center text-nowrap">
+                                            <LoadingIcon icon="tail-spin" class="h-8" color="black" />
+                                            <div class="mt-2">Cargando información...</div>
+                                        </div>
                                     </Table.Td>
                                 </Table.Tr>
                             </Table.Tbody>
@@ -141,7 +162,7 @@ onMounted(() => {
                                             $ {{ bill.amount }}
                                         </Table.Td>
                                         <Table.Td class="py-4 border-dashed dark:bg-darkmode-600">
-                                           {{ bill.concept }}
+                                            {{ bill.concept }}
                                         </Table.Td>
                                         <Table.Td class="py-4 border-dashed dark:bg-darkmode-600">
                                             {{ formatDateToDDMMYYYY(bill.date) }}

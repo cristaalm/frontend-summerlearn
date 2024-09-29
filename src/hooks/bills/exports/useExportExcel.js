@@ -30,7 +30,7 @@ export function useExportExcel({ showToast }) {
     } catch (error) {
       console.error(error)
       errorExportExcel.value = 'Error al exportar a Excel'
-      console.error(errorExportExcel.value)
+      showToast(errorExportExcel.value)
     } finally {
       loadingExportExcel.value = false
     }
@@ -38,7 +38,6 @@ export function useExportExcel({ showToast }) {
 
   return {
     loadExportExcel,
-    loadingExportExcel,
-    errorExportExcel
+    loadingExportExcel
   }
 }
