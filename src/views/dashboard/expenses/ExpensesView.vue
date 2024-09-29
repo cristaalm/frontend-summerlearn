@@ -64,11 +64,11 @@ onMounted(() => {
                         <div class="flex flex-col sm:flex-row gap-x-3 gap-y-2 sm:ml-auto">
                             <Menu>
                                 <Menu.Button :as="Button" variant="outline-secondary"
-                                    :class="`w-full sm:w-auto ${loadingExportExcel ? 'text-amber-500' : ' text-black'}`"
-                                    :disabled="loadingExportExcel">
-                                    <Lucide v-if="!loadingExportExcel" icon="Download"
+                                    :class="`w-full sm:w-auto ${loadingExportExcel || loadingExportPDF ? 'text-amber-500' : ' text-black'}`"
+                                    :disabled="loadingExportExcel || loadingExportPDF">
+                                    <Lucide v-if="!loadingExportExcel && !loadingExportPDF" icon="Download"
                                         class="stroke-[1.3] w-4 h-4 mr-2" />
-                                    <LoadingIcon v-if="loadingExportExcel" icon="tail-spin"
+                                    <LoadingIcon v-if="loadingExportExcel || loadingExportPDF" icon="tail-spin"
                                         class="stroke-[1.3] w-4 h-4 mr-2" color="black" />
                                     Exportar
                                     <Lucide icon="ChevronDown" class="stroke-[1.3] w-4 h-4 ml-2" />
