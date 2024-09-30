@@ -5,11 +5,14 @@ export const getUsers = async () => {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${localStorage.getItem('access_token')}`
+      Authorization: `Bearer ${localStorage.getItem('access_token')}`
     }
   })
   const json = await response.json()
   const users = json
+
+  // Ordenar por id DESC
+  users.sort((a, b) => b.id - a.id)
 
   return users?.map((user) => ({
     id: user.id,
@@ -19,6 +22,6 @@ export const getUsers = async () => {
     phone: user.users_phone,
     email: user.email,
     rol: user.users_rol,
-    status: user.users_status ?? 0,
+    status: user.users_status ?? 0
   }))
 }
