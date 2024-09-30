@@ -1,12 +1,5 @@
 <script setup>
-import {
-  useFilter,
-  usePagination,
-  usePrograms,
-  useDialogDelete,
-  useToast,
-  useStatusProgram
-} from '@/hooks/programs/'
+import { useFilter, usePagination, usePrograms, useDialogDelete, useToast, useStatusProgram, useExportExcel, useExportPDF } from '@/hooks/programs/'
 import formatDate from '@/logic/formatDate'
 import { FormInput, FormSelect } from '@/components/base/Form'
 import { Menu, Popover, Dialog } from '@/components/base/Headless'
@@ -21,12 +14,12 @@ import ToastNotification from '@/components/ToastNotification'
 
 const { programs, loading, error, loadPrograms } = usePrograms()
 const { searchQuery, selectedStatus, filteredItems, activeFilters } = useFilter(programs)
-const { currentPage, pageSize, totalPages, paginatedItems, changePage, changePageSize } =
-  usePagination(filteredItems)
+const { currentPage, pageSize, totalPages, paginatedItems, changePage, changePageSize } = usePagination(filteredItems)
 const { toastMessages, showToast } = useToast()
-const { dialogStatusDelete, openDeleteModal, confirmDeleteProgram, closeDeleteProgram } =
-  useDialogDelete({ showToast, programs })
+const { dialogStatusDelete, openDeleteModal, confirmDeleteProgram, closeDeleteProgram } = useDialogDelete({ showToast, programs })
 const { updateStatus } = useStatusProgram({ showToast })
+const { loadExportExcel, loadingExportExcel } = useExportExcel({ showToast })
+const { loadExportPDF, loadingExportPDF } = useExportPDF({ showToast })
 const router = useRouter()
 
 onMounted(() => {
@@ -38,26 +31,17 @@ onMounted(() => {
   <!--? ######################## TOAST NOTIFICATION ######################## -->
 
   <div>
-    <ToastNotification
-      v-for="(message, index) in toastMessages"
-      :key="index"
-      :message="message"
-      :index="index"
-    >
+    <ToastNotification v-for="(message, index) in toastMessages" :key="index" :message="message" :index="index">
     </ToastNotification>
   </div>
 
   <!--? ######################## DIALOG DELETE PROGRAM ######################## -->
 
   <!-- BEGIN: Modal Content -->
-  <Dialog
-    :open="dialogStatusDelete"
-    @close="
-      () => {
-        dialogStatusDelete.value = false
-      }
-    "
-  >
+  <Dialog :open="dialogStatusDelete" @close="() => {
+    dialogStatusDelete.value = false
+  }
+    ">
     <Dialog.Panel>
       <div class="p-5 text-center">
         <Lucide icon="XCircle" class="w-16 h-16 mx-auto mt-3 text-danger" />
@@ -69,21 +53,10 @@ onMounted(() => {
         </div>
       </div>
       <div class="px-5 pb-8 text-center space-x-8">
-        <Button
-          type="button"
-          variant="outline-secondary"
-          @click="closeDeleteProgram"
-          class="w-24 mr-1"
-        >
+        <Button type="button" variant="outline-secondary" @click="closeDeleteProgram" class="w-24 mr-1">
           Cancelar
         </Button>
-        <Button
-          type="button"
-          variant="danger"
-          class="w-24"
-          @click="confirmDeleteProgram"
-          ref="deleteButtonRef"
-        >
+        <Button type="button" variant="danger" class="w-24" @click="confirmDeleteProgram" ref="deleteButtonRef">
           Eliminar
         </Button>
       </div>
@@ -98,17 +71,14 @@ onMounted(() => {
       <div class="flex flex-col md:h-10 gap-y-3 md:items-center md:flex-row">
         <div class="text-base font-medium group-[.mode--light]:text-white">Programas</div>
         <div class="flex flex-col sm:flex-row gap-x-3 gap-y-2 md:ml-auto">
-          <Button
-            variant="primary"
+          <Button variant="primary"
             class="group-[.mode--light]:!bg-white/[0.12] group-[.mode--light]:!text-slate-200 group-[.mode--light]:!border-transparent"
-            @click="
-              () => {
-                router.push({
-                  name: 'addProgram'
-                })
-              }
-            "
-          >
+            @click="() => {
+              router.push({
+                name: 'addProgram'
+              })
+            }
+              ">
             <Lucide icon="PenLine" class="stroke-[1.3] w-4 h-4 mr-2" /> Agregar nuevo programa
           </Button>
         </div>
@@ -121,26 +91,55 @@ onMounted(() => {
           <div class="flex flex-col p-5 sm:items-center sm:flex-row gap-y-2">
             <div>
               <div class="relative">
-                <Lucide
-                  icon="Search"
-                  class="absolute inset-y-0 left-0 z-10 w-4 h-4 my-auto ml-3 stroke-[1.3] text-slate-500"
-                />
-                <FormInput
-                  v-model="searchQuery"
-                  type="text"
-                  placeholder="Buscar nombre de programa..."
-                  class="pl-9 sm:w-72 rounded-[0.5rem]"
-                />
+                <Lucide icon="Search"
+                  class="absolute inset-y-0 left-0 z-10 w-4 h-4 my-auto ml-3 stroke-[1.3] text-slate-500" />
+                <FormInput v-model="searchQuery" type="text" placeholder="Buscar nombre de programa..."
+                  class="pl-9 sm:w-72 rounded-[0.5rem]" />
               </div>
             </div>
             <div class="flex flex-col sm:flex-row gap-x-3 gap-y-2 sm:ml-auto">
+              <div class="flex flex-col sm:flex-row gap-x-3 gap-y-2 sm:ml-auto">
+                <Menu>
+                  <Menu.Button :as="Button" variant="outline-secondary"
+                    :class="`w-full sm:w-auto ${loadingExportExcel || loadingExportPDF ? 'text-amber-500' : ' text-black'}`"
+                    :disabled="loadingExportExcel || loadingExportPDF">
+                    <Lucide v-if="!loadingExportExcel && !loadingExportPDF" icon="Download"
+                      class="stroke-[1.3] w-4 h-4 mr-2" />
+                    <LoadingIcon v-if="loadingExportExcel || loadingExportPDF" icon="tail-spin"
+                      class="stroke-[1.3] w-4 h-4 mr-2" color="black" />
+                    Exportar
+                    <Lucide icon="ChevronDown" class="stroke-[1.3] w-4 h-4 ml-2" />
+                  </Menu.Button>
+                  <Menu.Items class="w-40">
+                    <Menu.Item>
+                      <Button @click="loadExportExcel"
+                        :class="`w-full ${loadingExportExcel ? 'text-amber-500' : ' text-black'}`"
+                        :disabled="loadingExportExcel">
+                        <Lucide v-if="!loadingExportExcel" icon="FileSpreadsheet" class="stroke-[1.3] w-4 h-4 mr-2" />
+                        <LoadingIcon v-if="loadingExportExcel" icon="tail-spin" class="stroke-[1.3] w-4 h-4 mr-2"
+                          color="black" />
+                        Excel
+                      </Button>
+                    </Menu.Item>
+                    <Menu.Item>
+                      <Button @click="loadExportPDF"
+                        :class="`w-full ${loadingExportPDF ? 'text-amber-500' : ' text-black'}`"
+                        :disabled="loadingExportPDF">
+                        <Lucide v-if="!loadingExportPDF" icon="File" class="stroke-[1.3] w-4 h-4 mr-2" />
+                        <LoadingIcon v-if="loadingExportPDF" icon="tail-spin" class="stroke-[1.3] w-4 h-4 mr-2"
+                          color="black" />
+                        PDF
+                      </Button>
+                    </Menu.Item>
+                  </Menu.Items>
+                </Menu>
+              </div>
               <Popover class="inline-block" v-slot="{ close }">
                 <Popover.Button :as="Button" variant="outline-secondary" class="w-full sm:w-auto">
                   <Lucide icon="ArrowDownWideNarrow" class="stroke-[1.3] w-4 h-4 mr-2" />
                   Filtrar
                   <div
-                    class="flex items-center justify-center h-5 px-1.5 ml-2 text-xs font-medium border rounded-full bg-slate-100"
-                  >
+                    class="flex items-center justify-center h-5 px-1.5 ml-2 text-xs font-medium border rounded-full bg-slate-100">
                     {{ activeFilters }}
                   </div>
                 </Popover.Button>
@@ -155,15 +154,10 @@ onMounted(() => {
                       </FormSelect>
                     </div>
                     <div class="flex items-center mt-4">
-                      <Button
-                        variant="secondary"
-                        @click="
-                          () => {
-                            close()
-                          }
-                        "
-                        class="w-32 ml-auto"
-                      >
+                      <Button variant="secondary" @click="() => {
+                        close()
+                      }
+                        " class="w-32 ml-auto">
                         Cerrar
                       </Button>
                     </div>
@@ -180,28 +174,23 @@ onMounted(() => {
               <Table.Thead>
                 <Table.Tr>
                   <Table.Td
-                    class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500"
-                  >
+                    class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500">
                     Nombre
                   </Table.Td>
                   <Table.Td
-                    class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500"
-                  >
+                    class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500">
                     Responsable
                   </Table.Td>
                   <Table.Td
-                    class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500"
-                  >
+                    class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500">
                     Duración
                   </Table.Td>
                   <Table.Td
-                    class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500"
-                  >
+                    class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500">
                     Estado
                   </Table.Td>
                   <Table.Td
-                    class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500"
-                  >
+                    class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500">
                   </Table.Td>
                 </Table.Tr>
               </Table.Thead>
@@ -257,28 +246,19 @@ onMounted(() => {
                       </div>
                     </Table.Td>
                     <Table.Td class="py-4 border-dashed dark:bg-darkmode-600">
-                      <div
-                        :class="[
-                          'flex items-center justify-center',
-                          { 'text-success': program.status == 1 },
-                          { 'text-danger': program.status !== 1 },
-                          { 'text-[#FFA500]': program.status == 0 }
-                        ]"
-                      >
-                        <Lucide
-                          v-if="program.status == 1 || program.status == 2"
-                          icon="Database"
-                          class="w-3.5 h-3.5 stroke-[1.7]"
-                        />
-                        <div
-                          class="ml-1.5 whitespace-nowrap max-h-8 flex flex-row items-center justify-center gap-2"
-                        >
+                      <div :class="[
+                        'flex items-center justify-center',
+                        { 'text-success': program.status == 1 },
+                        { 'text-danger': program.status !== 1 },
+                        { 'text-[#FFA500]': program.status == 0 }
+                      ]">
+                        <Lucide v-if="program.status == 1 || program.status == 2" icon="Database"
+                          class="w-3.5 h-3.5 stroke-[1.7]" />
+                        <div class="ml-1.5 whitespace-nowrap max-h-8 flex flex-row items-center justify-center gap-2">
                           <div class="w-4 h-4" v-if="program.status == 0">
                             <LoadingIcon icon="bars" class="w-8 h-8" color="#FFA500" />
                           </div>
-                          <span v-if="program.status == 0" class="text-amber-500"
-                            >Cambiando....</span
-                          >
+                          <span v-if="program.status == 0" class="text-amber-500">Cambiando....</span>
                           <span v-else-if="program.status == 1" class="text-success">Activo</span>
                           <span v-else class="text-danger">Inactivo</span>
                         </div>
@@ -295,32 +275,24 @@ onMounted(() => {
                               <Lucide icon="CheckSquare" class="w-4 h-4 mr-2" />
                               Editar
                             </Menu.Item>
-                            <Menu.Item
-                              :class="`${program.status !== 1 ? 'text-blue' : 'text-[#ff6f0f]'}`"
-                              @click="
-                                () => {
-                                  updateStatus({ program }).then((updatedProgram) => {
-                                    const index = programs.findIndex(
-                                      (p) => p.id === updatedProgram.id
-                                    )
-                                    if (index !== -1) {
-                                      programs[index] = updatedProgram
-                                    }
-                                  })
+                            <Menu.Item :class="`${program.status !== 1 ? 'text-blue' : 'text-[#ff6f0f]'}`" @click="() => {
+                              updateStatus({ program }).then((updatedProgram) => {
+                                const index = programs.findIndex(
+                                  (p) => p.id === updatedProgram.id
+                                )
+                                if (index !== -1) {
+                                  programs[index] = updatedProgram
                                 }
-                              "
-                            >
+                              })
+                            }
+                              ">
                               <Lucide icon="RefreshCw" class="w-4 h-4 mr-2" />
                               {{ program.status !== 1 ? 'Activar' : 'Desactivar' }}
                             </Menu.Item>
-                            <Menu.Item
-                              class="text-danger"
-                              @click="
-                                () => {
-                                  openDeleteModal(program.id)
-                                }
-                              "
-                            >
+                            <Menu.Item class="text-danger" @click="() => {
+                              openDeleteModal(program.id)
+                            }
+                              ">
                               <Lucide icon="CheckSquare" class="w-4 h-4 mr-2" />
                               Eliminar
                             </Menu.Item>
@@ -336,9 +308,7 @@ onMounted(() => {
 
           <!--? ######################## PAGINATION TABLE ######################## -->
 
-          <div
-            class="flex flex-col-reverse flex-wrap items-center p-5 flex-reverse gap-y-2 sm:flex-row"
-          >
+          <div class="flex flex-col-reverse flex-wrap items-center p-5 flex-reverse gap-y-2 sm:flex-row">
             <Pagination class="flex-1 w-full mr-auto sm:w-auto">
               <Pagination.Link @click="changePage(1)">
                 <Lucide icon="ChevronsLeft" class="w-4 h-4" />
@@ -358,11 +328,7 @@ onMounted(() => {
                 <Lucide icon="ChevronsRight" class="w-4 h-4" />
               </Pagination.Link>
             </Pagination>
-            <FormSelect
-              class="sm:w-20 rounded-[0.5rem]"
-              v-model="pageSize"
-              @change="changePageSize"
-            >
+            <FormSelect class="sm:w-20 rounded-[0.5rem]" v-model="pageSize" @change="changePageSize">
               <option value="10">10</option>
               <option value="20">20</option>
               <option value="30">30</option>

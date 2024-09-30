@@ -5,6 +5,8 @@ import { usePagination } from './usePagination'
 import { useDialogDelete } from './dialog/useDialogDelete'
 import { useToast } from './useToast'
 import { useStatusProgram } from './editProgram/useStatusProgram'
+import { useExportExcel } from './exports/useExportExcel'
+import { useExportPDF } from './exports/useExportPDF'
 
 export {
   useFilter,
@@ -13,5 +15,7 @@ export {
   usePagination,
   useDialogDelete,
   useToast,
-  useStatusProgram
+  useStatusProgram,
+  useExportExcel,
+  useExportPDF
 }
