@@ -1,15 +1,14 @@
 <script setup>
 import Lucide from "@/components/base/Lucide";
-// import { Menu } from "@/components/base/Headless";
 import TinySlider from "@/components/base/TinySlider";
-// import { getColor } from "@/utils/colors";
 import ReportBarChart3 from "@/components/ReportBarChart3";
-// import ReportDonutChart3 from "@/components/ReportDonutChart3";
 import Button from "@/components/base/Button";
+import { Menu } from '@/components/base/Headless'
 import { onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import { useDonations, useDonationSearch, usePagination, useWeeklyDonations } from '@/hooks/donations/';
-import LoadingIcon from '@/components/base/LoadingIcon';
+import { useDonations, useDonationSearch, usePagination, useWeeklyDonations, useExportExcel, useExportPDF, useToast } from '@/hooks/donations/';
+import LoadingIcon from '@/components/base/LoadingIcon'
+import ToastNotification from '@/components/ToastNotification'
 import Pagination from "@/components/base/Pagination";
 import { FormInput, FormSelect } from "@/components/base/Form";
 import Table from "@/components/base/Table";
@@ -19,16 +18,15 @@ const { barDonations, donations, loading, loadDonations, errorDonations } = useD
 const { searchQuery, filteredItems } = useDonationSearch(donations);
 const { currentPage, pageSize, totalPages, paginatedItems, changePage, changePageSize } = usePagination(filteredItems);
 const { donationsWeek, loadingWeek, loadDonationsWeek, errorWeek, totalDonationsWeek } = useWeeklyDonations();
-
+const { toastMessages, showToast } = useToast()
+const { loadExportExcel, loadingExportExcel } = useExportExcel({ showToast })
+const { loadExportPDF, loadingExportPDF } = useExportPDF({ showToast })
 
 function formatDateToDDMMYYYY(dateString) {
     if (!dateString) return ''; // Verifica si dateString es undefined, null o vacío.
     const [year, month, day] = dateString.split('-');
     return `${day}/${month}/${year}`;
 }
-
-
-
 
 onMounted(() => {
     loadDonations();
@@ -39,6 +37,14 @@ onMounted(() => {
 </script>
 
 <template>
+
+    <!--? ######################## TOAST NOTIFICATION ######################## -->
+
+    <div>
+        <ToastNotification v-for="(message, index) in toastMessages" :key="index" :message="message" :index="index">
+        </ToastNotification>
+    </div>
+
     <div class="grid grid-cols-12 gap-y-10 gap-x-6">
         <div class="col-span-12">
             <div class="flex flex-col md:h-10 gap-y-3 md:items-center md:flex-row">
@@ -224,9 +230,48 @@ onMounted(() => {
                                     <div class="relative">
                                         <Lucide icon="Search"
                                             class="absolute inset-y-0 left-0 z-10 w-4 h-4 my-auto ml-3 stroke-[1.3] text-slate-500" />
-                                        <FormInput v-model="searchQuery" type="text" placeholder="Buscar por concepto..."
+                                        <FormInput v-model="searchQuery" type="text"
+                                            placeholder="Buscar por concepto..."
                                             class="pl-9 sm:w-64 rounded-[0.5rem]" />
                                     </div>
+                                </div>
+                                <div class="flex flex-col sm:flex-row gap-x-3 gap-y-2 sm:ml-auto">
+                                    <Menu>
+                                        <Menu.Button :as="Button" variant="outline-secondary"
+                                            :class="`w-full sm:w-auto ${loadingExportExcel || loadingExportPDF ? 'text-amber-500' : ' text-black'}`"
+                                            :disabled="loadingExportExcel || loadingExportPDF">
+                                            <Lucide v-if="!loadingExportExcel && !loadingExportPDF" icon="Download"
+                                                class="stroke-[1.3] w-4 h-4 mr-2" />
+                                            <LoadingIcon v-if="loadingExportExcel || loadingExportPDF" icon="tail-spin"
+                                                class="stroke-[1.3] w-4 h-4 mr-2" color="black" />
+                                            Exportar
+                                            <Lucide icon="ChevronDown" class="stroke-[1.3] w-4 h-4 ml-2" />
+                                        </Menu.Button>
+                                        <Menu.Items class="w-40">
+                                            <Menu.Item>
+                                                <Button @click="loadExportExcel"
+                                                    :class="`w-full ${loadingExportExcel ? 'text-amber-500' : ' text-black'}`"
+                                                    :disabled="loadingExportExcel">
+                                                    <Lucide v-if="!loadingExportExcel" icon="FileSpreadsheet"
+                                                        class="stroke-[1.3] w-4 h-4 mr-2" />
+                                                    <LoadingIcon v-if="loadingExportExcel" icon="tail-spin"
+                                                        class="stroke-[1.3] w-4 h-4 mr-2" color="black" />
+                                                    Excel
+                                                </Button>
+                                            </Menu.Item>
+                                            <Menu.Item>
+                                                <Button @click="loadExportPDF"
+                                                    :class="`w-full ${loadingExportPDF ? 'text-amber-500' : ' text-black'}`"
+                                                    :disabled="loadingExportPDF">
+                                                    <Lucide v-if="!loadingExportPDF" icon="File"
+                                                        class="stroke-[1.3] w-4 h-4 mr-2" />
+                                                    <LoadingIcon v-if="loadingExportPDF" icon="tail-spin"
+                                                        class="stroke-[1.3] w-4 h-4 mr-2" color="black" />
+                                                    PDF
+                                                </Button>
+                                            </Menu.Item>
+                                        </Menu.Items>
+                                    </Menu>
                                 </div>
                             </div>
 
