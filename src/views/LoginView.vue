@@ -23,11 +23,6 @@ const router = useRouter()
       <div class="relative z-10 flex flex-col justify-center w-full h-full py-2 lg:py-32">
         <div class="mt-10">
           <div class="text-2xl font-medium">Iniciar sesión</div>
-          <div class="mt-2.5 text-slate-600">
-            ¿No tienes una cuenta?
-            <span class="font-medium text-primary cursor-pointer" @click="router.push({ name: 'register' })"> Regístrate
-            </span>
-          </div>
 
           <Alert variant="outline-danger" v-if="error"
             class="flex items-center px-4 py-3 my-7 bg-danger/5 border-danger/20 rounded-[0.6rem] leading-[1.7]"

@@ -7,13 +7,21 @@ import { useRefs } from '@/hooks/register/useRefs'
 import { useAuth } from '@/hooks/register/useAuth'
 import Button from '@/components/base/Button'
 import { useRouter } from 'vue-router'
+import { onMounted } from 'vue'
 
-const { password, firstName, lastName, email, phone, birthdate, perfil, terms, password_confirm, valid } = useRefs()
-const { validateText, validate } = useValidationFunctions({ firstName, lastName, email, phone, birthdate, perfil, terms, password, password_confirm, valid, status })
-const { registerUser, loading } = useAuth({ password, firstName, lastName, email, phone, birthdate, perfil, valid, validate })
+const { password, firstName, lastName, email, phone, birthdate, terms, password_confirm, valid, perfil } = useRefs()
+const { validateText, validate } = useValidationFunctions({ firstName, lastName, email, phone, birthdate, terms, perfil, password, password_confirm, valid, status })
+const { registerUser, loading } = useAuth({ password, firstName, lastName, email, perfil, phone, birthdate, valid, validate })
 const router = useRouter()
 
-
+onMounted(() => {
+  // Set the profile value to the route parameter
+  if (router.currentRoute.value.query.rol >= 3 && router.currentRoute.value.query.rol <= 5) {
+    perfil.value = router.currentRoute.value.query.rol
+  } else {
+    router.push({ name: 'login' })
+  }
+})
 
 const handleSubmit = () => {
   if (valid.value) {
@@ -30,12 +38,13 @@ const handleSubmit = () => {
     ]">
       <div class="relative z-10 flex flex-col justify-center w-full h-full py-2">
         <div class="mt-10">
-          <div class="text-2xl font-medium">Registrarse</div>
-          <div class="mt-2.5 text-slate-600">
-            ¿Ya tienes una cuenta?
-            <span class="font-medium text-primary cursor-pointer" @click="router.push({ name: 'login' })">
-              Iniciar sesión
-            </span>
+          <div class="text-2xl font-medium">
+            Registrarse como
+            <!-- <option value="5" class="text-black">Beneficiario</option>
+              <option value="4" class="text-black">Voluntario</option>
+              <option value="3" class="text-black">Donante</option> -->
+            <span class="font-bold text-blue">{{ perfil == 5 ? 'Beneficiario' : perfil == 4 ? 'Voluntario' :
+              'Donante' }}</span>
           </div>
           <div class="mt-6">
             <FormLabel>Nombre <span class="text-red-600 bold">*</span></FormLabel>
@@ -110,19 +119,6 @@ const handleSubmit = () => {
             <div class="flex flex-row text-red-600 p-2" v-if="status.password_confirm.menssage">
               {{ status.password_confirm.menssage }}
             </div>
-            <!-- El perfil es un select -->
-            <FormLabel class="mt-5">Perfil <span class="text-red-600 bold">*</span></FormLabel>
-            <select name="perfil"
-              :class="`block w-full px-4 py-3.5 border-[2px] rounded-[0.6rem] ${status.perfil.error ? 'border-red-300/80' : 'border-slate-300/80'}`"
-              v-model="perfil">
-              <option value="" selected class="text-gray-700">Seleccionar perfil</option>
-              <option value="5" class="text-black">Beneficiario</option>
-              <option value="4" class="text-black">Voluntario</option>
-              <option value="3" class="text-black">Donante</option>
-            </select>
-            <div class="flex flex-row text-red-600 p-2" v-if="status.perfil.error">
-              {{ status.perfil.menssage }}
-            </div>
             <div
               :class="`flex items-center mt-5 text-xs  sm:text-sm ${status.terms.error ? 'text-red-600' : 'text-slate-500'}`">
               <FormCheck.Input name="terms" type="checkbox" class="mr-2 border" v-model="terms" />
@@ -140,6 +136,12 @@ const handleSubmit = () => {
                 <LoadingIcon v-if="loading" icon="three-dots" class="w-8 h-5" color="white" />
                 {{ !loading ? 'Registrarse' : '' }}
               </Button>
+            </div>
+            <div class="mt-2.5 text-black mb-5">
+              ¿Ya tienes una cuenta?
+              <span class="font-medium text-primary cursor-pointer" @click="router.push({ name: 'login' })">
+                Iniciar sesión
+              </span>
             </div>
           </div>
         </div>

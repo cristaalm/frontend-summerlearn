@@ -55,7 +55,16 @@ const router = createRouter({
     {
       path: '/register',
       name: 'register',
-      component: () => import('@/views/RegisterView.vue')
+      component: () => import('@/views/RegisterView.vue'),
+      beforeEnter: (to, from, next) => {
+        // Verifica si el parámetro 'rol' está presente en la URL
+        if (!to.query.rol) {
+          // Redirige a una página de error o regresa un mensaje de error
+          return next({ name: 'home' }) // Cambia a la ruta que desees si falta 'rol'
+        }
+        // Si 'rol' está presente, continua con la navegación
+        next()
+      }
     },
     {
       path: '/terms',
@@ -210,14 +219,6 @@ const router = createRouter({
               () => import('@/views/dashboard/notFoundView/NotFoundView.vue')
             )
         },
-        // {
-        //   path: '/dashboard/programs/add',
-        //   name: 'addProgram',
-        //   component: () =>
-        //     import('@/views/dashboard/programs/AddProgram.vue').catch(
-        //       () => import('@/views/dashboard/notFoundView/NotFoundView.vue')
-        //     )
-        // },
         {
           path: '/dashboard/donations',
           name: 'donations',

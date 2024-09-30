@@ -14,6 +14,8 @@ export function useValidationFunctions({
   valid,
   status
 }) {
+  //? ######################### FUNCTIONS #########################
+
   const validate = () => {
     const validForm = Object.keys(status.value).every((key) => status.value[key].value)
     valid.value = validForm
@@ -126,6 +128,8 @@ export function useValidationFunctions({
     }
     validate()
   }
+
+  //? ######################### WATCHERS #########################
 
   watch(
     [firstName, lastName, email, phone, birthdate, perfil, terms, password, password_confirm],
