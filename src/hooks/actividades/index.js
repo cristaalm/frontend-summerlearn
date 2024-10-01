@@ -4,6 +4,8 @@ import { useValidationAddActividades } from './addActividades/useValidationAddAc
 import { usePagination } from './usePagination'
 import { useDialogDelete } from './dialog/useDialogDelete'
 import { useToast } from './useToast'
+import { useExportPDF } from './exports/useExportPDF'
+import { useExportExcel } from './exports/useExportExcel'
 
 export {
   useFilter,
@@ -11,5 +13,7 @@ export {
   useValidationAddActividades,
   usePagination,
   useDialogDelete,
-  useToast
+  useToast,
+  useExportPDF,
+  useExportExcel
 }
