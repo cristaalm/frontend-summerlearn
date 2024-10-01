@@ -103,12 +103,15 @@ const handleRegister = async () => {
                                 </div>
                             </label>
                             <div class="flex-1 w-full mt-3 xl:mt-0">
-                                <TomSelect v-model="selectMultiple"
+                                <TomSelect 
+                                    v-model="selectMultiple"
                                     :options="{ placeholder: 'Selecciona las donaciones' }" class="w-full" multiple>
+
                                     <template v-for="(donation) in filteredDonations" :key="donation.id">
                                         <option :value="donation.id">{{ donation.concept }} ($ {{ donation.remaining }})
                                         </option>
                                     </template>
+                                    
                                 </TomSelect>
 
                                 <div class="mt-1 text-xs text-red-500 h-4">

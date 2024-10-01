@@ -15,11 +15,14 @@ export const getBills = async () => {
     const json = await response.json();
     const bills = json;
 
-    return bills?.map(bill => ({
+    
+    return bills
+    ?.map(bill => ({
         id: bill.bills_id,
         concept: bill.bills_concept,
         date: bill.bills_date,
         amount: bill.bills_amount,
         donation: bill.bills_donations,
-    }));   
+    }))
+    .sort((a, b) => new Date(b.date) - new Date(a.date));
 }

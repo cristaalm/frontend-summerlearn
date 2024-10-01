@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import { FormInput, FormLabel } from '@/components/base/Form'
 import Button from '@/components/base/Button'
-// import Alert from '@/components/base/Alert'
-// import Lucide from '@/components/base/Lucide'
 import LoadingIcon from '@/components/base/LoadingIcon'
 import { useValidation } from '@/hooks/forgotPassword/useValidation'
 import { useRouter } from 'vue-router'
@@ -11,16 +9,25 @@ import { ref } from 'vue'
 
 const { email, error, status } = useValidation()
 const router = useRouter()
-const message = ref('') // Variable para almacenar el mensaje de éxito o error
+const message = ref('') // Variable para almacenar el mensaje de éxito
+const hasSubmitted = ref(false) // Para manejar si el formulario fue enviado
 
+// Función para enviar el correo
 const handleSendMail = async () => {
-    const result = await sendMail(email.value) // Asegúrate de usar email.value para obtener el valor
-    if (result) {
-        message.value = result.message // Asigna el mensaje recibido de la función
-    }
-}
+    hasSubmitted.value = true;
+    error.value = ''; 
+    message.value = ''; 
 
+    const result = await sendMail(email.value);
+
+    if (result.success) {
+        message.value = result.message;
+    } else if (result.status === 404) { 
+        error.value = result.message; // Solo asignar el error si el código de estado es 404
+    }
+};
 </script>
+
 
 <template>
   <div
@@ -35,13 +42,39 @@ const handleSendMail = async () => {
             <p>¿Olvidaste tu contraseña?</p>
             <p>No te preocupes, te enviaremos un correo electrónico con un enlace para restablecer tu contraseña.</p>
           </div>
+          
+          
 
+        <!-- Alerta verde si el correo se envía correctamente -->
+        <Alert variant="outline-success" v-if="message"
+          class="flex items-center px-4 py-3 my-7 bg-success/5 border-success/20 rounded-[0.6rem] leading-[1.7]">
+          <div>
+            <Lucide icon="CheckCircle" class="stroke-[0.8] stroke-success w-7 h-7 mr-2 fill-success/10" />
+          </div>
+          <div class="ml-1 mr-8">
+            <span class="text-success">{{ message }}</span>
+          </div>
+        </Alert>
+
+        <!-- Alerta roja si el correo no se envía correctamente -->
+        <Alert 
+              variant="outline-danger" 
+              v-if="error == 'Correo no encontrado'" 
+              class="flex items-center px-4 py-3 my-7 bg-danger/5 border-danger/20 rounded-[0.6rem] leading-[1.7]">
+              <div>
+                  <Lucide icon="AlertTriangle" class="stroke-[0.8] stroke-danger w-7 h-7 mr-2 fill-danger/10" />
+              </div>
+              <div class="ml-1 mr-8">
+                  <span class="text-danger">{{ error }}</span>
+              </div>
+          </Alert>
+          
 
           <div class="mt-6">
             <FormLabel>Correo electrónico*</FormLabel>
             <FormInput type="text" class="block px-4 py-3.5 rounded-[0.6rem] border-slate-300/80"
               placeholder="correo@mail.com" v-model="email" />
-            <div class="flex flex-row text-red-600 p-2" v-if="error">
+            <div class="flex flex-row text-red-600 p-2" v-if="error && error !== 'Correo no encontrado'">
               {{ error }}
             </div>
             <div class="flex flex-row justify-end mt-4 text-xs text-slate-500 sm:text-sm">
@@ -54,11 +87,6 @@ const handleSendMail = async () => {
                 Siguiente
               </Button>
             </div>
-
-            <div v-if="!message" class="flex flex-row text-green-600  p-2">
-              {{ message }}
-            </div>
-
           </div>
         </div>
       </div>

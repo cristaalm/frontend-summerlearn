@@ -45,7 +45,7 @@ onMounted(() => {
                 <div class="flex flex-col sm:flex-row gap-x-3 gap-y-2 md:ml-auto">
                     <Button variant="primary" @click="router.push({ name: 'addExpense' })"
                         class="group-[.mode--light]:!bg-white/[0.12] group-[.mode--light]:!text-slate-200 group-[.mode--light]:!border-transparent">
-                        <Lucide icon="PenLine" class="stroke-[1.3] w-4 h-4 mr-2" /> Nuevo Gasto
+                        <Lucide icon="PenLine" class="stroke-[1.3] w-4 h-4 mr-2" /> Agregar nuevo gasto
                     </Button>
                 </div>
             </div>
@@ -57,7 +57,7 @@ onMounted(() => {
                             <div class="relative">
                                 <Lucide icon="Search"
                                     class="absolute inset-y-0 left-0 z-10 w-4 h-4 my-auto ml-3 stroke-[1.3] text-slate-500" />
-                                <FormInput v-model="searchQuery" type="text" placeholder="Buscar por concepto"
+                                <FormInput v-model="searchQuery" type="text" placeholder="Buscar concepto..."
                                     class="pl-9 sm:w-64 rounded-[0.5rem]" />
                             </div>
                         </div>
@@ -106,7 +106,7 @@ onMounted(() => {
                                 <Table.Tr>
                                     <Table.Td
                                         class="py-4 font-medium border-t bg-slate-50 border-slate-200/60 text-slate-500">
-                                        Nombre del donante
+                                        Encargado del gasto
                                     </Table.Td>
                                     <Table.Td
                                         class="py-4 font-medium border-t bg-slate-50 border-slate-200/60 text-slate-500">

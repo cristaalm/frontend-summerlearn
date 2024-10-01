@@ -18,6 +18,8 @@ export function useBills() {
     }
   }
 
+  
+/*********************************************************/
   const deleteBill = async (bills_id) => {
     try {
         const response = await fetch(`${Baseurl}/bills/${bills_id}/`, {
@@ -36,7 +38,7 @@ export function useBills() {
     } catch (error) {
         console.error('Error:', error);
     }
-};
+  };
 
     return { bills, loading, loadBills, deleteBill, errorBills };
 }

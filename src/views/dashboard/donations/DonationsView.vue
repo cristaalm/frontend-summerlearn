@@ -56,7 +56,7 @@ onMounted(() => {
                     <Button variant="primary" @click="() => router.push({ name: 'addDonation' })"
                         class="group-[.mode--light]:!bg-white/[0.12] group-[.mode--light]:!text-slate-200 group-[.mode--light]:!border-transparent">
                         <Lucide icon="PenLine" class="stroke-[1.3] w-4 h-4 mr-2" />
-                        Nueva Donación
+                        Agregar nueva donacion
                     </Button>
                 </div>
             </div>
@@ -156,7 +156,7 @@ onMounted(() => {
                     <div class="grid grid-cols-4 gap-5">
                         <div
                             class="col-span-4 md:col-span-2 xl:col-span-1 p-5 border border-dashed rounded-[0.6rem] border-slate-300/80 box shadow-sm">
-                            <div class="text-base text-slate-500">Cantidad de donaciones</div>
+                            <div class="text-base text-slate-500">Cantidad de donaciones:</div>
                             <div class="mt-1.5 text-2xl font-medium">
                                 <div v-if="loading" class="w-full h-4 mt-4">
                                     <LoadingIcon icon="three-dots" color="gray" />
@@ -168,7 +168,7 @@ onMounted(() => {
                         </div>
                         <div
                             class="col-span-4 md:col-span-2 xl:col-span-1 p-5 border border-dashed rounded-[0.6rem] border-slate-300/80 box shadow-sm">
-                            <div class="text-base text-slate-500">Dinero Total Donado</div>
+                            <div class="text-base text-slate-500">Dinero total donado:</div>
                             <div class="mt-1.5 text-2xl font-medium">
                                 <div v-if="loading" class="w-full h-4 mt-4">
                                     <LoadingIcon icon="three-dots" color="gray" />
@@ -182,7 +182,7 @@ onMounted(() => {
                         </div>
                         <div
                             class="col-span-4 md:col-span-2 xl:col-span-1 p-5 border border-dashed rounded-[0.6rem] border-slate-300/80 box shadow-sm">
-                            <div class="text-base text-slate-500">Ultima Cantidad Donada</div>
+                            <div class="text-base text-slate-500">Ultima cantidad donada:</div>
                             <div class="mt-1.5 text-2xl font-medium">
                                 <div v-if="loading" class="w-full h-4 mt-4">
                                     <LoadingIcon icon="three-dots" color="gray" />
@@ -196,7 +196,7 @@ onMounted(() => {
                         </div>
                         <div
                             class="col-span-4 md:col-span-2 xl:col-span-1 p-5 border border-dashed rounded-[0.6rem] border-slate-300/80 box shadow-sm">
-                            <div class="text-base text-slate-500">Ultima Fecha de Donación</div>
+                            <div class="text-base text-slate-500">Ultima fecha de donación:</div>
                             <div class="mt-1.5 text-2xl font-medium">
                                 <div v-if="loading" class="w-full h-4 mt-4">
                                     <LoadingIcon icon="three-dots" color="gray" />
@@ -231,7 +231,7 @@ onMounted(() => {
                                         <Lucide icon="Search"
                                             class="absolute inset-y-0 left-0 z-10 w-4 h-4 my-auto ml-3 stroke-[1.3] text-slate-500" />
                                         <FormInput v-model="searchQuery" type="text"
-                                            placeholder="Buscar por concepto..."
+                                            placeholder="Buscar concepto..."
                                             class="pl-9 sm:w-64 rounded-[0.5rem]" />
                                     </div>
                                 </div>

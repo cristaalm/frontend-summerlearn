@@ -10,13 +10,18 @@ export const getDonations = async () => {
   });
 
   const json = await response.json();
-  return json?.map((donation) => ({
+  const donation = json;
+
+  return donation
+  ?.map(donation => ({
     id: donation.donations_id,
     concept: donation.donations_concept,
     quanty: donation.donations_quantity,
     spent: donation.donations_spent,
     date: donation.donations_date,
     user: donation.donations_user,
-  })) || []; // Asegúrate de devolver un array vacío si no hay datos
+  }))
+  .sort((a, b) => new Date(b.date) - new Date(a.date)) || []
+
 };
 
