@@ -14,7 +14,7 @@ const router = useRouter()
 
       <!-- Sección de voluntarios -->
       <section id="volunteer"
-        class="w-full lg:w-1/3 flex flex-col justify-center items-center p-6 rounded-lg bg-white shadow-lg hover:shadow-2xl transition-all duration-200 hover:scale-110">
+        class="w-full h-[300px] lg:w-1/3 flex flex-col justify-center items-center p-6 rounded-lg bg-white shadow-lg hover:shadow-2xl transition-all duration-200 hover:scale-110">
         <div class="container px-4 md:px-6">
           <div class="flex flex-col items-center justify-center space-y-4 text-center">
             <div class="space-y-2">
@@ -37,7 +37,7 @@ const router = useRouter()
 
       <!-- Sección de beneficiarios -->
       <section id="beneficiary"
-        class="w-full lg:w-1/3 flex flex-col justify-center items-center p-6 rounded-lg bg-white shadow-lg hover:shadow-2xl transition-all duration-200 hover:scale-110">
+        class="w-full h-[300px] lg:w-1/3 flex flex-col justify-center items-center p-6 rounded-lg bg-white shadow-lg hover:shadow-2xl transition-all duration-200 hover:scale-110">
         <div class="container px-4 md:px-6">
           <div class="flex flex-col items-center justify-center space-y-4 text-center">
             <div class="space-y-2">
@@ -60,7 +60,7 @@ const router = useRouter()
 
       <!-- Sección de donantes -->
       <section id="donor"
-        class="w-full lg:w-1/3 flex flex-col justify-center items-center p-6 rounded-lg bg-white shadow-lg hover:shadow-2xl transition-all duration-200 hover:scale-110">
+        class="w-full h-[300px] lg:w-1/3 flex flex-col justify-center items-center p-6 rounded-lg bg-white shadow-lg hover:shadow-2xl transition-all duration-200 hover:scale-110">
         <div class="container px-4 md:px-6">
           <div class="flex flex-col items-center justify-center space-y-4 text-center">
             <div class="space-y-2">
