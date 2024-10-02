@@ -11,6 +11,9 @@ export const getAreas = async () => {
   const json = await response.json()
   const areas = json
 
+  // Ordenar por id DESC
+  areas.sort((a, b) => b.areas_id - a.areas_id)
+
   return areas?.map((area) => ({
     id: area.areas_id,
     date: area.areas_date,

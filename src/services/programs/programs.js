@@ -9,8 +9,10 @@ export const getPrograms = async () => {
     }
   })
   const json = await response.json()
-
   const programs = json
+
+  // Ordenar por id DESC
+  programs.sort((a, b) => b.programs_id - a.programs_id)
 
   return programs?.map((program) => ({
     id: program.programs_id,
