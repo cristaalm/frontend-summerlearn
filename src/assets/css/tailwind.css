@@ -5427,16 +5427,12 @@ select {
   height: 100vh;
 }
 
-.h-auto {
-  height: auto;
-}
-
 .h-\[90vh\] {
   height: 90vh;
 }
 
-.h-\[100vh\] {
-  height: 100vh;
+.h-auto {
+  height: auto;
 }
 
 .max-h-0 {
@@ -5629,18 +5625,6 @@ select {
 
 .w-screen {
   width: 100vw;
-}
-
-.w-\[500px\] {
-  width: 500px;
-}
-
-.w-\[400px\] {
-  width: 400px;
-}
-
-.w-auto {
-  width: auto;
 }
 
 .min-w-0 {
@@ -5964,10 +5948,6 @@ select {
 
 .overflow-hidden {
   overflow: hidden;
-}
-
-.overflow-scroll {
-  overflow: scroll;
 }
 
 .overflow-y-auto {
@@ -6720,10 +6700,6 @@ select {
 
 .p-px {
   padding: 1px;
-}
-
-.p-10 {
-  padding: 2.5rem;
 }
 
 .px-1 {
