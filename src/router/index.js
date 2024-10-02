@@ -53,33 +53,41 @@ const router = createRouter({
       }
     },
     {
-      path: '/register',
+      path: '/register/:rol/',
       name: 'register',
-      component: () => import('@/views/RegisterView.vue'),
+      component: () =>
+        import('@/views/RegisterView.vue').catch(() => import('@/views/NotFoundView.vue')),
       beforeEnter: (to, from, next) => {
-        // Verifica si el parámetro 'rol' está presente en la URL
-        if (!to.query.rol) {
-          // Redirige a una página de error o regresa un mensaje de error
-          return next({ name: 'home' }) // Cambia a la ruta que desees si falta 'rol'
+        const rol = to.params.rol // Leer el parámetro del rol si es pasado en la URL
+
+        // Verificar si el rol es válido
+        if (!['donante', 'voluntario', 'beneficiario'].includes(rol)) {
+          return next({ name: 'home' }) // Redirigir a la página de inicio si no es válido
         }
-        // Si 'rol' está presente, continua con la navegación
-        next()
+
+        // Convertir el rol a un número correspondiente
+        to.params.rol = rol == 'donador' ? 3 : rol == 'voluntario' ? 4 : 5 // 3: Donador, 4: Voluntario, 5: Beneficiario
+
+        next() // Si es válido, sigue con la navegación
       }
     },
     {
       path: '/terms',
       name: 'terms',
-      component: () => import('@/views/TermsView.vue')
+      component: () =>
+        import('@/views/TermsView.vue').catch(() => import('@/views/NotFoundView.vue'))
     },
     {
       path: '/forgot-password',
       name: 'forgotPassword',
-      component: () => import('@/views/ForgotPasswordView.vue')
+      component: () =>
+        import('@/views/ForgotPasswordView.vue').catch(() => import('@/views/NotFoundView.vue'))
     },
     {
       path: '/reset-password/:key?',
       name: 'resetPassword',
-      component: () => import('@/views/ResetPasswordView.vue'),
+      component: () =>
+        import('@/views/ResetPasswordView.vue').catch(() => import('@/views/NotFoundView.vue')),
       beforeEnter: (to, from, next) => {
         const key = to.params.key
 
@@ -94,7 +102,8 @@ const router = createRouter({
     {
       path: '/login',
       name: 'login',
-      component: () => import('@/views/LoginView.vue').catch()
+      component: () =>
+        import('@/views/LoginView.vue').catch(() => import('@/views/NotFoundView.vue'))
     },
     {
       path: '/dashboard',

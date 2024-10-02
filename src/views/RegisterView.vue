@@ -6,22 +6,25 @@ import LoadingIcon from '@/components/base/LoadingIcon'
 import { useRefs } from '@/hooks/register/useRefs'
 import { useAuth } from '@/hooks/register/useAuth'
 import Button from '@/components/base/Button'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import { onMounted } from 'vue'
 
 const { password, firstName, lastName, email, phone, birthdate, terms, password_confirm, valid, perfil } = useRefs()
 const { validateText, validate } = useValidationFunctions({ firstName, lastName, email, phone, birthdate, terms, perfil, password, password_confirm, valid, status })
 const { registerUser, loading } = useAuth({ password, firstName, lastName, email, perfil, phone, birthdate, valid, validate })
 const router = useRouter()
+const route = useRoute()
 
 onMounted(() => {
-  // Set the profile value to the route parameter
-  if (router.currentRoute.value.query.rol >= 3 && router.currentRoute.value.query.rol <= 5) {
-    perfil.value = router.currentRoute.value.query.rol
+  const rol = route.params.rol
+
+  if (rol) { // si rol existe
+    perfil.value = rol
   } else {
-    router.push({ name: 'login' })
+    router.push({ name: 'home' }) // Redirige si el rol no es válido
   }
 })
+
 
 const handleSubmit = () => {
   if (valid.value) {
@@ -40,51 +43,51 @@ const handleSubmit = () => {
         <div class="mt-10">
           <div class="text-2xl font-medium">
             Registrarse como
-            <!-- <option value="5" class="text-black">Beneficiario</option>
-              <option value="4" class="text-black">Voluntario</option>
-              <option value="3" class="text-black">Donante</option> -->
             <span class="font-bold text-blue">{{ perfil == 5 ? 'Beneficiario' : perfil == 4 ? 'Voluntario' :
               'Donante' }}</span>
           </div>
           <div class="mt-6">
-            <FormLabel>Nombre <span class="text-red-600 bold">*</span></FormLabel>
-            <FormInput type="text" name="firstName"
+            <FormLabel htmlFor="firstName">Nombre <span class="text-red-600 bold">*</span></FormLabel>
+            <FormInput type="text" name="firstName" id="firstName"
               :class="`block px-4 py-3.5 border-[2px] rounded-[0.6rem]  ${status.firstName.error ? 'border-red-300/80' : 'border-slate-300/80'}`"
               v-model="firstName" />
             <div class="flex flex-row text-red-600 p-2" v-if="status.firstName.menssage">
               {{ status.firstName.menssage }}
             </div>
-            <FormLabel class="mt-5">Apellido <span class="text-red-600 bold">*</span></FormLabel>
-            <FormInput type="text" name="lastName"
+            <FormLabel class="mt-5" htmlFor="lastName">Apellido <span class="text-red-600 bold">*</span></FormLabel>
+            <FormInput type="text" name="lastName" id="lastName"
               :class="`block px-4 py-3.5 border-[2px] rounded-[0.6rem] ${status.lastName.error ? 'border-red-300/80' : 'border-slate-300/80'}`"
               v-model="lastName" />
             <div class="flex flex-row text-red-600 p-2" v-if="status.lastName.menssage">
               {{ status.lastName.menssage }}
             </div>
-            <FormLabel class="mt-5">Correo electrónico <span class="text-red-600 bold">*</span></FormLabel>
-            <FormInput type="text" name="email"
+            <FormLabel class="mt-5" htmlFor="email">Correo electrónico <span class="text-red-600 bold">*</span>
+            </FormLabel>
+            <FormInput type="text" name="email" id="email" autocomplete="email"
               :class="`block px-4 py-3.5 border-[2px] rounded-[0.6rem] ${status.email.error ? 'border-red-300/80' : 'border-slate-300/80'}`"
               v-model="email" />
             <div class="flex flex-row text-red-600 p-2" v-if="status.email.menssage">
               {{ status.email.menssage }}
             </div>
-            <FormLabel class="mt-5">Teléfono celular <span class="text-red-600 bold">*</span></FormLabel>
-            <FormInput type="text" name="phone"
+            <FormLabel class="mt-5" htmlFor="phone">Teléfono celular <span class="text-red-600 bold">*</span>
+            </FormLabel>
+            <FormInput type="text" name="phone" id="phone" autocomplete="tel"
               :class="`block px-4 py-3.5 border-[2px] rounded-[0.6rem] ${status.phone.error ? 'border-red-300/80' : 'border-slate-300/80'}`"
               v-model="phone" @input="validateText" />
             <div class="flex flex-row text-red-600 p-2" v-if="status.phone.menssage">
               {{ status.phone.menssage }}
             </div>
-            <FormLabel class="mt-5">Fecha de nacimiento <span class="text-red-600 bold">*</span></FormLabel>
-            <FormInput type="date" name="birthdate"
+            <FormLabel class="mt-5" htmlFor="birthdate">Fecha de nacimiento <span class="text-red-600 bold">*</span>
+            </FormLabel>
+            <FormInput type="date" name="birthdate" id="birthdate"
               :class="`block px-4 py-3.5 border-[2px] rounded-[0.6rem] ${status.birthdate.error ? 'border-red-300/80' : 'border-slate-300/80'}`"
               v-model="birthdate" />
             <div class="flex flex-row text-red-600 p-2" v-if="status.birthdate.menssage">
               {{ status.birthdate.menssage }}
             </div>
 
-            <FormLabel class="mt-5">Contraseña <span class="text-red-600 bold">*</span></FormLabel>
-            <FormInput type="password" name="password"
+            <FormLabel class="mt-5" htmlFor="password">Contraseña <span class="text-red-600 bold">*</span></FormLabel>
+            <FormInput type="password" name="password" id="password"
               :class="`block px-4 py-3.5 border-[2px] rounded-[0.6rem] ${status.password.error ? 'border-red-300/80' : 'border-slate-300/80'}`"
               placeholder="************" v-model="password" />
             <div class="flex flex-row text-red-600 p-2" v-if="status.password.menssage">
@@ -112,8 +115,9 @@ const handleSubmit = () => {
                 </li>
               </ul>
             </div>
-            <FormLabel class="mt-5">Confirmación de contraseña <span class="text-red-600 bold">*</span></FormLabel>
-            <FormInput type="password" name="password_confirm"
+            <FormLabel class="mt-5" htmlFor="password_confirm">Confirmación de contraseña <span
+                class="text-red-600 bold">*</span></FormLabel>
+            <FormInput type="password" name="password_confirm" id="password_confirm"
               :class="`block px-4 py-3.5 border-[2px] rounded-[0.6rem] ${status.password_confirm.error ? 'border-red-300/80' : 'border-slate-300/80'}`"
               placeholder="************" v-model="password_confirm" />
             <div class="flex flex-row text-red-600 p-2" v-if="status.password_confirm.menssage">
@@ -121,8 +125,8 @@ const handleSubmit = () => {
             </div>
             <div
               :class="`flex items-center mt-5 text-xs  sm:text-sm ${status.terms.error ? 'text-red-600' : 'text-slate-500'}`">
-              <FormCheck.Input name="terms" type="checkbox" class="mr-2 border" v-model="terms" />
-              <label class="cursor-pointer select-none" htmlFor="remember-me">
+              <FormCheck.Input name="terms" id="terms" type="checkbox" class="mr-2 border" v-model="terms" />
+              <label class="cursor-pointer select-none" htmlFor="terms">
                 Acepto los términos y condiciones
               </label>
               <a class="ml-1 text-primary dark:text-slate-200" href="/terms" target="_blank">

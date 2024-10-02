@@ -26,12 +26,10 @@ const router = useRouter()
               </p>
             </div>
             <div class="flex gap-2 flex-row justify-center">
-              <span @click="() => {
-                router.push('/register?rol=4')
-              }"
+              <button @click="router.push({ name: 'register', params: { rol: 'voluntario' } })"
                 class="inline-flex h-10 w-3/4 md:w-fit items-center whitespace-nowrap justify-center cursor-pointer select-none rounded-md bg-emerald-500 px-10 py-6 text-lg font-medium text-white shadow transition-colors hover:bg-emerald-500/80 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 duration-300 transform hover:scale-105 hover:rotate-2">
                 {{ $t('joinOurTeam.volunteer.button') }}
-              </span>
+              </button>
             </div>
           </div>
         </div>
@@ -52,12 +50,10 @@ const router = useRouter()
               </p>
             </div>
             <div class="flex gap-2 flex-row justify-center">
-              <span @click="() => {
-                router.push('/register?rol=5')
-              }"
+              <button @click="router.push({ name: 'register', params: { rol: 'beneficiario' } })"
                 class="inline-flex h-10 w-3/4 md:w-fit items-center whitespace-nowrap justify-center cursor-pointer select-none rounded-md bg-emerald-500 px-10 py-6 text-lg font-medium text-white shadow transition-colors hover:bg-emerald-500/80 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 duration-300 transform hover:scale-105 hover:rotate-2">
                 {{ $t('joinOurTeam.beneficiary.button') }}
-              </span>
+              </button>
             </div>
           </div>
         </div>
@@ -78,12 +74,10 @@ const router = useRouter()
               </p>
             </div>
             <div class="flex gap-2 flex-row justify-center">
-              <span @click="() => {
-                router.push('/register?rol=3')
-              }"
+              <button @click="router.push({ name: 'register', params: { rol: 'donante' } })"
                 class="inline-flex h-10 w-3/4 md:w-fit items-center whitespace-nowrap justify-center cursor-pointer select-none rounded-md bg-emerald-500 px-10 py-6 text-lg font-medium text-white shadow transition-colors hover:bg-emerald-500/80 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 duration-300 transform hover:scale-105 hover:rotate-2">
                 {{ $t('joinOurTeam.donor.button') }}
-              </span>
+              </button>
             </div>
           </div>
         </div>
