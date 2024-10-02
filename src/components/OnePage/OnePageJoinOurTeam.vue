@@ -8,7 +8,7 @@ const router = useRouter()
 <template>
   <div class="w-full py-12 md:py-24 lg:py-32 flex flex-col justify-center items-center bg-red/20 space-y-4 "
     id="joinOurTeam">
-    <h1 class="text-7xl font-bold text-center mb-10">Join Our Team</h1>
+    <h1 class="text-7xl font-bold text-center mb-10">{{ $t('joinOurTeam.title') }}</h1>
     <div class="w-full md:flex md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-4">
 
       <!-- Sección de voluntarios -->

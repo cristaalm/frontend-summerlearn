@@ -9,9 +9,9 @@
                 <div class="w-1/2 flex flex-row justify-end">
                     <div class="flex flex-col gap-2">
                         <!-- Label for language selection -->
-                        <label for="language-select" class="w-full text-center">Language:</label>
+                        <label for="language-select" class="w-full text-center">{{ $t('footer.language') }}:</label>
                         <!-- Dropdown for language selection -->
-                        <select id="language-select" class="block appearance-none bg-gray-900 border border-gray-800 text-white py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-gray-800 focus:border-gray-500" v-model="language" @change="changeLanguage">
+                        <select id="language-select" class="block appearance-none bg-yellow/20 border border-yellow/30 text-black py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-yellow/20 focus:border-yellow/300" v-model="language" @change="changeLanguage">
                             <!-- Option to activate language -->
                             <option :value="`${ $t('footer.values.activate.activate') }`">{{ $t('footer.values.activate.lenguage') }}</option>
                             <!-- Option to deactivate language -->
