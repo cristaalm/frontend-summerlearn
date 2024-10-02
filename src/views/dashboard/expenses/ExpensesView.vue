@@ -116,9 +116,9 @@ onMounted(() => {
                                         class="py-4 font-medium border-t bg-slate-50 border-slate-200/60 text-slate-500">
                                         Concepto
                                     </Table.Td>
-                                    <Table.Td
+                                    <Table.Td   
                                         class="py-4 font-medium border-t bg-slate-50 border-slate-200/60 text-slate-500">
-                                        Fecha de Donación
+                                        Fecha
                                     </Table.Td>
                                 </Table.Tr>
                             </Table.Thead>

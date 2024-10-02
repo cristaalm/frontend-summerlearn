@@ -56,7 +56,7 @@ onMounted(() => {
                     <Button variant="primary" @click="() => router.push({ name: 'addDonation' })"
                         class="group-[.mode--light]:!bg-white/[0.12] group-[.mode--light]:!text-slate-200 group-[.mode--light]:!border-transparent">
                         <Lucide icon="PenLine" class="stroke-[1.3] w-4 h-4 mr-2" />
-                        Agregar nueva donacion
+                        Agregar nueva donación
                     </Button>
                 </div>
             </div>
@@ -102,7 +102,7 @@ onMounted(() => {
                     <div class="flex flex-col col-span-12 p-5 md:col-span-6 2xl:col-span-3 box box--stacked">
 
                         <div class="pb-5 mb-5 border-b border-dashed border-slate-300/70">
-                            <div class="text-base text-slate-500">Donacion Semanal</div>
+                            <div class="text-base text-slate-500">Donación Semanal</div>
                             <div class="flex items-center mt-1">
                                 <div class="flex items-center text-xl font-medium">
                                     <span class="mr-px">$</span>{{ totalDonationsWeek }}
@@ -112,7 +112,7 @@ onMounted(() => {
                         </div>
                         <ReportBarChart3 class="relative z-10 -ml-1" :height="80" />
 
-                        <span class="flex items-center mt-6 font-medium text-primary">Donaciones Diarias.</span>
+                        <span class="flex items-center mt-6 font-medium text-primary">Donaciones Diarias</span>
 
                     </div>
 
@@ -182,7 +182,7 @@ onMounted(() => {
                         </div>
                         <div
                             class="col-span-4 md:col-span-2 xl:col-span-1 p-5 border border-dashed rounded-[0.6rem] border-slate-300/80 box shadow-sm">
-                            <div class="text-base text-slate-500">Ultima cantidad donada:</div>
+                            <div class="text-base text-slate-500">Última cantidad donada:</div>
                             <div class="mt-1.5 text-2xl font-medium">
                                 <div v-if="loading" class="w-full h-4 mt-4">
                                     <LoadingIcon icon="three-dots" color="gray" />
@@ -196,7 +196,7 @@ onMounted(() => {
                         </div>
                         <div
                             class="col-span-4 md:col-span-2 xl:col-span-1 p-5 border border-dashed rounded-[0.6rem] border-slate-300/80 box shadow-sm">
-                            <div class="text-base text-slate-500">Ultima fecha de donación:</div>
+                            <div class="text-base text-slate-500">Última fecha de donación:</div>
                             <div class="mt-1.5 text-2xl font-medium">
                                 <div v-if="loading" class="w-full h-4 mt-4">
                                     <LoadingIcon icon="three-dots" color="gray" />
@@ -231,7 +231,7 @@ onMounted(() => {
                                         <Lucide icon="Search"
                                             class="absolute inset-y-0 left-0 z-10 w-4 h-4 my-auto ml-3 stroke-[1.3] text-slate-500" />
                                         <FormInput v-model="searchQuery" type="text"
-                                            placeholder="Buscar concepto..."
+                                            placeholder="Buscar nombre de donante..."
                                             class="pl-9 sm:w-64 rounded-[0.5rem]" />
                                     </div>
                                 </div>
@@ -293,7 +293,7 @@ onMounted(() => {
                                             </Table.Td>
                                             <Table.Td
                                                 class="py-4 font-medium border-t bg-slate-50 border-slate-200/60 text-slate-500">
-                                                Fecha de Donación
+                                                Fecha
                                             </Table.Td>
                                         </Table.Tr>
                                     </Table.Thead>

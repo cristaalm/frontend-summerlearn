@@ -91,7 +91,7 @@ const handleRegister = async () => {
                             <label class="inline-block mb-2 sm:mb-0 sm:mr-5 sm:text-right xl:w-60 xl:mr-14">
                                 <div class="text-left">
                                     <div class="flex items-center">
-                                        <div class="font-medium">Donaciónes</div>
+                                        <div class="font-medium">Donaciones</div>
                                         <div
                                             class="ml-2.5 px-2 py-0.5 bg-slate-100 text-slate-500 text-xs rounded-md border border-slate-200">
                                             Requerido
@@ -105,7 +105,7 @@ const handleRegister = async () => {
                             <div class="flex-1 w-full mt-3 xl:mt-0">
                                 <TomSelect 
                                     v-model="selectMultiple"
-                                    :options="{ placeholder: 'Selecciona las donaciones' }" class="w-full" multiple>
+                                    :options="{ placeholder: 'Seleccione una donación...' }" class="w-full" multiple>
 
                                     <template v-for="(donation) in filteredDonations" :key="donation.id">
                                         <option :value="donation.id">{{ donation.concept }} ($ {{ donation.remaining }})
@@ -137,7 +137,7 @@ const handleRegister = async () => {
                                 </div>
                             </label>
                             <div class="flex-1 w-full mt-3 xl:mt-0">
-                                <FormInput type="text" placeholder="Concepto del gasto..." v-model="concept" />
+                                <FormInput type="text" placeholder="Escriba aquí el concepto..." v-model="concept" />
                                 <div class="mt-1 text-xs text-red-500 h-4">
                                     {{ status.concept.message }}
                                 </div>
@@ -163,7 +163,7 @@ const handleRegister = async () => {
                             <div class="flex-1 w-full mt-3 xl:mt-0">
                                 <InputGroup>
                                     <InputGroup.Text> $ </InputGroup.Text>
-                                    <FormInput type="text" placeholder="Monto a gastar" v-model="amount"
+                                    <FormInput type="text" placeholder="Escriba aquí su monto..." v-model="amount"
                                         @input="validateInputAmount" />
                                 </InputGroup>
                                 <div class="mt-1 text-xs text-red-500 h-4">

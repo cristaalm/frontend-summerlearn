@@ -84,7 +84,7 @@ const handleRegister = () => {
                                 </div>
                             </label>
                             <div class="flex-1 w-full mt-3 xl:mt-0">
-                                <FormInput type="text" placeholder="Concepto de donación..." v-model="concept" />
+                                <FormInput type="text" placeholder="Escriba aquí el concepto..." v-model="concept" />
                                 <div class="mt-1 text-xs text-red-500 h-4">
                                     {{ status.concept.message }}
                                 </div>
@@ -109,7 +109,7 @@ const handleRegister = () => {
                             <div class="flex-1 w-full mt-3 xl:mt-0">
                                 <InputGroup>
                                     <InputGroup.Text> $ </InputGroup.Text>
-                                    <FormInput type="text" placeholder="Monto" v-model="amount"
+                                    <FormInput type="text" placeholder="Escriba aquí su monto..." v-model="amount"
                                         @input="validateInputAmount" />
                                 </InputGroup>
 
