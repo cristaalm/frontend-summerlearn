@@ -3,6 +3,7 @@ import { useValidationFunctions } from '@/hooks/register/useValidationFunctions'
 import { FormCheck, FormInput, FormLabel } from '@/components/base/Form'
 import { status } from '@/hooks/register/useStatus'
 import LoadingIcon from '@/components/base/LoadingIcon'
+import Lucide from '@/components/base/Lucide'
 import { useRefs } from '@/hooks/register/useRefs'
 import { useAuth } from '@/hooks/register/useAuth'
 import Button from '@/components/base/Button'
@@ -40,6 +41,13 @@ const handleSubmit = () => {
       'relative z-50 h-full col-span-12 p-7 sm:p-14 bg-white rounded-2xl lg:bg-transparent lg:pr-10 lg:col-span-5 xl:pr-24 2xl:col-span-4 lg:p-0'
     ]">
       <div class="relative z-10 flex flex-col justify-center w-full h-full py-2">
+        <div class="flex flex-row justify-start items-center pt-5">
+          <span @click="router.push({ name: 'home' })"
+            class="flex flex-row gap-2 transition-all duration-200 hover:scale-95 !bg-white/[0.12] !text-black !border-transparent cursor-pointer">
+            <Lucide icon="ArrowLeft" class="w-5 h-5" />
+            Regresar
+          </span>
+        </div>
         <div class="mt-10">
           <div class="text-2xl font-medium">
             Registrarse como

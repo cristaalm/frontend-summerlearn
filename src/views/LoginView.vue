@@ -21,6 +21,13 @@ const router = useRouter()
       'relative z-50 h-full col-span-12 p-7 sm:p-14 bg-white rounded-2xl lg:bg-transparent lg:pr-10 lg:col-span-5 xl:pr-24 2xl:col-span-4 lg:p-0'
     ]">
       <div class="relative z-10 flex flex-col justify-center w-full h-full py-2 lg:py-32">
+        <div class="flex flex-row justify-start items-center">
+          <span @click="router.push({ name: 'home' })"
+            class="flex flex-row gap-2 transition-all duration-200 hover:scale-95 !bg-white/[0.12] !text-black !border-transparent cursor-pointer">
+            <Lucide icon="ArrowLeft" class="w-5 h-5" />
+            Regresar
+          </span>
+        </div>
         <div class="mt-10">
           <div class="text-2xl font-medium">Iniciar sesión</div>
 
