@@ -9,7 +9,6 @@ const color = ref(false)
 
 const changeColor = () => {
   color.value = !color.value
-  console.log(color.value)
 }
 
 window.addEventListener('scroll', () => {
@@ -18,7 +17,6 @@ window.addEventListener('scroll', () => {
   } else {
     topScroll.value = true
   }
-  console.log(topScroll.value)
 })
 </script>
 

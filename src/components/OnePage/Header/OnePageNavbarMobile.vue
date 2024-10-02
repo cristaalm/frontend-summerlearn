@@ -46,7 +46,7 @@
 </template>
 
 <script setup>
-import { ref, defineProps } from 'vue'
+import { ref } from 'vue'
 import Menu from '@/components/icons/IconMenu.vue'
 import Close from '@/components/icons/IconClose.vue'
 import { useRouter } from 'vue-router'
