@@ -56,6 +56,13 @@ const router = useRouter()
               <span class=" cursor-pointer" @click="router.push({ name: 'forgotPassword' })">¿Olvidaste tu
                 contraseña?</span>
             </div>
+            <!-- avisos de privacidad -->
+            <div class="flex items-center mt-5 text-xs  sm:text-sm">
+              Lee nuestros
+              <a class="ml-1 text-primary dark:text-slate-200" href="/privacy" target="_blank">
+                Avisos de privacidad
+              </a>
+            </div>
             <div class="mt-5 text-center xl:mt-8 xl:text-left">
               <Button @click="() => { loginUser({ email, password }) }" :disabled="!valid || loading" variant="primary"
                 rounded

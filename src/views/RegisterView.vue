@@ -135,13 +135,21 @@ const handleSubmit = () => {
               :class="`flex items-center mt-5 text-xs  sm:text-sm ${status.terms.error ? 'text-red-600' : 'text-slate-500'}`">
               <FormCheck.Input name="terms" id="terms" type="checkbox" class="mr-2 border" v-model="terms" />
               <label class="cursor-pointer select-none" htmlFor="terms">
-                Acepto los términos y condiciones
+                Acepto los <a class="ml-1 text-primary dark:text-slate-200" href="/terms" target="_blank">
+                  terminos y condiciones
+                </a>
               </label>
-              <a class="ml-1 text-primary dark:text-slate-200" href="/terms" target="_blank">
-                Política de privacidad
-              </a>
+
               .
             </div>
+            <!-- avisos de privacidad -->
+            <div class="flex items-center mt-5 text-xs  sm:text-sm">
+              Lee nuestros
+              <a class="ml-1 text-primary dark:text-slate-200" href="/privacy" target="_blank">
+                Avisos de privacidad
+              </a>
+            </div>
+
             <div class="mt-5 text-center xl:mt-8 xl:text-left">
               <Button @click="handleSubmit" :disabled="!valid" variant="primary" rounded
                 :class="`bg-gradient-to-r transition-all border-none scale-105 duration-200 w-full py-3.5 xl:mr-3 ${valid && !loading ? 'from-green-dark to-green hover:scale-100 select-none cursor-pointer' : 'from-gray-600 to-gray-600  cursor-default'}`">
