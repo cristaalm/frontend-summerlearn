@@ -43,7 +43,7 @@ export default {
       }
     },
     joinOurTeam: {
-      title : "Join Our Team",
+      title: 'Join Our Team',
       volunteer: {
         title: 'Volunteer Team',
         description:
@@ -61,11 +61,12 @@ export default {
         description:
           'Your donation allows more children to join our summer courses, where they will receive quality education and tools for a better future. Together, we can make a lasting difference.',
         button: 'Apply to Donor'
-      },
+      }
     },
     footer: {
       language: 'Language',
       copyRight: '© 2024 SummerLearn. All rights reserved.',
+      privacyNotices: 'Privacy Notices',
       values: {
         activate: {
           activate: 'en',
@@ -75,7 +76,7 @@ export default {
           deactivate: 'es',
           lenguage: 'Spanish'
         }
-        }
+      }
     }
   },
   es: {
@@ -122,7 +123,7 @@ export default {
       }
     },
     joinOurTeam: {
-      title : "Únete a nuestro equipo",
+      title: 'Únete a nuestro equipo',
       volunteer: {
         title: 'Equipo De Voluntarios',
         description:
@@ -140,15 +141,16 @@ export default {
         description:
           'Con tu donación, más niños podrán participar en nuestros cursos de verano, donde recibirán educación de calidad y herramientas para un mejor futuro.',
         button: 'Aplica para donadro'
-      },
+      }
     },
     footer: {
       language: 'Idioma',
       copyRight: '© 2024 SummerLearn. Todos los derechos reservados.',
+      privacyNotices: 'Avisos de privacidad',
       values: {
         activate: {
           activate: 'es',
-          lenguage: 'Español' 
+          lenguage: 'Español'
         },
         deactivate: {
           deactivate: 'en',
