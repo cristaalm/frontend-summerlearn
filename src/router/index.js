@@ -78,6 +78,12 @@ const router = createRouter({
         import('@/views/TermsView.vue').catch(() => import('@/views/NotFoundView.vue'))
     },
     {
+      path: '/privacy',
+      name: 'privacy',
+      component: () =>
+        import('@/views/PrivacyView.vue').catch(() => import('@/views/NotFoundView.vue'))
+    },
+    {
       path: '/forgot-password',
       name: 'forgotPassword',
       component: () =>
