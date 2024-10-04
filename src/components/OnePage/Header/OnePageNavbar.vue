@@ -47,7 +47,7 @@ const smoothScroll = (event) => {
         :class="`px-6 py-2 text-lg text-nowrap transition-all duration-300 cursor-pointer ${topScroll ? ' hover:text-emerald-600' : 'text-black hover:text-gray-500'}`">
         {{ $t('navbar.logIn') }}
       </span>
-      <button @click="router.push('/register?rol=3')"
+      <button @click="router.push({ name: 'register', params: { rol: 'donante' } })"
         class="px-6 py-2 text-xl bg-rose-500 hover:bg-rose-400 transition-all duration-300 rounded-2xl text-white">
         {{ $t('navbar.donate') }}
       </button>

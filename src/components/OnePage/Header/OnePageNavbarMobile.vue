@@ -36,7 +36,7 @@
           :class="`px-6 py-2 text-2xl transition-all duration-300 text-white ${topScroll ? ' hover:text-emerald-300' : ' hover:text-emerald-500'}`">
           {{ $t('navbar.logIn') }}
         </span>
-        <button @click="router.push('/register?rol=3')"
+        <button @click="router.push({ name: 'register', params: { rol: 'donante' } })"
           class="px-6 py-2 text-3xl bg-rose-500 hover:bg-rose-400 transition-all duration-300 rounded-2xl text-white">
           {{ $t('navbar.donate') }}
         </button>
