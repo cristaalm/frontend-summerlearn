@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { FormInput, FormLabel } from '@/components/base/Form'
+import { FormInput, FormLabel, InputGroup } from '@/components/base/Form'
 import Button from '@/components/base/Button'
 import Alert from '@/components/base/Alert'
 import Lucide from '@/components/base/Lucide'
@@ -8,22 +8,12 @@ import { useFormValidation } from '@/hooks/login/useFormValidation'
 import { useAuth } from '@/hooks/login/useAuth'
 import { useRouter } from 'vue-router'
 import { useRefs } from "@/hooks/login/useRefs";
-import { InputGroup } from "@/components/base/Form";
 
-const { showPassword, password } = useRefs()
+const { showPassword } = useRefs()
 const { loginUser, loading, error } = useAuth()
-const { email, validateInput, valid } = useFormValidation({ error })
+const { email, password, valid, validateInput } = useFormValidation({ error })
 const router = useRouter()
 
-const togglePasswordVisibility = () => {
-  showPassword.value = !showPassword.value
-}
-
-
-const handleLogin = () => {
-alert("entra")
-  loginUser({ email, password })
-}
 </script>
 
 
@@ -60,33 +50,25 @@ alert("entra")
 
           <div class="mt-6">
             <FormLabel>Correo electrónico <span class="text-red-600 bold">*</span></FormLabel>
-              <FormInput 
-                type="text" 
-                class="block px-4 py-3.5 rounded-[0.6rem] border-slate-300/80"
-                placeholder="correo@mail.com" 
-                v-model="email" 
-                @input="validateInput('email')" />
+            <FormInput type="text" class="block px-4 py-3.5 rounded-[0.6rem] border-slate-300/80"
+              placeholder="correo@mail.com" v-model="email" @input="validateInput('email')" />
 
-              <FormLabel class="mt-4">Contraseña <span class="text-red-600 bold">*</span></FormLabel>
+            <FormLabel class="mt-4">Contraseña <span class="text-red-600 bold">*</span></FormLabel>
 
-              <div class="flex-1 w-full mt-3 xl:mt-0">
-                <InputGroup class="mt-2">
-                  <FormInput 
-                    :type="showPassword ? 'text' : 'password'"
-                    class="block px-4 py-3.5 rounded-[0.6rem] border-slate-300/80"
-                    placeholder="************" 
-                    v-model="password" 
-                    @input="validateInput('password')" />
-                  
-                  <div class="block px-4 py-3.5 rounded-[0.6rem] border-slate-300/80 bg-slate-200">
-                    <button type="button" @click="togglePasswordVisibility" class="cursor-pointer">
-                      <Lucide icon="Eye" class="w-4 h-4 stroke-[1.3] text-green-500" v-if="showPassword" />
-                      <Lucide icon="EyeOff" class="w-4 h-4 stroke-[1.3] text-red-500" v-else />
-                    </button>
-                  </div>
-                </InputGroup>
-              </div>
-
+            <div class="flex-1 w-full mt-3 xl:mt-0">
+              <InputGroup class="mt-2">
+                <FormInput placeholder="************" :type="`${showPassword ? 'text' : 'password'}`"
+                  htmlid="inputPassword" class="block px-4 py-3.5" name="password" v-model="password"
+                  @input="validateInput('password')" />
+                <InputGroup.Text @click="() => { showPassword = !showPassword }"
+                  class="cursor-pointer flex flex-col justify-center items-center">
+                  <button class="">
+                    <Lucide icon="Eye" class="w-4 h-4 stroke-[1.3] text-green-500" v-if="showPassword" />
+                    <Lucide icon="EyeOff" class="w-4 h-4 stroke-[1.3] text-red-500" v-else />
+                  </button>
+                </InputGroup.Text>
+              </InputGroup>
+            </div>
             <div class="flex flex-row justify-end mt-4 text-xs text-slate-500 sm:text-sm">
               <span class=" cursor-pointer" @click="router.push({ name: 'forgotPassword' })">¿Olvidaste tu
                 contraseña?</span>
@@ -99,7 +81,9 @@ alert("entra")
               </a>
             </div>
             <div class="mt-5 text-center xl:mt-8 xl:text-left">
-              <Button @click="handleLogin" :disabled="!valid || loading" variant="primary" rounded :class="`bg-gradient-to-r transition-all border-none scale-105 duration-200 w-full py-3.5 xl:mr-3 ${valid && !loading ? 'from-green-dark to-green hover:scale-100 select-none cursor-pointer' : 'from-gray-600 to-gray-600 cursor-default'}`">
+              <Button @click="() => { loginUser({ email, password }) }" :disabled="!valid || loading" variant="primary"
+                rounded
+                :class="`bg-gradient-to-r transition-all border-none scale-105 duration-200 w-full py-3.5 xl:mr-3 ${valid && !loading ? 'from-green-dark to-green hover:scale-100 select-none cursor-pointer' : 'from-gray-600 to-gray-600 cursor-default'}`">
                 <LoadingIcon v-if="loading" icon="three-dots" class="w-8 h-5" color="white" />
                 {{ loading ? '' : 'Iniciar Sesión' }}
               </Button>
