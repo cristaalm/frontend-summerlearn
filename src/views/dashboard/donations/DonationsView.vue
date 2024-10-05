@@ -70,7 +70,7 @@ onMounted(() => {
 
                     <div class="col-span-12 p-1 md:col-span-6 2xl:col-span-3 box box--stacked">
                         <div
-                            class="-mx-1 overflow-hidden h-[244px] [&_.tns-outer_.tns-nav]:bottom-auto [&_.tns-outer_.tns-nav]:w-auto [&_.tns-outer_.tns-nav]:ml-5 [&_.tns-outer_.tns-nav]:mt-5 [&_.tns-outer_.tns-nav_button]:w-2 [&_.tns-outer_.tns-nav_button]:h-2 [&_.tns-outer_.tns-nav_button.tns-nav-active]:w-5 [&_.tns-outer_.tns-nav_button]:mx-0.5 [&_.tns-outer_.tns-nav_button]:bg-white/40 [&_.tns-outer_.tns-nav_button.tns-nav-active]:bg-white/70">
+                            class="-mx-1 overflow-hidden h-[244px] [&_.tns-outer_.tns-nav]:bottom-auto [&_.tns-outer_.tns-nav]:w-auto [&_.tns-outer_.tns-nav]:ml-5 [&_.tns-outer_.tns-nav]:mt-5 [&_.tns-outer_.tns-nav_button]:w-2 [&_.tns-outer_.tns-nav_button]:h-2 [&_.tns-outer_.tns-nav_button.tns-nav-active]:w-5 [&_.tns-outer_.tns-nav_button]:mx-0.5 [&_.tns-outer_.tns-nav_button]:bg-black/40 [&_.tns-outer_.tns-nav_button.tns-nav-active]:bg-black/70">
                             <TinySlider :options="{ mode: 'gallery', nav: true }">
                                 <div class="px-1">
                                     <div
@@ -78,16 +78,16 @@ onMounted(() => {
                                         <Lucide icon="Medal"
                                             class="absolute top-0 right-0 w-36 h-36 -mt-5 -mr-5 text-white/20 fill-white/[0.03] transform rotate-[-10deg] stroke-[0.3]" />
                                         <div class="mt-12 mb-9">
-                                            <div class="text-2xl font-medium leading-snug text-white">
+                                            <div class="text-2xl font-medium leading-snug text-black">
                                                 Estadiscas De
                                                 <br />
                                                 Donaciones
                                             </div>
-                                            <div class="mt-1.5 text-lg text-white/70">
+                                            <div class="mt-1.5 text-lg text-black/70">
                                                 Aumente su rendimiento
                                             </div>
                                         </div>
-                                        <a class="flex items-center font-medium text-white" href="">
+                                        <a class="flex items-center font-medium text-black" href="">
                                             Actualizar ahora
                                             <Lucide icon="MoveRight" class="w-4 h-4 ml-1.5" />
                                         </a>
