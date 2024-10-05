@@ -76,7 +76,6 @@ export function useValidationFunctions({
     // Si el campo es el teléfono, lo desformateamos
     if (name == 'phone') {
       value = unformatPhone(value)
-      console.log(value)
     }
 
     if (status.value[name].Regex.test(value)) {

@@ -50,7 +50,6 @@ export function useAuth({
     const data = await response.json()
 
     if (response.ok) {
-      console.log('Registration successful')
       localStorage.setItem('access_token', data.access)
       localStorage.setItem('refresh_token', data.refresh)
       router.push({ name: 'dashboard' })
