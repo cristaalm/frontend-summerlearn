@@ -143,7 +143,7 @@ export const useMenuStore = defineStore('menu', {
             {
               icon: 'MessagesSquare',
               pageName: 'chat',
-              title: 'Chat'
+              title: 'Contacto'
             }
           ]
           break
@@ -183,7 +183,7 @@ export const useMenuStore = defineStore('menu', {
             {
               icon: 'MessagesSquare',
               pageName: 'chat',
-              title: 'Chat'
+              title: 'Contacto'
             }
           ]
           break
@@ -206,7 +206,7 @@ export const useMenuStore = defineStore('menu', {
             {
               icon: 'MessagesSquare',
               pageName: 'chat',
-              title: 'Chat'
+              title: 'Contacto'
             }
           ]
           break
@@ -227,7 +227,7 @@ export const useMenuStore = defineStore('menu', {
             {
               icon: 'MessagesSquare',
               pageName: 'chat',
-              title: 'Chat'
+              title: 'Contacto'
             }
           ]
           break
@@ -248,7 +248,7 @@ export const useMenuStore = defineStore('menu', {
             {
               icon: 'MessagesSquare',
               pageName: 'chat',
-              title: 'Chat'
+              title: 'Contacto'
             }
           ]
           break

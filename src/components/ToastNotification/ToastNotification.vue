@@ -2,7 +2,7 @@
   <div
     v-if="isVisible"
     :style="{ top: `${topOffset}px`, zIndex: 1000 }"
-    class="fixed right-20 p-4 bg-white text-gray-800 rounded shadow-lg transition-opacity duration-300"
+    class="fixed right-22 p-4 bg-white text-gray-800 rounded shadow-lg transition-opacity duration-300"
   >
     <p>{{ message }}</p>
   </div>

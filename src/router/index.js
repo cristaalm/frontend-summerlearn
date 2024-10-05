@@ -167,10 +167,20 @@ const router = createRouter({
           path: '/dashboard/activities',
           name: 'activities',
           component: () =>
-            import('@/views/dashboard/activities/ActivitiesView.vue').catch(
-              () => import('@/views/dashboard/notFoundView/NotFoundView.vue')
-            )
+            import('@/views/dashboard/activities/ActivitiesView.vue').catch((error) => {
+              console.error('Error loading ActivitiesView.vue:', error)
+              // Puedes manejar el error o mostrar alguna notificación en la interfaz si lo deseas
+              throw error // Re-lanzamos el error si necesitas que sea gestionado en otro lugar
+            })
         },
+        // {
+        //   path: '/dashboard/activities',
+        //   name: 'activities',
+        //   component: () =>
+        //     import('@/views/dashboard/activities/ActivitiesView.vue').catch(
+        //       () => import('@/views/dashboard/notFoundView/NotFoundView.vue')
+        //     )
+        // },
         {
           path: '/dashboard/activities/add',
           name: 'addActividades',
