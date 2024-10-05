@@ -36,6 +36,10 @@ module.exports = {
         '3xl': '1600px'
       },
       colors: {
+        'greend': '#8FFFAE',
+        'yellowd': '#FDFFAA',
+        'redd': '#FFC3C3',
+        'blued': '#86E6FF',
         theme: {
           1: 'rgb(var(--color-theme-1) / <alpha-value>)',
           2: 'rgb(var(--color-theme-2) / <alpha-value>)'

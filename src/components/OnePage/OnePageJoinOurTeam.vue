@@ -6,7 +6,7 @@ const router = useRouter()
 </script>
 
 <template>
-  <div class="w-full py-12 md:py-24 lg:py-32 flex flex-col justify-center items-center bg-red/20 space-y-4 "
+  <div class="w-full py-12 md:py-24 lg:py-32 flex flex-col justify-center items-center bg-redd space-y-4 "
     id="joinOurTeam">
     <h1 class="text-7xl font-bold text-center mb-10">{{ $t('joinOurTeam.title') }}</h1>
     <div class="w-full flex flex-col lg:flex-row justify-center items-center p-10 space-y-4 lg:space-y-0 lg:space-x-4"

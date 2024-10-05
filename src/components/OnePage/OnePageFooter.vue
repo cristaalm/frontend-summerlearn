@@ -1,5 +1,5 @@
 <template>
-    <footer class="text-black py-10 flex flex-row justify-center items-center w-full bg-footerColor">
+    <footer class="text-black py-10 flex flex-row justify-center items-center w-full bg-blued">
         <div class="container">
             <div class="flex flex-row w-full">
                 <div class="w-1/2 flex flex-col justify-center items-start">
@@ -15,7 +15,7 @@
                         <label for="language-select" class="w-full text-center">{{ $t('footer.language') }}:</label>
                         <!-- Dropdown for language selection -->
                         <select id="language-select"
-                            class="block appearance-none bg-yellow/20 border border-yellow/30 text-black py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-yellow/20 focus:border-yellow/300"
+                            class="block appearance-none bg-yellow/50 border border-yellow/30 text-black py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-yellow/20 focus:border-yellow/300"
                             v-model="language" @change="changeLanguage">
                             <!-- Option to activate language -->
                             <option :value="`${$t('footer.values.activate.activate')}`">{{
