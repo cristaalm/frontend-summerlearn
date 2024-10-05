@@ -35,7 +35,10 @@ const setFormattedMenu = (computedFormattedMenu: Array<FormattedMenu | string>) 
   Object.assign(formattedMenu, computedFormattedMenu)
 }
 const menuStore = useMenuStore()
+menuStore.resetMenu()
+menuStore.loadMenu()
 const menu = computed(() => nestedMenu(menuStore.value, route))
+
 
 provide<ProvideForceActiveMenu>('forceActiveMenu', (pageName: string) => {
   forceActiveMenu(route, pageName)
@@ -78,6 +81,7 @@ watch(
 const clearLocalStorage = () => {
   if (typeof window !== 'undefined' && window.localStorage) {
     localStorage.removeItem('access_token')
+    localStorage.removeItem('refresh_token')
   }
 }
 
@@ -126,9 +130,9 @@ window.onscroll = () => {
         { hidden: !activeMobileMenu }
       ]">
         <a href="" @click="(event) => {
-            event.preventDefault()
-            activeMobileMenu = false
-          }
+          event.preventDefault()
+          activeMobileMenu = false
+        }
           " class="mt-5 ml-5">
           <Lucide icon="X" class="w-8 h-8 text-white" />
         </a>
@@ -136,13 +140,13 @@ window.onscroll = () => {
       <div :class="[
         'h-full box bg-white/[0.95] rounded-none xl:rounded-xl z-20 relative w-[275px] duration-300 transition-[width] group-[.side-menu--collapsed]:xl:w-[91px] group-[.side-menu--collapsed.side-menu--on-hover]:xl:shadow-[6px_0_12px_-4px_#0000000f] group-[.side-menu--collapsed.side-menu--on-hover]:xl:w-[275px] overflow-hidden flex flex-col'
       ]" @mouseover="(event) => {
-            event.preventDefault()
-            compactMenuOnHover = true
-          }
-          " @mouseleave="(event) => {
-            event.preventDefault()
-            compactMenuOnHover = false
-          }
+        event.preventDefault()
+        compactMenuOnHover = true
+      }
+        " @mouseleave="(event) => {
+          event.preventDefault()
+          compactMenuOnHover = false
+        }
           ">
         <div :class="[
           'flex items-center z-10 px-5 h-[65px] w-[275px] overflow-hidden relative duration-300 xl:group-[.side-menu--collapsed]:w-[91px] group-[.side-menu--collapsed.side-menu--on-hover]:w-[275px]'
@@ -150,12 +154,12 @@ window.onscroll = () => {
           <a href=""
             class="flex items-center transition-[margin] duration-300 group-[.side-menu--collapsed]:xl:ml-2 group-[.side-menu--collapsed.side-menu--on-hover]:xl:ml-0"
             @click="(event: MouseEvent) => {
-                event.preventDefault()
-                router.push({
-                  name: 'dashboard'
-                })
-                activeMobileMenu = false
-              }
+              event.preventDefault()
+              router.push({
+                name: 'dashboard'
+              })
+              activeMobileMenu = false
+            }
               ">
             <div
               class="flex items-center justify-center w-[34px] rounded-lg h-[34px] bg-gradient-to-b from-theme-1 to-theme-2/80 transition-transform ease-in-out group-[.side-menu--collapsed.side-menu--on-hover]:xl:-rotate-360">
@@ -190,14 +194,14 @@ window.onscroll = () => {
                     'side-menu__link--active-dropdown': menu.activeDropdown
                   }
                 ]" @click="(event: MouseEvent) => {
-                      event.preventDefault()
-                      if (!menu.subMenu) {
-                        activeMobileMenu = false
-                      }
-                      linkTo(menu, router)
-                      setFormattedMenu([...formattedMenu])
-                    }
-                    ">
+                  event.preventDefault()
+                  if (!menu.subMenu) {
+                    activeMobileMenu = false
+                  }
+                  linkTo(menu, router)
+                  setFormattedMenu([...formattedMenu])
+                }
+                  ">
                   <Lucide :icon="menu.icon" class="side-menu__link__icon" />
                   <div class="side-menu__link__title">{{ menu.title }}</div>
                   <div v-if="menu.badge" class="side-menu__link__badge">
@@ -216,12 +220,12 @@ window.onscroll = () => {
                           'side-menu__link--active-dropdown': subMenu.activeDropdown
                         }
                       ]" @click="(event: MouseEvent) => {
-                            event.preventDefault()
-                            activeMobileMenu = false
-                            linkTo(subMenu, router)
-                            setFormattedMenu([...formattedMenu])
-                          }
-                          ">
+                        event.preventDefault()
+                        activeMobileMenu = false
+                        linkTo(subMenu, router)
+                        setFormattedMenu([...formattedMenu])
+                      }
+                        ">
                         <Lucide :icon="subMenu.icon" class="side-menu__link__icon" />
                         <div class="side-menu__link__title">
                           {{ subMenu.title }}
@@ -244,11 +248,11 @@ window.onscroll = () => {
                                 'side-menu__link--active-dropdown': lastSubMenu.activeDropdown
                               }
                             ]" @click="(event: MouseEvent) => {
-                                  event.preventDefault()
-                                  linkTo(lastSubMenu, router)
-                                  setFormattedMenu([...formattedMenu])
-                                }
-                                ">
+                              event.preventDefault()
+                              linkTo(lastSubMenu, router)
+                              setFormattedMenu([...formattedMenu])
+                            }
+                              ">
                               <Lucide :icon="lastSubMenu.icon" class="side-menu__link__icon" />
                               <div class="side-menu__link__title">
                                 {{ lastSubMenu.title }}
@@ -282,9 +286,9 @@ window.onscroll = () => {
             class="container flex items-center justify-between w-full h-full transition-[padding,background-color,border-color] ease-in-out duration-300 box bg-transparent border-transparent shadow-none group-[.top-bar--active]:box group-[.top-bar--active]:px-5 group-[.top-bar--active]:bg-transparent group-[.top-bar--active]:border-transparent group-[.top-bar--active]:bg-gradient-to-r group-[.top-bar--active]:from-theme-1 group-[.top-bar--active]:to-theme-2">
             <div class="flex items-center gap-1 xl:hidden">
               <a href="" @click="(event) => {
-                  event.preventDefault()
-                  activeMobileMenu = true
-                }
+                event.preventDefault()
+                activeMobileMenu = true
+              }
                 " class="p-2 text-white rounded-full hover:bg-white/5">
                 <Lucide icon="AlignJustify" class="w-[18px] h-[18px]" />
               </a>
@@ -297,8 +301,8 @@ window.onscroll = () => {
             <!-- END: Breadcrumb -->
             <!-- BEGIN: Search -->
             <div class="relative justify-center flex-1 hidden xl:flex" @click="() => {
-                quickSearch = true
-              }
+              quickSearch = true
+            }
               "></div>
 
             <div class="flex flex-row justify-end px-4">
@@ -310,20 +314,21 @@ window.onscroll = () => {
                 </Menu.Button>
                 <Menu.Items class="w-56 mt-1">
                   <Menu.Item @click="() => {
-                      router.push({
-                        name: 'settings'
-                      })
-                    }
+                    router.push({
+                      name: 'settings'
+                    })
+                  }
                     " class="text-primary">
                     <Lucide icon="Users" class="w-4 h-4 mr-2" />
                     Información Personal
                   </Menu.Item>
                   <Menu.Item @click="() => {
-                      clearLocalStorage()
-                      router.push({
-                        name: 'login'
-                      })
-                    }
+                    clearLocalStorage()
+                    menuStore.resetMenu()
+                    router.push({
+                      name: 'login'
+                    })
+                  }
                     " class="text-danger">
                     <Lucide icon="Power" class="w-4 h-4 mr-2" />
                     Cerrar Sesión
