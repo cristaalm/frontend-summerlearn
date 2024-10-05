@@ -47,8 +47,8 @@ const handleSubmit = async () => {
       if (response) {
         // Redirige o muestra un mensaje de éxito
         router.push({ name: 'login' }) // Cambia a la ruta que desees
-      } else {
-        error.value = 'Error al restablecer la contraseña' // Manejo de errores
+      }else {
+        error.value = 'Se agotó el tiempo, intenta de nuevo'
       }
     } catch (err) {
       error.value = 'Error al restablecer la contraseña'
@@ -93,8 +93,17 @@ const handleSubmit = async () => {
 
           <div class="mt-6">
 
+            <Alert variant="outline-danger" v-if="error"
+              class="flex items-center px-4 py-3 my-7 bg-danger/5 border-danger/20 rounded-[0.6rem] leading-[1.7]">
+              <div>
+                <Lucide icon="AlertTriangle" class="stroke-[0.8] stroke-danger w-7 h-7 mr-2 fill-danger/10" />
+              </div>
+              <div class="ml-1 mr-8">
+                <span class="text-danger">{{ error }}</span>
+              </div>
+            </Alert>
 
-            <FormLabel class="mt-4">Nueva contraseña</FormLabel>
+            <FormLabel class="mt-4">Nueva contraseña <span class="text-red-600 bold">*</span></FormLabel>
             <FormInput type="password" placeholder="**********" name="password" v-model="password" />
             <div class="grid w-full h-1.5 grid-cols-12 gap-4 mt-3.5">
               <div
@@ -121,7 +130,7 @@ const handleSubmit = async () => {
             </div>
 
 
-            <FormLabel class="mt-4">Confirmar contraseña</FormLabel>
+            <FormLabel class="mt-4">Confirmar contraseña <span class="text-red-600 bold">*</span></FormLabel>
             <FormInput type="password" class="block px-4 py-3.5 rounded-[0.6rem] border-slate-300/80"
               placeholder="correo@mail.com" v-model="confirm_password" />
 

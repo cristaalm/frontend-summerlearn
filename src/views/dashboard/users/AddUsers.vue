@@ -338,16 +338,21 @@
                 </label>
                 <div class="flex-1 w-full mt-3 xl:mt-0">
                   <InputGroup class="mt-2">
+
                     <FormInput placeholder="Escriba nuevamente aquí su contraseña..."
                       :type="`${showPasswordConfirm ? 'text' : 'password'}`" ref="inputPasswordConfirm"
                       name="password_confirm" v-model="password_confirm" @input="validatePasswordComfirm" />
+
                     <InputGroup.Text @click="() => { showPasswordConfirm = !showPasswordConfirm }"
-                      class="cursor-pointer">
+                                      class="cursor-pointer">
+
                       <button>
                         <Lucide icon="Eye" class="w-4 h-4 stroke-[1.3] text-green-500" v-if="showPasswordConfirm" />
                         <Lucide icon="EyeOff" class="w-4 h-4 stroke-[1.3] text-red-500" v-else />
                       </button>
+                      
                     </InputGroup.Text>
+
                   </InputGroup>
                   <div class="text-red-500 mt-2">{{ status.password_confirm.message }}</div>
                 </div>
