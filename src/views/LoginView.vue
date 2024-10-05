@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 import { FormInput, FormLabel, InputGroup } from '@/components/base/Form'
 import Button from '@/components/base/Button'
 import Alert from '@/components/base/Alert'

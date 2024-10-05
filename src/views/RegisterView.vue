@@ -1,7 +1,7 @@
 <script setup>
 import { useValidationFunctions } from '@/hooks/register/useValidationFunctions'
 import { FormCheck, FormInput, FormLabel } from '@/components/base/Form'
-import { status } from '@/hooks/register/useStatus'
+import { useStatus } from '@/hooks/register/useStatus'
 import LoadingIcon from '@/components/base/LoadingIcon'
 import Lucide from '@/components/base/Lucide'
 import { useRefs } from '@/hooks/register/useRefs'
@@ -10,9 +10,10 @@ import Button from '@/components/base/Button'
 import { useRouter, useRoute } from 'vue-router'
 import { onMounted } from 'vue'
 
+const { status, resetFields } = useStatus()
 const { password, firstName, lastName, email, phone, birthdate, terms, password_confirm, valid, perfil } = useRefs()
-const { validateText, validate } = useValidationFunctions({ firstName, lastName, email, phone, birthdate, terms, perfil, password, password_confirm, valid, status })
-const { registerUser, loading } = useAuth({ password, firstName, lastName, email, perfil, phone, birthdate, valid, validate })
+const { validateText, validateInputPhone, validate } = useValidationFunctions({ firstName, lastName, email, phone, birthdate, terms, perfil, password, password_confirm, valid, status })
+const { registerUser, loading } = useAuth({ password, firstName, lastName, email, perfil, phone, birthdate, valid, validate, resetFields })
 const router = useRouter()
 const route = useRoute()
 
@@ -81,7 +82,10 @@ const handleSubmit = () => {
             </FormLabel>
             <FormInput type="text" name="phone" id="phone" autocomplete="tel"
               :class="`block px-4 py-3.5 border-[2px] rounded-[0.6rem] ${status.phone.error ? 'border-red-300/80' : 'border-slate-300/80'}`"
-              v-model="phone" @input="validateText" />
+              v-model="phone" @input="(e)=>{
+                validateInputPhone(e)
+                validateText(e)
+              }" />
             <div class="flex flex-row text-red-600 p-2" v-if="status.phone.menssage">
               {{ status.phone.menssage }}
             </div>

@@ -1,5 +1,6 @@
-import { watch } from 'vue'
+import { watch, ref } from 'vue'
 import { usePasswordSecurity } from '@/hooks/register/usePasswordSecurity'
+import { unformatPhone } from '@/logic/formatNumber'
 
 export function useValidationFunctions({
   firstName,
@@ -14,6 +15,8 @@ export function useValidationFunctions({
   valid,
   status
 }) {
+  const lastPhone = ref('')
+
   //? ######################### FUNCTIONS #########################
 
   const validate = () => {
@@ -23,20 +26,57 @@ export function useValidationFunctions({
 
   const { validatePassword } = usePasswordSecurity({ status, validate })
 
-  const validateText = (e) => {
-    const { name, value } = e.target
+  const validateInputPhone = (e) => {
+    let { value } = e.target
 
-    if (name === 'phone') {
-      if (!/^[0-9]+$/.test(value)) {
-        if (value === '') {
-          status.value.phone.lastPhone = ''
-          return
-        }
-        phone.value = status.value.phone.lastPhone
-        return
-      } else {
-        status.value.phone.lastPhone = value
-      }
+    // Guardamos el valor sin formatear, eliminando todo lo que no sea un número
+    const rawValue = value.replace(/\D/g, '')
+
+    // Si el usuario está eliminando, permitimos continuar sin formatear
+    if (rawValue.length <= lastPhone.value.replace(/\D/g, '').length) {
+      lastPhone.value = rawValue
+      e.target.value = formatPhone(rawValue)
+      return
+    }
+
+    // Si el valor supera los 10 dígitos, no permitimos más entradas
+    if (rawValue.length > 10) {
+      return
+    }
+
+    // Aplicamos el formato a medida que se va escribiendo
+    value = formatPhone(rawValue)
+
+    // Establecemos el valor formateado y lo guardamos
+    e.target.value = value
+    lastPhone.value = value
+  }
+
+  // Función auxiliar para formatear el número de teléfono
+  const formatPhone = (value) => {
+    // Formateamos el número a medida que crece
+    let formattedValue = ''
+
+    if (value.length > 0) {
+      formattedValue = `(${value.slice(0, 3)}` // Añadir paréntesis
+    }
+    if (value.length >= 4) {
+      formattedValue += `) ${value.slice(3, 6)}` // Añadir cierre del paréntesis y el primer bloque de números
+    }
+    if (value.length >= 7) {
+      formattedValue += ` ${value.slice(6, 10)}` // Añadir el segundo bloque de números
+    }
+
+    return formattedValue
+  }
+
+  const validateText = (e) => {
+    let { name, value } = e.target
+
+    // Si el campo es el teléfono, lo desformateamos
+    if (name == 'phone') {
+      value = unformatPhone(value)
+      console.log(value)
     }
 
     if (status.value[name].Regex.test(value)) {
@@ -213,9 +253,6 @@ export function useValidationFunctions({
   return {
     validate,
     validateText,
-    validateDate,
-    validatePasswordComfirm,
-    validatePerfil,
-    validateTerms
+    validateInputPhone
   }
 }
