@@ -66,7 +66,8 @@ const router = createRouter({
         }
 
         // Convertir el rol a un número correspondiente
-        to.params.rol = rol == 'donador' ? 3 : rol == 'voluntario' ? 4 : 5 // 3: Donador, 4: Voluntario, 5: Beneficiario
+        to.params.rol = rol == 'donante' ? 3 : rol == 'voluntario' ? 4 : 5 // 3: Donador, 4: Voluntario, 5: Beneficiario
+        console.log(to.params.rol)
 
         next() // Si es válido, sigue con la navegación
       }
