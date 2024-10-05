@@ -10,10 +10,10 @@ export function useValidation() {
         error.value = '';
         status.value = false;
         if (!email.value) {
-            error.value = 'El campo email es requerido';
+            error.value = 'El campo del correo es requerido.';
             return false;
         } else if (!Regex.test(email.value)) {
-            error.value = 'El email no es válido';
+            error.value = 'El correo no es válido.';
             return false;
         }
         status.value = true;

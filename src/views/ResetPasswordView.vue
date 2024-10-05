@@ -48,10 +48,10 @@ const handleSubmit = async () => {
         // Redirige o muestra un mensaje de éxito
         router.push({ name: 'login' }) // Cambia a la ruta que desees
       }else {
-        error.value = 'Se agotó el tiempo, intenta de nuevo'
+        error.value = 'Se agotó el tiempo, intenta de nuevo.'
       }
     } catch (err) {
-      error.value = 'Error al restablecer la contraseña'
+      error.value = 'Error al restablecer la contraseña. Intenta de nuevo.'
       console.error(err)
     } finally {
       loading.value = false
@@ -132,7 +132,7 @@ const handleSubmit = async () => {
 
             <FormLabel class="mt-4">Confirmar contraseña <span class="text-red-600 bold">*</span></FormLabel>
             <FormInput type="password" class="block px-4 py-3.5 rounded-[0.6rem] border-slate-300/80"
-              placeholder="correo@mail.com" v-model="confirm_password" />
+              placeholder="**********" v-model="confirm_password" />
 
 
             <div class="flex flex-row text-red-600 p-2" v-if="status.confirm_password.error">

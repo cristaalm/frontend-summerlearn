@@ -19,11 +19,11 @@ export const sendMail = async (email) => {
             }
 
             const errorData = await response.json();
-            throw new Error(errorData.message || 'Error al enviar el correo');
+            throw new Error(errorData.message || 'Error al enviar el correo.');
         }
 
         const data = await response.json();
-        return { success: true, message: data.message || 'Correo enviado correctamente' };
+        return { success: true, message: data.message || 'Correo enviado correctamente.' };
 
     } catch (error) {
         console.error('Error:', error);
