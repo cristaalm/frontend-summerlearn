@@ -190,6 +190,14 @@ const router = createRouter({
             )
         },
         {
+          path: '/dashboard/activities/view',
+          name: 'activities_view',
+          component: () =>
+            import('@/views/dashboard/activities/ActivitiesOnlyView.vue').catch(
+              () => import('@/views/dashboard/notFoundView/NotFoundView.vue')
+            )
+        },
+        {
           path: '/dashboard/expenses',
           name: 'expenses',
           component: () =>
@@ -201,7 +209,7 @@ const router = createRouter({
           path: '/dashboard/expenses/add',
           name: 'addExpense',
           component: () =>
-            import('@/views/dashboard/expenses/addExpense.vue').catch(
+            import('@/views/dashboard/expenses/AddExpense.vue').catch(
               () => import('@/views/dashboard/notFoundView/NotFoundView.vue')
             )
         },
@@ -214,10 +222,26 @@ const router = createRouter({
             )
         },
         {
+          path: '/dashboard/Subscriptions/request',
+          name: 'request_subscriptions',
+          component: () =>
+            import('@/views/dashboard/subscriptions/RequestSubscriptions.vue').catch(
+              () => import('@/views/dashboard/notFoundView/NotFoundView.vue')
+            )
+        },
+        {
           path: '/dashboard/performance',
           name: 'performance',
           component: () =>
-            import('@/views/dashboard/performance/performanceView.vue').catch(
+            import('@/views/dashboard/performance/PerformanceView.vue').catch(
+              () => import('@/views/dashboard/notFoundView/NotFoundView.vue')
+            )
+        },
+        {
+          path: '/dashboard/performance/view',
+          name: 'performance_view',
+          component: () =>
+            import('@/views/dashboard/performance/PerformanceOnlyView.vue').catch(
               () => import('@/views/dashboard/notFoundView/NotFoundView.vue')
             )
         },
@@ -257,7 +281,7 @@ const router = createRouter({
           path: '/dashboard/donations/add',
           name: 'addDonation',
           component: () =>
-            import('@/views/dashboard/donations/addDonation.vue').catch(
+            import('@/views/dashboard/donations/AddDonation.vue').catch(
               () => import('@/views/dashboard/notFoundView/NotFoundView.vue')
             )
         },
