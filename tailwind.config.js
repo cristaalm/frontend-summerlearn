@@ -108,8 +108,9 @@ module.exports = {
       addBase({
         // Default colors
         ':root': {
-          '--color-theme-1': toRGB('#064e3b'), // Tonalidad oscura de esmeralda
-          '--color-theme-2': toRGB('#0f766e'), // Tonalidad más clara
+          '--color-theme-1': toRGB('#8FFFAE '), // Tonalidad oscura de esmeralda
+          '--color-theme-2': toRGB('#5DD47E'), // Tonalidad más clara
+          '--color-theme-3': toRGB('#00a02c'), // Tonalidad más clara
           '--color-primary': toRGB('#064e3b'),
           '--color-secondary': toRGB(colors.emerald['200']), // Usé un tono claro de esmeralda
           '--color-success': toRGB(colors.emerald['500']), // Color de éxito con tono esmeralda
