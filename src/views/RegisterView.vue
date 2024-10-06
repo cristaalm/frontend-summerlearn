@@ -1,6 +1,6 @@
 <script setup>
 import { useValidationFunctions } from '@/hooks/register/useValidationFunctions'
-import { FormCheck, FormInput, FormLabel } from '@/components/base/Form'
+import { FormCheck, FormInput, FormLabel, InputGroup } from '@/components/base/Form'
 import { useStatus } from '@/hooks/register/useStatus'
 import LoadingIcon from '@/components/base/LoadingIcon'
 import Lucide from '@/components/base/Lucide'
@@ -11,7 +11,7 @@ import { useRouter, useRoute } from 'vue-router'
 import { onMounted } from 'vue'
 
 const { status, resetFields } = useStatus()
-const { password, firstName, lastName, email, phone, birthdate, terms, password_confirm, valid, perfil } = useRefs()
+const { password, firstName, lastName, email, phone, birthdate, terms, password_confirm, valid, perfil, showPassword, showPasswordConfirm } = useRefs()
 const { validateText, validateInputPhone, validate } = useValidationFunctions({ firstName, lastName, email, phone, birthdate, terms, perfil, password, password_confirm, valid, status })
 const { registerUser, loading } = useAuth({ password, firstName, lastName, email, perfil, phone, birthdate, valid, validate, resetFields })
 const router = useRouter()
@@ -56,6 +56,9 @@ const handleSubmit = () => {
               'Donante' }}</span>
           </div>
           <div class="mt-6">
+
+            <!--? ################### FIRSTNAME ###################### -->
+
             <FormLabel htmlFor="firstName">Nombre <span class="text-red-600 bold">*</span></FormLabel>
             <FormInput type="text" name="firstName" id="firstName"
               :class="`block px-4 py-3.5 border-[2px] rounded-[0.6rem]  ${status.firstName.error ? 'border-red-300/80' : 'border-slate-300/80'}`"
@@ -63,6 +66,9 @@ const handleSubmit = () => {
             <div class="flex flex-row text-red-600 p-2" v-if="status.firstName.menssage">
               {{ status.firstName.menssage }}
             </div>
+
+            <!--? ################### LASTNAME ###################### -->
+
             <FormLabel class="mt-5" htmlFor="lastName">Apellido <span class="text-red-600 bold">*</span></FormLabel>
             <FormInput type="text" name="lastName" id="lastName"
               :class="`block px-4 py-3.5 border-[2px] rounded-[0.6rem] ${status.lastName.error ? 'border-red-300/80' : 'border-slate-300/80'}`"
@@ -70,6 +76,9 @@ const handleSubmit = () => {
             <div class="flex flex-row text-red-600 p-2" v-if="status.lastName.menssage">
               {{ status.lastName.menssage }}
             </div>
+
+            <!--? ################### EMAIL ###################### -->
+
             <FormLabel class="mt-5" htmlFor="email">Correo electrónico <span class="text-red-600 bold">*</span>
             </FormLabel>
             <FormInput type="text" name="email" id="email" autocomplete="email"
@@ -78,18 +87,26 @@ const handleSubmit = () => {
             <div class="flex flex-row text-red-600 p-2" v-if="status.email.menssage">
               {{ status.email.menssage }}
             </div>
+
+            <!--? ################### PHONE ###################### -->
+
             <FormLabel class="mt-5" htmlFor="phone">Teléfono celular <span class="text-red-600 bold">*</span>
             </FormLabel>
             <FormInput type="text" name="phone" id="phone" autocomplete="tel"
               :class="`block px-4 py-3.5 border-[2px] rounded-[0.6rem] ${status.phone.error ? 'border-red-300/80' : 'border-slate-300/80'}`"
-              v-model="phone" @input="(e)=>{
+              v-model="phone" @input="(e) => {
                 validateInputPhone(e)
                 validateText(e)
               }" />
             <div class="flex flex-row text-red-600 p-2" v-if="status.phone.menssage">
               {{ status.phone.menssage }}
             </div>
-            <FormLabel class="mt-5" htmlFor="birthdate">Fecha de nacimiento <span class="text-red-600 bold">*</span>
+
+            <!--? ################### BIRTHDATE ###################### -->
+
+            <FormLabel class="mt-5" htmlFor="birthdate">
+              Fecha de nacimiento
+              <span class="text-red-600 bold">*</span>
             </FormLabel>
             <FormInput type="date" name="birthdate" id="birthdate"
               :class="`block px-4 py-3.5 border-[2px] rounded-[0.6rem] ${status.birthdate.error ? 'border-red-300/80' : 'border-slate-300/80'}`"
@@ -98,10 +115,23 @@ const handleSubmit = () => {
               {{ status.birthdate.menssage }}
             </div>
 
+            <!--? ################### PASSWORD ###################### -->
+
             <FormLabel class="mt-5" htmlFor="password">Contraseña <span class="text-red-600 bold">*</span></FormLabel>
-            <FormInput type="password" name="password" id="password"
-              :class="`block px-4 py-3.5 border-[2px] rounded-[0.6rem] ${status.password.error ? 'border-red-300/80' : 'border-slate-300/80'}`"
-              placeholder="************" v-model="password" />
+
+            <InputGroup class="mt-2">
+              <FormInput :type="`${showPassword ? 'text' : 'password'}`"
+                :class="`block px-4 py-3.5 border-[2px] ${status.password.error ? 'border-red-300/80' : 'border-slate-300/80'}`"
+                placeholder="**********" v-model="password" />
+              <InputGroup.Text @click="() => { showPassword = !showPassword }"
+                class="cursor-pointer flex flex-col justify-center items-center">
+                <button class="">
+                  <Lucide icon="Eye" class="w-4 h-4 stroke-[1.3] text-green-500" v-if="showPassword" />
+                  <Lucide icon="EyeOff" class="w-4 h-4 stroke-[1.3] text-red-500" v-else />
+                </button>
+              </InputGroup.Text>
+            </InputGroup>
+
             <div class="flex flex-row text-red-600 p-2" v-if="status.password.menssage">
               {{ status.password.menssage }}
             </div>
@@ -127,14 +157,33 @@ const handleSubmit = () => {
                 </li>
               </ul>
             </div>
-            <FormLabel class="mt-5" htmlFor="password_confirm">Confirmación de contraseña <span
-                class="text-red-600 bold">*</span></FormLabel>
-            <FormInput type="password" name="password_confirm" id="password_confirm"
-              :class="`block px-4 py-3.5 border-[2px] rounded-[0.6rem] ${status.password_confirm.error ? 'border-red-300/80' : 'border-slate-300/80'}`"
-              placeholder="************" v-model="password_confirm" />
+
+            <!--? ################### PASSWORD CONFIRM ###################### -->
+
+            <FormLabel class="mt-5" htmlFor="password_confirm">
+              Confirmación de contraseña
+              <span class="text-red-600 bold">*</span>
+            </FormLabel>
+
+            <InputGroup class="mt-2">
+              <FormInput :type="`${showPasswordConfirm ? 'text' : 'password'}`"
+                :class="`block px-4 py-3.5 border-[2px] ${status.password_confirm.error ? 'border-red-300/80' : 'border-slate-300/80'}`"
+                placeholder="**********" v-model="password_confirm" />
+              <InputGroup.Text @click="() => { showPasswordConfirm = !showPasswordConfirm }"
+                class="cursor-pointer flex flex-col justify-center items-center">
+                <button class="">
+                  <Lucide icon="Eye" class="w-4 h-4 stroke-[1.3] text-green-500" v-if="showPasswordConfirm" />
+                  <Lucide icon="EyeOff" class="w-4 h-4 stroke-[1.3] text-red-500" v-else />
+                </button>
+              </InputGroup.Text>
+            </InputGroup>
+
             <div class="flex flex-row text-red-600 p-2" v-if="status.password_confirm.menssage">
               {{ status.password_confirm.menssage }}
             </div>
+
+            <!--? ################### TERMS ###################### -->
+
             <div
               :class="`flex items-center mt-5 text-xs  sm:text-sm ${status.terms.error ? 'text-red-600' : 'text-slate-500'}`">
               <FormCheck.Input name="terms" id="terms" type="checkbox" class="mr-2 border" v-model="terms" />
@@ -143,16 +192,19 @@ const handleSubmit = () => {
                   terminos y condiciones
                 </a>
               </label>
-
               .
             </div>
-            <!-- avisos de privacidad -->
+
+            <!--? ################### PRIVACY ###################### -->
+
             <div class="flex items-center mt-5 text-xs  sm:text-sm">
               Lee nuestros
               <a class="ml-1 text-primary dark:text-slate-200" href="/privacy" target="_blank">
                 Avisos de privacidad
               </a>
             </div>
+
+            <!--? ################### BUTTON ###################### -->
 
             <div class="mt-5 text-center xl:mt-8 xl:text-left">
               <Button @click="handleSubmit" :disabled="!valid" variant="primary" rounded

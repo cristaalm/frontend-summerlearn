@@ -5,13 +5,13 @@ export function usePasswordSecurity({ status, validate }) {
 
     // Validaciones requeridas para la contraseña
     const validations = {
-      length: '8 caracteres',
-      uppercase: 'Una letra mayúscula',
-      lowercase: 'Una letra minúscula',
-      number: 'Un número',
-      special: 'Un caracter especial',
-      secuential: 'No puede contener secuencias de números',
-      noRepeat: 'No puede contener caracteres repetitivos'
+      length: '8 caracteres.',
+      uppercase: 'Una letra mayúscula.',
+      lowercase: 'Una letra minúscula.',
+      number: 'Un número.',
+      special: 'Un caracter especial.',
+      secuential: 'No puede contener secuencias de números.',
+      noRepeat: 'No puede contener caracteres repetitivos.'
     }
 
     let missingRequirements = []
