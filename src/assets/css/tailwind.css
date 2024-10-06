@@ -4325,8 +4325,9 @@ select {
 }
 
 :root {
-  --color-theme-1: 6 78 59;
-  --color-theme-2: 15 118 110;
+  --color-theme-1: 113 188 132;
+  --color-theme-2: 78 151 99;
+  --color-theme-3: 0 160 44;
   --color-primary: 6 78 59;
   --color-secondary: 167 243 208;
   --color-success: 16 185 129;
@@ -4914,10 +4915,6 @@ select {
   right: 0px;
 }
 
-.right-20 {
-  right: 5rem;
-}
-
 .right-\[100\%\] {
   right: 100%;
 }
@@ -5081,6 +5078,10 @@ select {
 
 .-mt-px {
   margin-top: -1px;
+}
+
+.mb-1 {
+  margin-bottom: 0.25rem;
 }
 
 .mb-10 {
@@ -5652,6 +5653,10 @@ select {
   max-width: 900px;
 }
 
+.max-w-full {
+  max-width: 100%;
+}
+
 .flex-1 {
   flex: 1 1 0%;
 }
@@ -5913,6 +5918,12 @@ select {
   row-gap: 0.75rem;
 }
 
+.space-x-4 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 0;
+  margin-right: calc(1rem * var(--tw-space-x-reverse));
+  margin-left: calc(1rem * calc(1 - var(--tw-space-x-reverse)));
+}
+
 .space-x-8 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-x-reverse: 0;
   margin-right: calc(2rem * var(--tw-space-x-reverse));
@@ -5949,6 +5960,10 @@ select {
 
 .overflow-hidden {
   overflow: hidden;
+}
+
+.overflow-x-auto {
+  overflow-x: auto;
 }
 
 .overflow-y-auto {
@@ -6335,8 +6350,9 @@ select {
   background-color: rgb(var(--color-green-light) / 0.3);
 }
 
-.bg-green\/20 {
-  background-color: rgb(var(--color-green) / 0.2);
+.bg-greend {
+  --tw-bg-opacity: 1;
+  background-color: rgb(143 255 174 / var(--tw-bg-opacity));
 }
 
 .bg-pending {
@@ -6365,8 +6381,9 @@ select {
   background-color: rgb(var(--color-primary) / 0.7);
 }
 
-.bg-red\/20 {
-  background-color: rgb(var(--color-red) / 0.2);
+.bg-redd {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 195 195 / var(--tw-bg-opacity));
 }
 
 .bg-rose-500 {
@@ -6454,6 +6471,11 @@ select {
 
 .bg-yellow\/20 {
   background-color: rgb(var(--color-yellow) / 0.2);
+}
+
+.bg-yellowd {
+  --tw-bg-opacity: 1;
+  background-color: rgb(253 255 170 / var(--tw-bg-opacity));
 }
 
 .bg-opacity-10 {
@@ -6657,6 +6679,10 @@ select {
 
 .p-4 {
   padding: 1rem;
+}
+
+.p-40 {
+  padding: 10rem;
 }
 
 .p-5 {
@@ -7053,6 +7079,10 @@ select {
 .text-black {
   --tw-text-opacity: 1;
   color: rgb(0 0 0 / var(--tw-text-opacity));
+}
+
+.text-black\/70 {
+  color: rgb(0 0 0 / 0.7);
 }
 
 .text-blue {
@@ -8900,8 +8930,8 @@ select {
     justify-content: flex-end;
   }
 
-  .md\:bg-green\/70 {
-    background-color: rgb(var(--color-green) / 0.7);
+  .md\:bg-blued\/70 {
+    background-color: rgb(134 230 255 / 0.7);
   }
 
   .md\:p-8 {
@@ -9184,6 +9214,10 @@ select {
 
   .xl\:mt-0 {
     margin-top: 0px;
+  }
+
+  .xl\:mt-1 {
+    margin-top: 0.25rem;
   }
 
   .xl\:mt-3 {
@@ -9724,8 +9758,8 @@ select {
   width: 1.25rem;
 }
 
-.\[\&_\.tns-outer_\.tns-nav_button\.tns-nav-active\]\:bg-white\/70 .tns-outer .tns-nav button.tns-nav-active {
-  background-color: rgb(255 255 255 / 0.7);
+.\[\&_\.tns-outer_\.tns-nav_button\.tns-nav-active\]\:bg-black\/70 .tns-outer .tns-nav button.tns-nav-active {
+  background-color: rgb(0 0 0 / 0.7);
 }
 
 .\[\&_\.tns-outer_\.tns-nav_button\]\:mx-0\.5 .tns-outer .tns-nav button {
@@ -9741,8 +9775,8 @@ select {
   width: 0.5rem;
 }
 
-.\[\&_\.tns-outer_\.tns-nav_button\]\:bg-white\/40 .tns-outer .tns-nav button {
-  background-color: rgb(255 255 255 / 0.4);
+.\[\&_\.tns-outer_\.tns-nav_button\]\:bg-black\/40 .tns-outer .tns-nav button {
+  background-color: rgb(0 0 0 / 0.4);
 }
 
 .\[\&_td\]\:last\:border-b-0:last-child td {
