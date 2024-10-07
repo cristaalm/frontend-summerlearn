@@ -140,7 +140,7 @@ export default {
         title: 'Donante',
         description:
           'Con tu donación, más niños podrán participar en nuestros cursos de verano, donde recibirán educación de calidad y herramientas para un mejor futuro.',
-        button: 'Aplica para donador'
+        button: 'Aplica para Donante'
       }
     },
     footer: {

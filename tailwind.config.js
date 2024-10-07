@@ -36,8 +36,8 @@ module.exports = {
         '3xl': '1600px'
       },
       colors: {
-        customGreen: '#ACC196',
-        greend: '#8FFFAE',
+        customGreen: '#76D390',
+        greend: '#a6f6bd',
         yellowd: '#FDFFAA',
         redd: '#FFC3C3',
         blued: '#86E6FF',
@@ -113,9 +113,9 @@ module.exports = {
       addBase({
         // Default colors
         ':root': {
-          '--color-theme-1': toRGB('#71bc84'), // Tonalidad oscura de esmeralda
-          '--color-theme-2': toRGB('#4e9763'), // Tonalidad más clara
-          '--color-theme-3': toRGB('#00a02c'), // Tonalidad más clara
+          '--color-theme-1': toRGB('#76D390'), // Tonalidad oscura de esmeralda
+          '--color-theme-2': toRGB('#76D390'), // Tonalidad más clara
+          '--color-theme-3': toRGB('#6BC083 '), // Tonalidad más clara
           '--color-primary': toRGB('#064e3b'),
           '--color-secondary': toRGB(colors.emerald['200']), // Usé un tono claro de esmeralda
           '--color-success': toRGB(colors.emerald['500']), // Color de éxito con tono esmeralda
