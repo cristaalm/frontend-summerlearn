@@ -7,7 +7,7 @@ export function useStatus() {
       success: false,
       message: '',
       name: 'nombre del programa',
-      Regex: /^[a-zA-Z0-9\sáéíóúÁÉÍÓÚñÑ]+$/
+      Regex: /^[0-9a-zA-ZáéíóúÁÉÍÓÚñÑ\s.,!?;:-]+$/ // Letras, números, espacios, y algunos caracteres de puntuación
     },
     duration: {
       error: false,
