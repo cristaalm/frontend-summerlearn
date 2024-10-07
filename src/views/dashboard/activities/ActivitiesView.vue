@@ -543,37 +543,37 @@ onMounted(() => {
               <Table.Thead>
                 <Table.Tr>
                   <Table.Td
-                    class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500"
+                    class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500 whitespace-normal w-96"
                   >
                     Nombre
                   </Table.Td>
                   <Table.Td
-                    class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500"
+                    class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500 whitespace-normal"
                   >
                     Fecha
                   </Table.Td>
                   <Table.Td
-                    class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500"
+                    class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500 whitespace-normal"
                   >
                     Programa
                   </Table.Td>
                   <Table.Td
-                    class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500"
+                    class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500 whitespace-normal"
                   >
                     Área
                   </Table.Td>
                   <Table.Td
-                    class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500"
+                    class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500 whitespace-normal"
                   >
                     # Voluntario
                   </Table.Td>
                   <Table.Td
-                    class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500"
+                    class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500 whitespace-normal"
                   >
                     # Beneficiario
                   </Table.Td>
                   <Table.Td
-                    class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500"
+                    class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500 whitespace-normal"
                   >
                   </Table.Td>
                 </Table.Tr>
@@ -614,22 +614,22 @@ onMounted(() => {
                 <template v-for="actividades in paginatedItems" :key="actividades.id">
                   <Table.Tr class="[&_td]:last:border-b-0">
                     <Table.Td class="py-4 border-dashed dark:bg-darkmode-600 text-center">
-                      <div href="" class="font-medium whitespace-nowrap">
+                      <div class="font-medium">
                         {{ actividades.name }}
                       </div>
                     </Table.Td>
                     <Table.Td class="py-4 border-dashed dark:bg-darkmode-600 text-center">
-                      <div href="" class="font-medium whitespace-nowrap">
+                      <div href="" class="font-medium whitespace-normal">
                         {{ actividades.date }}
                       </div>
                     </Table.Td>
                     <Table.Td class="py-4 border-dashed dark:bg-darkmode-600 text-center">
-                      <div href="" class="font-medium whitespace-nowrap">
+                      <div href="" class="font-medium whitespace-normal">
                         {{ actividades.program_name }}
                       </div>
                     </Table.Td>
                     <Table.Td class="py-4 border-dashed dark:bg-darkmode-600 text-center">
-                      <div href="" class="font-medium whitespace-nowrap">
+                      <div href="" class="font-medium whitespace-normal">
                         {{ actividades.area_name }}
                       </div>
                     </Table.Td>
@@ -677,17 +677,6 @@ onMounted(() => {
                               <Lucide icon="Trash" class="w-4 h-4 mr-2" />
                               Eliminar
                             </Menu.Item>
-                            <!-- <Menu.Item
-                              :class="`${actividades.status ? 'text-red-dark' : 'text-primary'}`"
-                              @click="
-                                () => {
-                                  actividades.status = !actividades.status
-                                }
-                              "
-                            >
-                              <Lucide icon="RefreshCw" class="w-4 h-4 mr-2" />
-                              {{ actividades.status ? 'Desactivar' : 'Activar' }}
-                            </Menu.Item> -->
                           </Menu.Items>
                         </Menu>
                       </div>
@@ -697,6 +686,7 @@ onMounted(() => {
               </Table.Tbody>
             </Table>
           </div>
+
           <div
             class="flex flex-col-reverse flex-wrap items-center p-5 flex-reverse gap-y-2 sm:flex-row"
           >
