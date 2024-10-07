@@ -1,6 +1,6 @@
 <template>
   <section id="mission"
-    className="w-full py-12 md:py-24 lg:py-32 flex flex-col justify-center items-center bg-greend">
+    className="w-full py-12 md:py-24 lg:py-32 flex flex-col justify-center items-center bg-customGreen">
     <div className="container px-4 md:px-6">
       <div className="flex flex-col items-center justify-center space-y-4 text-center">
         <div className="space-y-2" data-aos="fade-up" data-aos-delay="100">

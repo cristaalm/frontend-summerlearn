@@ -36,6 +36,7 @@ module.exports = {
         '3xl': '1600px'
       },
       colors: {
+        customGreen: '#ACC196',
         greend: '#8FFFAE',
         yellowd: '#FDFFAA',
         redd: '#FFC3C3',

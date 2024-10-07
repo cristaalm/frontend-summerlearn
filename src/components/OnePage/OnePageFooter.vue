@@ -15,7 +15,7 @@
                         <label for="language-select" class="w-full text-center">{{ $t('footer.language') }}:</label>
                         <!-- Dropdown for language selection -->
                         <select id="language-select"
-                            class="block appearance-none bg-yellow/20 border border-yellow/30 text-black py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-yellow/20 focus:border-yellow/300"
+                            class="block appearance-none bg-yellow/20 border border-yellow/30 text-black py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-yellow/20 focus:border-yellow/300 cursor-pointer"
                             v-model="language" @change="changeLanguage">
                             <!-- Option to activate language -->
                             <option :value="`${$t('footer.values.activate.activate')}`">{{
