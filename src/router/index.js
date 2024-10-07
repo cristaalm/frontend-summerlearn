@@ -147,6 +147,14 @@ const router = createRouter({
             )
         },
         {
+          path: '/dashboard/users/request',
+          name: 'users-request',
+          component: () =>
+            import('@/views/dashboard/users/UsersRequestView.vue').catch(
+              () => import('@/views/dashboard/notFoundView/NotFoundView.vue')
+            )
+        },
+        {
           path: '/dashboard/areas',
           name: 'areas',
           component: () =>
@@ -213,18 +221,10 @@ const router = createRouter({
             )
         },
         {
-          path: '/dashboard/Subscriptions',
+          path: '/dashboard/subscriptions',
           name: 'subscriptions',
           component: () =>
             import('@/views/dashboard/subscriptions/SubscriptionsView.vue').catch(
-              () => import('@/views/dashboard/notFoundView/NotFoundView.vue')
-            )
-        },
-        {
-          path: '/dashboard/Subscriptions/request',
-          name: 'request_subscriptions',
-          component: () =>
-            import('@/views/dashboard/subscriptions/RequestSubscriptions.vue').catch(
               () => import('@/views/dashboard/notFoundView/NotFoundView.vue')
             )
         },

@@ -1,7 +1,7 @@
 import { Baseurl } from '@/../global'
 
 export const getUsers = async () => {
-  const response = await fetch(`${Baseurl}users/show-by-status/`, {
+  const response = await fetch(`${Baseurl}users/by-status/?id_status=3`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -11,17 +11,14 @@ export const getUsers = async () => {
   const json = await response.json()
   const users = json
 
-  // Ordenar por id DESC
-  users.sort((a, b) => b.id - a.id)
+  users.sort((a, b) => b.id - a.id) // Ordenar por id ASC
 
   return users?.map((user) => ({
     id: user.id,
-    photo: user.users_photo,
     name: user.name,
-    birthdate: user.users_birthdate,
-    phone: user.users_phone,
+    photo: user.users_photo,
     email: user.email,
-    rol: user.users_rol,
-    status: user.users_status ?? 0
+    rol: user.users_rol__rol_name,
+    status: user.users_status__status_name
   }))
 }

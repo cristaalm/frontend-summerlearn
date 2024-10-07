@@ -49,9 +49,6 @@ async function getRoleFromToken(): Promise<string | null> {
   return null // If no token in localStorage
 }
 
-// Obtén el rol desde el token desencriptado
-const role = await getRoleFromToken() // await se pone para las
-
 export interface Menu {
   icon: Icon
   title: string
@@ -72,6 +69,7 @@ export const useMenuStore = defineStore('menu', {
 
   actions: {
     async loadMenu() {
+      // Obtén el rol desde el token desencriptado
       const role = await getRoleFromToken() // Llama a la función para obtener el rol desencriptado
 
       if (!role) {
@@ -90,20 +88,20 @@ export const useMenuStore = defineStore('menu', {
             {
               icon: 'SquareUser',
               pageName: 'users',
-              title: 'Usuarios'
+              title: 'Usuarios',
+              subMenu: [
+                {
+                  icon: 'GalleryVerticalEnd',
+                  pageName: 'users-request',
+                  title: 'Solicitudes'
+                }
+              ]
             },
             'GESTIÓN DE PROGRAMAS',
             {
               icon: 'Notebook',
               pageName: 'subscriptions',
               title: 'Suscripciones',
-              subMenu: [
-                {
-                  icon: 'GalleryVerticalEnd',
-                  pageName: 'request_subscriptions',
-                  title: 'Solicitudes'
-                }
-              ]
             },
             {
               icon: 'Album',

@@ -1,42 +1,87 @@
 <script setup>
 import { FormInput, FormSelect } from '@/components/base/Form'
 import Pagination from '@/components/base/Pagination'
-import { Menu, Popover } from '@/components/base/Headless'
-import { useUsers, useSearch, usePagination, useStatusUser, useToast } from '@/hooks/users/'
-import { onMounted } from 'vue'
+import { Menu, Popover, Dialog } from '@/components/base/Headless'
+import { useUserRequest, useSearch, usePagination, useToast, useDialog } from '@/hooks/users/'
 import Lucide from '@/components/base/Lucide'
 import Button from '@/components/base/Button'
 import Table from '@/components/base/Table'
 import Tippy from '@/components/base/Tippy'
 import LoadingIcon from '@/components/base/LoadingIcon'
 import ToastNotification from '@/components/ToastNotification'
-import { useRoles } from '@/hooks/roles/useRoles'
-import { calculateAge } from '@/logic/'
 import { useRouter } from 'vue-router'
 import { Baseurl } from '@/../global'
-import { formatPhone } from '@/logic/formatNumber'
+import { ref, onMounted } from 'vue'
 
-const { users, loading, error, loadUsers } = useUsers()
-const { roles, loadingRoles, errorRoles, loadRoles } = useRoles()
+const { users, loading, error, loadUsers } = useUserRequest()
+const { toastMessages, showToast } = useToast()
+const { dialogStatusModal, openModal, confirmSubscription, closeModal } = useDialog({
+  showToast,
+  users
+})
+
 const { searchQuery, selectedStatus, selectedRole, filteredUsers, filtersCount } = useSearch(users)
 const { currentPage, pageSize, totalPages, paginatedUsers, changePage, changePageSize } =
   usePagination(filteredUsers)
-const { toastMessages, showToast } = useToast()
-const { updateStatus } = useStatusUser({ showToast })
+// const { updateStatus } = useStatusUser({ showToast })
 const router = useRouter()
 
 // Cargar las áreas al iniciar el componente
 onMounted(() => {
   loadUsers()
-  loadRoles()
 })
-const handleAccept = (id) => {
-  id_actividad.value = id // Guarda el ID en la variable reactiva
-  loadObjectives(id_actividad.value) // Pasa el valor del ID de la actividad
+const statusId = ref(null) // Variable reactiva para guardar el ID
+// Función para guardar el ID
+const saveStatus = (action) => {
+  statusId.value = action
 }
 </script>
-
 <template>
+  <div>
+    <ToastNotification
+      v-for="(message, index) in toastMessages"
+      :key="index"
+      :message="message"
+      :index="index"
+    >
+    </ToastNotification>
+  </div>
+  <!-- BEGIN: Modal Content -->
+  <Dialog :open="dialogStatusModal" @close="closeModal">
+    <Dialog.Panel>
+      <div class="p-5 text-center">
+        <Lucide
+          :icon="statusId === 'accept' ? 'CheckCircleIcon' : 'XCircle'"
+          class="w-16 h-16 mx-auto mt-3"
+          :class="statusId === 'accept' ? 'text-success' : 'text-danger'"
+        />
+        <div class="mt-5 text-3xl">
+          ¿Está seguro de {{ statusId === 'accept' ? 'aceptar' : 'rechazar' }} este registro?
+        </div>
+        <div class="mt-2 text-slate-500">
+          ¿Realmente {{ statusId === 'accept' ? 'aceptar' : 'rechazar' }} este registro?
+          <br />
+          Este proceso no puede deshacerse.
+        </div>
+      </div>
+      <div class="px-5 pb-8 text-center space-x-8">
+        <Button type="button" variant="outline-secondary" @click="closeModal" class="w-24 mr-1">
+          Cancelar
+        </Button>
+        <Button
+          type="button"
+          :variant="statusId === 'accept' ? 'success' : 'danger'"
+          class="w-24 text-white"
+          @click="confirmSubscription"
+          ref="deleteButtonRef"
+        >
+          {{ statusId === 'accept' ? 'Aceptar' : 'Rechazar' }}
+        </Button>
+      </div>
+    </Dialog.Panel>
+  </Dialog>
+  <!-- END: Modal Content -->
+
   <!--? ######################## TOAST NOTIFICATION ######################## -->
 
   <div>
@@ -52,21 +97,8 @@ const handleAccept = (id) => {
   <div class="grid grid-cols-12 gap-y-10 gap-x-6">
     <div class="col-span-12">
       <div class="flex flex-col md:h-10 gap-y-3 md:items-center md:flex-row">
-        <div class="text-base font-medium group-[.mode--light]:text-white">Usuarios</div>
-        <div class="flex flex-col sm:flex-row gap-x-3 gap-y-2 md:ml-auto">
-          <Button
-            variant="primary"
-            class="group-[.mode--light]:!bg-white/[0.12] group-[.mode--light]:!text-slate-200 group-[.mode--light]:!border-transparent"
-            @click="
-              () => {
-                router.push({
-                  name: 'addUser'
-                })
-              }
-            "
-          >
-            <Lucide icon="PenLine" class="stroke-[1.3] w-4 h-4 mr-2" /> Agregar nuevo usuario
-          </Button>
+        <div class="text-base font-medium group-[.mode--light]:text-white">
+          Solicitud de Usuarios
         </div>
       </div>
       <div class="mt-3.5">
@@ -100,33 +132,11 @@ const handleAccept = (id) => {
                 <Popover.Panel placement="bottom-end">
                   <div class="p-2 space-y-4">
                     <div>
-                      <div class="text-left text-slate-500">Estado</div>
-                      <FormSelect v-model="selectedStatus" class="flex-1 mt-2">
-                        <option :value="null">Todos</option>
-                        <option :value="1">Activo</option>
-                        <option :value="2">Inactivo</option>
-                      </FormSelect>
-                    </div>
-                    <div>
                       <div class="text-left text-slate-500">Rol</div>
                       <FormSelect v-model="selectedRole" class="flex-1 mt-2">
-                        <!--? Mostrar 'Cargando roles...' cuando loadingRoles es true -->
-                        <template v-if="loadingRoles">
-                          <option>Cargando roles...</option>
-                        </template>
-
-                        <!--? Mostrar mensaje de error cuando hay errorRoles -->
-                        <template v-if="errorRoles">
-                          <option>Error al cargar roles</option>
-                        </template>
-
-                        <!--? Mostrar los roles cuando no está cargando y no existe ningun errorRoles -->
-                        <template v-if="!loadingRoles">
-                          <option :value="null">Todos</option>
-                          <template v-for="rol in roles" :key="rol.id">
-                            <option :value="rol.id">{{ rol.name }}</option>
-                          </template>
-                        </template>
+                        <option :value="null">Todos</option>
+                        <option :value="'Voluntario'">Voluntario</option>
+                        <option :value="'Beneficiario'">Beneficiario</option>
                       </FormSelect>
                     </div>
                     <div class="flex items-center mt-4">
@@ -139,7 +149,7 @@ const handleAccept = (id) => {
                         "
                         class="w-32 ml-auto"
                       >
-                        Close
+                        Cerrar
                       </Button>
                     </div>
                   </div>
@@ -160,16 +170,6 @@ const handleAccept = (id) => {
                     class="py-4 font-medium border-t bg-slate-50 border-slate-200/60 text-slate-500"
                   >
                     Nombre / Correo electrónico
-                  </Table.Td>
-                  <Table.Td
-                    class="py-4 font-medium border-t bg-slate-50 border-slate-200/60 text-slate-500"
-                  >
-                    Edad
-                  </Table.Td>
-                  <Table.Td
-                    class="py-4 font-medium border-t bg-slate-50 border-slate-200/60 text-slate-500"
-                  >
-                    Teléfono
                   </Table.Td>
                   <Table.Td
                     class="py-4 font-medium border-t bg-slate-50 border-slate-200/60 text-slate-500"
@@ -246,25 +246,7 @@ const handleAccept = (id) => {
                     </Table.Td>
                     <Table.Td class="py-4 border-dashed dark:bg-darkmode-600">
                       <div class="whitespace-nowrap">
-                        {{ calculateAge(user.birthdate) }}
-                      </div>
-                    </Table.Td>
-                    <Table.Td class="py-4 border-dashed dark:bg-darkmode-600">
-                      <div class="flex items-center text-primary">
-                        <Lucide icon="Phone" class="w-4 h-4 mr-2" />
-                        {{ formatPhone(user.phone) }}
-                      </div>
-                    </Table.Td>
-                    <Table.Td
-                      class="py-4 border-dashed dark:bg-darkmode-600"
-                      @click="
-                        () => {
-                          console.log(roles)
-                        }
-                      "
-                    >
-                      <div class="whitespace-nowrap">
-                        {{ roles[user.rol - 1].name }}
+                        {{ user.rol }}
                       </div>
                     </Table.Td>
                     <Table.Td class="py-4 border-dashed dark:bg-darkmode-600">
@@ -289,39 +271,34 @@ const handleAccept = (id) => {
                           </div>
                           <span v-if="user.status == 0" class="text-amber-500">Cambiando....</span>
                           <span v-else-if="user.status == 1" class="text-success">Activo</span>
-                          <span v-else class="text-danger">Inactivo</span>
+                          <span v-else class="text-danger">{{ user.status }}</span>
                         </div>
                       </div>
                     </Table.Td>
                     <Table.Td class="relative py-4 border-dashed dark:bg-darkmode-600">
-                      <div class="flex items-center justify-center">
-                        <Menu class="h-5">
-                          <Menu.Button class="w-5 h-5 text-black">
-                            <Lucide icon="MoreVertical" class="w-5 h-5 stroke-black fill-black" />
-                          </Menu.Button>
-                          <Menu.Items class="w-40">
-                            <Menu.Item>
-                              <Lucide icon="CheckSquare" class="w-4 h-4 mr-2" />
-                              Editar
-                            </Menu.Item>
-                            <Menu.Item
-                              :class="`${user.status == 1 ? 'text-blue' : 'text-[#ff6f0f]'}`"
-                              @click="
-                                () => {
-                                  updateStatus({ user }).then((updatedUser) => {
-                                    const index = users.findIndex((u) => u.id == updatedUser.id)
-                                    if (index !== -1) {
-                                      users[index] = updatedUser
-                                    }
-                                  })
-                                }
-                              "
-                            >
-                              <Lucide icon="RefreshCw" class="w-4 h-4 mr-2" />
-                              Cambiar Estado
-                            </Menu.Item>
-                          </Menu.Items>
-                        </Menu>
+                      <div class="flex flex-col sm:flex-row gap-x-3 gap-y-2 md:ml-auto">
+                        <Button
+                          class="bg-green-300 text-gray-950 hover:bg-green-500 hover:text-white"
+                          @click="
+                            () => {
+                              openModal(user.id, 'accept')
+                              saveStatus('accept')
+                            }
+                          "
+                        >
+                          <Lucide icon="UserCheckIcon" class="stroke-[1.3] w-4 h-4 mr-2" /> Aceptar
+                        </Button>
+                        <Button
+                          class="bg-red-300 text-gray-950 hover:bg-red-500 hover:text-white"
+                          @click="
+                            () => {
+                              openModal(user.id, 'reject')
+                              saveStatus('reject')
+                            }
+                          "
+                        >
+                          <Lucide icon="UserMinusIcon" class="stroke-[1.3] w-4 h-4 mr-2" /> Rechazar
+                        </Button>
                       </div>
                     </Table.Td>
                   </Table.Tr>
