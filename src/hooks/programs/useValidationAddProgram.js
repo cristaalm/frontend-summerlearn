@@ -7,7 +7,8 @@ export function useValidationAddProgram() {
       success: false,
       message: '',
       name: 'Nombre del programa',
-      Regex: /^[a-zA-Z\s]+$/
+      Regex: /^[0-9a-zA-ZáéíóúÁÉÍÓÚñÑ\s.,!?;:-]+$/ // Letras, números, espacios, y algunos caracteres de puntuación
+
     },
     start: {
       error: false,
