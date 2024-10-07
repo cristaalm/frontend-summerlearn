@@ -1,0 +1,18 @@
+/* Custom Scrollbar */
+.scrollbar-custom::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  width: 10px;
+  background-color: #c5f7de;
+}
+.scrollbar-custom::-webkit-scrollbar-thumb,
+body::-webkit-scrollbar-thumb {
+  background: hwb(154 19% 48%);
+  border-radius: 5px;
+}
+
+@media (max-width: 768px) {
+  [data-aos] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

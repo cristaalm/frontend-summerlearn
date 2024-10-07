@@ -1,22 +1,44 @@
-import './assets/css/tailwind.css'
 import { createApp } from 'vue'
-import App from './App.vue'
-import router from './router'
-import i18n from './assets/js/i18n.js'
+import App from '@/App.vue'
+import router from '@/router'
+import i18n from '@/assets/js/i18n.js'
+// import '@/assets/css/tailwind.css' // Import Tailwind CSS
+import '@/assets/css/input.css' // Import custom styles
+import AOS from 'aos'
+import 'aos/dist/aos.css' // Import AOS styles
+import '@/assets/css/custom.css' // Import custom styles
+import { createPinia } from 'pinia'
 
-const app = createApp(App) // Create a new Vue app instance
+// 1. Import Pinia
+
+const app = createApp(App)
+
+// 2. Create a Pinia instance
+const pinia = createPinia()
 
 router.beforeEach((to, from, next) => {
-  const lang = to.params.lang // Get the language parameter from the route
+  const lang = to.params.lang
   if (lang && ['en', 'es'].includes(lang)) {
-    i18n.global.locale = lang // Set the global locale to the selected language
+    i18n.global.locale = lang
   } else {
-    i18n.global.locale = 'en' // Set the global locale to English if no language is specified
+    i18n.global.locale = 'en'
   }
-  next() // Continue with the navigation
+  next()
 })
 
-app.use(router) // Use the router plugin in the Vue app
-app.use(i18n) // Use the i18n plugin in the Vue app
+// 3. Use the plugins in the Vue application
+app.use(pinia)
+app.use(router)
+app.use(i18n)
 
-app.mount('#app') // Mount the Vue app to the element with id 'app'
+app.mount('#app')
+
+// Initialize AOS only if the screen width is larger than 768px (tablet/desktop)
+if (window.innerWidth > 768) {
+  AOS.init({
+    offset: 200,
+    duration: 800,
+    easing: 'ease-in-out',
+    once: true
+  })
+}
