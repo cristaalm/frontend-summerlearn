@@ -1,6 +1,7 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { Baseurl } from '@/../global'
+import { unformatPhone } from '@/logic/formatNumber'
 
 export function useSetUser({
   email,
@@ -35,7 +36,7 @@ export function useSetUser({
     // Crear un FormData para enviar los datos del usuario junto con la imagen
     const formData = new FormData()
     formData.append('email', email.value)
-    formData.append('users_phone', phone.value)
+    formData.append('users_phone', unformatPhone(phone.value))
     formData.append('password', password.value)
     formData.append('first_name', `${firstName.value}`)
     formData.append('last_name', `${lastName.value}`)

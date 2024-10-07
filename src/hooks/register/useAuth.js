@@ -1,6 +1,7 @@
 import { useRouter } from 'vue-router'
 import { ref } from 'vue'
 import { Baseurl } from '@/../global'
+import { unformatPhone } from '@/logic/formatNumber'
 
 export function useAuth({
   password,
@@ -34,7 +35,7 @@ export function useAuth({
       },
       body: JSON.stringify({
         email: email.value,
-        users_phone: phone.value,
+        users_phone: unformatPhone(phone.value),
         users_photo: 'media/imagesUsers/placeholderUser.jpg', // default photo
         password: password.value,
         first_name: firstName.value,
