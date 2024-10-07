@@ -300,7 +300,7 @@ const handleAccept = (id) => {
                             <Lucide icon="MoreVertical" class="w-5 h-5 stroke-black fill-black" />
                           </Menu.Button>
                           <Menu.Items class="w-40">
-                            <Menu.Item>
+                            <Menu.Item class="text-warning">
                               <Lucide icon="CheckSquare" class="w-4 h-4 mr-2" />
                               Editar
                             </Menu.Item>

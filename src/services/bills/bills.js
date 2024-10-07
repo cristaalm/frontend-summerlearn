@@ -20,5 +20,5 @@ export const getBills = async () => {
       amount: bill.bills_amount,
       donation: bill.bills_donations
     }))
-    .sort((a, b) => new Date(b.date) - new Date(a.date))
+    .sort((a, b) => b.id - a.id)
 }

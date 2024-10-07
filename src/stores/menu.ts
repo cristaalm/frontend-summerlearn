@@ -138,12 +138,12 @@ export const useMenuStore = defineStore('menu', {
                 }
               ]
             },
-            'CONTÁCTANOS',
-            {
-              icon: 'MessagesSquare',
-              pageName: 'chat',
-              title: 'Contacto'
-            }
+            // 'CONTÁCTANOS',
+            // {
+            //   icon: 'MessagesSquare',
+            //   pageName: 'chat',
+            //   title: 'Contacto'
+            // }
           ]
           break
         case '2':
@@ -179,12 +179,12 @@ export const useMenuStore = defineStore('menu', {
               pageName: 'performance',
               title: 'Desempeño'
             },
-            'CONTÁCTANOS',
-            {
-              icon: 'MessagesSquare',
-              pageName: 'chat',
-              title: 'Contacto'
-            }
+            // 'CONTÁCTANOS',
+            // {
+            //   icon: 'MessagesSquare',
+            //   pageName: 'chat',
+            //   title: 'Contacto'
+            // }
           ]
           break
         case '3':
@@ -203,12 +203,12 @@ export const useMenuStore = defineStore('menu', {
                 }
               ]
             },
-            'CONTÁCTANOS',
-            {
-              icon: 'MessagesSquare',
-              pageName: 'chat',
-              title: 'Contacto'
-            }
+            // 'CONTÁCTANOS',
+            // {
+            //   icon: 'MessagesSquare',
+            //   pageName: 'chat',
+            //   title: 'Contacto'
+            // }
           ]
           break
         case '4':
@@ -225,12 +225,12 @@ export const useMenuStore = defineStore('menu', {
               pageName: 'performance',
               title: 'Desempeño'
             },
-            'CONTÁCTANOS',
-            {
-              icon: 'MessagesSquare',
-              pageName: 'chat',
-              title: 'Contacto'
-            }
+            // 'CONTÁCTANOS',
+            // {
+            //   icon: 'MessagesSquare',
+            //   pageName: 'chat',
+            //   title: 'Contacto'
+            // }
           ]
           break
         case '5':
@@ -246,12 +246,12 @@ export const useMenuStore = defineStore('menu', {
               pageName: 'performance_view',
               title: 'Desempeño'
             },
-            'CONTÁCTANOS',
-            {
-              icon: 'MessagesSquare',
-              pageName: 'chat',
-              title: 'Contacto'
-            }
+            // 'CONTÁCTANOS',
+            // {
+            //   icon: 'MessagesSquare',
+            //   pageName: 'chat',
+            //   title: 'Contacto'
+            // }
           ]
           break
         default:
