@@ -45,19 +45,19 @@ export default {
     joinOurTeam: {
       title: 'Join Our Team',
       volunteer: {
-        title: 'Volunteer Team',
+        title: 'Volunteer ',
         description:
           'Be a part of our mission to provide quality education to children in need. Your time and your skills can make a significant impact.',
         button: 'Apply to Volunteer'
       },
       beneficiary: {
-        title: 'Beneficiary Program',
+        title: 'Beneficiary ',
         description:
           'Join our summer courses where you’ll learn, grow, and gain access to new educational opportunities. Start building your future today!',
         button: 'Apply to Beneficiary'
       },
       donor: {
-        title: 'Donor Team',
+        title: 'Donor ',
         description:
           'Your donation allows more children to join our summer courses, where they will receive quality education and tools for a better future. Together, we can make a lasting difference.',
         button: 'Apply to Donor'
@@ -125,19 +125,19 @@ export default {
     joinOurTeam: {
       title: 'Únete a nuestro equipo',
       volunteer: {
-        title: 'Equipo De Voluntarios',
+        title: 'Voluntarios',
         description:
           'Sé parte de nuestra misión de proporcionar educación de calidad a los niños que más lo necesitan. Tu tiempo y tus habilidades pueden generar un impacto significativo.',
         button: 'Aplica para voluntario'
       },
       beneficiary: {
-        title: 'Programa De Beneficiarios',
+        title: 'Beneficiarios',
         description:
           'Participa en nuestros cursos de verano, donde aprenderás, crecerás y tendrás acceso a nuevas oportunidades educativas. ¡Empieza a construir tu futuro hoy!',
         button: 'Aplica para voluntario'
       },
       donor: {
-        title: 'Equipo De Donantes',
+        title: 'Donantes',
         description:
           'Con tu donación, más niños podrán participar en nuestros cursos de verano, donde recibirán educación de calidad y herramientas para un mejor futuro.',
         button: 'Aplica para donadro'
