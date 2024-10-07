@@ -245,7 +245,7 @@ onMounted(() => {
                     </Table.Td>
                     <Table.Td class="py-4 border-dashed dark:bg-darkmode-600 text-center">
                       <div href="" class="font-medium whitespace-nowrap">
-                        {{ program.grade }}
+                        {{ program.grade.description }}
                       </div>
                     </Table.Td>
                     <Table.Td class="py-4 border-dashed dark:bg-darkmode-600 text-center">
