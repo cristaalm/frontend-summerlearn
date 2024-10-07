@@ -19,10 +19,10 @@ const smoothScroll = (event) => {
       <div class="grid gap-6 lg:grid-cols-[1fr_400px] lg:gap-12 xl:grid-cols-[1fr_600px]">
         <div class="flex flex-col justify-center space-y-12" data-aos="fade-right" data-aos-delay="100">
           <div class="space-y-6">
-            <h1 class="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none">
+            <h1 class="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none ">
               {{ $t('hero.title') }}
             </h1>
-            <p class="max-w-[600px] text-muted-foreground md:text-xl">
+            <p class="max-w-[600px] text-muted-foreground md:text-xl text-justify">
               {{ $t('hero.description') }}
             </p>
           </div>

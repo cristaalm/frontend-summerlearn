@@ -15,19 +15,19 @@
     <div class="w-full h-[0px] overflow-hidden flex flex-col gap-5 justify-between" ref="navbarMenu">
       <div class="flex flex-col gap-4">
         <a href="#home" @click.prevent="smoothScroll('#home')" @click="toggleMenu"
-          :class="`h-full flex flex-row justify-center items-center text-4xl py-4 transition-all duration-300 text-white hover:text-blue-light hover:bg-blue/10`">
+          :class="`h-full flex flex-row justify-center items-center text-4xl py-4 transition-all duration-300 text-white hover:text-blue-light hover:bg-blued`">
           {{ $t('navbar.home') }}
         </a>
         <a href="#mission" @click.prevent="smoothScroll('#mission')" @click="toggleMenu"
-          :class="`h-full flex flex-row justify-center items-center text-4xl py-4 transition-all duration-300 text-white hover:text-green-light hover:bg-green/10`">
+          :class="`h-full flex flex-row justify-center items-center text-4xl py-4 transition-all duration-300 text-white hover:text-green-light hover:bg-greend`">
           {{ $t('navbar.mission') }}
         </a>
         <a href="#impact" @click.prevent="smoothScroll('#impact')" @click="toggleMenu"
-          :class="`h-full flex flex-row justify-center items-center text-4xl py-4 transition-all duration-300 text-white hover:text-yellow-light hover:bg-yellow/10`">
+          :class="`h-full flex flex-row justify-center items-center text-4xl py-4 transition-all duration-300 text-white hover:text-yellow-light hover:bg-yellowd`">
           {{ $t('navbar.impact') }}
         </a>
         <a href="#joinOurTeam" @click.prevent="smoothScroll('#joinOurTeam')" @click="toggleMenu"
-          :class="`h-full flex flex-row justify-center items-center text-4xl py-4 transition-all duration-300 text-white hover:text-red-light hover:bg-red/10`">
+          :class="`h-full flex flex-row justify-center items-center text-4xl py-4 transition-all duration-300 text-white hover:text-red-light hover:bg-redd`">
           {{ $t('navbar.joinOurTeam') }}
         </a>
       </div>

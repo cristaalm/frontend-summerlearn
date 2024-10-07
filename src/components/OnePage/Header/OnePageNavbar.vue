@@ -26,19 +26,19 @@ const smoothScroll = (event) => {
   <div class="hidden md:flex flex-row justify-between lg:gap-10 w-full">
     <nav class="flex flex-row text-2xl lg:gap-2 navbar">
       <a href="#home" @click="smoothScroll"
-        :class="`h-full flex justify-center items-center px-4 whitespace-nowrap transition-all duration-300 ${topScroll ? ' hover:text-blue-dark' : 'text-gray-900 hover:text-gray-500 '}`">
+        :class="`h-full flex justify-center items-center px-4 whitespace-nowrap transition-all duration-300 ${topScroll ? ' hover:text-blued' : 'text-gray-900 hover:text-gray-500 '}`">
         {{ $t('navbar.home') }}
       </a>
       <a href="#mission" @click="smoothScroll"
-        :class="`h-full flex justify-center items-center px-4 whitespace-nowrap transition-all duration-300 ${topScroll ? ' hover:text-green-dark' : 'text-gray-900 hover:text-gray-500 '}`">
+        :class="`h-full flex justify-center items-center px-4 whitespace-nowrap transition-all duration-300 ${topScroll ? ' hover:text-green' : 'text-gray-900 hover:text-gray-500 '}`">
         {{ $t('navbar.mission') }}
       </a>
       <a href="#impact" @click="smoothScroll"
-        :class="`h-full flex justify-center items-center px-4 whitespace-nowrap transition-all duration-300 ${topScroll ? ' hover:text-yellow-dark' : 'text-gray-900 hover:text-gray-500 '}`">
+        :class="`h-full flex justify-center items-center px-4 whitespace-nowrap transition-all duration-300 ${topScroll ? ' hover:text-yellow' : 'text-gray-900 hover:text-gray-500 '}`">
         {{ $t('navbar.impact') }}
       </a>
       <a href="#joinOurTeam" @click="smoothScroll"
-        :class="`h-full flex justify-center items-center px-4 whitespace-nowrap min-w-[150px] transition-all duration-300 ${topScroll ? ' hover:text-red-dark' : 'text-gray-900 hover:text-gray-500'}`">
+        :class="`h-full flex justify-center items-center px-4 whitespace-nowrap min-w-[150px] transition-all duration-300 ${topScroll ? ' hover:text-redd' : 'text-gray-900 hover:text-gray-500'}`">
         {{ $t('navbar.joinOurTeam') }}
       </a>
     </nav>
