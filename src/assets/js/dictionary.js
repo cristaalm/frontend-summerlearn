@@ -43,39 +43,30 @@ export default {
       }
     },
     joinOurTeam: {
+      title: 'Join Our Team',
       volunteer: {
-        title: 'Volunteer Team',
+        title: 'Volunteer ',
         description:
           'Be a part of our mission to provide quality education to children in need. Your time and your skills can make a significant impact.',
         button: 'Apply to Volunteer'
       },
       beneficiary: {
-        title: 'Beneficiary Program',
+        title: 'Beneficiary ',
         description:
-          'Be a part of our mission to provide quality education to children in need. Your time and your skills can make a significant impact.',
+          'Join our summer courses where you’ll learn, grow, and gain access to new educational opportunities. Start building your future today!',
         button: 'Apply to Beneficiary'
       },
       donor: {
-        title: 'Donor Team',
+        title: 'Donor ',
         description:
-          'Be a part of our mission to provide quality education to children in need. Your time and your skills can make a significant impact.',
+          'Your donation allows more children to join our summer courses, where they will receive quality education and tools for a better future. Together, we can make a lasting difference.',
         button: 'Apply to Donor'
-      },
-    },
-    beneficiary: {
-      title: 'Join Our Beneficiary Program',
-      description:
-        'Be a part of our mission to provide quality education to children in need. Your time and your skills can make a significant impact.',
-      button: 'Apply to Beneficiary'
-    },
-    donor: {
-      title: 'Join Our Donor Team',
-      description:
-        'Be a part of our mission to provide quality education to children in need. Your time and your skills can make a significant impact.',
-      button: 'Apply to Donor'
+      }
     },
     footer: {
+      language: 'Language',
       copyRight: '© 2024 SummerLearn. All rights reserved.',
+      privacyNotices: 'Privacy Notices',
       values: {
         activate: {
           activate: 'en',
@@ -85,7 +76,7 @@ export default {
           deactivate: 'es',
           lenguage: 'Spanish'
         }
-        }
+      }
     }
   },
   es: {
@@ -95,7 +86,7 @@ export default {
       home: 'Inicio',
       mission: 'Misión',
       impact: 'Impacto',
-      volunteer: 'Únete a nuestro equipo',
+      joinOurTeam: 'Únete a nosotros',
       donate: 'Donar'
     },
     hero: {
@@ -131,18 +122,35 @@ export default {
         }
       }
     },
-    volunteer: {
-      title: 'Únete a nuestro equipo de voluntarios',
-      description:
-        'Sé parte de nuestra misión de proporcionar educación de calidad a niños necesitados. Tu tiempo y tus habilidades pueden tener un impacto significativo.',
-      button: 'Unirse'
+    joinOurTeam: {
+      title: 'Únete a nuestro equipo',
+      volunteer: {
+        title: 'Voluntario',
+        description:
+          'Sé parte de nuestra misión de proporcionar educación de calidad a los niños que más lo necesitan. Tu tiempo y tus habilidades pueden generar un impacto significativo.',
+        button: 'Aplica para voluntario'
+      },
+      beneficiary: {
+        title: 'Beneficiario',
+        description:
+          'Participa en nuestros cursos de verano, donde aprenderás, crecerás y tendrás acceso a nuevas oportunidades educativas. ¡Empieza a construir tu futuro hoy!',
+        button: 'Aplica para beneficiario'
+      },
+      donor: {
+        title: 'Donante',
+        description:
+          'Con tu donación, más niños podrán participar en nuestros cursos de verano, donde recibirán educación de calidad y herramientas para un mejor futuro.',
+        button: 'Aplica para donador'
+      }
     },
     footer: {
+      language: 'Idioma',
       copyRight: '© 2024 SummerLearn. Todos los derechos reservados.',
+      privacyNotices: 'Avisos de privacidad',
       values: {
         activate: {
           activate: 'es',
-          lenguage: 'Español' 
+          lenguage: 'Español'
         },
         deactivate: {
           deactivate: 'en',

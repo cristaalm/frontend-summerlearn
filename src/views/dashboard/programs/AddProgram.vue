@@ -4,22 +4,24 @@ import Button from "@/components/base/Button"
 import Alert from '@/components/base/Alert'
 import Litepicker from "@/components/base/Litepicker";
 import LoadingIcon from "@/components/base/LoadingIcon";
-import { useRefs, useValidations, useStatus, useAreas, useUsers, useSetProgram } from '@/hooks/programs/addProgram/'
+import { useRefs, useValidations, useStatus, useAreas, useUsers, useSetProgram, useGrades} from '@/hooks/programs/addProgram/'
 import { FormInput, FormSelect } from "@/components/base/Form"
 import { onMounted } from "vue"
 import { useRouter } from "vue-router"
 
 const router = useRouter()
-const { name, duration, responsible, area } = useRefs()
+const { name, duration, responsible, area, grade } = useRefs()
 const { status } = useStatus()
 const { valid } = useValidations({ status, name, duration, responsible, area })
 const { areas, loadingAreas, errorAreas, loadAreas } = useAreas()
+const { grades, loadingGrades, errorGrades, loadGrades } = useGrades()
 const { users, loadingResponsable, errorResponsable, loadUsers } = useUsers()
 const { setProgramLoading, setProgramError, addProgram } = useSetProgram()
 
 onMounted(() => {
     loadAreas()
     loadUsers()
+    loadGrades()
 })
 
 const handleRegister = () => {
@@ -29,7 +31,9 @@ const handleRegister = () => {
             duration: duration.value,
             responsible: responsible.value,
             area: area.value,
+            grade: grade.value,
         }
+        console.log(program)
         addProgram({ program })
     }
 }
@@ -107,6 +111,55 @@ const handleRegister = () => {
                             <label class="inline-block mb-2 sm:mb-0 sm:mr-5 sm:text-right xl:w-60 xl:mr-14">
                                 <div class="text-left">
                                     <div class="flex items-center">
+                                        <div class="font-medium">Escolaridad</div>
+                                        <div
+                                            class="ml-2.5 px-2 py-0.5 bg-slate-100 text-slate-500 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md border border-slate-200">
+                                            Requerido
+                                        </div>
+                                    </div>
+                                    <div class="mt-1.5 xl:mt-3 text-xs leading-relaxed text-slate-500/80">
+                                        Por favor, seleccione la escolaridad del programa
+                                    </div>
+                                </div>
+                            </label>
+
+                            <div class="flex-1 w-full mt-3 xl:mt-0">
+                                <FormSelect v-model="grade">
+
+                                    <template v-if="loadingGrades">
+                                        <option value="" disabled selected>
+                                            Cargando...
+                                        </option>
+                                    </template>
+
+                                    <template v-else-if="errorGrades">
+                                        <option value="" disabled selected>
+                                            Error al cargar la escolaridad
+                                        </option>
+                                    </template>
+
+                                    <template v-else>
+                                        <option value="" disabled selected>
+                                            Seleccione una escolaridad...
+                                        </option>
+                                        <template v-for="grade in grades" :key="grade.id">
+                                            <option :value="grade.id">
+                                                {{ grade.description }}
+                                            </option>
+                                        </template>
+                                    </template>
+
+                                </FormSelect>
+                                <!-- <div class="mt-1 text-xs text-red-500 h-4">
+                                    {{ status.grade.message }}
+                                </div> -->
+                            </div>
+                        </div>
+
+                        <div class="flex-col block pt-5 mt-5 xl:items-center sm:flex xl:flex-row first:mt-0 first:pt-0">
+                            <label class="inline-block mb-2 sm:mb-0 sm:mr-5 sm:text-right xl:w-60 xl:mr-14">
+                                <div class="text-left">
+                                    <div class="flex items-center">
                                         <div class="font-medium text-nowrap">Duración del programa</div>
                                         <div
                                             class="ml-2.5 px-2 py-0.5 bg-slate-100 text-slate-500 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md border border-slate-200">
@@ -143,7 +196,7 @@ const handleRegister = () => {
                             <label class="inline-block mb-2 sm:mb-0 sm:mr-5 sm:text-right xl:w-60 xl:mr-14">
                                 <div class="text-left">
                                     <div class="flex items-center">
-                                        <div class="font-medium">Responsabe</div>
+                                        <div class="font-medium">Responsable</div>
                                         <div
                                             class="ml-2.5 px-2 py-0.5 bg-slate-100 text-slate-500 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md border border-slate-200">
                                             Requerido

@@ -1,18 +1,31 @@
 <script setup>
 import { useValidationFunctions } from '@/hooks/register/useValidationFunctions'
-import { FormCheck, FormInput, FormLabel } from '@/components/base/Form'
-import { status } from '@/hooks/register/useStatus'
+import { FormCheck, FormInput, FormLabel, InputGroup } from '@/components/base/Form'
+import { useStatus } from '@/hooks/register/useStatus'
 import LoadingIcon from '@/components/base/LoadingIcon'
+import Lucide from '@/components/base/Lucide'
 import { useRefs } from '@/hooks/register/useRefs'
 import { useAuth } from '@/hooks/register/useAuth'
 import Button from '@/components/base/Button'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
+import { onMounted } from 'vue'
 
-const { password, firstName, lastName, email, phone, birthdate, perfil, terms, password_confirm, valid } = useRefs()
-const { validateText, validate } = useValidationFunctions({ firstName, lastName, email, phone, birthdate, perfil, terms, password, password_confirm, valid, status })
-const { registerUser, loading } = useAuth({ password, firstName, lastName, email, phone, birthdate, perfil, valid, validate })
+const { status, resetFields } = useStatus()
+const { password, firstName, lastName, email, phone, birthdate, terms, password_confirm, valid, perfil, showPassword, showPasswordConfirm } = useRefs()
+const { validateText, validateInputPhone, validate } = useValidationFunctions({ firstName, lastName, email, phone, birthdate, terms, perfil, password, password_confirm, valid, status })
+const { registerUser, loading } = useAuth({ password, firstName, lastName, email, perfil, phone, birthdate, valid, validate, resetFields })
 const router = useRouter()
+const route = useRoute()
 
+onMounted(() => {
+  const rol = route.params.rol
+
+  if (rol) { // si rol existe
+    perfil.value = rol
+  } else {
+    router.push({ name: 'home' }) // Redirige si el rol no es válido
+  }
+})
 
 
 const handleSubmit = () => {
@@ -29,55 +42,96 @@ const handleSubmit = () => {
       'relative z-50 h-full col-span-12 p-7 sm:p-14 bg-white rounded-2xl lg:bg-transparent lg:pr-10 lg:col-span-5 xl:pr-24 2xl:col-span-4 lg:p-0'
     ]">
       <div class="relative z-10 flex flex-col justify-center w-full h-full py-2">
+        <div class="flex flex-row justify-start items-center pt-5">
+          <span @click="router.push({ name: 'home' })"
+            class="flex flex-row gap-2 transition-all duration-200 hover:scale-95 !bg-white/[0.12] !text-black !border-transparent cursor-pointer">
+            <Lucide icon="ArrowLeft" class="w-5 h-5" />
+            Regresar
+          </span>
+        </div>
         <div class="mt-10">
-          <div class="text-2xl font-medium">Registrarse</div>
-          <div class="mt-2.5 text-slate-600">
-            ¿Ya tienes una cuenta?
-            <span class="font-medium text-primary cursor-pointer" @click="router.push({ name: 'login' })">
-              Iniciar sesión
-            </span>
+          <div class="text-2xl font-medium">
+            Registrarse como
+            <span class="font-bold text-blue">{{ perfil == 5 ? 'Beneficiario' : perfil == 4 ? 'Voluntario' :
+              'Donante' }}</span>
           </div>
           <div class="mt-6">
-            <FormLabel>Nombre <span class="text-red-600 bold">*</span></FormLabel>
-            <FormInput type="text" name="firstName"
+
+            <!--? ################### FIRSTNAME ###################### -->
+
+            <FormLabel htmlFor="firstName">Nombre <span class="text-red-600 bold">*</span></FormLabel>
+            <FormInput type="text" name="firstName" id="firstName"
               :class="`block px-4 py-3.5 border-[2px] rounded-[0.6rem]  ${status.firstName.error ? 'border-red-300/80' : 'border-slate-300/80'}`"
               v-model="firstName" />
             <div class="flex flex-row text-red-600 p-2" v-if="status.firstName.menssage">
               {{ status.firstName.menssage }}
             </div>
-            <FormLabel class="mt-5">Apellido <span class="text-red-600 bold">*</span></FormLabel>
-            <FormInput type="text" name="lastName"
+
+            <!--? ################### LASTNAME ###################### -->
+
+            <FormLabel class="mt-5" htmlFor="lastName">Apellido <span class="text-red-600 bold">*</span></FormLabel>
+            <FormInput type="text" name="lastName" id="lastName"
               :class="`block px-4 py-3.5 border-[2px] rounded-[0.6rem] ${status.lastName.error ? 'border-red-300/80' : 'border-slate-300/80'}`"
               v-model="lastName" />
             <div class="flex flex-row text-red-600 p-2" v-if="status.lastName.menssage">
               {{ status.lastName.menssage }}
             </div>
-            <FormLabel class="mt-5">Correo electrónico <span class="text-red-600 bold">*</span></FormLabel>
-            <FormInput type="text" name="email"
+
+            <!--? ################### EMAIL ###################### -->
+
+            <FormLabel class="mt-5" htmlFor="email">Correo electrónico <span class="text-red-600 bold">*</span>
+            </FormLabel>
+            <FormInput type="text" name="email" id="email" autocomplete="email"
               :class="`block px-4 py-3.5 border-[2px] rounded-[0.6rem] ${status.email.error ? 'border-red-300/80' : 'border-slate-300/80'}`"
               v-model="email" />
             <div class="flex flex-row text-red-600 p-2" v-if="status.email.menssage">
               {{ status.email.menssage }}
             </div>
-            <FormLabel class="mt-5">Teléfono celular <span class="text-red-600 bold">*</span></FormLabel>
-            <FormInput type="text" name="phone"
+
+            <!--? ################### PHONE ###################### -->
+
+            <FormLabel class="mt-5" htmlFor="phone">Teléfono celular <span class="text-red-600 bold">*</span>
+            </FormLabel>
+            <FormInput type="text" name="phone" id="phone" autocomplete="tel"
               :class="`block px-4 py-3.5 border-[2px] rounded-[0.6rem] ${status.phone.error ? 'border-red-300/80' : 'border-slate-300/80'}`"
-              v-model="phone" @input="validateText" />
+              v-model="phone" @input="(e) => {
+                validateInputPhone(e)
+                validateText(e)
+              }" />
             <div class="flex flex-row text-red-600 p-2" v-if="status.phone.menssage">
               {{ status.phone.menssage }}
             </div>
-            <FormLabel class="mt-5">Fecha de nacimiento <span class="text-red-600 bold">*</span></FormLabel>
-            <FormInput type="date" name="birthdate"
+
+            <!--? ################### BIRTHDATE ###################### -->
+
+            <FormLabel class="mt-5" htmlFor="birthdate">
+              Fecha de nacimiento
+              <span class="text-red-600 bold">*</span>
+            </FormLabel>
+            <FormInput type="date" name="birthdate" id="birthdate"
               :class="`block px-4 py-3.5 border-[2px] rounded-[0.6rem] ${status.birthdate.error ? 'border-red-300/80' : 'border-slate-300/80'}`"
               v-model="birthdate" />
             <div class="flex flex-row text-red-600 p-2" v-if="status.birthdate.menssage">
               {{ status.birthdate.menssage }}
             </div>
 
-            <FormLabel class="mt-5">Contraseña <span class="text-red-600 bold">*</span></FormLabel>
-            <FormInput type="password" name="password"
-              :class="`block px-4 py-3.5 border-[2px] rounded-[0.6rem] ${status.password.error ? 'border-red-300/80' : 'border-slate-300/80'}`"
-              placeholder="************" v-model="password" />
+            <!--? ################### PASSWORD ###################### -->
+
+            <FormLabel class="mt-5" htmlFor="password">Contraseña <span class="text-red-600 bold">*</span></FormLabel>
+
+            <InputGroup class="mt-2">
+              <FormInput :type="`${showPassword ? 'text' : 'password'}`"
+                :class="`block px-4 py-3.5 border-[2px] ${status.password.error ? 'border-red-300/80' : 'border-slate-300/80'}`"
+                placeholder="**********" v-model="password" />
+              <InputGroup.Text @click="() => { showPassword = !showPassword }"
+                class="cursor-pointer flex flex-col justify-center items-center">
+                <button class="">
+                  <Lucide icon="Eye" class="w-4 h-4 stroke-[1.3] text-green-500" v-if="showPassword" />
+                  <Lucide icon="EyeOff" class="w-4 h-4 stroke-[1.3] text-red-500" v-else />
+                </button>
+              </InputGroup.Text>
+            </InputGroup>
+
             <div class="flex flex-row text-red-600 p-2" v-if="status.password.menssage">
               {{ status.password.menssage }}
             </div>
@@ -103,43 +157,67 @@ const handleSubmit = () => {
                 </li>
               </ul>
             </div>
-            <FormLabel class="mt-5">Confirmación de contraseña <span class="text-red-600 bold">*</span></FormLabel>
-            <FormInput type="password" name="password_confirm"
-              :class="`block px-4 py-3.5 border-[2px] rounded-[0.6rem] ${status.password_confirm.error ? 'border-red-300/80' : 'border-slate-300/80'}`"
-              placeholder="************" v-model="password_confirm" />
+
+            <!--? ################### PASSWORD CONFIRM ###################### -->
+
+            <FormLabel class="mt-5" htmlFor="password_confirm">
+              Confirmación de contraseña
+              <span class="text-red-600 bold">*</span>
+            </FormLabel>
+
+            <InputGroup class="mt-2">
+              <FormInput :type="`${showPasswordConfirm ? 'text' : 'password'}`"
+                :class="`block px-4 py-3.5 border-[2px] ${status.password_confirm.error ? 'border-red-300/80' : 'border-slate-300/80'}`"
+                placeholder="**********" v-model="password_confirm" />
+              <InputGroup.Text @click="() => { showPasswordConfirm = !showPasswordConfirm }"
+                class="cursor-pointer flex flex-col justify-center items-center">
+                <button class="">
+                  <Lucide icon="Eye" class="w-4 h-4 stroke-[1.3] text-green-500" v-if="showPasswordConfirm" />
+                  <Lucide icon="EyeOff" class="w-4 h-4 stroke-[1.3] text-red-500" v-else />
+                </button>
+              </InputGroup.Text>
+            </InputGroup>
+
             <div class="flex flex-row text-red-600 p-2" v-if="status.password_confirm.menssage">
               {{ status.password_confirm.menssage }}
             </div>
-            <!-- El perfil es un select -->
-            <FormLabel class="mt-5">Perfil <span class="text-red-600 bold">*</span></FormLabel>
-            <select name="perfil"
-              :class="`block w-full px-4 py-3.5 border-[2px] rounded-[0.6rem] ${status.perfil.error ? 'border-red-300/80' : 'border-slate-300/80'}`"
-              v-model="perfil">
-              <option value="" selected class="text-gray-700">Seleccionar perfil</option>
-              <option value="5" class="text-black">Beneficiario</option>
-              <option value="4" class="text-black">Voluntario</option>
-              <option value="3" class="text-black">Donante</option>
-            </select>
-            <div class="flex flex-row text-red-600 p-2" v-if="status.perfil.error">
-              {{ status.perfil.menssage }}
-            </div>
+
+            <!--? ################### TERMS ###################### -->
+
             <div
               :class="`flex items-center mt-5 text-xs  sm:text-sm ${status.terms.error ? 'text-red-600' : 'text-slate-500'}`">
-              <FormCheck.Input name="terms" type="checkbox" class="mr-2 border" v-model="terms" />
-              <label class="cursor-pointer select-none" htmlFor="remember-me">
-                Acepto los términos y condiciones
+              <FormCheck.Input name="terms" id="terms" type="checkbox" class="mr-2 border" v-model="terms" />
+              <label class="cursor-pointer select-none" htmlFor="terms">
+                Acepto los <a class="ml-1 text-primary dark:text-slate-200" href="/terms" target="_blank">
+                  terminos y condiciones
+                </a>
               </label>
-              <a class="ml-1 text-primary dark:text-slate-200" href="/terms" target="_blank">
-                Política de privacidad
-              </a>
               .
             </div>
+
+            <!--? ################### PRIVACY ###################### -->
+
+            <div class="flex items-center mt-5 text-xs  sm:text-sm">
+              Lee nuestros
+              <a class="ml-1 text-primary dark:text-slate-200" href="/privacy" target="_blank">
+                Avisos de privacidad
+              </a>
+            </div>
+
+            <!--? ################### BUTTON ###################### -->
+
             <div class="mt-5 text-center xl:mt-8 xl:text-left">
               <Button @click="handleSubmit" :disabled="!valid" variant="primary" rounded
                 :class="`bg-gradient-to-r transition-all border-none scale-105 duration-200 w-full py-3.5 xl:mr-3 ${valid && !loading ? 'from-green-dark to-green hover:scale-100 select-none cursor-pointer' : 'from-gray-600 to-gray-600  cursor-default'}`">
                 <LoadingIcon v-if="loading" icon="three-dots" class="w-8 h-5" color="white" />
                 {{ !loading ? 'Registrarse' : '' }}
               </Button>
+            </div>
+            <div class="mt-2.5 text-black mb-5">
+              ¿Ya tienes una cuenta?
+              <span class="font-medium text-primary cursor-pointer" @click="router.push({ name: 'login' })">
+                Iniciar sesión
+              </span>
             </div>
           </div>
         </div>

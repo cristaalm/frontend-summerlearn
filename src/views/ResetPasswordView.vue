@@ -1,7 +1,8 @@
 <script setup>
-import { FormInput, FormLabel } from '@/components/base/Form'
+import { FormInput, FormLabel, InputGroup } from '@/components/base/Form'
 import Button from '@/components/base/Button'
 import LoadingIcon from '@/components/base/LoadingIcon'
+import Lucide from '@/components/base/Lucide'
 import { useRoute, useRouter } from 'vue-router'
 import { useRefs } from '@/hooks/recovery/useRefs'
 import { status } from '@/hooks/recovery/useStatus'
@@ -9,15 +10,13 @@ import { useValidation } from '@/hooks/recovery/useValidation'
 import { usePasswordSecurity } from '@/hooks/recovery/usePasswordSecurity'
 import { watch, ref } from 'vue'
 import { recoveryPassword } from '@/hooks/recovery/useRecovery'
-
 // Recupera la ruta actual
 const route = useRoute()
 const router = useRouter()
 
 // Recupera la key de los parámetros de la URL
 const key = route.params.key || ''
-
-const { password, confirm_password, valid } = useRefs()
+const { password, confirm_password, valid, showPassword, showPasswordConfirm } = useRefs()
 const { validationConfirmPassword, validate } = useValidation({ password, confirm_password, status, valid })
 const { validatePassword } = usePasswordSecurity({ status, validate, password })
 
@@ -47,10 +46,10 @@ const handleSubmit = async () => {
         // Redirige o muestra un mensaje de éxito
         router.push({ name: 'login' }) // Cambia a la ruta que desees
       } else {
-        error.value = 'Error al restablecer la contraseña' // Manejo de errores
+        error.value = 'Se agotó el tiempo, intenta de nuevo.'
       }
     } catch (err) {
-      error.value = 'Error al restablecer la contraseña'
+      error.value = 'Error al restablecer la contraseña, Intenta de nuevo.'
       console.error(err)
     } finally {
       loading.value = false
@@ -66,6 +65,13 @@ const handleSubmit = async () => {
       'relative z-50 h-full col-span-12 p-7 sm:p-14 bg-white rounded-2xl lg:bg-transparent lg:pr-10 lg:col-span-5 xl:pr-24 2xl:col-span-4 lg:p-0'
     ]">
       <div class="relative z-10 flex flex-col justify-center w-full h-full py-2 lg:py-32">
+        <div class="flex flex-row justify-start items-center">
+          <span @click="router.push({ name: 'login' })"
+            class="flex flex-row gap-2 transition-all duration-200 hover:scale-95 !bg-white/[0.12] !text-black !border-transparent cursor-pointer">
+            <Lucide icon="ArrowLeft" class="w-5 h-5" />
+            Regresar
+          </span>
+        </div>
         <div class="mt-10">
           <div class="text-2xl font-medium">Reiniciar Contraseña</div>
 
@@ -85,9 +91,29 @@ const handleSubmit = async () => {
 
           <div class="mt-6">
 
+            <Alert variant="outline-danger" v-if="error"
+              class="flex items-center px-4 py-3 my-7 bg-danger/5 border-danger/20 rounded-[0.6rem] leading-[1.7]">
+              <div>
+                <Lucide icon="AlertTriangle" class="stroke-[0.8] stroke-danger w-7 h-7 mr-2 fill-danger/10" />
+              </div>
+              <div class="ml-1 mr-8">
+                <span class="text-danger">{{ error }}</span>
+              </div>
+            </Alert>
 
-            <FormLabel class="mt-4">Nueva contraseña</FormLabel>
-            <FormInput type="password" placeholder="**********" name="password" v-model="password" />
+            <FormLabel class="mt-4">Nueva contraseña <span class="text-red-600 bold">*</span></FormLabel>
+            <InputGroup class="mt-2">
+              <FormInput :type="`${showPassword ? 'text' : 'password'}`" placeholder="**********"
+                class="block px-4 py-3.5  border-slate-300/80" name="password" v-model="password" />
+              <InputGroup.Text @click="() => { showPassword = !showPassword }"
+                class="cursor-pointer flex flex-col justify-center items-center">
+                <button class="">
+                  <Lucide icon="Eye" class="w-4 h-4 stroke-[1.3] text-green-500" v-if="showPassword" />
+                  <Lucide icon="EyeOff" class="w-4 h-4 stroke-[1.3] text-red-500" v-else />
+                </button>
+              </InputGroup.Text>
+            </InputGroup>
+
             <div class="grid w-full h-1.5 grid-cols-12 gap-4 mt-3.5">
               <div
                 :class="`h-full col-span-3 border rounded bg-slate-400/30 border-slate-400/20 ${status.password.color} ${status.password.secure >= 0 ? 'active' : ''}`">
@@ -113,19 +139,20 @@ const handleSubmit = async () => {
             </div>
 
 
-            <FormLabel class="mt-4">Confirmar contraseña</FormLabel>
-            <FormInput type="password" class="block px-4 py-3.5 rounded-[0.6rem] border-slate-300/80"
-              placeholder="correo@mail.com" v-model="confirm_password" />
-
-
+            <FormLabel class="mt-4">Confirmar contraseña <span class="text-red-600 bold">*</span></FormLabel>
+            <InputGroup class="mt-2">
+              <FormInput :type="`${showPasswordConfirm ? 'text' : 'password'}`"
+                class="block px-4 py-3.5  border-slate-300/80" placeholder="**********" v-model="confirm_password" />
+              <InputGroup.Text @click="() => { showPasswordConfirm = !showPasswordConfirm }"
+                class="cursor-pointer flex flex-col justify-center items-center">
+                <button class="">
+                  <Lucide icon="Eye" class="w-4 h-4 stroke-[1.3] text-green-500" v-if="showPasswordConfirm" />
+                  <Lucide icon="EyeOff" class="w-4 h-4 stroke-[1.3] text-red-500" v-else />
+                </button>
+              </InputGroup.Text>
+            </InputGroup>
             <div class="flex flex-row text-red-600 p-2" v-if="status.confirm_password.error">
               {{ status.confirm_password.message }}
-            </div>
-
-            <div class="flex flex-row justify-end mt-4 text-xs text-slate-500 sm:text-sm">
-
-              <span class=" cursor-pointer" @click="router.push({ name: 'login' })">Regresar al inicio de sesión</span>
-
             </div>
             <div class="mt-5 text-center xl:mt-8 xl:text-left">
 

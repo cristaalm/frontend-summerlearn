@@ -84,6 +84,7 @@ export const useMenuStore = defineStore('menu', {
       let menuItems: Array<Menu | string> = []
       switch (role) {
         case '1':
+          menuItems = []
           menuItems = [
             'GESTIÓN DE USUARIOS',
             {
@@ -143,11 +144,12 @@ export const useMenuStore = defineStore('menu', {
             {
               icon: 'MessagesSquare',
               pageName: 'chat',
-              title: 'Chat'
+              title: 'Contacto'
             }
           ]
           break
         case '2':
+          menuItems = []
           menuItems = [
             'GESTIÓN DE PROGRAMAS',
             {
@@ -183,11 +185,12 @@ export const useMenuStore = defineStore('menu', {
             {
               icon: 'MessagesSquare',
               pageName: 'chat',
-              title: 'Chat'
+              title: 'Contacto'
             }
           ]
           break
         case '3':
+          menuItems = []
           menuItems = [
             'GESTIÓN ECONÓMICA',
             {
@@ -206,17 +209,18 @@ export const useMenuStore = defineStore('menu', {
             {
               icon: 'MessagesSquare',
               pageName: 'chat',
-              title: 'Chat'
+              title: 'Contacto'
             }
           ]
           break
         case '4':
+          menuItems = []
           menuItems = [
             'GESTIÓN DE PROGRAMAS',
             {
               icon: 'BookMarked',
               pageName: 'activities_view',
-              title: 'Actividades-Vista'
+              title: 'Actividades Vista'
             },
             {
               icon: 'BarChartBig',
@@ -227,7 +231,7 @@ export const useMenuStore = defineStore('menu', {
             {
               icon: 'MessagesSquare',
               pageName: 'chat',
-              title: 'Chat'
+              title: 'Contacto'
             }
           ]
           break
@@ -248,17 +252,21 @@ export const useMenuStore = defineStore('menu', {
             {
               icon: 'MessagesSquare',
               pageName: 'chat',
-              title: 'Chat'
+              title: 'Contacto'
             }
           ]
           break
         default:
+          menuItems = []
           console.warn('Rol desconocido:', role)
           break
       }
 
       // Actualiza el estado del menú
       this.value = menuItems
+    },
+    resetMenu() {
+      this.value = []
     }
   }
 })

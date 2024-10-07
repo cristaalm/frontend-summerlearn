@@ -32,7 +32,6 @@ export function useSetDonation() {
       const data = await response.json()
       if (response.ok) {
         // Aquí puedes manejar la redirección o mostrar un mensaje de éxito
-        console.log('Donación registrada:', data)
         router.push({ name: 'donations' }) // Redirige a la página de donaciones
       } else {
         setDonationError.value = data.detail || 'Error al agregar la donación'

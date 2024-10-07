@@ -20,8 +20,7 @@ export function useAuth() {
           email: email,
           password: password
         })
-      })  
-      console.log(response)
+      })
       const data = await response.json()
       if (response.ok) {
         localStorage.setItem('access_token', data.access)

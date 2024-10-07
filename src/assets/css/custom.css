@@ -9,6 +9,7 @@ body::-webkit-scrollbar-thumb {
   background: hwb(154 19% 48%);
   border-radius: 5px;
 }
+
 @media (max-width: 768px) {
   [data-aos] {
     opacity: 1 !important;

@@ -12,6 +12,9 @@ export function useRefs() {
   const terms = ref(false)
   const valid = ref(false)
 
+  const showPassword = ref(false)
+  const showPasswordConfirm = ref(false)
+
   return {
     firstName,
     lastName,
@@ -22,6 +25,8 @@ export function useRefs() {
     password_confirm,
     perfil,
     terms,
-    valid
+    valid,
+    showPassword,
+    showPasswordConfirm
   }
 }

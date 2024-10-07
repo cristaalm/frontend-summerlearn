@@ -15,7 +15,6 @@ export function useValidateFunctions({ valid, password, password_confirm, status
     // Si el campo es el teléfono, lo desformateamos
     if (name == 'phone') {
       value = unformatPhone(value)
-      console.log(value)
     }
 
     const nameComponent = status.value[name].name

@@ -53,24 +53,47 @@ const router = createRouter({
       }
     },
     {
-      path: '/register',
+      path: '/register/:rol/',
       name: 'register',
-      component: () => import('@/views/RegisterView.vue')
+      component: () =>
+        import('@/views/RegisterView.vue').catch(() => import('@/views/NotFoundView.vue')),
+      beforeEnter: (to, from, next) => {
+        const rol = to.params.rol // Leer el parámetro del rol si es pasado en la URL
+
+        // Verificar si el rol es válido
+        if (!['donante', 'voluntario', 'beneficiario'].includes(rol)) {
+          return next({ name: 'home' }) // Redirigir a la página de inicio si no es válido
+        }
+
+        // Convertir el rol a un número correspondiente
+        to.params.rol = rol == 'donante' ? 3 : rol == 'voluntario' ? 4 : 5 // 3: Donador, 4: Voluntario, 5: Beneficiario
+
+        next() // Si es válido, sigue con la navegación
+      }
     },
     {
       path: '/terms',
       name: 'terms',
-      component: () => import('@/views/TermsView.vue')
+      component: () =>
+        import('@/views/TermsView.vue').catch(() => import('@/views/NotFoundView.vue'))
+    },
+    {
+      path: '/privacy',
+      name: 'privacy',
+      component: () =>
+        import('@/views/PrivacyView.vue').catch(() => import('@/views/NotFoundView.vue'))
     },
     {
       path: '/forgot-password',
       name: 'forgotPassword',
-      component: () => import('@/views/ForgotPasswordView.vue')
+      component: () =>
+        import('@/views/ForgotPasswordView.vue').catch(() => import('@/views/NotFoundView.vue'))
     },
     {
       path: '/reset-password/:key?',
       name: 'resetPassword',
-      component: () => import('@/views/ResetPasswordView.vue'),
+      component: () =>
+        import('@/views/ResetPasswordView.vue').catch(() => import('@/views/NotFoundView.vue')),
       beforeEnter: (to, from, next) => {
         const key = to.params.key
 
@@ -85,7 +108,8 @@ const router = createRouter({
     {
       path: '/login',
       name: 'login',
-      component: () => import('@/views/LoginView.vue').catch()
+      component: () =>
+        import('@/views/LoginView.vue').catch(() => import('@/views/NotFoundView.vue'))
     },
     {
       path: '/dashboard',
@@ -142,15 +166,33 @@ const router = createRouter({
           path: '/dashboard/activities',
           name: 'activities',
           component: () =>
-            import('@/views/dashboard/activities/ActivitiesView.vue').catch(
-              () => import('@/views/dashboard/notFoundView/NotFoundView.vue')
-            )
+            import('@/views/dashboard/activities/ActivitiesView.vue').catch((error) => {
+              console.error('Error loading ActivitiesView.vue:', error)
+              // Puedes manejar el error o mostrar alguna notificación en la interfaz si lo deseas
+              throw error // Re-lanzamos el error si necesitas que sea gestionado en otro lugar
+            })
         },
+        // {
+        //   path: '/dashboard/activities',
+        //   name: 'activities',
+        //   component: () =>
+        //     import('@/views/dashboard/activities/ActivitiesView.vue').catch(
+        //       () => import('@/views/dashboard/notFoundView/NotFoundView.vue')
+        //     )
+        // },
         {
           path: '/dashboard/activities/add',
           name: 'addActividades',
           component: () =>
             import('@/views/dashboard/activities/AddActividades.vue').catch(
+              () => import('@/views/dashboard/notFoundView/NotFoundView.vue')
+            )
+        },
+        {
+          path: '/dashboard/activities/view',
+          name: 'activities_view',
+          component: () =>
+            import('@/views/dashboard/activities/ActivitiesOnlyView.vue').catch(
               () => import('@/views/dashboard/notFoundView/NotFoundView.vue')
             )
         },
@@ -166,7 +208,7 @@ const router = createRouter({
           path: '/dashboard/expenses/add',
           name: 'addExpense',
           component: () =>
-            import('@/views/dashboard/expenses/addExpense.vue').catch(
+            import('@/views/dashboard/expenses/AddExpense.vue').catch(
               () => import('@/views/dashboard/notFoundView/NotFoundView.vue')
             )
         },
@@ -179,10 +221,26 @@ const router = createRouter({
             )
         },
         {
+          path: '/dashboard/Subscriptions/request',
+          name: 'request_subscriptions',
+          component: () =>
+            import('@/views/dashboard/subscriptions/RequestSubscriptions.vue').catch(
+              () => import('@/views/dashboard/notFoundView/NotFoundView.vue')
+            )
+        },
+        {
           path: '/dashboard/performance',
           name: 'performance',
           component: () =>
-            import('@/views/dashboard/performance/performanceView.vue').catch(
+            import('@/views/dashboard/performance/PerformanceView.vue').catch(
+              () => import('@/views/dashboard/notFoundView/NotFoundView.vue')
+            )
+        },
+        {
+          path: '/dashboard/performance/view',
+          name: 'performance_view',
+          component: () =>
+            import('@/views/dashboard/performance/PerformanceOnlyView.vue').catch(
               () => import('@/views/dashboard/notFoundView/NotFoundView.vue')
             )
         },
@@ -210,14 +268,6 @@ const router = createRouter({
               () => import('@/views/dashboard/notFoundView/NotFoundView.vue')
             )
         },
-        // {
-        //   path: '/dashboard/programs/add',
-        //   name: 'addProgram',
-        //   component: () =>
-        //     import('@/views/dashboard/programs/AddProgram.vue').catch(
-        //       () => import('@/views/dashboard/notFoundView/NotFoundView.vue')
-        //     )
-        // },
         {
           path: '/dashboard/donations',
           name: 'donations',
@@ -230,7 +280,7 @@ const router = createRouter({
           path: '/dashboard/donations/add',
           name: 'addDonation',
           component: () =>
-            import('@/views/dashboard/donations/addDonation.vue').catch(
+            import('@/views/dashboard/donations/AddDonation.vue').catch(
               () => import('@/views/dashboard/notFoundView/NotFoundView.vue')
             )
         },

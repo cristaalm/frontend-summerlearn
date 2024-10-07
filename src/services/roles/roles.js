@@ -12,6 +12,9 @@ export const getRoles = async () => {
   const json = await response.json()
   const roles = json
 
+  // Ordenar por id ASC
+  roles.sort((a, b) => a.rol_id - b.rol_id)
+
   return roles?.map((rol) => ({
     id: rol.rol_id,
     name: rol.rol_name

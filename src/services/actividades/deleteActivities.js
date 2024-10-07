@@ -2,7 +2,7 @@ import { Baseurl } from '@/../global'
 
 export const deleteActividad = async (actividadId) => {
   try {
-    const response = await fetch(`${Baseurl}areas/${actividadId}/`, {
+    const response = await fetch(`${Baseurl}activities/${actividadId}/`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',

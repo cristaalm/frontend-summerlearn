@@ -1,5 +1,5 @@
-<script setup lang="ts">
-import { FormInput, FormLabel } from '@/components/base/Form'
+<script setup>
+import { FormInput, FormLabel, InputGroup } from '@/components/base/Form'
 import Button from '@/components/base/Button'
 import Alert from '@/components/base/Alert'
 import Lucide from '@/components/base/Lucide'
@@ -7,12 +7,15 @@ import LoadingIcon from '@/components/base/LoadingIcon'
 import { useFormValidation } from '@/hooks/login/useFormValidation'
 import { useAuth } from '@/hooks/login/useAuth'
 import { useRouter } from 'vue-router'
+import { useRefs } from "@/hooks/login/useRefs";
 
+const { showPassword } = useRefs()
 const { loginUser, loading, error } = useAuth()
-const { email, password, validateInput, valid } = useFormValidation({ error })
+const { email, password, valid, validateInput } = useFormValidation({ error })
 const router = useRouter()
 
 </script>
+
 
 <template>
   <div
@@ -21,13 +24,15 @@ const router = useRouter()
       'relative z-50 h-full col-span-12 p-7 sm:p-14 bg-white rounded-2xl lg:bg-transparent lg:pr-10 lg:col-span-5 xl:pr-24 2xl:col-span-4 lg:p-0'
     ]">
       <div class="relative z-10 flex flex-col justify-center w-full h-full py-2 lg:py-32">
+        <div class="flex flex-row justify-start items-center">
+          <span @click="router.push({ name: 'home' })"
+            class="flex flex-row gap-2 transition-all duration-200 hover:scale-95 !bg-white/[0.12] !text-black !border-transparent cursor-pointer">
+            <Lucide icon="ArrowLeft" class="w-5 h-5" />
+            Regresar
+          </span>
+        </div>
         <div class="mt-10">
           <div class="text-2xl font-medium">Iniciar sesión</div>
-          <div class="mt-2.5 text-slate-600">
-            ¿No tienes una cuenta?
-            <span class="font-medium text-primary cursor-pointer" @click="router.push({ name: 'register' })"> Regístrate
-            </span>
-          </div>
 
           <Alert variant="outline-danger" v-if="error"
             class="flex items-center px-4 py-3 my-7 bg-danger/5 border-danger/20 rounded-[0.6rem] leading-[1.7]"
@@ -44,20 +49,41 @@ const router = useRouter()
           </Alert>
 
           <div class="mt-6">
-            <FormLabel>Correo electrónico*</FormLabel>
+            <FormLabel>Correo electrónico <span class="text-red-600 bold">*</span></FormLabel>
             <FormInput type="text" class="block px-4 py-3.5 rounded-[0.6rem] border-slate-300/80"
               placeholder="correo@mail.com" v-model="email" @input="validateInput('email')" />
-            <FormLabel class="mt-4">Contraseña*</FormLabel>
-            <FormInput type="password" class="block px-4 py-3.5 rounded-[0.6rem] border-slate-300/80"
-              placeholder="************" v-model="password" @input="validateInput('password')" />
+
+            <FormLabel class="mt-4">Contraseña <span class="text-red-600 bold">*</span></FormLabel>
+
+            <div class="flex-1 w-full mt-3 xl:mt-0">
+              <InputGroup class="mt-2">
+                <FormInput placeholder="************" :type="`${showPassword ? 'text' : 'password'}`"
+                  htmlid="inputPassword" class="block px-4 py-3.5" name="password" v-model="password"
+                  @input="validateInput('password')" />
+                <InputGroup.Text @click="() => { showPassword = !showPassword }"
+                  class="cursor-pointer flex flex-col justify-center items-center">
+                  <button class="">
+                    <Lucide icon="Eye" class="w-4 h-4 stroke-[1.3] text-green-500" v-if="showPassword" />
+                    <Lucide icon="EyeOff" class="w-4 h-4 stroke-[1.3] text-red-500" v-else />
+                  </button>
+                </InputGroup.Text>
+              </InputGroup>
+            </div>
             <div class="flex flex-row justify-end mt-4 text-xs text-slate-500 sm:text-sm">
               <span class=" cursor-pointer" @click="router.push({ name: 'forgotPassword' })">¿Olvidaste tu
                 contraseña?</span>
             </div>
+            <!-- avisos de privacidad -->
+            <div class="flex items-center mt-5 text-xs  sm:text-sm">
+              Lee nuestros
+              <a class="ml-1 text-primary dark:text-slate-200" href="/privacy" target="_blank">
+                Avisos de privacidad
+              </a>
+            </div>
             <div class="mt-5 text-center xl:mt-8 xl:text-left">
               <Button @click="() => { loginUser({ email, password }) }" :disabled="!valid || loading" variant="primary"
                 rounded
-                :class="`bg-gradient-to-r transition-all border-none scale-105 duration-200 w-full py-3.5 xl:mr-3 ${valid && !loading ? 'from-green-dark to-green hover:scale-100 select-none cursor-pointer' : 'from-gray-600 to-gray-600  cursor-default'}`">
+                :class="`bg-gradient-to-r transition-all border-none scale-105 duration-200 w-full py-3.5 xl:mr-3 ${valid && !loading ? 'from-green-dark to-green hover:scale-100 select-none cursor-pointer' : 'from-gray-600 to-gray-600 cursor-default'}`">
                 <LoadingIcon v-if="loading" icon="three-dots" class="w-8 h-5" color="white" />
                 {{ loading ? '' : 'Iniciar Sesión' }}
               </Button>

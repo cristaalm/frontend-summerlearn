@@ -5,11 +5,13 @@ export function useRefs() {
   const duration = ref('')
   const responsible = ref('')
   const area = ref('')
+  const grade = ref('') // te falto declarar la variable reactiva
 
   return {
     name,
     duration,
     responsible,
-    area
+    area,
+    grade
   }
 }

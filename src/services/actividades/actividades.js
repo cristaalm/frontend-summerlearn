@@ -12,7 +12,7 @@ export const getActividades = async () => {
   const activities = json
   // console.log(activities)
 
-  activities.sort((a, b) => a.activities_id - b.activities_id) // Ordenar por id ASC
+  activities.sort((a, b) => b.activities_id - a.activities_id) // Ordenar por id ASC
 
   return activities?.map((actividades) => {
     // Formatear la fecha
