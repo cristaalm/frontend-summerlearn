@@ -47,7 +47,7 @@ const handleSendMail = async () => {
         <div class="mt-10">
           <div class="text-2xl font-medium">Recuperar Contraseña</div>
           <div class="mt-2.5 text-slate-600 flex flex-col gap-2">
-            <p>¿Olvidaste tu contraseña?</p>
+            <p>¿No recuerdas tu contraseña?</p>
             <p>No te preocupes, te enviaremos un correo electrónico con un enlace para restablecer tu contraseña.</p>
           </div>
 

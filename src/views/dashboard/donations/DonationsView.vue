@@ -79,9 +79,9 @@ onMounted(() => {
                                             class="absolute top-0 right-0 w-36 h-36 -mt-5 -mr-5 text-white/20 fill-white/[0.03] transform rotate-[-10deg] stroke-[0.3]" />
                                         <div class="mt-12 mb-9">
                                             <div class="text-2xl font-medium leading-snug text-black">
-                                                Estadiscas De
+                                                Estadísticas de
                                                 <br />
-                                                Donaciones
+                                                donaciones
                                             </div>
                                             <div class="mt-1.5 text-lg text-black/70">
                                                 Aumente su rendimiento
@@ -102,7 +102,7 @@ onMounted(() => {
                     <div class="flex flex-col col-span-12 p-5 md:col-span-6 2xl:col-span-3 box box--stacked">
 
                         <div class="pb-5 mb-5 border-b border-dashed border-slate-300/70">
-                            <div class="text-base text-slate-500">Donación Semanal</div>
+                            <div class="text-base text-slate-500">Donación semanal</div>
                             <div class="flex items-center mt-1">
                                 <div class="flex items-center text-xl font-medium">
                                     <span class="mr-px">$</span>{{ totalDonationsWeek }}
@@ -112,7 +112,7 @@ onMounted(() => {
                         </div>
                         <ReportBarChart3 class="relative z-10 -ml-1" :height="80" />
 
-                        <span class="flex items-center mt-6 font-medium text-primary">Donaciones Diarias</span>
+                        <span class="flex items-center mt-6 font-medium text-primary">Donaciones diarias</span>
 
                     </div>
 
