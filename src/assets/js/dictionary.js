@@ -125,22 +125,22 @@ export default {
     joinOurTeam: {
       title: 'Únete a nuestro equipo',
       volunteer: {
-        title: 'Voluntarios',
+        title: 'Voluntario',
         description:
           'Sé parte de nuestra misión de proporcionar educación de calidad a los niños que más lo necesitan. Tu tiempo y tus habilidades pueden generar un impacto significativo.',
         button: 'Aplica para voluntario'
       },
       beneficiary: {
-        title: 'Beneficiarios',
+        title: 'Beneficiario',
         description:
           'Participa en nuestros cursos de verano, donde aprenderás, crecerás y tendrás acceso a nuevas oportunidades educativas. ¡Empieza a construir tu futuro hoy!',
-        button: 'Aplica para voluntario'
+        button: 'Aplica para beneficiario'
       },
       donor: {
-        title: 'Donantes',
+        title: 'Donante',
         description:
           'Con tu donación, más niños podrán participar en nuestros cursos de verano, donde recibirán educación de calidad y herramientas para un mejor futuro.',
-        button: 'Aplica para donadro'
+        button: 'Aplica para donador'
       }
     },
     footer: {

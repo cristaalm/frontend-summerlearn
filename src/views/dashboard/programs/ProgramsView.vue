@@ -1,5 +1,5 @@
 <script setup>
-import { useFilter, usePagination, usePrograms, useDialogDelete, useToast, useStatusProgram, useExportExcel, useExportPDF } from '@/hooks/programs/'
+import { useFilter, usePagination, usePrograms, useDialogDelete, useToast, useStatusProgram, useExportExcel, useExportPDF} from '@/hooks/programs/'
 import formatDate from '@/logic/formatDate'
 import { FormInput, FormSelect } from '@/components/base/Form'
 import { Menu, Popover, Dialog } from '@/components/base/Headless'
@@ -183,6 +183,10 @@ onMounted(() => {
                   </Table.Td>
                   <Table.Td
                     class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500">
+                    Escolaridad
+                  </Table.Td>
+                  <Table.Td
+                    class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500">
                     Duración
                   </Table.Td>
                   <Table.Td
@@ -237,6 +241,11 @@ onMounted(() => {
                     <Table.Td class="py-4 border-dashed dark:bg-darkmode-600 text-center">
                       <div href="" class="font-medium whitespace-nowrap">
                         {{ program.user.name }}
+                      </div>
+                    </Table.Td>
+                    <Table.Td class="py-4 border-dashed dark:bg-darkmode-600 text-center">
+                      <div href="" class="font-medium whitespace-nowrap">
+                        {{ program.grade }}
                       </div>
                     </Table.Td>
                     <Table.Td class="py-4 border-dashed dark:bg-darkmode-600 text-center">

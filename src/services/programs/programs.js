@@ -21,6 +21,7 @@ export const getPrograms = async () => {
     end: program.programs_end,
     user: program.programs_user,
     area: program.programs_area,
-    status: program.programs_status
+    status: program.programs_status,
+    grade: program.programs_grade,
   }))
 }

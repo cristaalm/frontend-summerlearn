@@ -50,7 +50,8 @@ export function useSetProgram() {
           programs_end: end,
           programs_user: program.responsible,
           programs_area: program.area,
-          programs_status: 1
+          programs_status: 1,
+          programs_grade: program.grade 
         })
       })
       if (response.ok) {
