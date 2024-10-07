@@ -69,8 +69,8 @@ const router = useRouter()
                 </InputGroup.Text>
               </InputGroup>
             </div>
-            <div class="flex flex-row justify-end mt-4 text-xs text-slate-500 sm:text-sm">
-              <span class=" cursor-pointer" @click="router.push({ name: 'forgotPassword' })">¿Olvidaste tu
+            <div class="flex flex-row justify-end mt-4 text-xs text-slate-500 sm:text-sm hover:text-green-500">
+              <span class=" cursor-pointer"  @click="router.push({ name: 'forgotPassword' })">¿Olvidaste tu
                 contraseña?</span>
             </div>
             <!-- avisos de privacidad -->
