@@ -1,9 +1,9 @@
 import { ref, computed } from 'vue'
 
 export function useBillSearch(bills) {
-  const searchQuery = ref('')  // Término de búsqueda para el concepto
-  const selectedStatus = ref(null)  // Estado seleccionado (ej. pagada/no pagada)
-  const selectedCategory = ref(null)  // Categoría seleccionada (ej. servicios, productos)
+  const searchQuery = ref('') // Término de búsqueda para el concepto
+  const selectedStatus = ref(null) // Estado seleccionado (ej. pagada/no pagada)
+  const selectedCategory = ref(null) // Categoría seleccionada (ej. servicios, productos)
 
   // Computed que filtra las facturas en base al concepto, estado y categoría
   const filteredBills = computed(() => {

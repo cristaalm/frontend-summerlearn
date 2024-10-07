@@ -1,3 +1,3 @@
-import SwitchAccount from "./SwitchAccount.vue";
+import SwitchAccount from './SwitchAccount.vue'
 
-export default SwitchAccount;
+export default SwitchAccount

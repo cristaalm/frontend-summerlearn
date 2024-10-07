@@ -1,3 +1,3 @@
-import QuickSearch from "./QuickSearch.vue";
+import QuickSearch from './QuickSearch.vue'
 
-export default QuickSearch;
+export default QuickSearch

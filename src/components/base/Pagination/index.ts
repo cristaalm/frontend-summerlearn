@@ -1,8 +1,8 @@
-import Pagination from "./Pagination.vue";
-import Link from "./Link.vue";
+import Pagination from './Pagination.vue'
+import Link from './Link.vue'
 
 const PaginationComponent = Object.assign({}, Pagination, {
-  Link: Link,
-});
+  Link: Link
+})
 
-export default PaginationComponent;
+export default PaginationComponent

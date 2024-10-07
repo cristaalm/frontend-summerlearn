@@ -1,3 +1,3 @@
-import ReportDonutChart3 from "./ReportDonutChart3.vue";
+import ReportDonutChart3 from './ReportDonutChart3.vue'
 
-export default ReportDonutChart3;
+export default ReportDonutChart3

@@ -1,20 +1,20 @@
 <script setup lang="ts">
-import { Slideover } from "@/components/base/Headless";
-import Button from "@/components/base/Button";
-import Lucide from "@/components/base/Lucide";
-import activities from "@/fakers/activities";
-import users from "@/fakers/users";
-import _ from "lodash";
+import { Slideover } from '@/components/base/Headless'
+import Button from '@/components/base/Button'
+import Lucide from '@/components/base/Lucide'
+import activities from '@/fakers/activities'
+import users from '@/fakers/users'
+import _ from 'lodash'
 
 interface MainProps {
-  notificationsPanel: boolean;
-  setNotificationsPanel: (val: boolean) => void;
+  notificationsPanel: boolean
+  setNotificationsPanel: (val: boolean) => void
 }
 
 const props = withDefaults(defineProps<MainProps>(), {
   notificationsPanel: false,
-  setNotificationsPanel: () => {},
-});
+  setNotificationsPanel: () => {}
+})
 </script>
 
 <template>
@@ -23,20 +23,18 @@ const props = withDefaults(defineProps<MainProps>(), {
       :open="props.notificationsPanel"
       @close="
         () => {
-          props.setNotificationsPanel(false);
+          props.setNotificationsPanel(false)
         }
       "
     >
-      <Slideover.Panel
-        class="w-72 rounded-[0.75rem_0_0_0.75rem/1.1rem_0_0_1.1rem]"
-      >
+      <Slideover.Panel class="w-72 rounded-[0.75rem_0_0_0.75rem/1.1rem_0_0_1.1rem]">
         <a
           href=""
           class="focus:outline-none hover:bg-white/10 bg-white/5 transition-all hover:rotate-180 absolute inset-y-0 left-0 right-auto flex items-center justify-center my-auto -ml-[60px] sm:-ml-[105px] border rounded-full text-white/90 w-8 h-8 sm:w-14 sm:h-14 border-white/90 hover:scale-105"
           @click="
             (e) => {
-              e.preventDefault();
-              props.setNotificationsPanel(false);
+              e.preventDefault()
+              props.setNotificationsPanel(false)
             }
           "
         >
@@ -50,14 +48,8 @@ const props = withDefaults(defineProps<MainProps>(), {
         </Slideover.Title>
         <Slideover.Description class="p-0">
           <div class="flex flex-col p-3 gap-0.5">
-            <template
-              v-for="(faker, fakerKey) in activities.fakeActivities()"
-              :key="fakerKey"
-            >
-              <a
-                href=""
-                class="flex items-center px-3 py-2.5 rounded-xl hover:bg-slate-100/80"
-              >
+            <template v-for="(faker, fakerKey) in activities.fakeActivities()" :key="fakerKey">
+              <a href="" class="flex items-center px-3 py-2.5 rounded-xl hover:bg-slate-100/80">
                 <div>
                   <div
                     class="overflow-hidden border-2 rounded-full w-11 h-11 image-fit border-slate-200/70"
@@ -74,35 +66,22 @@ const props = withDefaults(defineProps<MainProps>(), {
                     {{ faker.activityDetails }}
                   </div>
                   <template v-if="faker.images">
-                    <div
-                      class="w-40 sm:w-56 my-3.5 p-1 border rounded-[0.6rem] bg-slate-50/80"
-                    >
-                      <div
-                        class="grid grid-cols-3 overflow-hidden rounded-[0.6rem]"
-                      >
+                    <div class="w-40 sm:w-56 my-3.5 p-1 border rounded-[0.6rem] bg-slate-50/80">
+                      <div class="grid grid-cols-3 overflow-hidden rounded-[0.6rem]">
                         <div
                           class="h-12 sm:h-16 overflow-hidden border image-fit border-slate-100 saturate-[.6] hover:saturate-100 cursor-pointer"
                         >
-                          <img
-                            alt="Tailwise - Admin Dashboard Template"
-                            :src="faker.images[0]"
-                          />
+                          <img alt="Tailwise - Admin Dashboard Template" :src="faker.images[0]" />
                         </div>
                         <div
                           class="h-12 sm:h-16 overflow-hidden border image-fit border-slate-100 saturate-[.6] hover:saturate-100 cursor-pointer"
                         >
-                          <img
-                            alt="Tailwise - Admin Dashboard Template"
-                            :src="faker.images[1]"
-                          />
+                          <img alt="Tailwise - Admin Dashboard Template" :src="faker.images[1]" />
                         </div>
                         <div
                           class="h-12 sm:h-16 overflow-hidden border image-fit border-slate-100 saturate-[.6] hover:saturate-100 cursor-pointer"
                         >
-                          <img
-                            alt="Tailwise - Admin Dashboard Template"
-                            :src="faker.images[2]"
-                          />
+                          <img alt="Tailwise - Admin Dashboard Template" :src="faker.images[2]" />
                         </div>
                       </div>
                     </div>

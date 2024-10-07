@@ -101,7 +101,7 @@ export const useMenuStore = defineStore('menu', {
             {
               icon: 'Notebook',
               pageName: 'subscriptions',
-              title: 'Suscripciones',
+              title: 'Suscripciones'
             },
             {
               icon: 'Album',
@@ -137,7 +137,7 @@ export const useMenuStore = defineStore('menu', {
                   title: 'Gastos'
                 }
               ]
-            },
+            }
             // 'CONTÁCTANOS',
             // {
             //   icon: 'MessagesSquare',
@@ -178,7 +178,7 @@ export const useMenuStore = defineStore('menu', {
               icon: 'BarChartBig',
               pageName: 'performance',
               title: 'Desempeño'
-            },
+            }
             // 'CONTÁCTANOS',
             // {
             //   icon: 'MessagesSquare',
@@ -202,7 +202,7 @@ export const useMenuStore = defineStore('menu', {
                   title: 'Gastos'
                 }
               ]
-            },
+            }
             // 'CONTÁCTANOS',
             // {
             //   icon: 'MessagesSquare',
@@ -224,7 +224,7 @@ export const useMenuStore = defineStore('menu', {
               icon: 'BarChartBig',
               pageName: 'performance',
               title: 'Desempeño'
-            },
+            }
             // 'CONTÁCTANOS',
             // {
             //   icon: 'MessagesSquare',
@@ -245,7 +245,7 @@ export const useMenuStore = defineStore('menu', {
               icon: 'BarChartBig',
               pageName: 'performance_view',
               title: 'Desempeño'
-            },
+            }
             // 'CONTÁCTANOS',
             // {
             //   icon: 'MessagesSquare',

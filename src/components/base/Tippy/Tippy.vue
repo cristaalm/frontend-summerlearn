@@ -1,29 +1,29 @@
 <script setup lang="ts">
-import "@/assets/css/vendors/tippy.css";
+import '@/assets/css/vendors/tippy.css'
 import tippy, {
   type PopperElement,
   type Props,
   roundArrow,
-  animateFill as animateFillPlugin,
-} from "tippy.js";
-import { ref, onMounted, inject, watch } from "vue";
+  animateFill as animateFillPlugin
+} from 'tippy.js'
+import { ref, onMounted, inject, watch } from 'vue'
 
-export type ProvideTippy = (el: PopperElement) => void;
+export type ProvideTippy = (el: PopperElement) => void
 
 interface TippyProps {
-  refKey?: string;
-  content: string;
-  disable?: boolean;
-  as?: string | object;
-  options?: Partial<Props>;
+  refKey?: string
+  content: string
+  disable?: boolean
+  as?: string | object
+  options?: Partial<Props>
 }
 
 const props = withDefaults(defineProps<TippyProps>(), {
-  as: "span",
-  disable: false,
-});
+  as: 'span',
+  disable: false
+})
 
-const tippyRef = ref<PopperElement>();
+const tippyRef = ref<PopperElement>()
 
 const init = (el: PopperElement, props: TippyProps) => {
   tippy(el, {
@@ -33,53 +33,51 @@ const init = (el: PopperElement, props: TippyProps) => {
     popperOptions: {
       modifiers: [
         {
-          name: "preventOverflow",
+          name: 'preventOverflow',
           options: {
-            rootBoundary: "viewport",
-          },
-        },
-      ],
+            rootBoundary: 'viewport'
+          }
+        }
+      ]
     },
     animateFill: false,
-    animation: "shift-away",
-    ...props.options,
-  });
-};
+    animation: 'shift-away',
+    ...props.options
+  })
+}
 
 const bindInstance = (el: PopperElement) => {
   if (props.refKey) {
-    const bind = inject<ProvideTippy>(`bind[${props.refKey}]`, () => {});
+    const bind = inject<ProvideTippy>(`bind[${props.refKey}]`, () => {})
     if (bind) {
-      bind(el);
+      bind(el)
     }
   }
-};
+}
 
 const vTippyDirective = {
   mounted(el: PopperElement) {
-    tippyRef.value = el;
-  },
-};
+    tippyRef.value = el
+  }
+}
 
 const isDisabled = () => {
   if (tippyRef.value && tippyRef.value._tippy !== undefined) {
-    props.disable
-      ? tippyRef.value._tippy.disable()
-      : tippyRef.value._tippy.enable();
+    props.disable ? tippyRef.value._tippy.disable() : tippyRef.value._tippy.enable()
   }
-};
+}
 
 watch(props, () => {
-  isDisabled();
-});
+  isDisabled()
+})
 
 onMounted(() => {
   if (tippyRef.value) {
-    init(tippyRef.value, props);
-    bindInstance(tippyRef.value);
-    isDisabled();
+    init(tippyRef.value, props)
+    bindInstance(tippyRef.value)
+    isDisabled()
   }
-});
+})
 </script>
 
 <template>

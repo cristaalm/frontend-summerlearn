@@ -2,42 +2,76 @@
   <div class="md:hidden flex flex-col w-full text-black">
     <div class="w-full flex flex-row justify-between px-10">
       <a class="w-[100px]" href="#home" @click.prevent="smoothScroll('#home')">
-        <img src="/logo_icono.png" alt="Logo"
-          class="w-[100px] p-2 m-auto hover:scale-105 transition-all duration-300" />
+        <img
+          src="/logo_icono.png"
+          alt="Logo"
+          class="w-[100px] p-2 m-auto hover:scale-105 transition-all duration-300"
+        />
       </a>
       <div class="flex flex-row justify-center items-center">
         <button>
-          <Menu class="w-12 hover:scale-105 transition-all duration-300" v-if="!enableMenu" @click="toggleMenu" />
-          <Close class="w-12 hover:scale-105 transition-all duration-300 text-white" v-else @click="toggleMenu" />
+          <Menu
+            class="w-12 hover:scale-105 transition-all duration-300"
+            v-if="!enableMenu"
+            @click="toggleMenu"
+          />
+          <Close
+            class="w-12 hover:scale-105 transition-all duration-300 text-white"
+            v-else
+            @click="toggleMenu"
+          />
         </button>
       </div>
     </div>
-    <div class="w-full h-[0px] overflow-hidden flex flex-col gap-5 justify-between" ref="navbarMenu">
+    <div
+      class="w-full h-[0px] overflow-hidden flex flex-col gap-5 justify-between"
+      ref="navbarMenu"
+    >
       <div class="flex flex-col gap-4">
-        <a href="#home" @click.prevent="smoothScroll('#home')" @click="toggleMenu"
-          :class="`h-full flex flex-row justify-center items-center text-4xl py-4 transition-all duration-300 text-white hover:text-blue-light hover:bg-blued`">
+        <a
+          href="#home"
+          @click.prevent="smoothScroll('#home')"
+          @click="toggleMenu"
+          :class="`h-full flex flex-row justify-center items-center text-4xl py-4 transition-all duration-300 text-white hover:text-blue-light hover:bg-blued`"
+        >
           {{ $t('navbar.home') }}
         </a>
-        <a href="#mission" @click.prevent="smoothScroll('#mission')" @click="toggleMenu"
-          :class="`h-full flex flex-row justify-center items-center text-4xl py-4 transition-all duration-300 text-white hover:text-green-light hover:bg-greend`">
+        <a
+          href="#mission"
+          @click.prevent="smoothScroll('#mission')"
+          @click="toggleMenu"
+          :class="`h-full flex flex-row justify-center items-center text-4xl py-4 transition-all duration-300 text-white hover:text-green-light hover:bg-greend`"
+        >
           {{ $t('navbar.mission') }}
         </a>
-        <a href="#impact" @click.prevent="smoothScroll('#impact')" @click="toggleMenu"
-          :class="`h-full flex flex-row justify-center items-center text-4xl py-4 transition-all duration-300 text-white hover:text-yellow-light hover:bg-yellowd`">
+        <a
+          href="#impact"
+          @click.prevent="smoothScroll('#impact')"
+          @click="toggleMenu"
+          :class="`h-full flex flex-row justify-center items-center text-4xl py-4 transition-all duration-300 text-white hover:text-yellow-light hover:bg-yellowd`"
+        >
           {{ $t('navbar.impact') }}
         </a>
-        <a href="#joinOurTeam" @click.prevent="smoothScroll('#joinOurTeam')" @click="toggleMenu"
-          :class="`h-full flex flex-row justify-center items-center text-4xl py-4 transition-all duration-300 text-white hover:text-red-light hover:bg-redd`">
+        <a
+          href="#joinOurTeam"
+          @click.prevent="smoothScroll('#joinOurTeam')"
+          @click="toggleMenu"
+          :class="`h-full flex flex-row justify-center items-center text-4xl py-4 transition-all duration-300 text-white hover:text-red-light hover:bg-redd`"
+        >
           {{ $t('navbar.joinOurTeam') }}
         </a>
       </div>
       <div class="flex flex-col justify-center items-center gap-6">
-        <span @click="router.push({ name: 'login' })"
-          :class="`px-6 py-2 text-2xl transition-all duration-300 text-white ${topScroll ? ' hover:text-emerald-300' : ' hover:text-emerald-500'}`">
+        <span
+          @click="router.push({ name: 'login' })"
+          :class="`px-6 py-2 text-2xl transition-all duration-300 text-white ${topScroll ? ' hover:text-emerald-300' : ' hover:text-emerald-500'}`"
+        >
           {{ $t('navbar.logIn') }}
         </span>
-        <button @click="router.push({ name: 'register', params: { rol: 'donante' } })"
-          class="px-6 py-2 text-3xl bg-rose-500 hover:bg-rose-400 transition-all duration-300 rounded-2xl text-white">
+        <button
+          @click="router.push({ name: 'register', params: { rol: 'donante' } })"
+          class="px-6 py-2 text-3xl bg-rose-500 hover:bg-rose-400 transition-all duration-300 rounded-2xl text-white"
+        >
           {{ $t('navbar.donate') }}
         </button>
       </div>
@@ -85,7 +119,6 @@ const smoothScroll = (hash) => {
     })
   }
 }
-
 
 const toggleMenu = () => {
   props.changeColor()

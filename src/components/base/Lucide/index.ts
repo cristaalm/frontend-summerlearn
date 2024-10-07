@@ -1,5 +1,5 @@
-import Lucide from "./Lucide.vue";
+import Lucide from './Lucide.vue'
 
-export type { Icon } from "./Lucide.vue";
+export type { Icon } from './Lucide.vue'
 
-export default Lucide;
+export default Lucide

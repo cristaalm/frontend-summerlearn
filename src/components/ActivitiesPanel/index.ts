@@ -1,3 +1,3 @@
-import ActivitiesPanel from "./ActivitiesPanel.vue";
+import ActivitiesPanel from './ActivitiesPanel.vue'
 
-export default ActivitiesPanel;
+export default ActivitiesPanel

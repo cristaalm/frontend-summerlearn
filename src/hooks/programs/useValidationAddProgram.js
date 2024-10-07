@@ -8,7 +8,6 @@ export function useValidationAddProgram() {
       message: '',
       name: 'Nombre del programa',
       Regex: /^[0-9a-zA-ZáéíóúÁÉÍÓÚñÑ\s.,!?;:-]+$/ // Letras, números, espacios, y algunos caracteres de puntuación
-
     },
     start: {
       error: false,
@@ -16,7 +15,7 @@ export function useValidationAddProgram() {
       message: '',
       name: 'Fecha de inicio',
       Regex: /^\d{4}-\d{2}-\d{2}$/
-    },    
+    },
     end: {
       error: false,
       success: false,
@@ -37,7 +36,7 @@ export function useValidationAddProgram() {
       message: '',
       name: 'Estado del programa',
       Regex: /^(activo|inactivo)$/
-    }    
+    }
   })
 
   const name = ref('')
@@ -48,7 +47,13 @@ export function useValidationAddProgram() {
   const valid = ref(false)
 
   const validateAll = () => {
-    if (status.value.name.success && status.value.user.success && status.value.start.success && status.value.end.success && status.value.p_status.success) {
+    if (
+      status.value.name.success &&
+      status.value.user.success &&
+      status.value.start.success &&
+      status.value.end.success &&
+      status.value.p_status.success
+    ) {
       valid.value = true
     } else {
       valid.value = false

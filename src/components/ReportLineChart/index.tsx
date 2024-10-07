@@ -1,3 +1,3 @@
-import ReportLineChart from "./ReportLineChart.vue";
+import ReportLineChart from './ReportLineChart.vue'
 
-export default ReportLineChart;
+export default ReportLineChart

@@ -1,3 +1,3 @@
-import NotificationsPanel from "./NotificationsPanel.vue";
+import NotificationsPanel from './NotificationsPanel.vue'
 
-export default NotificationsPanel;
+export default NotificationsPanel

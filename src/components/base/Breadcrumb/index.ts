@@ -1,8 +1,8 @@
-import Breadcrumb from "./Breadcrumb.vue";
-import Link from "./Link.vue";
+import Breadcrumb from './Breadcrumb.vue'
+import Link from './Link.vue'
 
 const BreadcrumbComponent = Object.assign({}, Breadcrumb, {
-  Link: Link,
-});
+  Link: Link
+})
 
-export default BreadcrumbComponent;
+export default BreadcrumbComponent

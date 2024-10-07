@@ -4,12 +4,18 @@ export function usePaginationObjective(items, initialPageSize = 10) {
   const pageSizeObjective = ref(initialPageSize)
   const currentPageObjective = ref(1)
 
-  const startIndexObjective = computed(() => (currentPageObjective.value - 1) * pageSizeObjective.value)
+  const startIndexObjective = computed(
+    () => (currentPageObjective.value - 1) * pageSizeObjective.value
+  )
   const endIndexObjective = computed(() => startIndexObjective.value + pageSizeObjective.value)
 
-  const paginatedItemsObjective = computed(() => items.value.slice(startIndexObjective.value, endIndexObjective.value))
+  const paginatedItemsObjective = computed(() =>
+    items.value.slice(startIndexObjective.value, endIndexObjective.value)
+  )
 
-  const totalPagesObjective = computed(() => Math.ceil(items.value.length / pageSizeObjective.value))
+  const totalPagesObjective = computed(() =>
+    Math.ceil(items.value.length / pageSizeObjective.value)
+  )
 
   const changePageObjective = (page) => {
     if (page < 1) page = 1

@@ -1,18 +1,18 @@
 <script setup lang="ts">
-import { inject } from "vue";
-import { Tab as HeadlessTab } from "@headlessui/vue";
-import Provider from "./Provider.vue";
-import { type ProvideList } from "../List.vue";
+import { inject } from 'vue'
+import { Tab as HeadlessTab } from '@headlessui/vue'
+import Provider from './Provider.vue'
+import { type ProvideList } from '../List.vue'
 
 interface TabProps extends /* @vue-ignore */ ExtractProps<typeof HeadlessTab> {
-  fullWidth?: boolean;
+  fullWidth?: boolean
 }
 
 const { fullWidth } = withDefaults(defineProps<TabProps>(), {
-  fullWidth: true,
-});
+  fullWidth: true
+})
 
-const list = inject<ProvideList>("list");
+const list = inject<ProvideList>('list')
 </script>
 
 <template>
@@ -21,7 +21,7 @@ const list = inject<ProvideList>("list");
       :class="[
         'focus-visible:outline-none',
         { 'flex-1': fullWidth },
-        { '-mb-px': list && list.variant == 'tabs' },
+        { '-mb-px': list && list.variant == 'tabs' }
       ]"
     >
       <Provider :selected="selected">

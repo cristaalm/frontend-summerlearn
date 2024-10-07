@@ -1,44 +1,42 @@
 <script lang="ts">
 export default {
-  inheritAttrs: false,
-};
+  inheritAttrs: false
+}
 </script>
 
 <script setup lang="ts">
-import _ from "lodash";
-import { twMerge } from "tailwind-merge";
-import { DisclosureButton as HeadlessDisclosureButton } from "@headlessui/vue";
-import { useAttrs, computed, inject, watch } from "vue";
-import { type ProvideDisclosure } from "./Disclosure/Provider.vue";
-import { type ProvideGroup } from "./Group.vue";
+import _ from 'lodash'
+import { twMerge } from 'tailwind-merge'
+import { DisclosureButton as HeadlessDisclosureButton } from '@headlessui/vue'
+import { useAttrs, computed, inject, watch } from 'vue'
+import { type ProvideDisclosure } from './Disclosure/Provider.vue'
+import { type ProvideGroup } from './Group.vue'
 
-interface ButtonProps
-  extends /* @vue-ignore */ ExtractProps<typeof HeadlessDisclosureButton> {
-  as?: string | object;
+interface ButtonProps extends /* @vue-ignore */ ExtractProps<typeof HeadlessDisclosureButton> {
+  as?: string | object
 }
 
 const { as } = withDefaults(defineProps<ButtonProps>(), {
-  as: "button",
-});
+  as: 'button'
+})
 
-const disclosure = inject<ProvideDisclosure>("disclosure");
-const group = inject<ProvideGroup>("group");
+const disclosure = inject<ProvideDisclosure>('disclosure')
+const group = inject<ProvideGroup>('group')
 
 if (group) {
   watch(group, () => {
-    group.value.selectedIndex !== disclosure?.value.index &&
-      disclosure?.value.close();
-  });
+    group.value.selectedIndex !== disclosure?.value.index && disclosure?.value.close()
+  })
 }
 
-const attrs = useAttrs();
+const attrs = useAttrs()
 const computedClass = computed(() =>
   twMerge([
-    "outline-none py-4 -my-4 font-medium w-full text-left dark:text-slate-400",
-    disclosure?.value.open && "text-primary dark:text-slate-300",
-    typeof attrs.class === "string" && attrs.class,
+    'outline-none py-4 -my-4 font-medium w-full text-left dark:text-slate-400',
+    disclosure?.value.open && 'text-primary dark:text-slate-300',
+    typeof attrs.class === 'string' && attrs.class
   ])
-);
+)
 </script>
 
 <template>
@@ -46,7 +44,7 @@ const computedClass = computed(() =>
     as="template"
     @click="
       () => {
-        disclosure && group?.setSelectedIndex(disclosure.index);
+        disclosure && group?.setSelectedIndex(disclosure.index)
       }
     "
   >

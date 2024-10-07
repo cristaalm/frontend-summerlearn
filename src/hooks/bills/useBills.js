@@ -1,6 +1,6 @@
 import { ref } from 'vue'
 import { getBills } from '@/services/bills/bills'
-import { Baseurl } from '@/../global';
+import { Baseurl } from '@/../global'
 
 export function useBills() {
   const bills = ref([])
@@ -18,27 +18,26 @@ export function useBills() {
     }
   }
 
-  
-/*********************************************************/
+  /*********************************************************/
   const deleteBill = async (bills_id) => {
     try {
-        const response = await fetch(`${Baseurl}/bills/${bills_id}/`, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
-
-        if (!response.ok) {
-            throw new Error('Error al eliminar la factura');
+      const response = await fetch(`${Baseurl}/bills/${bills_id}/`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
         }
+      })
 
-        // Opcionalmente, puedes recargar la lista de facturas después de eliminar
-        loadBills(); // O manejarlo según tu lógica
+      if (!response.ok) {
+        throw new Error('Error al eliminar la factura')
+      }
+
+      // Opcionalmente, puedes recargar la lista de facturas después de eliminar
+      loadBills() // O manejarlo según tu lógica
     } catch (error) {
-        console.error('Error:', error);
+      console.error('Error:', error)
     }
-  };
+  }
 
-    return { bills, loading, loadBills, deleteBill, errorBills };
+  return { bills, loading, loadBills, deleteBill, errorBills }
 }

@@ -1,22 +1,22 @@
 <script setup lang="ts">
-import users from "@/fakers/users";
-import Lucide from "@/components/base/Lucide";
-import { FormCheck } from "@/components/base/Form";
-import { Dialog } from "@/components/base/Headless";
-import { ref } from "vue";
-import _ from "lodash";
+import users from '@/fakers/users'
+import Lucide from '@/components/base/Lucide'
+import { FormCheck } from '@/components/base/Form'
+import { Dialog } from '@/components/base/Headless'
+import { ref } from 'vue'
+import _ from 'lodash'
 
 interface MainProps {
-  switchAccount: boolean;
-  setSwitchAccount: (val: boolean) => void;
+  switchAccount: boolean
+  setSwitchAccount: (val: boolean) => void
 }
 
 const props = withDefaults(defineProps<MainProps>(), {
   switchAccount: false,
-  setSwitchAccount: () => {},
-});
+  setSwitchAccount: () => {}
+})
 
-const switchAccount = ref(0);
+const switchAccount = ref(0)
 </script>
 
 <template>
@@ -24,7 +24,7 @@ const switchAccount = ref(0);
     :open="props.switchAccount"
     @close="
       () => {
-        props.setSwitchAccount(false);
+        props.setSwitchAccount(false)
       }
     "
   >
@@ -34,10 +34,7 @@ const switchAccount = ref(0);
       </Dialog.Title>
       <Dialog.Description class="px-2.5 pt-3.5 pb-4">
         <div class="flex flex-col gap-1.5">
-          <template
-            v-for="(faker, fakerKey) in _.take(users.fakeUsers(), 5)"
-            :key="fakerKey"
-          >
+          <template v-for="(faker, fakerKey) in _.take(users.fakeUsers(), 5)" :key="fakerKey">
             <FormCheck.Label
               :for="'switch-account-' + fakerKey"
               class="flex items-center px-2.5 py-1 rounded-lg hover:bg-slate-100 cursor-pointer"
@@ -45,10 +42,7 @@ const switchAccount = ref(0);
               <div
                 class="overflow-hidden rounded-full w-11 h-11 image-fit border-[3px] border-slate-200/70"
               >
-                <img
-                  alt="Tailwise - Admin Dashboard Template"
-                  :src="faker.photo"
-                />
+                <img alt="Tailwise - Admin Dashboard Template" :src="faker.photo" />
               </div>
               <div class="ml-3.5">
                 <div class="font-medium">{{ faker.name }}</div>
@@ -64,7 +58,7 @@ const switchAccount = ref(0);
                   :checked="switchAccount === fakerKey"
                   @change="
                     () => {
-                      switchAccount = fakerKey;
+                      switchAccount = fakerKey
                     }
                   "
                   class="absolute z-10 w-full h-full opacity-0 peer"
@@ -83,9 +77,7 @@ const switchAccount = ref(0);
         </div>
       </Dialog.Description>
       <Dialog.Footer class="flex items-center justify-center text-center h-14">
-        <a href="" class="block -mt-1 text-primary">
-          Login into an Existing Account
-        </a>
+        <a href="" class="block -mt-1 text-primary"> Login into an Existing Account </a>
       </Dialog.Footer>
     </Dialog.Panel>
   </Dialog>

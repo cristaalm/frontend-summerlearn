@@ -1,21 +1,21 @@
 <script setup lang="ts">
-import { computed, provide, type ComputedRef } from "vue";
+import { computed, provide, type ComputedRef } from 'vue'
 
 export type ProvideTab = {
-  selected: ComputedRef<boolean>;
-};
+  selected: ComputedRef<boolean>
+}
 
 interface ProviderProps {
-  selected: boolean;
+  selected: boolean
 }
 
 const props = withDefaults(defineProps<ProviderProps>(), {
-  selected: false,
-});
+  selected: false
+})
 
-provide<ProvideTab>("tab", {
-  selected: computed(() => props.selected),
-});
+provide<ProvideTab>('tab', {
+  selected: computed(() => props.selected)
+})
 </script>
 
 <template>

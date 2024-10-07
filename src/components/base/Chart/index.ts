@@ -1,5 +1,5 @@
-import Chart from "./Chart.vue";
+import Chart from './Chart.vue'
 
-export type { ChartElement, ProvideChart } from "./Chart.vue";
+export type { ChartElement, ProvideChart } from './Chart.vue'
 
-export default Chart;
+export default Chart

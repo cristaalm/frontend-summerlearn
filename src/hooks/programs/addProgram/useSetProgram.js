@@ -51,7 +51,7 @@ export function useSetProgram() {
           programs_user: program.responsible,
           programs_area: program.area,
           programs_status: 1,
-          programs_grade: program.grade 
+          programs_grade: program.grade
         })
       })
       if (response.ok) {

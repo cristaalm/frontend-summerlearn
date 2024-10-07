@@ -40,7 +40,6 @@ export function useSetObjectives() {
 
       const data = await response.json()
       if (response.ok) {
-        
         setObjectiveSuccess.value = 'El objetivo se registró correctamente.'
         // router.push({ name: 'activities' }) // Redirigir después del éxito
         console.log('Objetivo registrado con éxito')

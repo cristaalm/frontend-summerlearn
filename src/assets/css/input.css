@@ -10,9 +10,9 @@
    | https://tailwindcss.com/docs/theme
    |
    */
-   @import "./fonts/_public-sans.css";
+@import './fonts/_public-sans.css';
 
-   /*
+/*
       |--------------------------------------------------------------------------
       | Components
       |--------------------------------------------------------------------------
@@ -20,14 +20,14 @@
       | Import CSS components.
       |
       */
-   @import "./components/_box.css";
-   @import "./components/_global.css";
-   @import "./components/_image-fit.css";
-   @import "./components/_scrollbar-hidden.css";
-   @import "./components/_typing-dots.css";
-   @import "./components/_zoom-in.css";
-   
-   /*
+@import './components/_box.css';
+@import './components/_global.css';
+@import './components/_image-fit.css';
+@import './components/_scrollbar-hidden.css';
+@import './components/_typing-dots.css';
+@import './components/_zoom-in.css';
+
+/*
     |--------------------------------------------------------------------------
     | TailwindCSS Directives
     |--------------------------------------------------------------------------
@@ -39,7 +39,6 @@
     | https://tailwindcss.com/docs/installation#include-tailwind-in-your-css
     |
     */
-   @tailwind base;
-   @tailwind components;
-   @tailwind utilities;
-   
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

@@ -1,12 +1,12 @@
-import Disclosure from "./Disclosure";
-import Group from "./Group.vue";
-import Button from "./Button.vue";
-import Panel from "./Panel.vue";
+import Disclosure from './Disclosure'
+import Group from './Group.vue'
+import Button from './Button.vue'
+import Panel from './Panel.vue'
 
 const DisclosureComponent = Object.assign({}, Disclosure, {
   Group: Group,
   Button: Button,
-  Panel: Panel,
-});
+  Panel: Panel
+})
 
-export default DisclosureComponent;
+export default DisclosureComponent
