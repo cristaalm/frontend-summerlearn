@@ -27,7 +27,7 @@ const { currentPage, pageSize, totalPages, paginatedItems, changePage, changePag
   usePagination(filteredItems)
 const { donationsWeek, loadingWeek, loadDonationsWeek, errorWeek, totalDonationsWeek } =
   useWeeklyDonations()
-const { toastMessages, showToast } = useToast()
+const { toastMessages, showToast } = useToast();
 const { loadExportExcel, loadingExportExcel } = useExportExcel({ showToast })
 const { loadExportPDF, loadingExportPDF } = useExportPDF({ showToast })
 
@@ -46,10 +46,11 @@ onMounted(() => {
 <template>
   <!--? ######################## TOAST NOTIFICATION ######################## -->
 
-  <div>
-    <ToastNotification v-for="(message, index) in toastMessages" :key="index" :message="message" :index="index">
-    </ToastNotification>
+  <div class="fixed right-22 p-4 transition-opacity duration-300 top-[110px] z-50 flex flex-col gap-3">
+    <!-- Recalcular posición top usando getTopOffset -->
+    <ToastNotification v-for="(message, index) in toastMessages" :key="index" :message="message" />
   </div>
+
 
   <div class="grid grid-cols-12 gap-y-10 gap-x-6">
     <div class="col-span-12">

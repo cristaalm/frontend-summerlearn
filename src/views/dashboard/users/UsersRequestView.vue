@@ -14,7 +14,7 @@ import { Baseurl } from '@/../global'
 import { ref, onMounted } from 'vue'
 
 const { users, loading, error, loadUsers } = useUserRequest()
-const { toastMessages, showToast } = useToast()
+const { toastMessages, showToast } = useToast();
 const { dialogStatusModal, openModal, confirmSubscription, closeModal } = useDialog({
   showToast,
   users
@@ -37,10 +37,6 @@ const saveStatus = (action) => {
 }
 </script>
 <template>
-  <div>
-    <ToastNotification v-for="(message, index) in toastMessages" :key="index" :message="message" :index="index">
-    </ToastNotification>
-  </div>
   <!-- BEGIN: Modal Content -->
   <Dialog :open="dialogStatusModal" @close="closeModal">
     <Dialog.Panel>
@@ -71,9 +67,9 @@ const saveStatus = (action) => {
 
   <!--? ######################## TOAST NOTIFICATION ######################## -->
 
-  <div>
-    <ToastNotification v-for="(message, index) in toastMessages" :key="index" :message="message" :index="index">
-    </ToastNotification>
+  <div class="fixed right-22 p-4 transition-opacity duration-300 top-[110px] z-50 flex flex-col gap-3">
+    <!-- Recalcular posición top usando getTopOffset -->
+    <ToastNotification v-for="(message, index) in toastMessages" :key="index" :message="message" />
   </div>
 
   <div class="grid grid-cols-12 gap-y-10 gap-x-6">
@@ -116,8 +112,8 @@ const saveStatus = (action) => {
                     </div>
                     <div class="flex items-center mt-4">
                       <Button variant="secondary" @click="() => {
-                          close()
-                        }
+                        close()
+                      }
                         " class="w-32 ml-auto">
                         Cerrar
                       </Button>
@@ -227,16 +223,16 @@ const saveStatus = (action) => {
                     <Table.Td class="relative py-4 border-dashed dark:bg-darkmode-600">
                       <div class="flex flex-col sm:flex-row gap-x-3 gap-y-2 md:ml-auto">
                         <Button class="bg-green-300 text-gray-950 hover:bg-green-500 hover:text-white" @click="() => {
-                            openModal(user.id, 'accept')
-                            saveStatus('accept')
-                          }
+                          openModal(user.id, 'accept')
+                          saveStatus('accept')
+                        }
                           ">
                           <Lucide icon="UserCheckIcon" class="stroke-[1.3] w-4 h-4 mr-2" /> Aceptar
                         </Button>
                         <Button class="bg-red-300 text-gray-950 hover:bg-red-500 hover:text-white" @click="() => {
-                            openModal(user.id, 'reject')
-                            saveStatus('reject')
-                          }
+                          openModal(user.id, 'reject')
+                          saveStatus('reject')
+                        }
                           ">
                           <Lucide icon="UserMinusIcon" class="stroke-[1.3] w-4 h-4 mr-2" /> Rechazar
                         </Button>

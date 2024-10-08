@@ -38,7 +38,7 @@ const { searchQuery, selectedStatus, filteredItems, activeFilters } = useFilter(
 const { currentPage, pageSize, totalPages, paginatedItems, changePage, changePageSize } =
   usePagination(filteredItems)
 
-const { toastMessages, showToast } = useToast()
+const { toastMessages, showToast } = useToast();
 const { dialogStatusDelete, openDeleteModal, confirmDeleteActividad, closeDeleteActividad } =
   useDialogDelete({ showToast, actividades })
 const {
@@ -87,11 +87,14 @@ onMounted(() => {
 </script>
 
 <template>
-  <div>
-    <ToastNotification v-for="(message, index) in toastMessages" :key="index" :message="message" :index="index">
-    </ToastNotification>
-  </div>
 
+
+  <!--? ######################## TOAST NOTIFICATION ######################## -->
+
+  <div class="fixed right-22 p-4 transition-opacity duration-300 top-[110px] z-50 flex flex-col gap-3">
+    <!-- Recalcular posición top usando getTopOffset -->
+    <ToastNotification v-for="(message, index) in toastMessages" :key="index" :message="message" />
+  </div>
   <!-- BEGIN: Modal Content -->
   <Dialog :open="dialogStatusDelete" @close="() => {
     dialogStatusDelete.value = false

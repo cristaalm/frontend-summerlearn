@@ -21,7 +21,7 @@ const { roles, loadingRoles, errorRoles, loadRoles } = useRoles()
 const { searchQuery, selectedStatus, selectedRole, filteredUsers, filtersCount } = useSearch(users)
 const { currentPage, pageSize, totalPages, paginatedUsers, changePage, changePageSize } =
   usePagination(filteredUsers)
-const { toastMessages, showToast } = useToast()
+const { toastMessages, showToast } = useToast();
 const { updateStatus } = useStatusUser({ showToast })
 const router = useRouter()
 
@@ -35,9 +35,9 @@ onMounted(() => {
 <template>
   <!--? ######################## TOAST NOTIFICATION ######################## -->
 
-  <div>
-    <ToastNotification v-for="(message, index) in toastMessages" :key="index" :message="message" :index="index">
-    </ToastNotification>
+  <div class="fixed right-22 p-4 transition-opacity duration-300 top-[110px] z-50 flex flex-col gap-3">
+    <!-- Recalcular posición top usando getTopOffset -->
+    <ToastNotification v-for="(message, index) in toastMessages" :key="index" :message="message" />
   </div>
 
   <div class="grid grid-cols-12 gap-y-10 gap-x-6">

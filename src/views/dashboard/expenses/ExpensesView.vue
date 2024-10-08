@@ -22,7 +22,7 @@ const { bills, loading, loadBills, errorBills } = useBills()
 const { searchQuery, filteredBills } = useBillSearch(bills)
 const { currentPage, pageSize, totalPages, paginatedItems, changePage, changePageSize } =
   usePagination(filteredBills)
-const { toastMessages, showToast } = useToast()
+const { toastMessages, showToast } = useToast();
 const { loadExportExcel, loadingExportExcel } = useExportExcel({ showToast })
 const { loadExportPDF, loadingExportPDF } = useExportPDF({ showToast })
 
@@ -41,8 +41,8 @@ onMounted(() => {
   <!--? ######################## TOAST NOTIFICATION ######################## -->
 
   <div>
-    <ToastNotification v-for="(message, index) in toastMessages" :key="index" :message="message" :index="index">
-    </ToastNotification>
+    <!-- Recalcular posición top usando getTopOffset -->
+    <ToastNotification v-for="(message, index) in toastMessages" :key="index" :message="message" />
   </div>
 
   <div class="grid grid-cols-12 gap-y-10 gap-x-6">

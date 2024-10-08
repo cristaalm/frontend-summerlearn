@@ -1,15 +1,16 @@
 <template>
-  <div
-    v-if="isVisible"
-    :style="{ top: `${topOffset}px`, zIndex: 1000 }"
-    :class="['fixed right-22 p-4 rounded shadow-lg transition-opacity duration-300', toastTypeClass]"
-  >
+  <div ref="container" :class="[
+    'right-22 p-4 rounded shadow-lg transition-opacity duration-300',
+    toastTypeClass,
+    moveClass, // Clase para controlar el movimiento
+    animationClass // Clase dinámica de animación de entrada/salida
+  ]">
     <p>{{ message.message }}</p>
   </div>
 </template>
 
 <script setup>
-import { ref, watch, computed } from 'vue'
+import { ref, computed, onMounted, nextTick } from 'vue'
 
 const props = defineProps({
   message: {
@@ -19,30 +20,34 @@ const props = defineProps({
   duration: {
     type: Number,
     default: 3000
-  },
-  index: Number
+  }
 })
 
-const isVisible = ref(false)
+const container = ref(null)
+const animationClass = ref('')
+const moveClass = ref('transition-all duration-500 ease-in-out')
 
-// Muestra y oculta el mensaje cuando cambia
-watch(
-  () => props.message,
-  (newMessage) => {
-    if (newMessage) {
-      isVisible.value = true
-      setTimeout(() => {
-        isVisible.value = false
-      }, props.duration)
-    }
-  },
-  { immediate: true }
-)
+onMounted(() => {
+  setTimeout(() => {
+    moveClass.value = 'transition-all duration-500 ease-in-out'
+  }, 10)
 
-// Aumenta el espacio entre mensajes para evitar superposición
-const topOffset = computed(() => props.index * 80 + 110)
+  animationClass.value = 'animate-toast-enter'
 
-// Determina la clase de estilo según el tipo de toast
+  // Iniciar animación de salida después de la duración establecida
+  setTimeout(() => {
+    animationClass.value = 'animate-toast-leave'
+
+    // Esperar a que la animación de salida se complete antes de ocultar el mensaje
+    const animationDuration = 500 // Duración de la animación de salida en milisegundos
+    setTimeout(() => {
+      nextTick(() => {
+        container.value.remove()
+      })
+    }, animationDuration)
+  }, props.duration)
+})
+
 const toastTypeClass = computed(() => {
   switch (props.message.tipo) {
     case 'error':
@@ -57,9 +62,3 @@ const toastTypeClass = computed(() => {
   }
 })
 </script>
-
-<style scoped>
-.fixed {
-  position: fixed;
-}
-</style>

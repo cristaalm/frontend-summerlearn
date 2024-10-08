@@ -20,7 +20,9 @@ module.exports = {
     extend: {
       animation: {
         navActivate: 'navActivate 1s forwards',
-        navDeactivate: 'navDeactivate 0.5s forwards'
+        navDeactivate: 'navDeactivate 0.5s forwards',
+        'toast-enter': 'toastEnter 0.5s ease-out forwards',
+        'toast-leave': 'toastLeave 0.5s ease-in forwards'
       },
       keyframes: {
         navActivate: {
@@ -30,6 +32,14 @@ module.exports = {
         navDeactivate: {
           '0%': { height: 'calc(100vh - 100px)', padding: '1rem 0' },
           '100%': { height: '0px' }
+        },
+        toastEnter: {
+          '0%': { opacity: '0', transform: 'translateX(-20px)' }, // Entrada desde la izquierda
+          '100%': { opacity: '1', transform: 'translateX(0)' }
+        },
+        toastLeave: {
+          '0%': { opacity: '1', transform: 'translateX(0)' },
+          '100%': { opacity: '0', transform: 'translateX(-20px)' } // Salida hacia la izquierda
         }
       },
       screens: {

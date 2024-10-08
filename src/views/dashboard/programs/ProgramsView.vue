@@ -24,7 +24,7 @@ const { programs, loading, error, loadPrograms } = usePrograms()
 const { searchQuery, selectedStatus, filteredItems, activeFilters } = useFilter(programs)
 const { currentPage, pageSize, totalPages, paginatedItems, changePage, changePageSize } =
   usePagination(filteredItems)
-const { toastMessages, showToast } = useToast()
+const { toastMessages, showToast } = useToast();
 const { dialogStatusDelete, openDeleteModal, confirmDeleteProgram, closeDeleteProgram } =
   useDialogDelete({ showToast, programs })
 const { updateStatus } = useStatusProgram({ showToast })
@@ -40,17 +40,17 @@ onMounted(() => {
 <template>
   <!--? ######################## TOAST NOTIFICATION ######################## -->
 
-  <div>
-    <ToastNotification v-for="(message, index) in toastMessages" :key="index" :message="message" :index="index">
-    </ToastNotification>
+  <div class="fixed right-22 p-4 transition-opacity duration-300 top-[110px] z-50 flex flex-col gap-3">
+    <!-- Recalcular posición top usando getTopOffset -->
+    <ToastNotification v-for="(message, index) in toastMessages" :key="index" :message="message" />
   </div>
 
   <!--? ######################## DIALOG DELETE PROGRAM ######################## -->
 
   <!-- BEGIN: Modal Content -->
   <Dialog :open="dialogStatusDelete" @close="() => {
-      dialogStatusDelete.value = false
-    }
+    dialogStatusDelete.value = false
+  }
     ">
     <Dialog.Panel>
       <div class="p-5 text-center">
@@ -84,10 +84,10 @@ onMounted(() => {
           <Button variant="primary"
             class="group-[.mode--light]:!bg-white/[0.12] group-[.mode--light]:!text-slate-200 group-[.mode--light]:!border-transparent"
             @click="() => {
-                router.push({
-                  name: 'addProgram'
-                })
-              }
+              router.push({
+                name: 'addProgram'
+              })
+            }
               ">
             <Lucide icon="PenLine" class="stroke-[1.3] w-4 h-4 mr-2" /> Agregar nuevo programa
           </Button>
@@ -165,8 +165,8 @@ onMounted(() => {
                     </div>
                     <div class="flex items-center mt-4">
                       <Button variant="secondary" @click="() => {
-                          close()
-                        }
+                        close()
+                      }
                         " class="w-32 ml-auto">
                         Cerrar
                       </Button>
@@ -296,22 +296,22 @@ onMounted(() => {
                               Editar
                             </Menu.Item>
                             <Menu.Item :class="`${program.status !== 1 ? 'text-blue' : 'text-[#ff6f0f]'}`" @click="() => {
-                                updateStatus({ program }).then((updatedProgram) => {
-                                  const index = programs.findIndex(
-                                    (p) => p.id === updatedProgram.id
-                                  )
-                                  if (index !== -1) {
-                                    programs[index] = updatedProgram
-                                  }
-                                })
-                              }
+                              updateStatus({ program }).then((updatedProgram) => {
+                                const index = programs.findIndex(
+                                  (p) => p.id === updatedProgram.id
+                                )
+                                if (index !== -1) {
+                                  programs[index] = updatedProgram
+                                }
+                              })
+                            }
                               ">
                               <Lucide icon="RefreshCw" class="w-4 h-4 mr-2" />
                               {{ program.status !== 1 ? 'Activar' : 'Desactivar' }}
                             </Menu.Item>
                             <Menu.Item class="text-danger" @click="() => {
-                                openDeleteModal(program.id)
-                              }
+                              openDeleteModal(program.id)
+                            }
                               ">
                               <Lucide icon="CheckSquare" class="w-4 h-4 mr-2" />
                               Eliminar
