@@ -22,11 +22,14 @@ export function useDialogDelete({ showToast, areas }) {
         window.scrollTo({ top: 0, behavior: 'smooth' })
 
         setTimeout(() => {
-          showToast('Área eliminada exitosamente.')
+          showToast({ message: 'Área eliminada exitosamente.', tipo: 'success' })
         }, 1000)
       } else {
         setTimeout(() => {
-          showToast('Hay un programa relacionado, no se puede eliminar área.')
+          showToast({
+            message: 'Hay un programa relacionado, no se puede eliminar área.',
+            tipo: 'warning'
+          })
         }, 1000)
       }
 
@@ -34,7 +37,7 @@ export function useDialogDelete({ showToast, areas }) {
       areaToDelete.value = null
     } catch (error) {
       console.error('Error deleting area:', error)
-      showToast('Error al eliminar el área.') // Use showToast for error message
+      showToast({ message: 'Error al eliminar el área.', tipo: 'error' }) // Use showToast for error message
     }
   }
 

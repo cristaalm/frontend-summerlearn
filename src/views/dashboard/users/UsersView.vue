@@ -2,14 +2,14 @@
 import { FormInput, FormSelect } from '@/components/base/Form'
 import Pagination from '@/components/base/Pagination'
 import { Menu, Popover } from '@/components/base/Headless'
-import { useUsers, useSearch, usePagination, useStatusUser, useToast } from '@/hooks/users/'
+import { useUsers, useSearch, usePagination, useStatusUser } from '@/hooks/users/'
 import { onMounted } from 'vue'
 import Lucide from '@/components/base/Lucide'
 import Button from '@/components/base/Button'
 import Table from '@/components/base/Table'
 import Tippy from '@/components/base/Tippy'
 import LoadingIcon from '@/components/base/LoadingIcon'
-import ToastNotification from '@/components/ToastNotification'
+import { ToastNotification, useToast } from '@/components/ToastNotification/'
 import { useRoles } from '@/hooks/roles/useRoles'
 import { calculateAge } from '@/logic/'
 import { useRouter } from 'vue-router'
@@ -48,10 +48,10 @@ onMounted(() => {
           <Button variant="primary"
             class="group-[.mode--light]:!bg-white/[0.12] group-[.mode--light]:!text-slate-200 group-[.mode--light]:!border-transparent"
             @click="() => {
-                router.push({
-                  name: 'addUser'
-                })
-              }
+              router.push({
+                name: 'addUser'
+              })
+            }
               ">
             <Lucide icon="PenLine" class="stroke-[1.3] w-4 h-4 mr-2" /> Agregar nuevo usuario
           </Button>
@@ -112,8 +112,8 @@ onMounted(() => {
                     </div>
                     <div class="flex items-center mt-4">
                       <Button variant="secondary" @click="() => {
-                          close()
-                        }
+                        close()
+                      }
                         " class="w-32 ml-auto">
                         Close
                       </Button>
@@ -214,8 +214,8 @@ onMounted(() => {
                       </div>
                     </Table.Td>
                     <Table.Td class="py-4 border-dashed dark:bg-darkmode-600" @click="() => {
-                        console.log(roles)
-                      }
+                      console.log(roles)
+                    }
                       ">
                       <div class="whitespace-nowrap">
                         {{ roles[user.rol - 1].name }}
@@ -252,13 +252,13 @@ onMounted(() => {
                               Editar
                             </Menu.Item>
                             <Menu.Item :class="`${user.status == 1 ? 'text-blue' : 'text-[#ff6f0f]'}`" @click="() => {
-                                updateStatus({ user }).then((updatedUser) => {
-                                  const index = users.findIndex((u) => u.id == updatedUser.id)
-                                  if (index !== -1) {
-                                    users[index] = updatedUser
-                                  }
-                                })
-                              }
+                              updateStatus({ user }).then((updatedUser) => {
+                                const index = users.findIndex((u) => u.id == updatedUser.id)
+                                if (index !== -1) {
+                                  users[index] = updatedUser
+                                }
+                              })
+                            }
                               ">
                               <Lucide icon="RefreshCw" class="w-4 h-4 mr-2" />
                               Cambiar Estado

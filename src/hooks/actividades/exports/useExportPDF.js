@@ -9,7 +9,7 @@ export function useExportPDF({ showToast }) {
   const loadExportPDF = async () => {
     loadingExportPDF.value = true
     errorExportPDF.value = ''
-    showToast('Generando archivo PDF...')
+    showToast({ message: 'Generando archivo PDF...', tipo: 'info' })
 
     try {
       const blob = await getPDF()
@@ -27,10 +27,11 @@ export function useExportPDF({ showToast }) {
 
       // Liberar la URL del objeto
       window.URL.revokeObjectURL(url)
+      showToast({ message: 'Archivo PDF generado exitosamente', tipo: 'success' })
     } catch (error) {
       console.error(error)
       errorExportPDF.value = 'Error al exportar a PDF'
-      showToast(errorExportPDF.value)
+      showToast({ message: errorExportPDF.value, tipo: 'error' })
     } finally {
       loadingExportPDF.value = false
     }

@@ -25,16 +25,16 @@ export function useDialog({ showToast, users }) {
 
       if (result) {
         users.value = users.value.filter((user) => user.id !== userIdSub.value)
-        showToast('Acción realizada exitosamente.')
+        showToast({ message: 'Acción realizada exitosamente.', tipo: 'success' })
       } else {
-        showToast('Error al realizar la acción.')
+        showToast({ message: 'Error al realizar la acción.', tipo: 'error' })
       }
 
       dialogStatusModal.value = false
       userIdSub.value = null
     } catch (error) {
       console.error('Error en la acción:', error)
-      showToast('Error inesperado.')
+      showToast({ message: 'Error inesperado.', tipo: 'error' })
     }
   }
 

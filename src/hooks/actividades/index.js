@@ -7,7 +7,6 @@ import { usePaginationObjective } from './usePaginationObjective'
 import { useDialogDelete } from './dialog/useDialogDelete'
 import { useDialogDeleteObjective } from './dialog/useDialogDeleteObjective'
 import { useDialogObjective } from './dialog/useDialogObjective'
-import { useToast } from './useToast'
 import { useExportPDF } from './exports/useExportPDF'
 import { useExportExcel } from './exports/useExportExcel'
 
@@ -21,7 +20,6 @@ export {
   useDialogDelete,
   useDialogDeleteObjective,
   useDialogObjective,
-  useToast,
   useExportPDF,
   useExportExcel
 }

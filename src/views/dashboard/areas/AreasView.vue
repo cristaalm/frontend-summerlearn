@@ -9,8 +9,8 @@ import LoadingIcon from '@/components/base/LoadingIcon'
 import Button from '@/components/base/Button'
 // import { useFilter, usePagination, useAreas } from '@/hooks/areas/' // error areglado ><
 import { onMounted } from 'vue'
-import { useFilter, useAreas, usePagination, useDialogDelete, useToast } from '@/hooks/areas/'
-import ToastNotification from '@/components/ToastNotification/' // Asegúrate de usar el nuevo nombre
+import { useFilter, useAreas, usePagination, useDialogDelete } from '@/hooks/areas/'
+import { ToastNotification, useToast } from '@/components/ToastNotification/'
 
 const { areas, loading, error, loadAreas } = useAreas()
 const { searchQuery, filteredItems } = useFilter(areas)
@@ -30,24 +30,15 @@ onMounted(() => {
 
 <template>
   <div>
-    <ToastNotification
-      v-for="(message, index) in toastMessages"
-      :key="index"
-      :message="message"
-      :index="index"
-    >
+    <ToastNotification v-for="(message, index) in toastMessages" :key="index" :message="message" :index="index">
     </ToastNotification>
   </div>
 
   <!-- BEGIN: Modal Content -->
-  <Dialog
-    :open="dialogStatusDelete"
-    @close="
-      () => {
-        dialogStatusDelete.value = false
-      }
-    "
-  >
+  <Dialog :open="dialogStatusDelete" @close="() => {
+    dialogStatusDelete.value = false
+  }
+    ">
     <Dialog.Panel>
       <div class="p-5 text-center">
         <Lucide icon="XCircle" class="w-16 h-16 mx-auto mt-3 text-danger" />
@@ -59,21 +50,10 @@ onMounted(() => {
         </div>
       </div>
       <div class="px-5 pb-8 text-center space-x-8">
-        <Button
-          type="button"
-          variant="outline-secondary"
-          @click="closeDeleteArea"
-          class="w-24 mr-1"
-        >
+        <Button type="button" variant="outline-secondary" @click="closeDeleteArea" class="w-24 mr-1">
           Cancelar
         </Button>
-        <Button
-          type="button"
-          variant="danger"
-          class="w-24"
-          @click="confirmDeleteArea"
-          ref="deleteButtonRef"
-        >
+        <Button type="button" variant="danger" class="w-24" @click="confirmDeleteArea" ref="deleteButtonRef">
           Eliminar
         </Button>
       </div>
@@ -85,17 +65,14 @@ onMounted(() => {
       <div class="flex flex-col md:h-10 gap-y-3 md:items-center md:flex-row">
         <div class="text-base font-medium group-[.mode--light]:text-white">Áreas</div>
         <div class="flex flex-col sm:flex-row gap-x-3 gap-y-2 md:ml-auto">
-          <Button
-            variant="primary"
+          <Button variant="primary"
             class="group-[.mode--light]:!bg-white/[0.12] group-[.mode--light]:!text-slate-200 group-[.mode--light]:!border-transparent"
-            @click="
-              () => {
-                router.push({
-                  name: 'addArea'
-                })
-              }
-            "
-          >
+            @click="() => {
+              router.push({
+                name: 'addArea'
+              })
+            }
+              ">
             <Lucide icon="PenLine" class="stroke-[1.3] w-4 h-4 mr-2" /> Agregar nueva área
           </Button>
         </div>
@@ -105,16 +82,10 @@ onMounted(() => {
           <div class="flex flex-col p-5 sm:items-center sm:flex-row gap-y-2">
             <div>
               <div class="relative">
-                <Lucide
-                  icon="Search"
-                  class="absolute inset-y-0 left-0 z-10 w-4 h-4 my-auto ml-3 stroke-[1.3] text-slate-500"
-                />
-                <FormInput
-                  v-model="searchQuery"
-                  type="text"
-                  placeholder="Buscar nombre de área..."
-                  class="pl-9 sm:w-72 rounded-[0.5rem]"
-                />
+                <Lucide icon="Search"
+                  class="absolute inset-y-0 left-0 z-10 w-4 h-4 my-auto ml-3 stroke-[1.3] text-slate-500" />
+                <FormInput v-model="searchQuery" type="text" placeholder="Buscar nombre de área..."
+                  class="pl-9 sm:w-72 rounded-[0.5rem]" />
               </div>
             </div>
           </div>
@@ -123,18 +94,15 @@ onMounted(() => {
               <Table.Thead>
                 <Table.Tr>
                   <Table.Td
-                    class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500"
-                  >
+                    class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500">
                     Nombre
                   </Table.Td>
                   <Table.Td
-                    class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500"
-                  >
+                    class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500">
                     Responsable
                   </Table.Td>
                   <Table.Td
-                    class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500"
-                  >
+                    class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500">
                   </Table.Td>
                 </Table.Tr>
               </Table.Thead>
@@ -194,14 +162,10 @@ onMounted(() => {
                               <Lucide icon="CheckSquare" class="w-4 h-4 mr-2" />
                               Editar
                             </Menu.Item>
-                            <Menu.Item
-                              class="text-danger"
-                              @click="
-                                () => {
-                                  openDeleteModal(area.id)
-                                }
-                              "
-                            >
+                            <Menu.Item class="text-danger" @click="() => {
+                              openDeleteModal(area.id)
+                            }
+                              ">
                               <Lucide icon="Trash" class="w-4 h-4 mr-2" />
                               Eliminar
                             </Menu.Item>
@@ -214,9 +178,7 @@ onMounted(() => {
               </Table.Tbody>
             </Table>
           </div>
-          <div
-            class="flex flex-col-reverse flex-wrap items-center p-5 flex-reverse gap-y-2 sm:flex-row"
-          >
+          <div class="flex flex-col-reverse flex-wrap items-center p-5 flex-reverse gap-y-2 sm:flex-row">
             <Pagination class="flex-1 w-full mr-auto sm:w-auto">
               <Pagination.Link @click="changePage(1)">
                 <Lucide icon="ChevronsLeft" class="w-4 h-4" />
@@ -236,11 +198,7 @@ onMounted(() => {
                 <Lucide icon="ChevronsRight" class="w-4 h-4" />
               </Pagination.Link>
             </Pagination>
-            <FormSelect
-              class="sm:w-20 rounded-[0.5rem]"
-              v-model="pageSize"
-              @change="changePageSize"
-            >
+            <FormSelect class="sm:w-20 rounded-[0.5rem]" v-model="pageSize" @change="changePageSize">
               <option value="10">10</option>
               <option value="20">20</option>
               <option value="30">30</option>

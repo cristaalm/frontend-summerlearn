@@ -1,3 +1,4 @@
 import ToastNotification from './ToastNotification.vue'
+import { useToast } from './toast'
 
-export default ToastNotification
+export { ToastNotification, useToast }

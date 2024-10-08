@@ -4,8 +4,9 @@ export function useToast() {
   const toastMessages = ref([])
 
   // Function to show the toast
-  const showToast = (message) => {
-    toastMessages.value.push(message)
+  const showToast = ({ message, tipo = 'info' }) => {
+    // Agrega el nuevo mensaje con su tipo
+    toastMessages.value.push({ message, tipo })
 
     // Remueve el mensaje después de 3 segundos
     setTimeout(() => {

@@ -2,9 +2,9 @@
   <div
     v-if="isVisible"
     :style="{ top: `${topOffset}px`, zIndex: 1000 }"
-    class="fixed right-22 p-4 bg-white text-gray-800 rounded shadow-lg transition-opacity duration-300"
+    :class="['fixed right-22 p-4 rounded shadow-lg transition-opacity duration-300', toastTypeClass]"
   >
-    <p>{{ message }}</p>
+    <p>{{ message.message }}</p>
   </div>
 </template>
 
@@ -12,7 +12,10 @@
 import { ref, watch, computed } from 'vue'
 
 const props = defineProps({
-  message: String,
+  message: {
+    type: Object,
+    required: true
+  },
   duration: {
     type: Number,
     default: 3000
@@ -22,6 +25,7 @@ const props = defineProps({
 
 const isVisible = ref(false)
 
+// Muestra y oculta el mensaje cuando cambia
 watch(
   () => props.message,
   (newMessage) => {
@@ -36,7 +40,22 @@ watch(
 )
 
 // Aumenta el espacio entre mensajes para evitar superposición
-const topOffset = computed(() => props.index * 80 + 110) // Ajusta el multiplicador para el espacio deseado
+const topOffset = computed(() => props.index * 80 + 110)
+
+// Determina la clase de estilo según el tipo de toast
+const toastTypeClass = computed(() => {
+  switch (props.message.tipo) {
+    case 'error':
+      return 'bg-red-100 text-red-800'
+    case 'warning':
+      return 'bg-yellow-100 text-yellow-800'
+    case 'success':
+      return 'bg-green-100 text-green-800'
+    case 'info':
+    default:
+      return 'bg-blue-100 text-blue-800'
+  }
+})
 </script>
 
 <style scoped>

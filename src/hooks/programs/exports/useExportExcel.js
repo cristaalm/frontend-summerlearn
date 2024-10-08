@@ -9,7 +9,7 @@ export function useExportExcel({ showToast }) {
   const loadExportExcel = async () => {
     loadingExportExcel.value = true
     errorExportExcel.value = ''
-    showToast('Generando archivo Excel...')
+    showToast({ message: 'Generando archivo Excel...', tipo: 'info' })
 
     try {
       const blob = await getExcel()
@@ -30,7 +30,7 @@ export function useExportExcel({ showToast }) {
     } catch (error) {
       console.error(error)
       errorExportExcel.value = 'Error al exportar a Excel'
-      showToast(errorExportExcel.value)
+      showToast({ message: errorExportExcel.value, tipo: 'error' })
     } finally {
       loadingExportExcel.value = false
     }

@@ -3,7 +3,7 @@ import Lucide from '@/components/base/Lucide'
 import { Menu } from '@/components/base/Headless'
 import Pagination from '@/components/base/Pagination'
 import LoadingIcon from '@/components/base/LoadingIcon'
-import ToastNotification from '@/components/ToastNotification'
+import { ToastNotification, useToast } from '@/components/ToastNotification/'
 import { FormInput, FormSelect } from '@/components/base/Form'
 import Button from '@/components/base/Button'
 import Table from '@/components/base/Table'
@@ -14,8 +14,7 @@ import {
   usePagination,
   useBillSearch,
   useExportExcel,
-  useExportPDF,
-  useToast
+  useExportPDF
 } from '@/hooks/bills'
 
 const router = useRouter()
@@ -42,12 +41,7 @@ onMounted(() => {
   <!--? ######################## TOAST NOTIFICATION ######################## -->
 
   <div>
-    <ToastNotification
-      v-for="(message, index) in toastMessages"
-      :key="index"
-      :message="message"
-      :index="index"
-    >
+    <ToastNotification v-for="(message, index) in toastMessages" :key="index" :message="message" :index="index">
     </ToastNotification>
   </div>
 
@@ -56,11 +50,8 @@ onMounted(() => {
       <div class="flex flex-col md:h-10 gap-y-3 md:items-center md:flex-row">
         <div class="text-base font-medium group-[.mode--light]:text-white">Gastos</div>
         <div class="flex flex-col sm:flex-row gap-x-3 gap-y-2 md:ml-auto">
-          <Button
-            variant="primary"
-            @click="router.push({ name: 'addExpense' })"
-            class="group-[.mode--light]:!bg-white/[0.12] group-[.mode--light]:!text-slate-200 group-[.mode--light]:!border-transparent"
-          >
+          <Button variant="primary" @click="router.push({ name: 'addExpense' })"
+            class="group-[.mode--light]:!bg-white/[0.12] group-[.mode--light]:!text-slate-200 group-[.mode--light]:!border-transparent">
             <Lucide icon="PenLine" class="stroke-[1.3] w-4 h-4 mr-2" /> Agregar nuevo gasto
           </Button>
         </div>
@@ -71,78 +62,42 @@ onMounted(() => {
           <div class="flex flex-col p-5 sm:items-center sm:flex-row gap-y-2">
             <div>
               <div class="relative">
-                <Lucide
-                  icon="Search"
-                  class="absolute inset-y-0 left-0 z-10 w-4 h-4 my-auto ml-3 stroke-[1.3] text-slate-500"
-                />
-                <FormInput
-                  v-model="searchQuery"
-                  type="text"
-                  placeholder="Buscar concepto..."
-                  class="pl-9 sm:w-64 rounded-[0.5rem]"
-                />
+                <Lucide icon="Search"
+                  class="absolute inset-y-0 left-0 z-10 w-4 h-4 my-auto ml-3 stroke-[1.3] text-slate-500" />
+                <FormInput v-model="searchQuery" type="text" placeholder="Buscar concepto..."
+                  class="pl-9 sm:w-64 rounded-[0.5rem]" />
               </div>
             </div>
             <div class="flex flex-col sm:flex-row gap-x-3 gap-y-2 sm:ml-auto">
               <Menu>
-                <Menu.Button
-                  :as="Button"
-                  variant="outline-secondary"
+                <Menu.Button :as="Button" variant="outline-secondary"
                   :class="`w-full sm:w-auto ${loadingExportExcel || loadingExportPDF ? 'text-amber-500' : ' text-black'}`"
-                  :disabled="loadingExportExcel || loadingExportPDF"
-                >
-                  <Lucide
-                    v-if="!loadingExportExcel && !loadingExportPDF"
-                    icon="Download"
-                    class="stroke-[1.3] w-4 h-4 mr-2"
-                  />
-                  <LoadingIcon
-                    v-if="loadingExportExcel || loadingExportPDF"
-                    icon="tail-spin"
-                    class="stroke-[1.3] w-4 h-4 mr-2"
-                    color="black"
-                  />
+                  :disabled="loadingExportExcel || loadingExportPDF">
+                  <Lucide v-if="!loadingExportExcel && !loadingExportPDF" icon="Download"
+                    class="stroke-[1.3] w-4 h-4 mr-2" />
+                  <LoadingIcon v-if="loadingExportExcel || loadingExportPDF" icon="tail-spin"
+                    class="stroke-[1.3] w-4 h-4 mr-2" color="black" />
                   Exportar
                   <Lucide icon="ChevronDown" class="stroke-[1.3] w-4 h-4 ml-2" />
                 </Menu.Button>
                 <Menu.Items class="w-40">
                   <Menu.Item>
-                    <Button
-                      @click="loadExportExcel"
+                    <Button @click="loadExportExcel"
                       :class="`w-full ${loadingExportExcel ? 'text-amber-500' : ' text-black'}`"
-                      :disabled="loadingExportExcel"
-                    >
-                      <Lucide
-                        v-if="!loadingExportExcel"
-                        icon="FileSpreadsheet"
-                        class="stroke-[1.3] w-4 h-4 mr-2"
-                      />
-                      <LoadingIcon
-                        v-if="loadingExportExcel"
-                        icon="tail-spin"
-                        class="stroke-[1.3] w-4 h-4 mr-2"
-                        color="black"
-                      />
+                      :disabled="loadingExportExcel">
+                      <Lucide v-if="!loadingExportExcel" icon="FileSpreadsheet" class="stroke-[1.3] w-4 h-4 mr-2" />
+                      <LoadingIcon v-if="loadingExportExcel" icon="tail-spin" class="stroke-[1.3] w-4 h-4 mr-2"
+                        color="black" />
                       Excel
                     </Button>
                   </Menu.Item>
                   <Menu.Item>
-                    <Button
-                      @click="loadExportPDF"
+                    <Button @click="loadExportPDF"
                       :class="`w-full ${loadingExportPDF ? 'text-amber-500' : ' text-black'}`"
-                      :disabled="loadingExportPDF"
-                    >
-                      <Lucide
-                        v-if="!loadingExportPDF"
-                        icon="File"
-                        class="stroke-[1.3] w-4 h-4 mr-2"
-                      />
-                      <LoadingIcon
-                        v-if="loadingExportPDF"
-                        icon="tail-spin"
-                        class="stroke-[1.3] w-4 h-4 mr-2"
-                        color="black"
-                      />
+                      :disabled="loadingExportPDF">
+                      <Lucide v-if="!loadingExportPDF" icon="File" class="stroke-[1.3] w-4 h-4 mr-2" />
+                      <LoadingIcon v-if="loadingExportPDF" icon="tail-spin" class="stroke-[1.3] w-4 h-4 mr-2"
+                        color="black" />
                       PDF
                     </Button>
                   </Menu.Item>
@@ -154,24 +109,16 @@ onMounted(() => {
             <Table class="border-b border-slate-200/60">
               <Table.Thead>
                 <Table.Tr>
-                  <Table.Td
-                    class="py-4 font-medium border-t bg-slate-50 border-slate-200/60 text-slate-500"
-                  >
+                  <Table.Td class="py-4 font-medium border-t bg-slate-50 border-slate-200/60 text-slate-500">
                     Encargado del gasto
                   </Table.Td>
-                  <Table.Td
-                    class="py-4 font-medium border-t bg-slate-50 border-slate-200/60 text-slate-500"
-                  >
+                  <Table.Td class="py-4 font-medium border-t bg-slate-50 border-slate-200/60 text-slate-500">
                     Monto
                   </Table.Td>
-                  <Table.Td
-                    class="py-4 font-medium border-t bg-slate-50 border-slate-200/60 text-slate-500"
-                  >
+                  <Table.Td class="py-4 font-medium border-t bg-slate-50 border-slate-200/60 text-slate-500">
                     Concepto
                   </Table.Td>
-                  <Table.Td
-                    class="py-4 font-medium border-t bg-slate-50 border-slate-200/60 text-slate-500"
-                  >
+                  <Table.Td class="py-4 font-medium border-t bg-slate-50 border-slate-200/60 text-slate-500">
                     Fecha
                   </Table.Td>
                 </Table.Tr>
@@ -226,9 +173,7 @@ onMounted(() => {
               </Table.Tbody>
             </Table>
           </div>
-          <div
-            class="flex flex-col-reverse flex-wrap items-center p-5 flex-reverse gap-y-2 sm:flex-row"
-          >
+          <div class="flex flex-col-reverse flex-wrap items-center p-5 flex-reverse gap-y-2 sm:flex-row">
             <Pagination class="flex-1 w-full mr-auto sm:w-auto">
               <Pagination.Link @click="changePage(1)">
                 <Lucide icon="ChevronsLeft" class="w-4 h-4" />
@@ -248,11 +193,7 @@ onMounted(() => {
                 <Lucide icon="ChevronsRight" class="w-4 h-4" />
               </Pagination.Link>
             </Pagination>
-            <FormSelect
-              class="sm:w-20 rounded-[0.5rem]"
-              v-model="pageSize"
-              @change="changePageSize"
-            >
+            <FormSelect class="sm:w-20 rounded-[0.5rem]" v-model="pageSize" @change="changePageSize">
               <option value="10">10</option>
               <option value="20">20</option>
               <option value="30">30</option>
