@@ -69,7 +69,7 @@ onMounted(() => {
 
           <!-- * Imagen del usuario * -->
           <SettingsHero :loading="loadingUser" :error="errorUser ? true : false"
-            :imageUser="user.photo ?? '/media/usersImages/placeholderUser.jpg'" :showToast="showToast" />
+            :imageUser="user?.photo ?? '/media/usersImages/placeholderUser.jpg'" :showToast="showToast" />
 
 
           <template v-if="page === null && !loadingUser">

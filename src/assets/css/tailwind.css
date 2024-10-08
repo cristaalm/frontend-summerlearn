@@ -4272,8 +4272,8 @@ select {
 
 :root {
   --color-theme-1: 118 211 144;
-  --color-theme-2: 118 211 144;
-  --color-theme-3: 107 192 131;
+  --color-theme-2: 76 133 92;
+  --color-theme-3: 100 176 121;
   --color-primary: 6 78 59;
   --color-secondary: 167 243 208;
   --color-success: 16 185 129;
@@ -6670,16 +6670,16 @@ select {
   fill: rgb(var(--color-danger) / 0.1);
 }
 
-.fill-green-600 {
-  fill: #16a34a;
-}
-
 .fill-primary\/10 {
   fill: rgb(var(--color-primary) / 0.1);
 }
 
 .fill-slate-300\/70 {
   fill: rgb(203 213 225 / 0.7);
+}
+
+.fill-slate-400 {
+  fill: #94a3b8;
 }
 
 .fill-slate-400\/70 {
@@ -6698,10 +6698,6 @@ select {
   fill: rgb(255 255 255 / 0.03);
 }
 
-.fill-slate-400 {
-  fill: #94a3b8;
-}
-
 .stroke-black {
   stroke: #000;
 }
@@ -6710,8 +6706,8 @@ select {
   stroke: rgb(var(--color-danger) / 1);
 }
 
-.stroke-green-400 {
-  stroke: #4ade80;
+.stroke-slate-200 {
+  stroke: #e2e8f0;
 }
 
 .stroke-slate-400\/50 {
@@ -6724,10 +6720,6 @@ select {
 
 .stroke-success {
   stroke: rgb(var(--color-success) / 1);
-}
-
-.stroke-slate-200 {
-  stroke: #e2e8f0;
 }
 
 .stroke-\[0\.3\] {

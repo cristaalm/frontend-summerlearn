@@ -14,7 +14,7 @@ export const getUser = async () => {
 
   const user = await response.json()
 
-  return {
+  const user_info = {
     id: user.id,
     photo: user.users_photo,
     name: user.name,
@@ -24,4 +24,13 @@ export const getUser = async () => {
     rol: user.users_rol,
     status: user.users_status ?? 0
   }
+
+  // comprobamos que los datos no estén vacíos
+  for (const key in user_info) {
+    if (user_info[key] === null || user_info[key] === undefined) {
+      return null
+    }
+  }
+
+  return user_info
 }

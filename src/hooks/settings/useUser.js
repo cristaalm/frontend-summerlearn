@@ -13,6 +13,9 @@ export function useUser() {
     } catch (e) {
       errorUser.value = e
     } finally {
+      if (!user.value) {
+        errorUser.value = 'No se ha podido cargar el usuario'
+      }
       loadingUser.value = false
     }
   }
