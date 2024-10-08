@@ -30,22 +30,13 @@ onMounted(() => {
   loadUsers()
   loadRoles()
 })
-const handleAccept = (id) => {
-  id_actividad.value = id // Guarda el ID en la variable reactiva
-  loadObjectives(id_actividad.value) // Pasa el valor del ID de la actividad
-}
 </script>
 
 <template>
   <!--? ######################## TOAST NOTIFICATION ######################## -->
 
   <div>
-    <ToastNotification
-      v-for="(message, index) in toastMessages"
-      :key="index"
-      :message="message"
-      :index="index"
-    >
+    <ToastNotification v-for="(message, index) in toastMessages" :key="index" :message="message" :index="index">
     </ToastNotification>
   </div>
 
@@ -54,17 +45,14 @@ const handleAccept = (id) => {
       <div class="flex flex-col md:h-10 gap-y-3 md:items-center md:flex-row">
         <div class="text-base font-medium group-[.mode--light]:text-white">Usuarios</div>
         <div class="flex flex-col sm:flex-row gap-x-3 gap-y-2 md:ml-auto">
-          <Button
-            variant="primary"
+          <Button variant="primary"
             class="group-[.mode--light]:!bg-white/[0.12] group-[.mode--light]:!text-slate-200 group-[.mode--light]:!border-transparent"
-            @click="
-              () => {
+            @click="() => {
                 router.push({
                   name: 'addUser'
                 })
               }
-            "
-          >
+              ">
             <Lucide icon="PenLine" class="stroke-[1.3] w-4 h-4 mr-2" /> Agregar nuevo usuario
           </Button>
         </div>
@@ -74,16 +62,10 @@ const handleAccept = (id) => {
           <div class="flex flex-col p-5 sm:items-center sm:flex-row gap-y-2">
             <div>
               <div class="relative">
-                <Lucide
-                  icon="Search"
-                  class="absolute inset-y-0 left-0 z-10 w-4 h-4 my-auto ml-3 stroke-[1.3] text-slate-500"
-                />
-                <FormInput
-                  v-model="searchQuery"
-                  type="text"
-                  placeholder="Buscar nombre de usuario..."
-                  class="pl-9 sm:w-72 rounded-[0.5rem]"
-                />
+                <Lucide icon="Search"
+                  class="absolute inset-y-0 left-0 z-10 w-4 h-4 my-auto ml-3 stroke-[1.3] text-slate-500" />
+                <FormInput v-model="searchQuery" type="text" placeholder="Buscar nombre de usuario..."
+                  class="pl-9 sm:w-72 rounded-[0.5rem]" />
               </div>
             </div>
             <div class="flex flex-col sm:flex-row gap-x-3 gap-y-2 sm:ml-auto">
@@ -92,8 +74,7 @@ const handleAccept = (id) => {
                   <Lucide icon="ArrowDownWideNarrow" class="stroke-[1.3] w-4 h-4 mr-2" />
                   Filtrar
                   <div
-                    class="flex items-center justify-center h-5 px-1.5 ml-2 text-xs font-medium border rounded-full bg-slate-100"
-                  >
+                    class="flex items-center justify-center h-5 px-1.5 ml-2 text-xs font-medium border rounded-full bg-slate-100">
                     {{ filtersCount }}
                   </div>
                 </Popover.Button>
@@ -130,15 +111,10 @@ const handleAccept = (id) => {
                       </FormSelect>
                     </div>
                     <div class="flex items-center mt-4">
-                      <Button
-                        variant="secondary"
-                        @click="
-                          () => {
-                            close()
-                          }
-                        "
-                        class="w-32 ml-auto"
-                      >
+                      <Button variant="secondary" @click="() => {
+                          close()
+                        }
+                        " class="w-32 ml-auto">
                         Close
                       </Button>
                     </div>
@@ -151,39 +127,26 @@ const handleAccept = (id) => {
             <Table class="border-b border-slate-200/60">
               <Table.Thead>
                 <Table.Tr>
-                  <Table.Td
-                    class="w-5 py-4 font-medium border-t bg-slate-50 border-slate-200/60 text-slate-500"
-                  >
+                  <Table.Td class="w-5 py-4 font-medium border-t bg-slate-50 border-slate-200/60 text-slate-500">
                     Foto
                   </Table.Td>
-                  <Table.Td
-                    class="py-4 font-medium border-t bg-slate-50 border-slate-200/60 text-slate-500"
-                  >
+                  <Table.Td class="py-4 font-medium border-t bg-slate-50 border-slate-200/60 text-slate-500">
                     Nombre / Correo electrónico
                   </Table.Td>
-                  <Table.Td
-                    class="py-4 font-medium border-t bg-slate-50 border-slate-200/60 text-slate-500"
-                  >
+                  <Table.Td class="py-4 font-medium border-t bg-slate-50 border-slate-200/60 text-slate-500">
                     Edad
                   </Table.Td>
-                  <Table.Td
-                    class="py-4 font-medium border-t bg-slate-50 border-slate-200/60 text-slate-500"
-                  >
+                  <Table.Td class="py-4 font-medium border-t bg-slate-50 border-slate-200/60 text-slate-500">
                     Teléfono
                   </Table.Td>
-                  <Table.Td
-                    class="py-4 font-medium border-t bg-slate-50 border-slate-200/60 text-slate-500"
-                  >
+                  <Table.Td class="py-4 font-medium border-t bg-slate-50 border-slate-200/60 text-slate-500">
                     Rol
                   </Table.Td>
-                  <Table.Td
-                    class="py-4 font-medium border-t bg-slate-50 border-slate-200/60 text-slate-500"
-                  >
+                  <Table.Td class="py-4 font-medium border-t bg-slate-50 border-slate-200/60 text-slate-500">
                     Estado
                   </Table.Td>
                   <Table.Td
-                    class="py-4 font-medium text-center border-t w-36 bg-slate-50 border-slate-200/60 text-slate-500"
-                  >
+                    class="py-4 font-medium text-center border-t w-36 bg-slate-50 border-slate-200/60 text-slate-500">
                   </Table.Td>
                 </Table.Tr>
               </Table.Thead>
@@ -225,14 +188,9 @@ const handleAccept = (id) => {
                     <Table.Td class="py-4 border-dashed dark:bg-darkmode-600">
                       <div class="flex">
                         <div class="w-9 h-9 image-fit zoom-in">
-                          <Tippy
-                            as="img"
-                            alt="Tailwise - Admin Dashboard Template"
+                          <Tippy as="img" alt="Tailwise - Admin Dashboard Template"
                             class="rounded-full cursor-default shadow-[0px_0px_0px_2px_#fff,_1px_1px_5px_rgba(0,0,0,0.32)] dark:shadow-[0px_0px_0px_2px_#3f4865,_1px_1px_5px_rgba(0,0,0,0.32)]"
-                            :src="`${Baseurl}${user.photo}`"
-                            :disable="true"
-                            :content="`Image User`"
-                          />
+                            :src="`${Baseurl}${user.photo}`" :disable="true" :content="`Image User`" />
                         </div>
                       </div>
                     </Table.Td>
@@ -255,35 +213,24 @@ const handleAccept = (id) => {
                         {{ formatPhone(user.phone) }}
                       </div>
                     </Table.Td>
-                    <Table.Td
-                      class="py-4 border-dashed dark:bg-darkmode-600"
-                      @click="
-                        () => {
-                          console.log(roles)
-                        }
-                      "
-                    >
+                    <Table.Td class="py-4 border-dashed dark:bg-darkmode-600" @click="() => {
+                        console.log(roles)
+                      }
+                      ">
                       <div class="whitespace-nowrap">
                         {{ roles[user.rol - 1].name }}
                       </div>
                     </Table.Td>
                     <Table.Td class="py-4 border-dashed dark:bg-darkmode-600">
-                      <div
-                        :class="[
-                          'flex items-center justify-start',
-                          { 'text-success': user.status == 1 },
-                          { 'text-danger': user.status !== 1 },
-                          { 'text-[#FFA500]': user.status == 0 }
-                        ]"
-                      >
-                        <Lucide
-                          v-if="user.status == 1 || user.status == 2"
-                          icon="Database"
-                          class="w-3.5 h-3.5 stroke-[1.7]"
-                        />
-                        <div
-                          class="ml-1.5 whitespace-nowrap max-h-8 flex flex-row items-center justify-center gap-2"
-                        >
+                      <div :class="[
+                        'flex items-center justify-start',
+                        { 'text-success': user.status == 1 },
+                        { 'text-danger': user.status !== 1 },
+                        { 'text-[#FFA500]': user.status == 0 }
+                      ]">
+                        <Lucide v-if="user.status == 1 || user.status == 2" icon="Database"
+                          class="w-3.5 h-3.5 stroke-[1.7]" />
+                        <div class="ml-1.5 whitespace-nowrap max-h-8 flex flex-row items-center justify-center gap-2">
                           <div class="w-4 h-4" v-if="user.status == 0">
                             <LoadingIcon icon="bars" class="w-8 h-8" color="#FFA500" />
                           </div>
@@ -304,19 +251,15 @@ const handleAccept = (id) => {
                               <Lucide icon="CheckSquare" class="w-4 h-4 mr-2" />
                               Editar
                             </Menu.Item>
-                            <Menu.Item
-                              :class="`${user.status == 1 ? 'text-blue' : 'text-[#ff6f0f]'}`"
-                              @click="
-                                () => {
-                                  updateStatus({ user }).then((updatedUser) => {
-                                    const index = users.findIndex((u) => u.id == updatedUser.id)
-                                    if (index !== -1) {
-                                      users[index] = updatedUser
-                                    }
-                                  })
-                                }
-                              "
-                            >
+                            <Menu.Item :class="`${user.status == 1 ? 'text-blue' : 'text-[#ff6f0f]'}`" @click="() => {
+                                updateStatus({ user }).then((updatedUser) => {
+                                  const index = users.findIndex((u) => u.id == updatedUser.id)
+                                  if (index !== -1) {
+                                    users[index] = updatedUser
+                                  }
+                                })
+                              }
+                              ">
                               <Lucide icon="RefreshCw" class="w-4 h-4 mr-2" />
                               Cambiar Estado
                             </Menu.Item>
@@ -329,9 +272,7 @@ const handleAccept = (id) => {
               </Table.Tbody>
             </Table>
           </div>
-          <div
-            class="flex flex-col-reverse flex-wrap items-center p-5 flex-reverse gap-y-2 sm:flex-row"
-          >
+          <div class="flex flex-col-reverse flex-wrap items-center p-5 flex-reverse gap-y-2 sm:flex-row">
             <Pagination class="flex-1 w-full mr-auto sm:w-auto">
               <Pagination.Link @click="changePage(1)">
                 <Lucide icon="ChevronsLeft" class="w-4 h-4" />
@@ -351,11 +292,7 @@ const handleAccept = (id) => {
                 <Lucide icon="ChevronsRight" class="w-4 h-4" />
               </Pagination.Link>
             </Pagination>
-            <FormSelect
-              class="sm:w-20 rounded-[0.5rem]"
-              v-model="pageSize"
-              @change="changePageSize"
-            >
+            <FormSelect class="sm:w-20 rounded-[0.5rem]" v-model="pageSize" @change="changePageSize">
               <option value="10">10</option>
               <option value="20">20</option>
               <option value="30">30</option>
