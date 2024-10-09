@@ -41,7 +41,6 @@ const handleRegister = () => {
       area: area.value,
       grade: grade.value
     }
-    console.log(program)
     addProgram({ program })
   }
 }

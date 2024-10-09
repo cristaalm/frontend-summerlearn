@@ -10,7 +10,6 @@ export const getActividades = async () => {
   })
   const json = await response.json()
   const activities = json
-  // console.log(activities)
 
   activities.sort((a, b) => b.activities_id - a.activities_id) // Ordenar por id ASC
 

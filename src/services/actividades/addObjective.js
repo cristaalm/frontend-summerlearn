@@ -12,7 +12,6 @@ export const addObjective = async (actividadId) => {
 
     if (response.status === 204 || response.status === 200) {
       // 204 No Content is common for successful DELETE
-      console.log('Objetivo creado con éxito')
       return true // Successfully deleted
     } else {
       const errorResponse = await response.json()

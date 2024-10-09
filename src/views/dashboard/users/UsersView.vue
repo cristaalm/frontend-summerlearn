@@ -213,10 +213,7 @@ onMounted(() => {
                         {{ formatPhone(user.phone) }}
                       </div>
                     </Table.Td>
-                    <Table.Td class="py-4 border-dashed dark:bg-darkmode-600" @click="() => {
-                      console.log(roles)
-                    }
-                      ">
+                    <Table.Td class="py-4 border-dashed dark:bg-darkmode-600">
                       <div class="whitespace-nowrap">
                         {{ roles[user.rol - 1].name }}
                       </div>

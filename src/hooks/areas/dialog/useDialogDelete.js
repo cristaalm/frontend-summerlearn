@@ -13,7 +13,6 @@ export function useDialogDelete({ showToast, areas }) {
   const confirmDeleteArea = async () => {
     try {
       const result = await deleteArea(areaToDelete.value)
-      console.log(result) // Verifica si el resultado es lo que esperas
       if (result) {
         // Remove the deleted activity from the list of activities
         areas.value = areas.value.filter((areas) => areas.id !== areaToDelete.value)

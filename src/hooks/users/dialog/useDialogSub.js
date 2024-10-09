@@ -17,10 +17,8 @@ export function useDialog({ showToast, users }) {
     try {
       if (statusId.value === 'accept') {
         result = await changeStatus(userIdSub.value, 1)
-        console.log(`User ${userIdSub.value} accepted`)
       } else if (statusId.value === 'reject') {
         result = await deleteUser(userIdSub.value)
-        console.log(`User ${userIdSub.value} rejected`)
       }
 
       if (result) {

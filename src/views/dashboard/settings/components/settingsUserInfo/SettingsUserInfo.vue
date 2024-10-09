@@ -37,15 +37,6 @@ const validChanges = computed(() => {
     return valid.value && (firstName.value !== props.user.firstName || lastName.value !== props.user.lastName || phone.value !== props.user.phone || birthdate.value !== props.user.birthdate.split('-').reverse().join('/'))
 })
 
-// debug de validChanges y valid
-watch(validChanges, (newValidChanges) => {
-    console.log('validChanges:', newValidChanges)
-})
-
-watch(valid, (newValid) => {
-    console.log('valid:', newValid)
-})
-
 const { loadingUser, updateUser } = useUpdateUser({ phone, firstName, lastName, birthdate, valid, validate, showToast: props.showToast, loadUser: props.loadUser })
 // Año mínimo para la fecha de nacimiento
 const minYear = new Date().getFullYear() - 18
