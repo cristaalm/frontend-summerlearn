@@ -285,7 +285,7 @@ const router = createRouter({
             )
         },
         {
-          path: '/dashboard/settings',
+          path: '/dashboard/settings/:page?/',
           name: 'settings',
           component: () =>
             import('@/views/dashboard/settings/SettingsView.vue').catch(

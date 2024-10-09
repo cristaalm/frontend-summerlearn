@@ -1,43 +1,36 @@
-<!-- path: @/views/dashboard/settings/SettingsView.vue -->
-
 <script setup>
 import { ToastNotification, useToast } from '@/components/ToastNotification'
-import { SettingsMenu, SettingsHero, SettingsUserInfo } from './components/'
-import { ref, onMounted, watch, computed } from 'vue'
+import { SettingsMenu, SettingsHero, SettingsUserInfo, SettingsChangePassword } from './components/'
+import { ref, onMounted, watch } from 'vue'
 import { useUser } from "@/hooks/settings/";
 import { useRoute } from 'vue-router'
 
 const page = ref(null);
 const { toastMessages, showToast } = useToast();
 const { user, loadingUser, errorUser, loadUser } = useUser();
-
 const route = useRoute();
 
-watch(errorUser, (newError) => {
-  if (newError) {
-    showToast({ message: 'Error al cargar la información, Intentelo mas tarde.', tipo: 'error' });
-  }
-});
+const loadPageFromQuery = () => {
+  // Asegúrate de que sea un string o null
+  page.value = route.params.page ? String(route.params.page) : null;
+};
 
 watch(
-  computed(() => route),
-  () => {
-    const queryParams = new URLSearchParams(window.location.search);
-    page.value = queryParams.get("page");
-  },
-  { deep: true }
+  () => route.params.page,  // Escucha directamente el parámetro 'page'
+  (newPage) => {
+    page.value = newPage ? String(newPage) : null;
+  }
 );
 
 onMounted(() => {
-  if (page.value === null) {
-    loadUser()
-  }
+  loadPageFromQuery(); // Inicializar el valor de `page` desde los query params
+  loadUser();
 });
 
 </script>
-<template>
-  <!--? ######################## TOAST NOTIFICATION ######################## -->
 
+<template>
+  <!-- TOAST NOTIFICATION -->
   <div class="fixed right-22 p-4 transition-opacity duration-300 top-[110px] z-50 flex flex-col gap-3">
     <ToastNotification v-for="(message, index) in toastMessages" :key="index" :message="message" />
   </div>
@@ -51,22 +44,22 @@ onMounted(() => {
       </div>
       <div class="mt-3.5 grid grid-cols-12 gap-y-10 gap-x-6">
 
-        <!--? ################################ MENU ################################ -->
-
-        <SettingsMenu />
-
+        <!-- MENU -->
+        <SettingsMenu :page="page" />
 
         <div class="flex flex-col col-span-12 xl:col-span-9 gap-y-7">
 
-          <!--? ################################ HERO ################################ -->
-
-          <!-- * Imagen del usuario * -->
+          <!-- HERO -->
           <SettingsHero :loading="loadingUser" :error="errorUser ? true : false"
             :imageUser="user?.photo ?? '/media/usersImages/placeholderUser.jpg'" :showToast="showToast" />
 
-
+          <!-- INFO USER -->
           <SettingsUserInfo v-if="page === null" :user="user" :loading="loadingUser" :error="errorUser ? true : false"
             :showToast="showToast" :loadUser="loadUser" />
+
+          <!-- CHANGE PASSWORD -->
+          <SettingsChangePassword v-if="page === 'changePassword'" :showToast="showToast" />
+
         </div>
       </div>
     </div>
