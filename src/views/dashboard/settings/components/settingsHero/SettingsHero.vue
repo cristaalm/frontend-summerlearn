@@ -1,5 +1,5 @@
 <script setup>
-import { watch } from "vue";
+import { ref, watch } from "vue";
 import Lucide from "@/components/base/Lucide";
 import LoadingIcon from '@/components/base/LoadingIcon'
 import { useValidationImage } from "@/hooks/settings/settingsHero";
@@ -24,8 +24,10 @@ const props = defineProps({
     },
 });
 
+const inputFile = ref(null);
+
 // enviamos la imagen del usuario proporsionada por el padre a la función useValidationImage
-const { profileImage, errorMessagePhoto, validateImage, triggerFileSelect, loadingImage } = useValidationImage({ imageUser: props.imageUser, showToast: props.showToast });
+const { profileImage, errorMessagePhoto, validateImage, triggerFileSelect, loadingImage } = useValidationImage({ imageUser: props.imageUser, showToast: props.showToast, inputFile });
 
 // Actualiza profileImage cuando loading cambia a false
 watch(() => props.loading, (newLoading) => {
@@ -63,7 +65,8 @@ watch(() => props.loading, (newLoading) => {
                     </div>
 
                     <!-- Input tipo archivo oculto -->
-                    <input id="profileImageInput" type="file" class="hidden" @change="validateImage" accept="image/*" />
+                    <input id="profileImageInput" type="file" class="hidden" @change="validateImage" accept="image/*"
+                        ref="inputFile" />
                 </div>
                 <div class="text-red-500 mt-2">{{ errorMessagePhoto }}</div>
             </div>
