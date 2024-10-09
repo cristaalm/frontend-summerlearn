@@ -81,12 +81,23 @@ export function useStatus() {
     }
   })
 
-  // hacemos una copia del estado inicial para reiniciar los campos
-  const initialState = JSON.parse(JSON.stringify(status.value))
+  // Copia profunda manual para preservar las expresiones regulares
+  const deepCopy = (obj) => {
+    return Object.keys(obj).reduce((copy, key) => {
+      const value = obj[key]
+      if (value && typeof value === 'object' && !(value instanceof RegExp)) {
+        copy[key] = deepCopy(value)
+      } else {
+        copy[key] = value
+      }
+      return copy
+    }, {})
+  }
 
-  // Función para reiniciar los campos
+  const initialState = deepCopy(status.value)
+
   const resetFields = () => {
-    status.value = JSON.parse(JSON.stringify(initialState))
+    status.value = deepCopy(initialState)
   }
 
   return { status, resetFields }
