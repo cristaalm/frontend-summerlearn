@@ -1,5 +1,6 @@
 import { Baseurl } from '@/../global'
 import getIdByToken from '@/logic/getIdByToken'
+import { first } from 'lodash'
 
 export const getUser = async () => {
   const token_access = localStorage.getItem('access_token')
@@ -17,7 +18,8 @@ export const getUser = async () => {
   const user_info = {
     id: user.id,
     photo: user.users_photo,
-    name: user.name,
+    firstName: user.first_name,
+    lastName: user.last_name,
     birthdate: user.users_birthdate,
     phone: user.users_phone,
     email: user.email,

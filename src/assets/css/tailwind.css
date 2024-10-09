@@ -4978,10 +4978,6 @@ select {
   margin-bottom: auto;
 }
 
-.-mb-1 {
-  margin-bottom: -0.25rem;
-}
-
 .-mb-px {
   margin-bottom: -1px;
 }
@@ -6235,10 +6231,6 @@ select {
   border-color: rgb(226 232 240 / 0.8);
 }
 
-.border-slate-300\/60 {
-  border-color: rgb(203 213 225 / 0.6);
-}
-
 .border-slate-300\/70 {
   border-color: rgb(203 213 225 / 0.7);
 }
@@ -7086,10 +7078,6 @@ select {
   font-size: 0.8rem;
 }
 
-.text-\[0\.94rem\] {
-  font-size: 0.94rem;
-}
-
 .text-\[2\.6rem\] {
   font-size: 2.6rem;
 }
@@ -7117,6 +7105,10 @@ select {
 .text-xs {
   font-size: 0.75rem;
   line-height: 1rem;
+}
+
+.text-\[0\.94rem\] {
+  font-size: 0.94rem;
 }
 
 .font-bold {
@@ -9143,10 +9135,6 @@ select {
 
   .md\:w-1\/2 {
     width: 50%;
-  }
-
-  .md\:w-36 {
-    width: 9rem;
   }
 
   .md\:w-auto {
