@@ -5322,6 +5322,10 @@ select {
   height: 1rem;
 }
 
+.h-40 {
+  height: 10rem;
+}
+
 .h-5 {
   height: 1.25rem;
 }
@@ -7078,6 +7082,10 @@ select {
   font-size: 0.8rem;
 }
 
+.text-\[0\.94rem\] {
+  font-size: 0.94rem;
+}
+
 .text-\[2\.6rem\] {
   font-size: 2.6rem;
 }
@@ -7105,10 +7113,6 @@ select {
 .text-xs {
   font-size: 0.75rem;
   line-height: 1rem;
-}
-
-.text-\[0\.94rem\] {
-  font-size: 0.94rem;
 }
 
 .font-bold {

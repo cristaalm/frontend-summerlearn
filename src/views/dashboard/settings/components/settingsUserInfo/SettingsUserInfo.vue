@@ -1,7 +1,7 @@
 <script setup>
 import { useStatus, useRefs, useValidateFunctions, useUpdateUser } from '@/hooks/settings/userInfoUpdate/'
 import { FormInput } from "@/components/base/Form";
-import { watch, computed } from 'vue'
+import { watch, computed, onMounted } from 'vue'
 import LoadingIcon from '@/components/base/LoadingIcon'
 import Litepicker from '@/components/base/Litepicker'
 import Lucide from '@/components/base/Lucide'
@@ -50,9 +50,8 @@ const { loadingUser, updateUser } = useUpdateUser({ phone, firstName, lastName, 
 // Año mínimo para la fecha de nacimiento
 const minYear = new Date().getFullYear() - 18
 
-
-watch(() => props.loading, (newLoading) => {
-    if (!newLoading) {
+onMounted(() => {
+    const assignUserValues = () => {
         // Asignar los valores del usuario a los campos
         if (props.user.firstName) firstName.value = props.user.firstName
         let e = { target: { value: firstName.value, name: 'firstName' } }
@@ -71,6 +70,8 @@ watch(() => props.loading, (newLoading) => {
 
         validate()
     }
+
+    watch(() => props.user, assignUserValues, { immediate: true })
 })
 
 watch(birthdate, (value) => {
