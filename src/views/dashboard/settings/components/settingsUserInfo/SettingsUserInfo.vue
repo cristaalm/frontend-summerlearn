@@ -30,7 +30,7 @@ const props = defineProps({
     }
 })
 
-const { status, resetFields } = useStatus()
+const { status } = useStatus()
 const { firstName, lastName, phone, birthdate, valid } = useRefs()
 const { validateText, validateDate, validateInputPhone, validate } = useValidateFunctions({ valid, status })
 const validChanges = computed(() => {
