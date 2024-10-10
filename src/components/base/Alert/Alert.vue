@@ -5,10 +5,12 @@ export default {
 </script>
 
 <script setup lang="ts">
+import DismissButton from './DismissButton.vue'
+import Lucide from '@/components/base/Lucide'
 import _ from 'lodash'
 import { twMerge } from 'tailwind-merge'
 import { TransitionRoot } from '@headlessui/vue'
-import { computed, ref, type HTMLAttributes, useAttrs } from 'vue'
+import { computed, ref, type HTMLAttributes, useAttrs, watch } from 'vue'
 
 type Variant =
   | 'primary'
@@ -33,18 +35,43 @@ type Variant =
   | 'soft-danger'
   | 'soft-dark'
 
-interface AlertProps extends /* @vue-ignore */ HTMLAttributes {
-  as?: string | object
+interface AlertProps {
   dismissible?: boolean
   variant?: Variant
-  onShow?: () => {}
-  onShown?: () => {}
-  onHide?: () => {}
-  onHidden?: () => {}
+  message: string
 }
 
-const { as = 'div', dismissible, variant, ...props } = defineProps<AlertProps>();
+const { dismissible, variant, message = '' } = defineProps<AlertProps>()
 
+// Define los íconos para cada variante
+const iconMap = {
+  'primary': 'CheckCircle',  // Puedes ajustar estos íconos según tus preferencias
+  'secondary': 'Info',
+  'success': 'CheckCircle',
+  'warning': 'AlertTriangle',
+  'pending': 'Clock',
+  'danger': 'AlertTriangle',
+  'dark': 'Moon',
+  'outline-primary': 'CheckCircle',
+  'outline-danger': 'AlertTriangle',
+  'outline-success': 'CheckCircle',
+  'outline-warning': 'AlertTriangle',
+  'outline-pending': 'Clock',
+  'outline-danger': 'AlertTriangle',
+  'outline-dark': 'Moon',
+  'soft-primary': 'CheckCircle',
+  'soft-secondary': 'Info',
+  'soft-success': 'CheckCircle',
+  'soft-warning': 'AlertTriangle',
+  'soft-pending': 'Clock',
+  'soft-danger': 'AlertTriangle',
+  'soft-dark': 'Moon'
+}
+
+// Computa el ícono basado en el `variant`
+const computedIcon = computed(() => {
+  return iconMap[variant] || 'Info' // Devuelve un ícono predeterminado si no hay coincidencia
+})
 
 const attrs = useAttrs()
 const show = ref<boolean>(true)
@@ -139,6 +166,7 @@ const softDark = [
   'dark:bg-darkmode-800/30 dark:border-darkmode-800/60 dark:text-slate-300' // Dark mode
 ]
 
+
 const computedClass = computed(() =>
   twMerge([
     'relative border rounded-md px-5 py-4',
@@ -167,6 +195,13 @@ const computedClass = computed(() =>
     typeof attrs.class === 'string' && attrs.class
   ])
 )
+
+
+
+// Dismiss the alert
+const dismiss = () => {
+  show.value = false
+}
 </script>
 
 <template>
@@ -174,11 +209,14 @@ const computedClass = computed(() =>
     enterFrom="invisible opacity-0 translate-y-1" enterTo="visible opacity-100 translate-y-0"
     leave="transition-all ease-linear duration-150" leaveFrom="visible opacity-100 translate-y-0"
     leaveTo="invisible opacity-0 translate-y-1">
-    <component :is="as" role="alert" :class="computedClass" v-bind="_.omit(attrs, 'class')">
-      <slot :dismiss="() => {
-          show = false
-        }
-        "></slot>
-    </component>
+    <div :class="`flex items-center ${computedClass}`">
+      <Lucide :icon="computedIcon" class="stroke-[0.8] w-7 h-7 mr-2" />
+      <div class="ml-1 mr-8">
+        <span>{{ message }}</span>
+      </div>
+      <DismissButton type="button" class="btn-close" @click="dismiss" v-if="dismissible">
+        <Lucide icon="X" class="w-5 h-5" />
+      </DismissButton>
+    </div>
   </TransitionRoot>
 </template>
