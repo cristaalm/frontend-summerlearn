@@ -1,6 +1,16 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { useMenuStore } from '@/stores/menu'
 import { getRoleFromToken } from '@/utils/getRolFromToken'
+import NProgress from 'nprogress'
+import 'nprogress/nprogress.css' // Asegúrate de importar el CSS
+
+NProgress.configure({
+  showSpinner: false, // Oculta el spinner (círculo giratorio) al final de la barra de progreso
+  speed: 500, // Velocidad de la barra (en milisegundos)
+  minimum: 0.5, // Valor mínimo inicial (para que la barra no comience de 0)
+  trickleSpeed: 200, // Velocidad de goteo automático
+  easing: 'ease' // Estilo de easing para animación
+})
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -308,6 +318,8 @@ const router = createRouter({
 })
 
 router.beforeEach(async (to, from, next) => {
+  NProgress.start() // Iniciar la barra de progreso
+
   const menuStore = useMenuStore()
   const role = await getRoleFromToken()
 
@@ -316,6 +328,16 @@ router.beforeEach(async (to, from, next) => {
   }
 
   next() // Continúa con la navegación
+})
+
+router.afterEach(() => {
+  // Detener la barra de progreso al finalizar la navegación
+  NProgress.done()
+})
+
+// Detener NProgress cuando la navegación se completa
+router.afterEach(() => {
+  NProgress.done() // Finaliza la barra de progreso
 })
 
 export default router

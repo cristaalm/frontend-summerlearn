@@ -23,6 +23,7 @@
     "lucide": "^0.451.0",
     "lucide-solid": "^0.451.0",
     "lucide-vue-next": "^0.451.0",
+    "nprogress": "^0.2.0",
     "pinia": "^2.1.7",
     "simplebar": "^6.2.7",
     "stream-browserify": "^3.0.0",
