@@ -257,19 +257,8 @@ onMounted(() => {
       <div class="px-5 pb-8 text-center">
         <div class="overflow-x-auto">
           <!--? Inicio de Alerta de Error -->
-          <Alert variant="outline-danger" v-if="setObjectiveError"
-            class="flex items-center px-4 py-3 my-7 bg-danger/5 border-danger/20 rounded-[0.6rem] leading-[1.7]"
-            v-slot="{ dismiss }">
-            <div class="">
-              <Lucide icon="AlertTriangle" class="stroke-[0.8] stroke-danger w-7 h-7 mr-2 fill-danger/10" />
-            </div>
-            <div class="ml-1 mr-8">
-              <span class="text-danger">{{ setObjectiveError }}</span>
-            </div>
-            <Alert.DismissButton type="button" class="btn-close text-danger" @click="dismiss" aria-label="Cerrar">
-              <Lucide icon="X" class="w-5 h-5" />
-            </Alert.DismissButton>
-          </Alert>
+          <Alert variant="outline-danger" v-if="setObjectiveError" :message="setObjectiveError" :dismissible="true"
+            class="flex items-center px-4 py-3 my-7" />
           <!--? Fin de Alerta de Error -->
           <div class="flex-col block xl:items-center sm:flex xl:flex-row">
             <label class="inline-block mb-2 sm:mb-0 sm:mr-5 sm:text-right xl:w-60 xl:mr-14">

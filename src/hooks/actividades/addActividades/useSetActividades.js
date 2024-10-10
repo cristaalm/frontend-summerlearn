@@ -41,7 +41,6 @@ export function useSetActividades() {
         })
       })
 
-      const data = await response.json()
       if (response.ok) {
         router.push({ name: 'activities' })
       } else {
