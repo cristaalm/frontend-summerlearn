@@ -5,6 +5,7 @@ import { Baseurl } from '@/../global'
 export function useAuth() {
   const router = useRouter()
   const loading = ref(false)
+  const loginSuccess = ref('')
   const error = ref('')
 
   const loginUser = async ({ email, password }) => {
@@ -23,6 +24,7 @@ export function useAuth() {
       })
       const data = await response.json()
       if (response.ok) {
+        loginSuccess.value = 'Inicio de sesión exitoso'
         localStorage.setItem('access_token', data.access)
         localStorage.setItem('refresh_token', data.refresh)
         router.push({ name: 'dashboard' })
@@ -40,6 +42,7 @@ export function useAuth() {
   return {
     loading,
     error,
+    loginSuccess,
     loginUser
   }
 }
