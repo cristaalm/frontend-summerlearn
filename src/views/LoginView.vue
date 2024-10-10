@@ -27,7 +27,10 @@ const alertVariant = computed(() => {
     <div :class="[
       'relative z-50 h-full col-span-12 p-7 sm:p-14 bg-white rounded-2xl lg:bg-transparent lg:pr-10 lg:col-span-5 xl:pr-24 2xl:col-span-4 lg:p-0'
     ]">
-      <div class="relative z-10 flex flex-col justify-center w-full h-full py-2 lg:py-32">
+
+      <!-- ? ######################## Formulario de inicio de sesión ######################## ? -->
+
+      <div class="relative z-10 flex flex-col justify-center w-full h-full py-2 lg:py-32" v-if="!loginSuccess">
         <div class="flex flex-row justify-start items-center">
           <span @click="router.push({ name: 'home' })"
             class="flex flex-row gap-2 transition-all duration-200 hover:scale-95 !bg-white/[0.12] !text-black !border-transparent cursor-pointer">
@@ -40,8 +43,8 @@ const alertVariant = computed(() => {
 
           <!-- ? ######################## ALERT ######################## ? -->
 
-          <Alert :variant="alertVariant" v-if="error || loginSuccess"
-            :message="error ? error : loginSuccess ? loginSuccess : ''" class="flex items-center px-4 py-3 my-7" />
+          <Alert :variant="alertVariant" v-if="error" :message="error ? error : loginSuccess ? loginSuccess : ''"
+            class="flex items-center px-4 py-3 my-7" />
 
           <div class="mt-6">
             <FormLabel>Correo electrónico <span class="text-red-600 bold">*</span></FormLabel>
@@ -90,6 +93,20 @@ const alertVariant = computed(() => {
           </div>
         </div>
       </div>
+
+      <!-- ? ######################## Mensaje de éxito ######################## ? -->
+      <div class="relative z-10 flex flex-col justify-center w-full h-full py-2 lg:py-32" v-else>
+        <div class="mt-10 text-center">
+          <Lucide icon="CheckCircle" class="w-16 h-16 text-green-500 mx-auto" />
+          <div class="text-3xl font-bold mt-4">¡Bienvenido!</div>
+          <div class="mt-4 text-slate-600 flex flex-col gap-2">
+            <p class="text-lg">Has iniciado sesión correctamente.</p>
+            <p class="text-lg">Redirigiendo...</p>
+          </div>
+        </div>
+      </div>
+
+
     </div>
   </div>
   <div
