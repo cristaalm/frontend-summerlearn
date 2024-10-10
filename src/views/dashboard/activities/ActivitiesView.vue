@@ -1,5 +1,6 @@
 <script setup>
 import { useRouter } from 'vue-router'
+import Alert from '@/components/base/Alert'
 import Lucide from '@/components/base/Lucide'
 import { FormInput, FormTextarea, FormSelect } from '@/components/base/Form'
 import { Menu, Popover, Dialog } from '@/components/base/Headless'

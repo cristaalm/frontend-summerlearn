@@ -16,9 +16,7 @@ interface ButtonProps extends /* @vue-ignore */ ExtractProps<typeof HeadlessDisc
   as?: string | object
 }
 
-const { as } = withDefaults(defineProps<ButtonProps>(), {
-  as: 'button'
-})
+const { as = 'button' } = defineProps<ButtonProps>()
 
 const disclosure = inject<ProvideDisclosure>('disclosure')
 const group = inject<ProvideGroup>('group')
@@ -40,14 +38,10 @@ const computedClass = computed(() =>
 </script>
 
 <template>
-  <HeadlessDisclosureButton
-    as="template"
-    @click="
-      () => {
-        disclosure && group?.setSelectedIndex(disclosure.index)
-      }
-    "
-  >
+  <HeadlessDisclosureButton as="template" @click="() => {
+      disclosure && group?.setSelectedIndex(disclosure.index)
+    }
+    ">
     <component :is="as" :class="computedClass" v-bind="_.omit(attrs, 'class')">
       <slot></slot>
     </component>

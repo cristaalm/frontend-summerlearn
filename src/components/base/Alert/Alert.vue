@@ -43,9 +43,8 @@ interface AlertProps extends /* @vue-ignore */ HTMLAttributes {
   onHidden?: () => {}
 }
 
-const { as, dismissible, variant, ...props } = withDefaults(defineProps<AlertProps>(), {
-  as: 'div'
-})
+const { as = 'div', dismissible, variant, ...props } = defineProps<AlertProps>();
+
 
 const attrs = useAttrs()
 const show = ref<boolean>(true)
@@ -171,24 +170,15 @@ const computedClass = computed(() =>
 </script>
 
 <template>
-  <TransitionRoot
-    as="template"
-    :show="show"
-    enter="transition-all ease-linear duration-150"
-    enterFrom="invisible opacity-0 translate-y-1"
-    enterTo="visible opacity-100 translate-y-0"
-    leave="transition-all ease-linear duration-150"
-    leaveFrom="visible opacity-100 translate-y-0"
-    leaveTo="invisible opacity-0 translate-y-1"
-  >
+  <TransitionRoot as="template" :show="show" enter="transition-all ease-linear duration-150"
+    enterFrom="invisible opacity-0 translate-y-1" enterTo="visible opacity-100 translate-y-0"
+    leave="transition-all ease-linear duration-150" leaveFrom="visible opacity-100 translate-y-0"
+    leaveTo="invisible opacity-0 translate-y-1">
     <component :is="as" role="alert" :class="computedClass" v-bind="_.omit(attrs, 'class')">
-      <slot
-        :dismiss="
-          () => {
-            show = false
-          }
-        "
-      ></slot>
+      <slot :dismiss="() => {
+          show = false
+        }
+        "></slot>
     </component>
   </TransitionRoot>
 </template>

@@ -19,11 +19,8 @@ interface GroupProps {
 
 const slots = useSlots()
 
-const { as, selectedIndex, variant } = withDefaults(defineProps<GroupProps>(), {
-  as: 'div',
-  selectedIndex: 0,
-  variant: 'default'
-})
+const { as = 'div', selectedIndex = 0, variant = 'default' } = defineProps<GroupProps>()
+
 
 const active = ref(selectedIndex)
 const setActive = (value: number) => {

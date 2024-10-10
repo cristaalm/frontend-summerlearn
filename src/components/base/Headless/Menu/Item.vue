@@ -14,9 +14,7 @@ interface ItemProps extends /* @vue-ignore */ ExtractProps<typeof HeadlessMenuIt
   as?: string | object
 }
 
-const { as } = withDefaults(defineProps<ItemProps>(), {
-  as: 'a'
-})
+const { as = 'a' } = defineProps<ItemProps>()
 
 const attrs = useAttrs()
 const computedClass = computed(() =>

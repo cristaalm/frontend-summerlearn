@@ -14,9 +14,7 @@ interface ButtonProps extends /* @vue-ignore */ ExtractProps<typeof HeadlessMenu
   as?: string | object
 }
 
-const { as } = withDefaults(defineProps<ButtonProps>(), {
-  as: 'div'
-})
+const { as = 'div' } = defineProps<ButtonProps>()
 
 const attrs = useAttrs()
 const computedClass = computed(() =>
@@ -27,7 +25,7 @@ const computedClass = computed(() =>
 <template>
   <HeadlessMenuButton as="template">
     <component :is="as" :class="computedClass" v-bind="_.omit(attrs, 'class')">
-      <slot></slot
-    ></component>
+      <slot></slot>
+    </component>
   </HeadlessMenuButton>
 </template>

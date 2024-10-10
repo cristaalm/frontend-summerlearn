@@ -48,9 +48,7 @@ interface ButtonProps extends /* @vue-ignore */ ButtonHTMLAttributes {
   rounded?: Rounded
 }
 
-const { as, size, variant, elevated, rounded } = withDefaults(defineProps<ButtonProps>(), {
-  as: 'button'
-})
+const { as = 'button', size, variant, elevated, rounded } = defineProps<ButtonProps>();
 
 const attrs = useAttrs()
 

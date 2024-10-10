@@ -14,9 +14,7 @@ interface TitleProps extends /* @vue-ignore */ ExtractProps<typeof HeadlessDialo
   as?: string | object
 }
 
-const { as } = withDefaults(defineProps<TitleProps>(), {
-  as: 'div'
-})
+const { as = 'div' } = defineProps<TitleProps>()
 
 const attrs = useAttrs()
 const computedClass = computed(() =>
