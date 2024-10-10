@@ -24,7 +24,6 @@ import { useObjectives } from '@/services/actividades/useObjectives'
 import { ref, onMounted } from 'vue'
 // useSetActividades, useSetObjectives
 import { useSetObjectives } from '@/hooks/actividades/addActividades'
-import { ToastNotification, useToast } from '@/components/ToastNotification/'
 import { useValidationAddObjective } from '@/hooks/actividades/addActividades/useValidationAddObjective'
 const { setObjectiveLoading, setObjectiveError, addObjective } = useSetObjectives()
 const { actividades, loading, error, loadActividades } = useActividades()
@@ -39,15 +38,14 @@ const { searchQuery, selectedStatus, filteredItems, activeFilters } = useFilter(
 const { currentPage, pageSize, totalPages, paginatedItems, changePage, changePageSize } =
   usePagination(filteredItems)
 
-const { toastMessages, showToast } = useToast();
 const { dialogStatusDelete, openDeleteModal, confirmDeleteActividad, closeDeleteActividad } =
-  useDialogDelete({ showToast, actividades })
+  useDialogDelete({ actividades })
 const {
   dialogStatusDeleteObjective,
   openDeleteModalObjective,
   confirmDeleteObjective,
   closeDeleteObjective
-} = useDialogDeleteObjective({ showToast, objectives })
+} = useDialogDeleteObjective({ objectives })
 const {
   dialogStatusObjective,
   dialogStatusObjectiveAdd,
@@ -56,10 +54,10 @@ const {
   // confirmAddObjective,
   closeAddObjective,
   closeAddObjectiveCreate
-} = useDialogObjective({ showToast, objectives })
+} = useDialogObjective({ objectives })
 const { status, description, valid, validate } = useValidationAddObjective()
-const { loadExportExcel, loadingExportExcel } = useExportExcel({ showToast })
-const { loadExportPDF, loadingExportPDF } = useExportPDF({ showToast })
+const { loadExportExcel, loadingExportExcel } = useExportExcel()
+const { loadExportPDF, loadingExportPDF } = useExportPDF()
 const router = useRouter()
 const id_actividad = ref(null) // Variable reactiva para guardar el ID
 
@@ -89,13 +87,6 @@ onMounted(() => {
 
 <template>
 
-
-  <!--? ######################## TOAST NOTIFICATION ######################## -->
-
-  <div class="fixed right-22 p-4 transition-opacity duration-300 top-[110px] z-50 flex flex-col gap-3">
-    <!-- Recalcular posición top usando getTopOffset -->
-    <ToastNotification v-for="(message, index) in toastMessages" :key="index" :message="message" />
-  </div>
   <!-- BEGIN: Modal Content -->
   <Dialog :open="dialogStatusDelete" @close="() => {
     dialogStatusDelete.value = false

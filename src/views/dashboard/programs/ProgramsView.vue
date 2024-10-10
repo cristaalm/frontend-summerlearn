@@ -18,18 +18,16 @@ import Pagination from '@/components/base/Pagination'
 import Button from '@/components/base/Button'
 import Lucide from '@/components/base/Lucide'
 import Table from '@/components/base/Table'
-import { ToastNotification, useToast } from '@/components/ToastNotification/'
 
 const { programs, loading, error, loadPrograms } = usePrograms()
 const { searchQuery, selectedStatus, filteredItems, activeFilters } = useFilter(programs)
 const { currentPage, pageSize, totalPages, paginatedItems, changePage, changePageSize } =
   usePagination(filteredItems)
-const { toastMessages, showToast } = useToast();
 const { dialogStatusDelete, openDeleteModal, confirmDeleteProgram, closeDeleteProgram } =
-  useDialogDelete({ showToast, programs })
-const { updateStatus } = useStatusProgram({ showToast })
-const { loadExportExcel, loadingExportExcel } = useExportExcel({ showToast })
-const { loadExportPDF, loadingExportPDF } = useExportPDF({ showToast })
+  useDialogDelete({ programs })
+const { updateStatus } = useStatusProgram()
+const { loadExportExcel, loadingExportExcel } = useExportExcel()
+const { loadExportPDF, loadingExportPDF } = useExportPDF()
 const router = useRouter()
 
 onMounted(() => {
@@ -38,12 +36,6 @@ onMounted(() => {
 </script>
 
 <template>
-  <!--? ######################## TOAST NOTIFICATION ######################## -->
-
-  <div class="fixed right-22 p-4 transition-opacity duration-300 top-[110px] z-50 flex flex-col gap-3">
-    <!-- Recalcular posición top usando getTopOffset -->
-    <ToastNotification v-for="(message, index) in toastMessages" :key="index" :message="message" />
-  </div>
 
   <!--? ######################## DIALOG DELETE PROGRAM ######################## -->
 

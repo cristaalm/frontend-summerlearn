@@ -1,9 +1,10 @@
-import { ref } from 'vue'
+import { ref, inject } from 'vue'
 import { deleteProgram } from '@/services/programs/deleteProgram'
 
-export function useDialogDelete({ showToast, programs }) {
+export function useDialogDelete({ programs }) {
   const dialogStatusDelete = ref(false)
   const programToDelete = ref('')
+  const showToast = inject('showToast')
 
   const openDeleteModal = (id) => {
     programToDelete.value = id

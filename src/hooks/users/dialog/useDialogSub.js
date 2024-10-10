@@ -1,10 +1,11 @@
-import { ref } from 'vue'
+import { ref, inject } from 'vue'
 import { changeStatus, deleteUser } from '@/services/users/changeStatus'
 
-export function useDialog({ showToast, users }) {
+export function useDialog({ users }) {
   const dialogStatusModal = ref(false)
   const userIdSub = ref('')
   const statusId = ref('')
+  const showToast = inject('showToast')
 
   const openModal = (id, action) => {
     userIdSub.value = id

@@ -9,7 +9,6 @@ import Button from '@/components/base/Button'
 import Table from '@/components/base/Table'
 import Tippy from '@/components/base/Tippy'
 import LoadingIcon from '@/components/base/LoadingIcon'
-import { ToastNotification, useToast } from '@/components/ToastNotification/'
 import { useRoles } from '@/hooks/roles/useRoles'
 import { calculateAge } from '@/logic/'
 import { useRouter } from 'vue-router'
@@ -21,8 +20,7 @@ const { roles, loadingRoles, errorRoles, loadRoles } = useRoles()
 const { searchQuery, selectedStatus, selectedRole, filteredUsers, filtersCount } = useSearch(users)
 const { currentPage, pageSize, totalPages, paginatedUsers, changePage, changePageSize } =
   usePagination(filteredUsers)
-const { toastMessages, showToast } = useToast();
-const { updateStatus } = useStatusUser({ showToast })
+const { updateStatus } = useStatusUser()
 const router = useRouter()
 
 // Cargar las áreas al iniciar el componente
@@ -33,12 +31,6 @@ onMounted(() => {
 </script>
 
 <template>
-  <!--? ######################## TOAST NOTIFICATION ######################## -->
-
-  <div class="fixed right-22 p-4 transition-opacity duration-300 top-[110px] z-50 flex flex-col gap-3">
-    <!-- Recalcular posición top usando getTopOffset -->
-    <ToastNotification v-for="(message, index) in toastMessages" :key="index" :message="message" />
-  </div>
 
   <div class="grid grid-cols-12 gap-y-10 gap-x-6">
     <div class="col-span-12">

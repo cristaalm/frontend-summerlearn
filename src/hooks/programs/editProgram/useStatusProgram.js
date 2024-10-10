@@ -1,6 +1,8 @@
 import { Baseurl } from '@/../global'
+import { inject } from 'vue'
 
-export function useStatusProgram({ showToast }) {
+export function useStatusProgram() {
+  const showToast = inject('showToast')
   const updateStatus = async ({ program }) => {
     //? ############# Copy Object #############
 

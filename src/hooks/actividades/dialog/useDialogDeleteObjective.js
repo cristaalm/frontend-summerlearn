@@ -1,9 +1,10 @@
-import { ref } from 'vue'
+import { ref, inject } from 'vue'
 import { deleteObjective } from '@/services/actividades/deleteObjective'
 
-export function useDialogDeleteObjective({ showToast, objectives }) {
+export function useDialogDeleteObjective({ objectives }) {
   const dialogStatusDeleteObjective = ref(false)
   const activityToDelete = ref('')
+  const showToast = inject('showToast')
 
   const openDeleteModalObjective = (id) => {
     activityToDelete.value = id

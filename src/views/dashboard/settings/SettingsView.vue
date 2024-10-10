@@ -1,12 +1,10 @@
 <script setup>
-import { ToastNotification, useToast } from '@/components/ToastNotification'
 import { SettingsMenu, SettingsHero, SettingsUserInfo, SettingsChangePassword } from './components/'
 import { ref, onMounted, watch } from 'vue'
 import { useUser } from "@/hooks/settings/";
 import { useRoute } from 'vue-router'
 
 const page = ref(null);
-const { toastMessages, showToast } = useToast();
 const { user, loadingUser, errorUser, loadUser } = useUser();
 const route = useRoute();
 
@@ -30,10 +28,6 @@ onMounted(() => {
 </script>
 
 <template>
-  <!-- TOAST NOTIFICATION -->
-  <div class="fixed right-22 p-4 transition-opacity duration-300 top-[110px] z-50 flex flex-col gap-3">
-    <ToastNotification v-for="(message, index) in toastMessages" :key="index" :message="message" />
-  </div>
 
   <div class="grid grid-cols-12 gap-y-10 gap-x-6">
     <div class="col-span-12">
@@ -51,14 +45,14 @@ onMounted(() => {
 
           <!-- HERO -->
           <SettingsHero :loading="loadingUser" :error="errorUser ? true : false"
-            :imageUser="user?.photo ?? '/media/usersImages/placeholderUser.jpg'" :showToast="showToast" />
+            :imageUser="user?.photo ?? '/media/usersImages/placeholderUser.jpg'" />
 
           <!-- INFO USER -->
           <SettingsUserInfo v-if="page === null" :user="user" :loading="loadingUser" :error="errorUser ? true : false"
-            :showToast="showToast" :loadUser="loadUser" />
+            :loadUser="loadUser" />
 
           <!-- CHANGE PASSWORD -->
-          <SettingsChangePassword v-if="page === 'changePassword'" :showToast="showToast" />
+          <SettingsChangePassword v-if="page === 'changePassword'" />
 
         </div>
       </div>

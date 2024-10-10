@@ -1,9 +1,10 @@
-import { ref } from 'vue'
-import { deleteArea } from '../../../services/areas/deleteAreas'
+import { ref, inject } from 'vue'
+import { deleteArea } from '@/services/areas/deleteAreas'
 
-export function useDialogDelete({ showToast, areas }) {
+export function useDialogDelete({ areas }) {
   const dialogStatusDelete = ref(false)
   const areaToDelete = ref('')
+  const showToast = inject('showToast')
 
   const openDeleteModal = (id) => {
     areaToDelete.value = id

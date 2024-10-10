@@ -1,10 +1,11 @@
 // hooks/bills/useExportExcel.js
-import { ref } from 'vue'
+import { ref, inject } from 'vue'
 import { getPDF } from '@/services/actividades/getPdf'
 
-export function useExportPDF({ showToast }) {
+export function useExportPDF() {
   const loadingExportPDF = ref(false)
   const errorExportPDF = ref('')
+  const showToast = inject('showToast')
 
   const loadExportPDF = async () => {
     loadingExportPDF.value = true

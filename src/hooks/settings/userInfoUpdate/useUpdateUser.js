@@ -1,5 +1,4 @@
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { ref, inject } from 'vue'
 import { Baseurl } from '@/../global'
 import { unformatPhone } from '@/logic/formatNumber'
 import getIdByToken from '@/logic/getIdByToken'
@@ -11,12 +10,11 @@ export function useUpdateUser({
   birthdate,
   valid,
   validate,
-  showToast,
   loadUser
 }) {
-  const router = useRouter()
   const errorUser = ref('')
   const loadingUser = ref(false)
+  const showToast = inject('showToast')
 
   const updateUser = async () => {
     errorUser.value = ''

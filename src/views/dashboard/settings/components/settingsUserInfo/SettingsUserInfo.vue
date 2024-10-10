@@ -20,10 +20,6 @@ const props = defineProps({
         type: Boolean,
         required: true
     },
-    showToast: {
-        type: Function,
-        required: true,
-    },
     loadUser: {
         type: Function,
         required: true,
@@ -37,7 +33,7 @@ const validChanges = computed(() => {
     return valid.value && (firstName.value !== props.user.firstName || lastName.value !== props.user.lastName || phone.value !== props.user.phone || birthdate.value !== props.user.birthdate.split('-').reverse().join('/'))
 })
 
-const { loadingUser, updateUser } = useUpdateUser({ phone, firstName, lastName, birthdate, valid, validate, showToast: props.showToast, loadUser: props.loadUser })
+const { loadingUser, updateUser } = useUpdateUser({ phone, firstName, lastName, birthdate, valid, validate, loadUser: props.loadUser })
 // Año mínimo para la fecha de nacimiento
 const minYear = new Date().getFullYear() - 18
 

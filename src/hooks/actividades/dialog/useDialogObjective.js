@@ -1,11 +1,11 @@
-import { ref } from 'vue'
-// import { addObjective } from '../../../services/actividades/addObjective'
+import { ref, inject } from 'vue'
 import { addObjective } from '@/services/actividades/addObjective'
 
-export function useDialogObjective({ showToast, actividades }) {
+export function useDialogObjective({ actividades }) {
   const dialogStatusObjective = ref(false)
   const dialogStatusObjectiveAdd = ref(false)
   const objectiveToAdd = ref('')
+  const showToast = inject('showToast')
 
   const openObjectiveModal = (id) => {
     objectiveToAdd.value = id

@@ -10,10 +10,6 @@ const props = defineProps({
         type: String,
         required: true,
     },
-    showToast: {
-        type: Function,
-        required: true,
-    },
     loading: {
         type: Boolean,
         required: true,
@@ -27,7 +23,7 @@ const props = defineProps({
 const inputFile = ref(null);
 
 // enviamos la imagen del usuario proporsionada por el padre a la función useValidationImage
-const { profileImage, errorMessagePhoto, validateImage, triggerFileSelect, loadingImage } = useValidationImage({ imageUser: props.imageUser, showToast: props.showToast, inputFile });
+const { profileImage, errorMessagePhoto, validateImage, triggerFileSelect, loadingImage } = useValidationImage({ imageUser: props.imageUser, inputFile });
 
 // Actualiza profileImage cuando loading cambia a false
 watch(() => props.loading, (newLoading) => {

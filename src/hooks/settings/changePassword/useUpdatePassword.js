@@ -1,4 +1,4 @@
-import { ref } from 'vue'
+import { ref, inject } from 'vue'
 import { Baseurl } from '@/../global'
 import getIdByToken from '@/logic/getIdByToken'
 
@@ -8,10 +8,10 @@ export function useUpdatePassword({
   newPasswordConfirm,
   validate,
   valid,
-  resetFields,
-  showToast
+  resetFields
 }) {
   const loadingUpdatePassword = ref(false)
+  const showToast = inject('showToast')
 
   const updatePassword = async () => {
     loadingUpdatePassword.value = true

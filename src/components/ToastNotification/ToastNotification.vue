@@ -1,55 +1,58 @@
 <template>
-  <div ref="container" :class="[
-    'right-22 p-4 rounded shadow-lg transition-opacity duration-300',
-    toastTypeClass,
-    moveClass, // Clase para controlar el movimiento
-    animationClass // Clase dinámica de animación de entrada/salida
-  ]">
-    <p>{{ message.message }}</p>
+  <div class="fixed top-0 right-5 p-4 transition-opacity duration-300 z-[2147483647] flex flex-col gap-3">
+    <div v-for="(toast, index) in toastMessages" :key="index" ref="container" :class="[
+      'right-22 p-4 rounded shadow-lg transition-opacity duration-300',
+      getToastTypeClass(toast.tipo),  // Aplicar la clase basada en el tipo de mensaje
+      toast.moveClass,
+      toast.animationClass
+    ]">
+      <p>{{ toast.message }}</p>
+    </div>
   </div>
+
+  <slot></slot>
 </template>
 
 <script setup>
-import { ref, computed, onMounted, nextTick } from 'vue'
+import { ref, nextTick, provide } from 'vue'
 
-const props = defineProps({
-  message: {
-    type: Object,
-    required: true
-  },
-  duration: {
-    type: Number,
-    default: 3000
+const toastMessages = ref([])
+
+// Función para mostrar el toast
+const showToast = ({ message, tipo = 'info', duration = 3000 }) => {
+  const toast = {
+    message,
+    tipo,
+    moveClass: 'transition-all duration-500 ease-in-out',
+    animationClass: 'animate-toast-enter'
   }
-})
 
-const container = ref(null)
-const animationClass = ref('')
-const moveClass = ref('transition-all duration-500 ease-in-out')
+  // Agregar el nuevo mensaje al array
+  toastMessages.value.push(toast)
 
-onMounted(() => {
+  // Animar la salida después de la duración definida
   setTimeout(() => {
-    moveClass.value = 'transition-all duration-500 ease-in-out'
-  }, 10)
+    toast.animationClass = 'animate-toast-leave'
 
-  animationClass.value = 'animate-toast-enter'
+    const animationDuration = 500 // Duración de la animación de salida
 
-  // Iniciar animación de salida después de la duración establecida
-  setTimeout(() => {
-    animationClass.value = 'animate-toast-leave'
-
-    // Esperar a que la animación de salida se complete antes de ocultar el mensaje
-    const animationDuration = 500 // Duración de la animación de salida en milisegundos
+    // Eliminar el mensaje después de que la animación de salida se complete
     setTimeout(() => {
       nextTick(() => {
-        container.value.remove()
+        const index = toastMessages.value.indexOf(toast)
+        if (index !== -1) {
+          toastMessages.value.splice(index, 1)  // Eliminar el mensaje
+        }
       })
     }, animationDuration)
-  }, props.duration)
-})
+  }, duration)
+}
 
-const toastTypeClass = computed(() => {
-  switch (props.message.tipo) {
+provide('showToast', showToast)
+
+// Función para determinar la clase según el tipo de mensaje
+const getToastTypeClass = (tipo) => {
+  switch (tipo) {
     case 'error':
       return 'bg-red-100 text-red-800'
     case 'warning':
@@ -60,5 +63,5 @@ const toastTypeClass = computed(() => {
     default:
       return 'bg-blue-100 text-blue-800'
   }
-})
+}
 </script>

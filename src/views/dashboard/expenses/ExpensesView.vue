@@ -3,7 +3,6 @@ import Lucide from '@/components/base/Lucide'
 import { Menu } from '@/components/base/Headless'
 import Pagination from '@/components/base/Pagination'
 import LoadingIcon from '@/components/base/LoadingIcon'
-import { ToastNotification, useToast } from '@/components/ToastNotification/'
 import { FormInput, FormSelect } from '@/components/base/Form'
 import Button from '@/components/base/Button'
 import Table from '@/components/base/Table'
@@ -22,9 +21,8 @@ const { bills, loading, loadBills, errorBills } = useBills()
 const { searchQuery, filteredBills } = useBillSearch(bills)
 const { currentPage, pageSize, totalPages, paginatedItems, changePage, changePageSize } =
   usePagination(filteredBills)
-const { toastMessages, showToast } = useToast();
-const { loadExportExcel, loadingExportExcel } = useExportExcel({ showToast })
-const { loadExportPDF, loadingExportPDF } = useExportPDF({ showToast })
+const { loadExportExcel, loadingExportExcel } = useExportExcel()
+const { loadExportPDF, loadingExportPDF } = useExportPDF()
 
 function formatDateToDDMMYYYY(dateString) {
   if (!dateString) return '' // Verifica si dateString es undefined, null o vacío.
@@ -38,12 +36,6 @@ onMounted(() => {
 </script>
 
 <template>
-  <!--? ######################## TOAST NOTIFICATION ######################## -->
-
-  <div>
-    <!-- Recalcular posición top usando getTopOffset -->
-    <ToastNotification v-for="(message, index) in toastMessages" :key="index" :message="message" />
-  </div>
 
   <div class="grid grid-cols-12 gap-y-10 gap-x-6">
     <div class="col-span-12">

@@ -10,17 +10,14 @@ import Button from '@/components/base/Button'
 // import { useFilter, usePagination, useAreas } from '@/hooks/areas/' // error areglado ><
 import { onMounted } from 'vue'
 import { useFilter, useAreas, usePagination, useDialogDelete } from '@/hooks/areas/'
-import { ToastNotification, useToast } from '@/components/ToastNotification/'
 
 const { areas, loading, error, loadAreas } = useAreas()
 const { searchQuery, filteredItems } = useFilter(areas)
 const { currentPage, pageSize, totalPages, paginatedItems, changePage, changePageSize } =
   usePagination(filteredItems)
 const router = useRouter()
-
-const { toastMessages, showToast } = useToast();
 const { dialogStatusDelete, openDeleteModal, confirmDeleteArea, closeDeleteArea } = useDialogDelete(
-  { showToast, areas }
+  { areas }
 )
 
 onMounted(() => {
@@ -29,13 +26,6 @@ onMounted(() => {
 </script>
 
 <template>
-
-  <!--? ######################## TOAST NOTIFICATION ######################## -->
-
-  <div class="fixed right-22 p-4 transition-opacity duration-300 top-[110px] z-50 flex flex-col gap-3">
-    <!-- Recalcular posición top usando getTopOffset -->
-    <ToastNotification v-for="(message, index) in toastMessages" :key="index" :message="message" />
-  </div>
 
   <!-- BEGIN: Modal Content -->
   <Dialog :open="dialogStatusDelete" @close="() => {

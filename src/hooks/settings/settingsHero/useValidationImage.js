@@ -1,11 +1,12 @@
-import { ref } from 'vue'
+import { ref, inject } from 'vue'
 import { Baseurl } from '@/../global'
 import getIdByToken from '@/logic/getIdByToken'
 
-export function useValidationImage({ imageUser, showToast, inputFile }) {
+export function useValidationImage({ imageUser, inputFile }) {
   const profileImage = ref(imageUser) // URL de la imagen inicial
   const maxFileSize = 2 * 1024 * 1024 // 2 MB
   const loadingImage = ref(false)
+  const showToast = inject('showToast')
 
   // Validar el archivo seleccionado
   const validateImage = (event) => {

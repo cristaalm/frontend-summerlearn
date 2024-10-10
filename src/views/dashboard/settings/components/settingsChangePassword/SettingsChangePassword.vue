@@ -5,18 +5,11 @@ import LoadingIcon from '@/components/base/LoadingIcon'
 import Lucide from '@/components/base/Lucide'
 import Button from '@/components/base/Button'
 
-const props = defineProps({
-    showToast: {
-        type: Function,
-        required: true,
-    },
-});
-
 const { currentPassword, newPassword, newPasswordConfirm, showCurrentPassword, showNewPassword, showNewPasswordConfirm, valid } = useRefs();
 const { status, resetFields } = useStatus();
 const { validate, validatePasswordCurrent, validateNewPasswordComfirm } = useValidateFunctions({ valid, password_current: currentPassword, new_password: newPassword, new_password_confirm: newPasswordConfirm, status })
 const { validatePassword } = usePasswordSecurity({ status, validate, newPassword, currentPassword });
-const { loadingUpdatePassword, updatePassword } = useUpdatePassword({ newPassword, newPasswordConfirm, currentPassword, validate, valid, resetFields, showToast: props.showToast });
+const { loadingUpdatePassword, updatePassword } = useUpdatePassword({ newPassword, newPasswordConfirm, currentPassword, validate, valid, resetFields });
 
 </script>
 
