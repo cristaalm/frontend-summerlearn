@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import ToastNotification from '@/components/ToastNotification/'
 import { useThemeStore, getTheme, themes, type Themes } from '@/stores/theme'
 import { useRoute } from 'vue-router'
 import { onMounted, computed } from 'vue'
@@ -20,7 +21,9 @@ onMounted(() => {
 </script>
 
 <template>
-  <div>
-    <Component />
-  </div>
+  <ToastNotification>
+    <div>
+      <Component />
+    </div>
+  </ToastNotification>
 </template>
