@@ -1,31 +1,50 @@
 import { Baseurl } from '@/../global'
+import { ref } from 'vue'
 
-export const sendMail = async (email) => {
-  let response // Declara la variable response aquí
+export function useSendMail({ email }) {
+  const loadingMail = ref(false)
+  const errorMail = ref(false)
+  const successMail = ref(false)
+  const warningMail = ref(false)
+  const messageMail = ref('')
 
-  try {
-    response = await fetch(`${Baseurl}send_mail/`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ email: email })
-    })
-
-    if (!response.ok) {
-      if (response.status === 404) {
-        // Verificar si el error es 404
-        throw new Error('Correo no encontrado') // Lanzar error personalizado para 404
+  const sendMail = async () => {
+    loadingMail.value = true
+    successMail.value = false
+    errorMail.value = false
+    warningMail.value = false
+    messageMail.value = ''
+    try {
+      const response = await fetch(`${Baseurl}send_mail/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email: email.value })
+      })
+      // Verifica si la respuesta es exitosa
+      if (!response.ok) {
+        // Manejo específico para el error 404
+        if (response.status === 404) {
+          warningMail.value = true
+          messageMail.value = 'Correo no encontrado.'
+        } else {
+          errorMail.value = true
+          messageMail.value = 'Hubo un problema con la solicitud.'
+        }
+      } else {
+        // Solo se ejecuta si la respuesta es exitosa
+        successMail.value = true
+        messageMail.value = 'Correo enviado, revisa tu correo.'
       }
-
-      const errorData = await response.json()
-      throw new Error(errorData.message || 'Error al enviar el correo.')
+    } catch (error) {
+      console.error('Error:', error.message)
+      errorMail.value = true
+      messageMail.value = 'Hubo un problema con la solicitud.'
+    } finally {
+      loadingMail.value = false
     }
-
-    const data = await response.json()
-    return { success: true, message: data.message || 'Correo enviado correctamente.' }
-  } catch (error) {
-    console.error('Error:', error)
-    return { success: false, message: error.message, status: response ? response.status : null } // Usar response aquí
   }
+
+  return { loadingMail, errorMail, warningMail, successMail, messageMail, sendMail }
 }

@@ -1,22 +1,30 @@
 import { ref, watch } from 'vue'
 
-export function useValidation() {
-  const email = ref('')
-  const error = ref('')
-  const status = ref(false)
-  const Regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/
+export function useValidation({ email }) {
+  const statusMail = ref({
+    value: false,
+    message: '',
+    error: false,
+    Regex: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/
+  })
 
   const validation = () => {
-    error.value = ''
-    status.value = false
+    statusMail.value.error = false
     if (!email.value) {
-      error.value = 'El campo del correo es requerido.'
-      return false
-    } else if (!Regex.test(email.value)) {
-      error.value = 'El correo no es válido.'
-      return false
+      // si el campo email esta vacio
+      statusMail.value.error = true
+      statusMail.value.message = 'El campo correo es requerido.'
+      statusMail.value.value = false
+      return
+    } else if (!statusMail.value.Regex.test(email.value)) {
+      statusMail.value.error = true
+      statusMail.value.message = 'El correo no es válido.'
+      statusMail.value.value = false
+      return
     }
-    status.value = true
+    statusMail.value.error = false
+    statusMail.value.message = ''
+    statusMail.value.value = true
   }
 
   watch(email, () => {
@@ -24,8 +32,6 @@ export function useValidation() {
   })
 
   return {
-    email,
-    error,
-    status
+    statusMail
   }
 }
