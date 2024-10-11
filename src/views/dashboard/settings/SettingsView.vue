@@ -44,8 +44,7 @@ onMounted(() => {
         <div class="flex flex-col col-span-12 xl:col-span-9 gap-y-7">
 
           <!-- HERO -->
-          <SettingsHero :loading="loadingUser" :error="errorUser ? true : false"
-            :imageUser="user?.photo ?? '/media/usersImages/placeholderUser.jpg'" />
+          <SettingsHero />
 
           <!-- INFO USER -->
           <SettingsUserInfo v-if="page === null" :user="user" :loading="loadingUser" :error="errorUser ? true : false"

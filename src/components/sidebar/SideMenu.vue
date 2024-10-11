@@ -2,7 +2,6 @@
 import '@/assets/css/vendors/simplebar.css'
 import '@/assets/css/themes/echo.css'
 import { useRoute, useRouter } from 'vue-router'
-// import { Menu } from '@/components/base/Headless'
 import { Menu, Slideover } from '@/components/base/Headless'
 import Tippy from '@/components/Base/Tippy'
 import Lucide from '@/components/base/Lucide'
@@ -21,6 +20,18 @@ import {
 } from './side-menu'
 import { watch, reactive, ref, computed, onMounted, provide } from 'vue'
 import SimpleBar from 'simplebar'
+
+// ? ############################ USER INFO ############################ 
+
+
+import { useUserPhoto } from '@/hooks/settings/'
+import { Baseurl } from '@/utils/global'
+
+const { photoUser, loadingUserPhoto, errorUserPhoto, loadUserPhoto } = useUserPhoto()
+
+provide('userPhoto', { photoUser, loadingUserPhoto, errorUserPhoto, loadUserPhoto })
+
+// ? ############################ SIDE MENU ############################
 
 const compactMenu = useCompactMenuStore()
 const setCompactMenu = (val: boolean) => {
@@ -87,6 +98,8 @@ const clearLocalStorage = () => {
 }
 
 onMounted(() => {
+  loadUserPhoto()
+
   if (scrollableRef.value) {
     new SimpleBar(scrollableRef.value)
   }
@@ -120,6 +133,7 @@ const openSlideOver = () => {
 const closeSlideOver = () => {
   openSlide.value = false
 }
+
 </script>
 
 <template>
@@ -266,10 +280,10 @@ const closeSlideOver = () => {
         compactMenuOnHover = true
       }
         " @mouseleave="(event) => {
-            event.preventDefault()
-            compactMenuOnHover = false
-          }
-            ">
+          event.preventDefault()
+          compactMenuOnHover = false
+        }
+          ">
         <div :class="[
           'flex items-center z-10 px-5 h-[65px] w-[275px] overflow-hidden relative duration-300 xl:group-[.side-menu--collapsed]:w-[91px] group-[.side-menu--collapsed.side-menu--on-hover]:w-[275px]'
         ]">
@@ -415,13 +429,6 @@ const closeSlideOver = () => {
                 <Lucide icon="AlignJustify" class="w-[18px] h-[18px]" />
               </a>
             </div>
-            <!-- BEGIN: Breadcrumb -->
-            <!-- <Breadcrumb light class="flex-1 hidden xl:block">
-              <Breadcrumb.Link to="/">SummerLearn</Breadcrumb.Link>
-              <Breadcrumb.Link to="/dashboard/" :active="true">Dashboard</Breadcrumb.Link>
-            </Breadcrumb> -->
-            <!-- END: Breadcrumb -->
-            <!-- BEGIN: Search -->
             <div class="relative justify-center flex-1 hidden xl:flex" @click="() => {
               quickSearch = true
             }
@@ -442,8 +449,10 @@ const closeSlideOver = () => {
               <!-- User Profile Menu -->
               <Menu>
                 <Menu.Button class="overflow-hidden rounded-full w-9 h-9 border-3 border-white/15 image-fit">
-                  <img alt="Tailwise - Admin Dashboard Template"
-                    :src="`https://avatar.iran.liara.run/public/boy?username=Ash`" />
+                  <!-- Verifica si loadingUserPhoto es falso y photoUser tiene un valor válido -->
+                  <img alt="User Photo" v-if="!loadingUserPhoto" :src="`${Baseurl}${photoUser}`" class="bg-white" />
+                  <!-- Mostrar un placeholder o ícono en caso de que loadingUserPhoto sea falso pero photoUser sea null -->
+                  <Lucide icon="user" v-else />
                 </Menu.Button>
                 <Menu.Items class="w-56 mt-1 bg-white shadow-lg rounded-md">
                   <Menu.Item @click="() => router.push({ name: 'settings' })"
@@ -463,19 +472,6 @@ const closeSlideOver = () => {
                 </Menu.Items>
               </Menu>
             </div>
-            <!-- <ActivitiesPanel
-              :activitiesPanel="activitiesPanel"
-              :setActivitiesPanel="setActivitiesPanel"
-            />
-            <NotificationsPanel
-              :notificationsPanel="notificationsPanel"
-              :setNotificationsPanel="setNotificationsPanel"
-            />
-            <SwitchAccount
-              :switchAccount="switchAccount"
-              :setSwitchAccount="setSwitchAccount"
-            /> -->
-            <!-- END: Notification & User Menu -->
           </div>
         </div>
       </div>
