@@ -20,7 +20,7 @@
         className="mx-auto grid max-w-5xl items-center gap-6 py-12 lg:grid-cols-2 lg:gap-12 text-justify"
       >
         <img
-          src="/src/assets/img/Photo1.png"
+          src="/src/assets/images/Photo1.png"
           alt="Mission"
           className="mx-auto aspect-video overflow-hidden rounded-xl object-cover object-center sm:w-full lg:order-last"
           width="550"

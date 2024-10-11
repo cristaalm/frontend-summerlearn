@@ -43,7 +43,7 @@ const smoothScroll = (event) => {
           </div>
         </div>
         <img
-          src="/src/assets/img/Photo2.jpg"
+          src="/src/assets/images/Photo2.jpg"
           alt="Hero"
           class="mx-auto aspect-video overflow-hidden rounded-xl object-cover sm:w-full lg:order-last lg:aspect-square w-[550] h-[550]"
           data-aos="fade-left"
