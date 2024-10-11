@@ -2,6 +2,8 @@ import { useRouter } from 'vue-router'
 import { ref } from 'vue'
 import { Baseurl } from '@/utils/global'
 import { unformatPhone } from '@/logic/formatNumber'
+import { loginColorSheme } from '@/utils/switchColorSheme'
+
 
 export function useAuth({
   password,
@@ -53,6 +55,7 @@ export function useAuth({
     if (response.ok) {
       localStorage.setItem('access_token', data.access)
       localStorage.setItem('refresh_token', data.refresh)
+      loginColorSheme()
       router.push({ name: 'dashboard' })
     } else {
       console.error('Registration failed', data)

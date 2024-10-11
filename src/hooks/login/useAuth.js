@@ -1,6 +1,7 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { Baseurl } from '@/utils/global'
+import { loginColorSheme } from '@/utils/switchColorSheme'
 
 export function useAuth() {
   const router = useRouter()
@@ -27,6 +28,7 @@ export function useAuth() {
         loginSuccess.value = 'Inicio de sesión exitoso'
         localStorage.setItem('access_token', data.access)
         localStorage.setItem('refresh_token', data.refresh)
+        loginColorSheme()
         router.push({ name: 'dashboard' })
       } else {
         error.value = 'Correo electrónico o contraseña incorrectos'

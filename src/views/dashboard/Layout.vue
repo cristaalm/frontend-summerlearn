@@ -1,6 +1,8 @@
 <script setup lang="ts">
+// @ts-ignore
 import ToastNotification from '@/components/ToastNotification/'
 import { useThemeStore, getTheme, themes, type Themes } from '@/stores/theme'
+import ThemeSwitcher from "@/components/ThemeSwitcher";
 import { useRoute } from 'vue-router'
 import { onMounted, computed } from 'vue'
 
@@ -18,6 +20,8 @@ onMounted(() => {
     switchTheme(theme)
   }
 })
+
+
 </script>
 
 <template>
@@ -26,4 +30,5 @@ onMounted(() => {
       <Component />
     </div>
   </ToastNotification>
+  <ThemeSwitcher/>
 </template>

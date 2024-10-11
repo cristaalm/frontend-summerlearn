@@ -123,20 +123,20 @@ module.exports = {
       addBase({
         // Default colors
         ':root': {
-          '--color-theme-1': toRGB('#76D390'), // Tonalidad oscura de esmeralda
-          '--color-theme-2': toRGB('#4c855c'), // Tonalidad más clara
-          '--color-theme-3': toRGB('#64b079 '), // Tonalidad más clara
-          '--color-primary': toRGB('#064e3b'),
-          '--color-secondary': toRGB(colors.emerald['200']), // Usé un tono claro de esmeralda
-          '--color-success': toRGB(colors.emerald['500']), // Color de éxito con tono esmeralda
-          '--color-info': toRGB(colors.cyan['400']),
-          '--color-warning': toRGB(colors.amber['500']),
-          '--color-pending': toRGB(colors.orange['600']),
-          '--color-danger': toRGB(colors.red['600']),
-          '--color-light': toRGB(colors.emerald['100']), // Tonalidad más suave de esmeralda
-          '--color-dark': toRGB(colors.emerald['900']), // Tonalidad muy oscura de esmeralda
+          "--color-theme-1": toRGB("#03045e"),
+          "--color-theme-2": toRGB("#0c4a6e"),
+          "--color-theme-3": toRGB("#0077b6"),
+          "--color-primary": toRGB("#03045e"),
+          "--color-secondary": toRGB(colors.slate["200"]),
+          "--color-success": toRGB(colors.teal["600"]),
+          "--color-info": toRGB(colors.cyan["600"]),
+          "--color-warning": toRGB(colors.yellow["600"]),
+          "--color-pending": toRGB(colors.orange["700"]),
+          "--color-danger": toRGB(colors.red["700"]),
+          "--color-light": toRGB(colors.slate["100"]),
+          "--color-dark": toRGB(colors.slate["800"]),
 
-          // Tonalidades agregadas
+          // // Tonalidades agregadas
           '--color-blue-light': toRGB('#7BD3EA'), // Azul claro
           '--color-blue': toRGB('#5BA3B8'), // Azul intermedio
           '--color-blue-dark': toRGB('#3A7386'), // Azul oscuro
@@ -167,10 +167,25 @@ module.exports = {
           '--color-darkmode-800': '27 37 59',
           '--color-darkmode-900': '15 23 42'
         },
-        // Theme 1 colors
         '.theme-1': {
+          '--color-theme-1': toRGB('#76D390'), // Tonalidad oscura de esmeralda
+          '--color-theme-2': toRGB('#4c855c'), // Tonalidad más clara
+          '--color-theme-3': toRGB('#64b079 '), // Tonalidad más clara
+          '--color-primary': toRGB('#064e3b'),
+          '--color-secondary': toRGB(colors.emerald['200']), // Usé un tono claro de esmeralda
+          '--color-success': toRGB(colors.emerald['500']), // Color de éxito con tono esmeralda
+          '--color-info': toRGB(colors.cyan['400']),
+          '--color-warning': toRGB(colors.amber['500']),
+          '--color-pending': toRGB(colors.orange['600']),
+          '--color-danger': toRGB(colors.red['600']),
+          '--color-light': toRGB(colors.emerald['100']), // Tonalidad más suave de esmeralda
+          '--color-dark': toRGB(colors.emerald['900']), // Tonalidad muy oscura de esmeralda
+        },
+        // Theme 1 colors
+        '.theme-2': {
           '--color-theme-1': toRGB(colors.violet['900']),
           '--color-theme-2': toRGB(colors.rose['800']),
+          '--color-theme-3': toRGB(colors.rose['800']),
           '--color-primary': toRGB(colors.violet['900']),
           '--color-secondary': toRGB(colors.slate['200']),
           '--color-success': toRGB(colors.teal['600']),
@@ -185,9 +200,10 @@ module.exports = {
           }
         },
         // Theme 2 colors
-        '.theme-2': {
+        '.theme-3': {
           '--color-theme-1': toRGB(colors.purple['900']),
           '--color-theme-2': toRGB(colors.cyan['700']),
+          '--color-theme-3': toRGB(colors.cyan['700']),
           '--color-primary': toRGB(colors.purple['900']),
           '--color-secondary': toRGB(colors.slate['200']),
           '--color-success': toRGB(colors.teal['600']),
@@ -202,9 +218,10 @@ module.exports = {
           }
         },
         // Theme 3 colors
-        '.theme-3': {
+        '.theme-4': {
           '--color-theme-1': toRGB(colors.cyan['700']),
           '--color-theme-2': toRGB(colors.violet['800']),
+          '--color-theme-3': toRGB(colors.violet['800']),
           '--color-primary': toRGB(colors.cyan['700']),
           '--color-secondary': toRGB(colors.slate['200']),
           '--color-success': toRGB(colors.teal['600']),
@@ -219,9 +236,10 @@ module.exports = {
           }
         },
         // Theme 4 colors
-        '.theme-4': {
+        '.theme-5': {
           '--color-theme-1': toRGB(colors.sky['700']),
           '--color-theme-2': toRGB(colors.rose['800']),
+          '--color-theme-3': toRGB(colors.rose['800']),
           '--color-primary': toRGB(colors.sky['700']),
           '--color-secondary': toRGB(colors.slate['200']),
           '--color-success': toRGB(colors.teal['600']),
@@ -236,9 +254,10 @@ module.exports = {
           }
         },
         // Theme 5 colors
-        '.theme-5': {
+        '.theme-6': {
           '--color-theme-1': toRGB(colors.sky['800']),
           '--color-theme-2': toRGB(colors.emerald['800']),
+          '--color-theme-3': toRGB(colors.emerald['800']),
           '--color-primary': toRGB(colors.sky['800']),
           '--color-secondary': toRGB(colors.slate['200']),
           '--color-success': toRGB(colors.teal['600']),
@@ -253,9 +272,10 @@ module.exports = {
           }
         },
         // Theme 6 colors
-        '.theme-6': {
+        '.theme-7': {
           '--color-theme-1': toRGB('#247ba0'),
           '--color-theme-2': toRGB('#0a2463'),
+          '--color-theme-3': toRGB('#0a2463'),
           '--color-primary': toRGB('#247ba0'),
           '--color-secondary': toRGB(colors.slate['200']),
           '--color-success': toRGB(colors.teal['600']),
@@ -270,9 +290,10 @@ module.exports = {
           }
         },
         // Theme 7 colors
-        '.theme-7': {
+        '.theme-8': {
           '--color-theme-1': toRGB(colors.lime['950']),
           '--color-theme-2': toRGB(colors.teal['900']),
+          '--color-theme-3': toRGB(colors.teal['900']),
           '--color-primary': toRGB(colors.lime['950']),
           '--color-secondary': toRGB(colors.slate['200']),
           '--color-success': toRGB(colors.teal['600']),
@@ -287,9 +308,10 @@ module.exports = {
           }
         },
         // Theme 8 colors
-        '.theme-8': {
+        '.theme-9': {
           '--color-theme-1': toRGB('#357266'),
           '--color-theme-2': toRGB('#0E3B43'),
+          '--color-theme-3': toRGB('#0E3B43'),
           '--color-primary': toRGB('#357266'),
           '--color-secondary': toRGB(colors.slate['200']),
           '--color-success': toRGB(colors.teal['600']),
@@ -304,9 +326,10 @@ module.exports = {
           }
         },
         // Theme 9 colors
-        '.theme-9': {
+        '.theme-10': {
           '--color-theme-1': toRGB('#6C6C60'),
           '--color-theme-2': toRGB('#4D4D42'),
+          '--color-theme-3': toRGB('#4D4D42'),
           '--color-primary': toRGB('#6C6C60'),
           '--color-secondary': toRGB(colors.slate['200']),
           '--color-success': toRGB(colors.teal['600']),
@@ -321,9 +344,10 @@ module.exports = {
           }
         },
         // Theme 10 colors
-        '.theme-10': {
+        '.theme-11': {
           '--color-theme-1': toRGB(colors.indigo['800']),
           '--color-theme-2': toRGB(colors.blue['900']),
+          '--color-theme-3': toRGB(colors.blue['900']),
           '--color-primary': toRGB(colors.indigo['800']),
           '--color-secondary': toRGB(colors.slate['200']),
           '--color-success': toRGB(colors.teal['600']),
@@ -338,9 +362,10 @@ module.exports = {
           }
         },
         // Theme 11 colors
-        '.theme-11': {
+        '.theme-12': {
           '--color-theme-1': toRGB('#2f3e46'),
           '--color-theme-2': toRGB('#52796f'),
+          '--color-theme-3': toRGB('#52796f'),
           '--color-primary': toRGB('#2f3e46'),
           '--color-secondary': toRGB(colors.slate['200']),
           '--color-success': toRGB(colors.teal['600']),
@@ -355,9 +380,10 @@ module.exports = {
           }
         },
         // Theme 12 colors
-        '.theme-12': {
+        '.theme-13': {
           '--color-theme-1': toRGB('#5e503f'),
           '--color-theme-2': toRGB('#22333b'),
+          '--color-theme-3': toRGB('#22333b'),
           '--color-primary': toRGB('#5e503f'),
           '--color-secondary': toRGB(colors.slate['200']),
           '--color-success': toRGB(colors.teal['600']),
@@ -372,9 +398,10 @@ module.exports = {
           }
         },
         // Theme 13 colors
-        '.theme-13': {
+        '.theme-14': {
           '--color-theme-1': toRGB('#5e548e'),
           '--color-theme-2': toRGB('#231942'),
+          '--color-theme-3': toRGB('#231942'),
           '--color-primary': toRGB('#5e548e'),
           '--color-secondary': toRGB(colors.slate['200']),
           '--color-success': toRGB(colors.teal['600']),
@@ -389,9 +416,10 @@ module.exports = {
           }
         },
         // Theme 14 colors
-        '.theme-14': {
+        '.theme-15': {
           '--color-theme-1': toRGB('#02292f'),
           '--color-theme-2': toRGB('#767522'),
+          '--color-theme-3': toRGB('#767522'),
           '--color-primary': toRGB('#02292f'),
           '--color-secondary': toRGB(colors.slate['200']),
           '--color-success': toRGB(colors.teal['600']),
@@ -406,9 +434,10 @@ module.exports = {
           }
         },
         // Theme 15 colors
-        '.theme-15': {
+        '.theme-16': {
           '--color-theme-1': toRGB('#4c956c'),
           '--color-theme-2': toRGB('#006466'),
+          '--color-theme-3': toRGB('#006466'),
           '--color-primary': toRGB('#4c956c'),
           '--color-secondary': toRGB(colors.slate['200']),
           '--color-success': toRGB(colors.teal['600']),
@@ -423,9 +452,10 @@ module.exports = {
           }
         },
         // Theme 16 colors
-        '.theme-16': {
+        '.theme-17': {
           '--color-theme-1': toRGB(colors.sky['900']),
           '--color-theme-2': toRGB(colors.blue['950']),
+          '--color-theme-3': toRGB(colors.blue['950']),
           '--color-primary': toRGB(colors.sky['900']),
           '--color-secondary': toRGB(colors.slate['200']),
           '--color-success': toRGB(colors.teal['600']),
@@ -440,9 +470,10 @@ module.exports = {
           }
         },
         // Theme 17 colors
-        '.theme-17': {
+        '.theme-18': {
           '--color-theme-1': toRGB(colors.slate['900']),
           '--color-theme-2': toRGB(colors.slate['800']),
+          '--color-theme-3': toRGB(colors.slate['800']),
           '--color-primary': toRGB(colors.slate['900']),
           '--color-secondary': toRGB(colors.slate['200']),
           '--color-success': toRGB(colors.teal['600']),

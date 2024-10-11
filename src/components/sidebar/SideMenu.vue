@@ -5,7 +5,6 @@ import { useRoute, useRouter } from 'vue-router'
 import { Menu, Slideover } from '@/components/base/Headless'
 import Tippy from '@/components/base/Tippy'
 import Lucide from '@/components/base/Lucide'
-import Breadcrumb from '@/components/base/Breadcrumb'
 import { useMenuStore } from '@/stores/menu'
 import { useCompactMenuStore } from '@/stores/compact-menu'
 import {
@@ -20,11 +19,14 @@ import {
 } from './side-menu'
 import { watch, reactive, ref, computed, onMounted, provide } from 'vue'
 import SimpleBar from 'simplebar'
+//@ts-ignore
+import { logoutColorScheme } from '@/utils/switchColorSheme'
 
 // ? ############################ USER INFO ############################ 
 
-
+// @ts-ignore
 import { useUserPhoto } from '@/hooks/settings/'
+// @ts-ignore
 import { Baseurl } from '@/utils/global'
 
 const { photoUser, loadingUserPhoto, errorUserPhoto, loadUserPhoto } = useUserPhoto()
@@ -463,6 +465,7 @@ const closeSlideOver = () => {
                   <Menu.Item @click="() => {
                     clearLocalStorage()
                     menuStore.resetMenu()
+                    logoutColorScheme()
                     router.push({ name: 'login' })
                   }
                     " class="text-danger flex items-center px-4 py-2 hover:bg-gray-100">
