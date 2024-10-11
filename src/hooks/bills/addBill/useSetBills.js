@@ -1,10 +1,11 @@
-import { ref } from 'vue'
+import { ref, inject } from 'vue'
 import { Baseurl } from '@/../global'
 import getIdByToken from '@/logic/getIdByToken'
 
 export function useSetBill() {
   const setBillError = ref(null)
   const loadingSetBill = ref(false)
+  const showToast = inject('showToast')
 
   const addBill = async (billData) => {
     setBillError.value = null
@@ -84,7 +85,7 @@ export function useSetBill() {
           setBillError.value = errorData.message || 'Error al actualizar la donación'
           return { success: false }
         }
-
+        showToast({ message: 'Gasto registrado con éxito', tipo: 'success', persistente: true })
         return { success: true }
       })
 

@@ -1,4 +1,4 @@
-import { ref } from 'vue'
+import { ref, inject } from 'vue'
 import { useRouter } from 'vue-router'
 import { Baseurl } from '@/../global'
 
@@ -17,6 +17,7 @@ export function useSetArea() {
   const router = useRouter()
   const setAreaLoading = ref(false)
   const setAreaError = ref('')
+  const showToast = inject('showToast')
 
   const addArea = async ({ area }) => {
     setAreaLoading.value = true
@@ -37,6 +38,7 @@ export function useSetArea() {
       })
       const data = await response.json()
       if (response.ok) {
+        showToast({ message: 'Área creada con éxito', tipo: 'success', persistente: true })
         router.push({ name: 'areas' })
       } else {
         setAreaError.value = 'Hubo un problema con la solicitud'

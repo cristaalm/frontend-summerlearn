@@ -1,4 +1,4 @@
-import { ref } from 'vue'
+import { ref, inject } from 'vue'
 import { useRouter } from 'vue-router'
 import { Baseurl } from '@/../global'
 import getIdByToken from '@/logic/getIdByToken'
@@ -8,6 +8,7 @@ export function useSetDonation() {
   const setDonationLoading = ref(false)
   const setDonationError = ref('')
   const access_token = localStorage.getItem('access_token')
+  const showToast = inject('showToast')
 
   // ! Obtiene el id del usuario desde el token almacenado en localStorage
   const userId = getIdByToken(access_token).user_id
@@ -31,7 +32,7 @@ export function useSetDonation() {
       })
       const data = await response.json()
       if (response.ok) {
-        // Aquí puedes manejar la redirección o mostrar un mensaje de éxito
+        showToast({ message: 'Donación agregada con éxito', tipo: 'success', persistente: true })
         router.push({ name: 'donations' }) // Redirige a la página de donaciones
       } else {
         setDonationError.value = data.detail || 'Error al agregar la donación'

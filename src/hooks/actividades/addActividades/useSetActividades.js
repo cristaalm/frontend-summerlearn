@@ -1,4 +1,4 @@
-import { ref } from 'vue'
+import { ref, inject } from 'vue'
 import { useRouter } from 'vue-router'
 import { Baseurl } from '@/../global'
 
@@ -20,6 +20,7 @@ export function useSetActividades() {
   const router = useRouter()
   const setActividadesLoading = ref(false)
   const setActividadesError = ref('')
+  const showToast = inject('showToast')
 
   const addActividades = async ({ actividad }) => {
     setActividadesLoading.value = true
@@ -42,6 +43,7 @@ export function useSetActividades() {
       })
 
       if (response.ok) {
+        showToast({ message: 'Actividad creada con éxito', tipo: 'success', persistente: true })
         router.push({ name: 'activities' })
       } else {
         setActividadesError.value = 'Hubo un problema con la solicitud'

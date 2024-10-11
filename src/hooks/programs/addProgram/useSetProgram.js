@@ -1,4 +1,4 @@
-import { ref } from 'vue'
+import { ref, inject } from 'vue'
 import { useRouter } from 'vue-router'
 import { Baseurl } from '@/../global'
 
@@ -6,6 +6,7 @@ export function useSetProgram() {
   const router = useRouter()
   const setProgramLoading = ref(false)
   const setProgramError = ref('')
+  const showToast = inject('showToast')
 
   const addProgram = async ({ program }) => {
     setProgramLoading.value = true
@@ -55,6 +56,7 @@ export function useSetProgram() {
         })
       })
       if (response.ok) {
+        showToast({ message: 'Programa creado con éxito', tipo: 'success', persistente: true })
         router.push({ name: 'programs' })
       } else {
         setProgramError.value = 'Hubo un problema con la solicitud'

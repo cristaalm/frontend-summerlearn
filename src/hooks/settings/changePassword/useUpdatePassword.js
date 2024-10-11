@@ -50,7 +50,11 @@ export function useUpdatePassword({
           showToast({ message: data.spanishSuccess, tipo: 'success' })
           return
         }
-        showToast({ message: 'Contraseña actualizada con éxito', tipo: 'success' })
+        showToast({
+          message: 'Contraseña actualizada con éxito',
+          tipo: 'success',
+          persistente: true
+        })
       } else {
         if (data.spanishError) {
           showToast({ message: data.spanishError, tipo: 'error' })
