@@ -4865,10 +4865,6 @@ select {
   right: 0px;
 }
 
-.right-5 {
-  right: 1.25rem;
-}
-
 .right-\[100\%\] {
   right: 100%;
 }
@@ -4891,10 +4887,6 @@ select {
 
 .top-\[50\%\] {
   top: 50%;
-}
-
-.right-1\/2 {
-  right: 50%;
 }
 
 .z-10 {
@@ -4984,11 +4976,6 @@ select {
 .my-auto {
   margin-top: auto;
   margin-bottom: auto;
-}
-
-.my-6 {
-  margin-top: 1.5rem;
-  margin-bottom: 1.5rem;
 }
 
 .-mb-px {
@@ -5423,11 +5410,6 @@ select {
   height: 100vh;
 }
 
-.h-fit {
-  height: -moz-fit-content;
-  height: fit-content;
-}
-
 .max-h-0 {
   max-height: 0px;
 }
@@ -5629,16 +5611,12 @@ select {
   min-width: 150px;
 }
 
-.min-w-full {
-  min-width: 100%;
-}
-
-.min-w-\[200px\] {
-  min-width: 200px;
-}
-
 .min-w-\[350px\] {
   min-width: 350px;
+}
+
+.min-w-full {
+  min-width: 100%;
 }
 
 .max-w-5xl {
@@ -5697,11 +5675,6 @@ select {
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
-.translate-y-4 {
-  --tw-translate-y: 1rem;
-  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-}
-
 .rotate-\[-10deg\] {
   --tw-rotate: -10deg;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
@@ -5757,38 +5730,6 @@ select {
 
 .animate-navDeactivate {
   animation: navDeactivate 0.5s forwards;
-}
-
-@keyframes toastEnter {
-  0% {
-    opacity: 0;
-    transform: translateX(-20px);
-  }
-
-  100% {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-.animate-toast-enter {
-  animation: toastEnter 0.5s ease-out forwards;
-}
-
-@keyframes toastLeave {
-  0% {
-    opacity: 1;
-    transform: translateX(0);
-  }
-
-  100% {
-    opacity: 0;
-    transform: translateX(-20px);
-  }
-}
-
-.animate-toast-leave {
-  animation: toastLeave 0.5s ease-in forwards;
 }
 
 .cursor-\[pointer\!important\] {
@@ -8433,6 +8374,11 @@ select {
   color: rgb(107 114 128 / var(--tw-text-opacity));
 }
 
+.hover\:text-gray-900:hover {
+  --tw-text-opacity: 1;
+  color: rgb(17 24 39 / var(--tw-text-opacity));
+}
+
 .hover\:text-green:hover {
   --tw-text-opacity: 1;
   color: rgb(var(--color-green) / var(--tw-text-opacity));
@@ -8476,11 +8422,6 @@ select {
 .hover\:text-yellow-light:hover {
   --tw-text-opacity: 1;
   color: rgb(var(--color-yellow-light) / var(--tw-text-opacity));
-}
-
-.hover\:text-gray-900:hover {
-  --tw-text-opacity: 1;
-  color: rgb(17 24 39 / var(--tw-text-opacity));
 }
 
 .hover\:underline:hover {
@@ -9065,13 +9006,13 @@ select {
     width: auto;
   }
 
-  .sm\:w-full {
-    width: 100%;
-  }
-
   .sm\:w-fit {
     width: -moz-fit-content;
     width: fit-content;
+  }
+
+  .sm\:w-full {
+    width: 100%;
   }
 
   .sm\:min-w-\[40px\] {
@@ -9130,10 +9071,6 @@ select {
 }
 
 @media (min-width: 768px) {
-  .md\:right-5 {
-    right: 1.25rem;
-  }
-
   .md\:col-span-2 {
     grid-column: span 2 / span 2;
   }
@@ -9503,10 +9440,6 @@ select {
 
   .xl\:mt-8 {
     margin-top: 2rem;
-  }
-
-  .xl\:block {
-    display: block;
   }
 
   .xl\:flex {
