@@ -1,7 +1,7 @@
 import { ref } from 'vue'
 import { getDonations } from '@/services/donations/donations'
 import { useBarDonations } from './useBarDonations'
-import { Baseurl } from '@/../global'
+import { Baseurl } from '@/utils/global'
 
 export function useDonations() {
   const donations = ref([])

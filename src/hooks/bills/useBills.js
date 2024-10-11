@@ -1,6 +1,6 @@
 import { ref } from 'vue'
 import { getBills } from '@/services/bills/bills'
-import { Baseurl } from '@/../global'
+import { Baseurl } from '@/utils/global'
 
 export function useBills() {
   const bills = ref([])

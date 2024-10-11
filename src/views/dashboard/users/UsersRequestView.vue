@@ -9,7 +9,7 @@ import Table from '@/components/base/Table'
 import Tippy from '@/components/base/Tippy'
 import LoadingIcon from '@/components/base/LoadingIcon'
 import { useRouter } from 'vue-router'
-import { Baseurl } from '@/../global'
+import { Baseurl } from '@/utils/global'
 import { ref, onMounted } from 'vue'
 
 const { users, loading, error, loadUsers } = useUserRequest()

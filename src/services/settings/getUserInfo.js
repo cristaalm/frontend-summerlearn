@@ -1,4 +1,4 @@
-import { Baseurl } from '@/../global'
+import { Baseurl } from '@/utils/global'
 import getIdByToken from '@/logic/getIdByToken'
 import { first } from 'lodash'
 

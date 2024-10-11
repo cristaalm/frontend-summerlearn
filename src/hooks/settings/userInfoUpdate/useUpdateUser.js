@@ -1,5 +1,5 @@
 import { ref, inject } from 'vue'
-import { Baseurl } from '@/../global'
+import { Baseurl } from '@/utils/global'
 import { unformatPhone } from '@/logic/formatNumber'
 import getIdByToken from '@/logic/getIdByToken'
 

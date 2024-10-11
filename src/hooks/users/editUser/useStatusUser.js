@@ -1,5 +1,5 @@
 import { inject } from 'vue'
-import { Baseurl } from '@/../global'
+import { Baseurl } from '@/utils/global'
 
 export function useStatusUser() {
   const showToast = inject('showToast')

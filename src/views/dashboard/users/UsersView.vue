@@ -12,7 +12,7 @@ import LoadingIcon from '@/components/base/LoadingIcon'
 import { useRoles } from '@/hooks/roles/useRoles'
 import { calculateAge } from '@/logic/'
 import { useRouter } from 'vue-router'
-import { Baseurl } from '@/../global'
+import { Baseurl } from '@/utils/global'
 import { formatPhone } from '@/logic/formatNumber'
 
 const { users, loading, error, loadUsers } = useUsers()

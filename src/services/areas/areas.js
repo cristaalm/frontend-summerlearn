@@ -1,4 +1,4 @@
-import { Baseurl } from '@/../global'
+import { Baseurl } from '@/utils/global'
 
 export const getAreas = async () => {
   const response = await fetch(`${Baseurl}areas/`, {

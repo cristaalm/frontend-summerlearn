@@ -1,6 +1,6 @@
 import { ref, inject } from 'vue'
 import { useRouter } from 'vue-router'
-import { Baseurl } from '@/../global'
+import { Baseurl } from '@/utils/global'
 
 export function useSetProgram() {
   const router = useRouter()

@@ -1,6 +1,6 @@
 import { ref, inject } from 'vue'
 import { useRouter } from 'vue-router'
-import { Baseurl } from '@/../global'
+import { Baseurl } from '@/utils/global'
 import { unformatPhone } from '@/logic/formatNumber'
 
 export function useSetUser({

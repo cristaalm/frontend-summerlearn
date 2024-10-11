@@ -1,4 +1,4 @@
-import { Baseurl } from '@/../global'
+import { Baseurl } from '@/utils/global'
 
 export async function getRoleFromToken(): Promise<string | null> {
   const encryptedToken = localStorage.getItem('access_token')

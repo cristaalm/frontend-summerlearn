@@ -3,7 +3,7 @@ import { ref, watch } from "vue";
 import Lucide from "@/components/base/Lucide";
 import LoadingIcon from '@/components/base/LoadingIcon'
 import { useValidationImage } from "@/hooks/settings/settingsHero";
-import { Baseurl } from "@/../global";
+import { Baseurl } from "@/utils/global";
 
 const props = defineProps({
     imageUser: {

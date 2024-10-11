@@ -1,5 +1,5 @@
 import { type Icon } from '@/components/base/Lucide/Lucide.vue'
-import { Baseurl } from '@/../global'
+import { Baseurl } from '@/utils/global'
 import { defineStore } from 'pinia'
 
 // Función para obtener el rol del token desencriptado

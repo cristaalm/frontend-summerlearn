@@ -1,4 +1,4 @@
-import { Baseurl } from '@/../global'
+import { Baseurl } from '@/utils/global'
 import { ref } from 'vue'
 
 export function useSendMail({ email }) {

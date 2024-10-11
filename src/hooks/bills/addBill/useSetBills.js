@@ -1,5 +1,5 @@
 import { ref, inject } from 'vue'
-import { Baseurl } from '@/../global'
+import { Baseurl } from '@/utils/global'
 import getIdByToken from '@/logic/getIdByToken'
 
 export function useSetBill() {

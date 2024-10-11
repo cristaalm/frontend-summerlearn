@@ -1,5 +1,5 @@
 import { ref } from 'vue'
-import { Baseurl } from '@/../global'
+import { Baseurl } from '@/utils/global'
 
 /**
  * Hook para agregar un objetivo.

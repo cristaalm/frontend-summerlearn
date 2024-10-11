@@ -1,4 +1,4 @@
-import { Baseurl } from '@/../global'
+import { Baseurl } from '@/utils/global'
 import { inject } from 'vue'
 
 export function useStatusProgram() {

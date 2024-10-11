@@ -1,6 +1,6 @@
 import { useRouter } from 'vue-router'
 import { ref } from 'vue'
-import { Baseurl } from '@/../global'
+import { Baseurl } from '@/utils/global'
 import { unformatPhone } from '@/logic/formatNumber'
 
 export function useAuth({

@@ -1,4 +1,4 @@
-import { Baseurl } from '@/../global'
+import { Baseurl } from '@/utils/global'
 
 export const getObjectivesById = async (id_activity) => {
   // Recibe id_activity como argumento
