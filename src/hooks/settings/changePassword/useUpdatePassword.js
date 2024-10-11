@@ -47,14 +47,9 @@ export function useUpdatePassword({
         newPasswordConfirm.value = ''
         resetFields()
         if (data.spanishSuccess) {
-          showToast({ message: data.spanishSuccess, tipo: 'success' })
+          showToast({ message: data.spanishSuccess, tipo: 'success', persistente: true })
           return
         }
-        showToast({
-          message: 'Contraseña actualizada con éxito',
-          tipo: 'success',
-          persistente: true
-        })
       } else {
         if (data.spanishError) {
           showToast({ message: data.spanishError, tipo: 'error' })
