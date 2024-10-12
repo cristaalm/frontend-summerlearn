@@ -7,7 +7,7 @@ const setColorSchemeClass = () => {
 };
 
 const getColorSchemeUser = () => {
-    return localStorage.getItem("userTheme") || colorSchemes[1];
+    return localStorage.getItem("userTheme") || colorSchemes[5];
 }
 
 const switchColorScheme = (colorScheme) => {
@@ -25,5 +25,5 @@ export const loginColorSheme = () => {
 
 export const logoutColorScheme = () => {
     setLocalStorage('userTheme', getColorScheme())
-    switchColorScheme('theme-1');
+    switchColorScheme('theme-19');
 }

@@ -48,15 +48,15 @@ body::-webkit-scrollbar-thumb {
 /* Estilos de colores según el tema */
 
 html.default {
-  --scrollbar-bg: #0c4a6e;
-  --scrollbar-thumb: #03045e;
-  --nprogress-bar-bg: #03045e;
+  --scrollbar-bg: #a3d8f7;
+  --scrollbar-thumb: #0c4a6e;
+  --nprogress-bar-bg: #0c4a6e;
   --nprogress-spinner: #03045e;
   --nprogress-shadow: #03045e;
 }
 
 html.theme-1 {
-  --scrollbar-bg: #76D390;
+  --scrollbar-bg: #a3e7b7;
   --scrollbar-thumb: #4c855c;
   --nprogress-bar-bg: #64b079;
   --nprogress-spinner: #064e3b;
@@ -64,7 +64,7 @@ html.theme-1 {
 }
 
 html.theme-2 {
-  --scrollbar-bg: #0c4a6e;
+  --scrollbar-bg: #aed9e6;
   --scrollbar-thumb: #0077b6;
   --nprogress-bar-bg: #03045e;
   --nprogress-spinner: #03045e;
@@ -72,7 +72,7 @@ html.theme-2 {
 }
 
 html.theme-3 {
-  --scrollbar-bg: #0077b6;
+  --scrollbar-bg: #addff1;
   --scrollbar-thumb: #00b4d8;
   --nprogress-bar-bg: #03045e;
   --nprogress-spinner: #03045e;
@@ -80,7 +80,7 @@ html.theme-3 {
 }
 
 html.theme-4 {
-  --scrollbar-bg: #00b4d8;
+  --scrollbar-bg: #a8e3f4;
   --scrollbar-thumb: #0077b6;
   --nprogress-bar-bg: #03045e;
   --nprogress-spinner: #03045e;
@@ -88,7 +88,7 @@ html.theme-4 {
 }
 
 html.theme-5 {
-  --scrollbar-bg: #0077b6;
+  --scrollbar-bg: #a1dbf2;
   --scrollbar-thumb: #00b4d8;
   --nprogress-bar-bg: #03045e;
   --nprogress-spinner: #03045e;
@@ -96,7 +96,7 @@ html.theme-5 {
 }
 
 html.theme-6 {
-  --scrollbar-bg: #03045e;
+  --scrollbar-bg: #83c8f0;
   --scrollbar-thumb: #0077b6;
   --nprogress-bar-bg: #00b4d8;
   --nprogress-spinner: #00b4d8;
@@ -104,7 +104,7 @@ html.theme-6 {
 }
 
 html.theme-7 {
-  --scrollbar-bg: #247ba0;
+  --scrollbar-bg: #9ac4db;
   --scrollbar-thumb: #0a2463;
   --nprogress-bar-bg: #247ba0;
   --nprogress-spinner: #247ba0;
@@ -112,7 +112,7 @@ html.theme-7 {
 }
 
 html.theme-8 {
-  --scrollbar-bg: #0a2463;
+  --scrollbar-bg: #9cc0d7;
   --scrollbar-thumb: #247ba0;
   --nprogress-bar-bg: #0a2463;
   --nprogress-spinner: #0a2463;
@@ -120,7 +120,7 @@ html.theme-8 {
 }
 
 html.theme-9 {
-  --scrollbar-bg: #357266;
+  --scrollbar-bg: #9fd5bf;
   --scrollbar-thumb: #0E3B43;
   --nprogress-bar-bg: #357266;
   --nprogress-spinner: #357266;
@@ -128,7 +128,7 @@ html.theme-9 {
 }
 
 html.theme-10 {
-  --scrollbar-bg: #6C6C60;
+  --scrollbar-bg: #b7b7a3;
   --scrollbar-thumb: #4D4D42;
   --nprogress-bar-bg: #6C6C60;
   --nprogress-spinner: #6C6C60;
@@ -136,7 +136,7 @@ html.theme-10 {
 }
 
 html.theme-11 {
-  --scrollbar-bg: #3949ab;
+  --scrollbar-bg: #b0b6e6;
   --scrollbar-thumb: #7986cb;
   --nprogress-bar-bg: #3949ab;
   --nprogress-spinner: #3949ab;
@@ -144,7 +144,7 @@ html.theme-11 {
 }
 
 html.theme-12 {
-  --scrollbar-bg: #2f3e46;
+  --scrollbar-bg: #8ca19f;
   --scrollbar-thumb: #52796f;
   --nprogress-bar-bg: #2f3e46;
   --nprogress-spinner: #2f3e46;
@@ -152,7 +152,7 @@ html.theme-12 {
 }
 
 html.theme-13 {
-  --scrollbar-bg: #5e503f;
+  --scrollbar-bg: #a79582;
   --scrollbar-thumb: #22333b;
   --nprogress-bar-bg: #5e503f;
   --nprogress-spinner: #5e503f;
@@ -160,7 +160,7 @@ html.theme-13 {
 }
 
 html.theme-14 {
-  --scrollbar-bg: #5e548e;
+  --scrollbar-bg: #a695c4;
   --scrollbar-thumb: #231942;
   --nprogress-bar-bg: #5e548e;
   --nprogress-spinner: #5e548e;
@@ -168,7 +168,7 @@ html.theme-14 {
 }
 
 html.theme-15 {
-  --scrollbar-bg: #02292f;
+  --scrollbar-bg: #517e81;
   --scrollbar-thumb: #767522;
   --nprogress-bar-bg: #02292f;
   --nprogress-spinner: #02292f;
@@ -176,7 +176,7 @@ html.theme-15 {
 }
 
 html.theme-16 {
-  --scrollbar-bg: #4c956c;
+  --scrollbar-bg: #79c19a;
   --scrollbar-thumb: #006466;
   --nprogress-bar-bg: #4c956c;
   --nprogress-spinner: #4c956c;
@@ -184,7 +184,7 @@ html.theme-16 {
 }
 
 html.theme-17 {
-  --scrollbar-bg: #0a2463;
+  --scrollbar-bg: #7faee7;
   --scrollbar-thumb: #247ba0;
   --nprogress-bar-bg: #0a2463;
   --nprogress-spinner: #0a2463;
@@ -192,19 +192,52 @@ html.theme-17 {
 }
 
 html.theme-18 {
-  --scrollbar-bg: #2f3e46;
+  --scrollbar-bg: #869f9f;
   --scrollbar-thumb: #52796f;
   --nprogress-bar-bg: #2f3e46;
   --nprogress-spinner: #2f3e46;
   --nprogress-shadow: #2f3e46;
 }
 
+
 html.dark {
-  --scrollbar-bg: #1e1e1e;
-  --scrollbar-thumb: #3e3e3e;
-  --nprogress-bar-bg: #1e1e1e;
+  --scrollbar-bg: #3e3e3e;
+  --scrollbar-thumb: #1e1e1e;
+  --nprogress-bar-bg: #3e3e3e;
   --nprogress-spinner: #1e1e1e;
   --nprogress-shadow: #1e1e1e;
+}
+
+html.theme-19 {
+  --scrollbar-bg: #5BCAE6;
+  --scrollbar-thumb: #1E6B88;
+  --nprogress-bar-bg: #5BCAE6;
+  --nprogress-spinner: #1E6B88;
+  --nprogress-shadow: #1E6B88;
+}
+
+html.theme-20 {
+  --scrollbar-bg: #67de96;
+  --scrollbar-thumb: #1aca60;
+  --nprogress-bar-bg: #67de96;
+  --nprogress-spinner: #1aca60;
+  --nprogress-shadow: #1aca60;
+}
+
+html.theme-21 {
+  --scrollbar-bg: #f0e035;
+  --scrollbar-thumb: #f88e15;
+  --nprogress-bar-bg: #f0e035;
+  --nprogress-spinner: #f88e15;
+  --nprogress-shadow: #f88e15;
+}
+
+html.theme-22 {
+  --scrollbar-bg: #ffa094;
+  --scrollbar-thumb: #db3e29;
+  --nprogress-bar-bg: #ffa094;
+  --nprogress-spinner: #db3e29;
+  --nprogress-shadow: #db3e29;
 }
 
 /* Agrega más temas según sea necesario */

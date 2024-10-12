@@ -9,6 +9,7 @@ import { useAuth } from '@/hooks/register/useAuth'
 import Button from '@/components/base/Button'
 import { useRouter, useRoute } from 'vue-router'
 import { onMounted } from 'vue'
+import ThemeSwitcher from "@/components/ThemeSwitcher";
 
 const { status, resetFields } = useStatus()
 const {
@@ -320,7 +321,7 @@ const handleSubmit = () => {
                 :disabled="!valid"
                 variant="primary"
                 rounded
-                :class="`bg-gradient-to-r transition-all border-none scale-105 duration-200 w-full py-3.5 xl:mr-3 ${valid && !loading ? 'from-green-dark to-green hover:scale-100 select-none cursor-pointer' : 'from-gray-600 to-gray-600  cursor-default'}`"
+                :class="`bg-gradient-to-r transition-all border-none scale-105 duration-200 w-full py-3.5 xl:mr-3 ${valid && !loading ? 'from-theme-2 to-theme-3 hover:scale-100 select-none cursor-pointer' : 'from-gray-600 to-gray-600  cursor-default'}`"
               >
                 <LoadingIcon v-if="loading" icon="three-dots" class="w-8 h-5" color="white" />
                 {{ !loading ? 'Registrarse' : '' }}
@@ -353,8 +354,8 @@ const handleSubmit = () => {
     <div
       :class="[
         'h-full col-span-7 2xl:col-span-8 lg:relative',
-        'before:content-[\'\'] before:absolute before:lg:-ml-10 before:left-0 before:inset-y-0 before:bg-gradient-to-b before:from-green-dark before:to-green-dark before:w-screen before:lg:w-[800%]',
-        'after:content-[\'\'] after:absolute after:inset-y-0 after:left-0 after:w-screen after:lg:w-[800%] after:bg-texture-white after:bg-fixed after:bg-center after:lg:bg-[25rem_-25rem] after:bg-no-repeat'
+        'before:content-[\'\'] before:absolute before:lg:-ml-10 before:left-0 before:inset-y-0 before:bg-gradient-to-b before:from-theme-1 before:to-theme-2 before:w-screen before:lg:w-[800%]',
+        'after:content-[\'\'] after:absolute after:inset-y-0 after:left-0 after:w-screen after:lg:w-[800%] after:bg-texture-white after:bg-fixed after:bg-center after:lg:bg-[25rem_-25rem] after:bg-no-repeat',
       ]"
     >
       <div
@@ -373,4 +374,5 @@ const handleSubmit = () => {
       </div>
     </div>
   </div>
+  <ThemeSwitcher />
 </template>

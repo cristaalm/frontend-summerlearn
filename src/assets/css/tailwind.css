@@ -4434,6 +4434,10 @@ select {
   --color-dark: 6 78 59;
 }
 
+.theme-1.dark {
+  --color-primary: 6 95 70;
+}
+
 .theme-2 {
   --color-theme-1: 76 29 149;
   --color-theme-2: 159 18 57;
@@ -4754,6 +4758,82 @@ select {
 }
 
 .theme-18.dark {
+  --color-primary: 7 89 133;
+}
+
+.theme-19 {
+  --color-theme-2: 30 107 136;
+  --color-theme-1: 91 202 230;
+  --color-theme-3: 30 107 136;
+  --color-primary: 30 107 136;
+  --color-secondary: 226 232 240;
+  --color-success: 13 148 136;
+  --color-info: 8 145 178;
+  --color-warning: 202 138 4;
+  --color-pending: 194 65 12;
+  --color-danger: 185 28 28;
+  --color-light: 241 245 249;
+  --color-dark: 30 41 59;
+}
+
+.theme-19.dark {
+  --color-primary: 7 89 133;
+}
+
+.theme-20 {
+  --color-theme-2: 26 202 96;
+  --color-theme-1: 103 222 150;
+  --color-theme-3: 26 202 96;
+  --color-primary: 26 202 96;
+  --color-secondary: 226 232 240;
+  --color-success: 13 148 136;
+  --color-info: 8 145 178;
+  --color-warning: 202 138 4;
+  --color-pending: 194 65 12;
+  --color-danger: 185 28 28;
+  --color-light: 241 245 249;
+  --color-dark: 30 41 59;
+}
+
+.theme-20.dark {
+  --color-primary: 7 89 133;
+}
+
+.theme-21 {
+  --color-theme-2: 248 142 21;
+  --color-theme-1: 240 224 53;
+  --color-theme-3: 248 142 21;
+  --color-primary: 248 142 21;
+  --color-secondary: 226 232 240;
+  --color-success: 13 148 136;
+  --color-info: 8 145 178;
+  --color-warning: 202 138 4;
+  --color-pending: 194 65 12;
+  --color-danger: 185 28 28;
+  --color-light: 241 245 249;
+  --color-dark: 30 41 59;
+}
+
+.theme-21.dark {
+  --color-primary: 7 89 133;
+}
+
+.theme-22 {
+  --color-theme-2: 219 62 41;
+  --color-theme-1: 255 160 148;
+  --color-theme-3: 219 62 41;
+  --color-primary: 219 62 41;
+  --color-secondary: 226 232 240;
+  --color-success: 13 148 136;
+  --color-info: 8 145 178;
+  --color-warning: 202 138 4;
+  --color-pending: 194 65 12;
+  --color-danger: 185 28 28;
+  --color-light: 241 245 249;
+  --color-dark: 30 41 59;
+}
+
+.theme-22.dark {
   --color-primary: 7 89 133;
 }
 
@@ -5444,10 +5524,6 @@ select {
 
 .h-screen {
   height: 100vh;
-}
-
-.h-28 {
-  height: 7rem;
 }
 
 .max-h-0 {
@@ -6663,6 +6739,12 @@ select {
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
 }
 
+.from-theme-2 {
+  --tw-gradient-from: rgb(var(--color-theme-2) / 1) var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(var(--color-theme-2) / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
 .via-theme-2\/50 {
   --tw-gradient-to: rgb(var(--color-theme-2) / 0)  var(--tw-gradient-to-position);
   --tw-gradient-stops: var(--tw-gradient-from), rgb(var(--color-theme-2) / 0.5) var(--tw-gradient-via-position), var(--tw-gradient-to);
@@ -6694,6 +6776,14 @@ select {
 
 .to-theme-2\/95 {
   --tw-gradient-to: rgb(var(--color-theme-2) / 0.95) var(--tw-gradient-to-position);
+}
+
+.to-theme-1 {
+  --tw-gradient-to: rgb(var(--color-theme-1) / 1) var(--tw-gradient-to-position);
+}
+
+.to-theme-2 {
+  --tw-gradient-to: rgb(var(--color-theme-2) / 1) var(--tw-gradient-to-position);
 }
 
 .fill-black {
@@ -7163,10 +7253,6 @@ select {
 
 .lowercase {
   text-transform: lowercase;
-}
-
-.capitalize {
-  text-transform: capitalize;
 }
 
 .italic {
@@ -7889,6 +7975,13 @@ select {
   content: var(--tw-content);
   --tw-gradient-from: rgb(255 255 255 / 0.1) var(--tw-gradient-from-position);
   --tw-gradient-to: rgb(255 255 255 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.before\:from-theme-1::before {
+  content: var(--tw-content);
+  --tw-gradient-from: rgb(var(--color-theme-1) / 1) var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(var(--color-theme-1) / 0) var(--tw-gradient-to-position);
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
 }
 

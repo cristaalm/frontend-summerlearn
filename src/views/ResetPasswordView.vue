@@ -11,6 +11,7 @@ import { useValidation } from '@/hooks/recovery/useValidation'
 import { usePasswordSecurity } from '@/hooks/recovery/usePasswordSecurity'
 import { computed } from 'vue'
 import { useChangePassword } from '@/hooks/recovery/useChangePassword'
+import ThemeSwitcher from "@/components/ThemeSwitcher";
 // Recupera la ruta actual
 const route = useRoute()
 const router = useRouter()
@@ -103,7 +104,7 @@ const alertVariant = computed(() => {
               <Button @click="() => {
                 changePassword(key, password)
               }" :disabled="!valid || loadingPassword" variant="primary" rounded
-                :class="`bg-gradient-to-r transition-all border-none scale-105 duration-200 w-full py-3.5 xl:mr-3 ${valid && !loadingPassword ? 'from-green-dark to-green hover:scale-100 select-none cursor-pointer' : 'from-gray-600 to-gray-600  cursor-default'}`">
+                :class="`bg-gradient-to-r transition-all border-none scale-105 duration-200 w-full py-3.5 xl:mr-3 ${valid && !loadingPassword ? 'from-theme-2 to-theme-3 hover:scale-100 select-none cursor-pointer' : 'from-gray-600 to-gray-600  cursor-default'}`">
                 <LoadingIcon v-if="loadingPassword" icon="three-dots" class="w-8 h-5" color="white" />
                 {{ loadingPassword ? '' : 'Restableser contraseña' }}
               </Button>
@@ -116,7 +117,7 @@ const alertVariant = computed(() => {
 
       <div class="relative z-10 flex flex-col justify-center w-full h-full py-2 lg:py-32" v-else>
         <div class="mt-10 text-center">
-          <Lucide icon="CheckCircle" class="w-16 h-16 text-green-500 mx-auto" />
+          <Lucide icon="CheckCircle" class="w-16 h-16 text-theme-1 mx-auto" />
           <div class="text-3xl font-bold mt-4">¡Listo!</div>
           <div class="mt-4 text-slate-600 flex flex-col gap-2">
             <p class="text-lg">¡Contraseña actualizada!</p>
@@ -141,8 +142,8 @@ const alertVariant = computed(() => {
     ]"></div>
     <div :class="[
       'h-full col-span-7 2xl:col-span-8 lg:relative',
-      'before:content-[\'\'] before:absolute before:lg:-ml-10 before:left-0 before:inset-y-0 before:bg-gradient-to-b before:from-green-dark before:to-green-dark before:w-screen before:lg:w-[800%]',
-      'after:content-[\'\'] after:absolute after:inset-y-0 after:left-0 after:w-screen after:lg:w-[800%] after:bg-texture-white after:bg-fixed after:bg-center after:lg:bg-[25rem_-25rem] after:bg-no-repeat'
+      'before:content-[\'\'] before:absolute before:lg:-ml-10 before:left-0 before:inset-y-0 before:bg-gradient-to-b before:from-theme-1 before:to-theme-2 before:w-screen before:lg:w-[800%]',
+      'after:content-[\'\'] after:absolute after:inset-y-0 after:left-0 after:w-screen after:lg:w-[800%] after:bg-texture-white after:bg-fixed after:bg-center after:lg:bg-[25rem_-25rem] after:bg-no-repeat',
     ]">
       <div class="sticky top-0 z-10 flex-col justify-center hidden h-screen ml-16 lg:flex xl:ml-28 2xl:ml-36">
         <div class="leading-[1.4] text-[2.6rem] xl:text-5xl font-medium xl:leading-[1.2] text-white">
@@ -157,4 +158,5 @@ const alertVariant = computed(() => {
       </div>
     </div>
   </div>
+  <ThemeSwitcher />
 </template>

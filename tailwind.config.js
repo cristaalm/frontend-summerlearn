@@ -180,6 +180,9 @@ module.exports = {
           '--color-danger': toRGB(colors.red['600']),
           '--color-light': toRGB(colors.emerald['100']), // Tonalidad más suave de esmeralda
           '--color-dark': toRGB(colors.emerald['900']), // Tonalidad muy oscura de esmeralda
+          '&.dark': {
+            '--color-primary': toRGB(colors.emerald['800'])
+          }
         },
         // Theme 1 colors
         '.theme-2': {
@@ -475,6 +478,74 @@ module.exports = {
           '--color-theme-2': toRGB(colors.slate['800']),
           '--color-theme-3': toRGB(colors.slate['800']),
           '--color-primary': toRGB(colors.slate['900']),
+          '--color-secondary': toRGB(colors.slate['200']),
+          '--color-success': toRGB(colors.teal['600']),
+          '--color-info': toRGB(colors.cyan['600']),
+          '--color-warning': toRGB(colors.yellow['600']),
+          '--color-pending': toRGB(colors.orange['700']),
+          '--color-danger': toRGB(colors.red['700']),
+          '--color-light': toRGB(colors.slate['100']),
+          '--color-dark': toRGB(colors.slate['800']),
+          '&.dark': {
+            '--color-primary': toRGB(colors.sky['800'])
+          }
+        },
+        '.theme-19': {
+          '--color-theme-2': toRGB('#1E6B88'),
+          '--color-theme-1': toRGB('#5BCAE6'),
+          '--color-theme-3': toRGB('#1E6B88'),
+          '--color-primary': toRGB('#1E6B88'),
+          '--color-secondary': toRGB(colors.slate['200']),
+          '--color-success': toRGB(colors.teal['600']),
+          '--color-info': toRGB(colors.cyan['600']),
+          '--color-warning': toRGB(colors.yellow['600']),
+          '--color-pending': toRGB(colors.orange['700']),
+          '--color-danger': toRGB(colors.red['700']),
+          '--color-light': toRGB(colors.slate['100']),
+          '--color-dark': toRGB(colors.slate['800']),
+          '&.dark': {
+            '--color-primary': toRGB(colors.sky['800'])
+          }
+        },
+        '.theme-20': {
+          '--color-theme-2': toRGB('#1aca60'),
+          '--color-theme-1': toRGB('#67de96'),
+          '--color-theme-3': toRGB('#1aca60'),
+          '--color-primary': toRGB('#1aca60'),
+          '--color-secondary': toRGB(colors.slate['200']),
+          '--color-success': toRGB(colors.teal['600']),
+          '--color-info': toRGB(colors.cyan['600']),
+          '--color-warning': toRGB(colors.yellow['600']),
+          '--color-pending': toRGB(colors.orange['700']),
+          '--color-danger': toRGB(colors.red['700']),
+          '--color-light': toRGB(colors.slate['100']),
+          '--color-dark': toRGB(colors.slate['800']),
+          '&.dark': {
+            '--color-primary': toRGB(colors.sky['800'])
+          }
+        },
+        '.theme-21': {
+          '--color-theme-2': toRGB('#f88e15'),
+          '--color-theme-1': toRGB('#f0e035'),
+          '--color-theme-3': toRGB('#f88e15'),
+          '--color-primary': toRGB('#f88e15'),
+          '--color-secondary': toRGB(colors.slate['200']),
+          '--color-success': toRGB(colors.teal['600']),
+          '--color-info': toRGB(colors.cyan['600']),
+          '--color-warning': toRGB(colors.yellow['600']),
+          '--color-pending': toRGB(colors.orange['700']),
+          '--color-danger': toRGB(colors.red['700']),
+          '--color-light': toRGB(colors.slate['100']),
+          '--color-dark': toRGB(colors.slate['800']),
+          '&.dark': {
+            '--color-primary': toRGB(colors.sky['800'])
+          }
+        },
+        '.theme-22': {
+          '--color-theme-2': toRGB('#db3e29'),
+          '--color-theme-1': toRGB('#ffa094'),
+          '--color-theme-3': toRGB('#db3e29'),
+          '--color-primary': toRGB('#db3e29'),
           '--color-secondary': toRGB(colors.slate['200']),
           '--color-success': toRGB(colors.teal['600']),
           '--color-info': toRGB(colors.cyan['600']),

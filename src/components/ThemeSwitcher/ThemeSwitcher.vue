@@ -8,6 +8,18 @@ import {
 } from "@/stores/color-scheme";
 import { ref, computed } from "vue";
 
+interface MainProps {
+  slide: boolean;
+}
+
+const props: MainProps = defineProps({
+  slide: {
+    type: Boolean,
+    default: false,
+  },
+}); 
+
+
 const themeSwitcherSlideover = ref(false);
 const setThemeSwitcherSlideover = (value: boolean) => {
   themeSwitcherSlideover.value = value;
@@ -24,14 +36,26 @@ const switchColorScheme = (colorScheme: ColorSchemes) => {
 };
 setColorSchemeClass();
 
-// Computed para filtrar los color schemes excluyendo 'default'
+
+// Computed para filtrar los color schemes excluyendo 'default' y los temas a partir de 'theme-18'
 const filteredColorSchemes = computed(() => {
-  return colorSchemes.filter((scheme) => scheme !== 'default');
+  return colorSchemes.filter((scheme) => {
+    const themeNumber = parseInt(scheme.replace('theme-', ''));
+    return scheme !== 'default' && (isNaN(themeNumber) || themeNumber < 19);
+  });
+});
+
+// Computed para filtrar los color schemes a partir de 'theme-19'
+const filteredColorSchemesFrom19 = computed(() => {
+  return colorSchemes.filter((scheme) => {
+    const themeNumber = parseInt(scheme.replace('theme-', ''));
+    return !isNaN(themeNumber) && themeNumber >= 19;
+  });
 });
 </script>
 
 <template>
-  <div>
+  <div v-if="props.slide" >
     <Slideover
       :open="themeSwitcherSlideover"
       @close="
@@ -78,10 +102,84 @@ const filteredColorSchemes = computed(() => {
                 </div>
               </div>
               <div class="border-b border-dashed mt-5"></div>
+              <!-- <p class="mt-5">Temas principales</p>
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-x-4 gap-y-3.5 mt-5">
+
+                <div
+                  v-for="colorScheme in filteredColorSchemesFrom19"
+                  :key="colorScheme"
+                >
+                  <div
+                    @click="(event: MouseEvent) => {
+                      event.preventDefault();
+                      switchColorScheme(colorScheme);
+                    }"
+                    :class="[
+                      'h-12 cursor-pointer bg-slate-50 box rounded-full p-1 border-slate-300/80',
+                      {
+                        'border-2 border-theme-1/60':
+                          colorSchemeStore.value === colorScheme,
+                      },
+                    ]"
+                  >
+                    <div class="h-full overflow-hidden rounded-full">
+                      <div class="flex items-center h-full gap-1 -mx-2">
+                        <div
+                          :class="[
+                            'w-1/2 h-[140%] bg-theme-1 rotate-12',
+                            colorScheme,
+                          ]"
+                        ></div>
+                        <div
+                          :class="[
+                            'w-1/2 h-[140%] bg-theme-2 rotate-12',
+                            colorScheme,
+                          ]"
+                        ></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div><div class="border-b border-dashed mt-5"></div> -->
               <p class="mt-5">Temas disponibles</p>
               <div class="grid grid-cols-2 sm:grid-cols-4 gap-x-4 gap-y-3.5 mt-5">
                 <!-- Muestra la lista de temas, excluyendo el tema 'default' -->
 
+                <div
+                  v-for="colorScheme in filteredColorSchemesFrom19"
+                  :key="colorScheme"
+                >
+                  <div
+                    @click="(event: MouseEvent) => {
+                      event.preventDefault();
+                      switchColorScheme(colorScheme);
+                    }"
+                    :class="[
+                      'h-12 cursor-pointer bg-slate-50 box rounded-full p-1 border-slate-300/80',
+                      {
+                        'border-2 border-theme-1/60':
+                          colorSchemeStore.value === colorScheme,
+                      },
+                    ]"
+                  >
+                    <div class="h-full overflow-hidden rounded-full">
+                      <div class="flex items-center h-full gap-1 -mx-2">
+                        <div
+                          :class="[
+                            'w-1/2 h-[140%] bg-theme-1 rotate-12',
+                            colorScheme,
+                          ]"
+                        ></div>
+                        <div
+                          :class="[
+                            'w-1/2 h-[140%] bg-theme-2 rotate-12',
+                            colorScheme,
+                          ]"
+                        ></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
                 <div
                   v-for="colorScheme in filteredColorSchemes"
                   :key="colorScheme"
