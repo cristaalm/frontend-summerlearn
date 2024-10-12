@@ -123,18 +123,18 @@ module.exports = {
       addBase({
         // Default colors
         ':root': {
-          "--color-theme-1": toRGB("#03045e"),
-          "--color-theme-2": toRGB("#0c4a6e"),
-          "--color-theme-3": toRGB("#0077b6"),
-          "--color-primary": toRGB("#03045e"),
-          "--color-secondary": toRGB(colors.slate["200"]),
-          "--color-success": toRGB(colors.teal["600"]),
-          "--color-info": toRGB(colors.cyan["600"]),
-          "--color-warning": toRGB(colors.yellow["600"]),
-          "--color-pending": toRGB(colors.orange["700"]),
-          "--color-danger": toRGB(colors.red["700"]),
-          "--color-light": toRGB(colors.slate["100"]),
-          "--color-dark": toRGB(colors.slate["800"]),
+          '--color-theme-1': toRGB('#03045e'),
+          '--color-theme-2': toRGB('#0c4a6e'),
+          '--color-theme-3': toRGB('#0077b6'),
+          '--color-primary': toRGB('#03045e'),
+          '--color-secondary': toRGB(colors.slate['200']),
+          '--color-success': toRGB(colors.teal['600']),
+          '--color-info': toRGB(colors.cyan['600']),
+          '--color-warning': toRGB(colors.yellow['600']),
+          '--color-pending': toRGB(colors.orange['700']),
+          '--color-danger': toRGB(colors.red['700']),
+          '--color-light': toRGB(colors.slate['100']),
+          '--color-dark': toRGB(colors.slate['800']),
 
           // // Tonalidades agregadas
           '--color-blue-light': toRGB('#7BD3EA'), // Azul claro
@@ -199,7 +199,7 @@ module.exports = {
           '--color-light': toRGB(colors.slate['100']),
           '--color-dark': toRGB(colors.slate['800']),
           '&.dark': {
-            '--color-primary': toRGB(colors.sky['800'])
+            '--color-primary': toRGB(colors.sky['700'])
           }
         },
         // Theme 2 colors
@@ -217,7 +217,7 @@ module.exports = {
           '--color-light': toRGB(colors.slate['100']),
           '--color-dark': toRGB(colors.slate['800']),
           '&.dark': {
-            '--color-primary': toRGB(colors.sky['800'])
+            '--color-primary': toRGB(colors.sky['700'])
           }
         },
         // Theme 3 colors
@@ -235,7 +235,7 @@ module.exports = {
           '--color-light': toRGB(colors.slate['100']),
           '--color-dark': toRGB(colors.slate['800']),
           '&.dark': {
-            '--color-primary': toRGB(colors.sky['800'])
+            '--color-primary': toRGB(colors.sky['700'])
           }
         },
         // Theme 4 colors
@@ -253,15 +253,15 @@ module.exports = {
           '--color-light': toRGB(colors.slate['100']),
           '--color-dark': toRGB(colors.slate['800']),
           '&.dark': {
-            '--color-primary': toRGB(colors.sky['800'])
+            '--color-primary': toRGB(colors.sky['700'])
           }
         },
         // Theme 5 colors
         '.theme-6': {
-          '--color-theme-1': toRGB(colors.sky['800']),
+          '--color-theme-1': toRGB(colors.sky['700']),
           '--color-theme-2': toRGB(colors.emerald['800']),
           '--color-theme-3': toRGB(colors.emerald['800']),
-          '--color-primary': toRGB(colors.sky['800']),
+          '--color-primary': toRGB(colors.sky['700']),
           '--color-secondary': toRGB(colors.slate['200']),
           '--color-success': toRGB(colors.teal['600']),
           '--color-info': toRGB(colors.cyan['600']),
@@ -271,7 +271,7 @@ module.exports = {
           '--color-light': toRGB(colors.slate['100']),
           '--color-dark': toRGB(colors.slate['800']),
           '&.dark': {
-            '--color-primary': toRGB(colors.sky['800'])
+            '--color-primary': toRGB(colors.sky['700'])
           }
         },
         // Theme 6 colors
@@ -289,7 +289,7 @@ module.exports = {
           '--color-light': toRGB(colors.slate['100']),
           '--color-dark': toRGB(colors.slate['800']),
           '&.dark': {
-            '--color-primary': toRGB(colors.sky['800'])
+            '--color-primary': toRGB(colors.sky['700'])
           }
         },
         // Theme 7 colors
@@ -307,7 +307,7 @@ module.exports = {
           '--color-light': toRGB(colors.slate['100']),
           '--color-dark': toRGB(colors.slate['800']),
           '&.dark': {
-            '--color-primary': toRGB(colors.sky['800'])
+            '--color-primary': toRGB(colors.sky['700'])
           }
         },
         // Theme 8 colors
@@ -325,7 +325,7 @@ module.exports = {
           '--color-light': toRGB(colors.slate['100']),
           '--color-dark': toRGB(colors.slate['800']),
           '&.dark': {
-            '--color-primary': toRGB(colors.sky['800'])
+            '--color-primary': toRGB(colors.sky['700'])
           }
         },
         // Theme 9 colors
@@ -343,7 +343,7 @@ module.exports = {
           '--color-light': toRGB(colors.slate['100']),
           '--color-dark': toRGB(colors.slate['800']),
           '&.dark': {
-            '--color-primary': toRGB(colors.sky['800'])
+            '--color-primary': toRGB(colors.sky['700'])
           }
         },
         // Theme 10 colors
@@ -361,7 +361,7 @@ module.exports = {
           '--color-light': toRGB(colors.slate['100']),
           '--color-dark': toRGB(colors.slate['800']),
           '&.dark': {
-            '--color-primary': toRGB(colors.sky['800'])
+            '--color-primary': toRGB(colors.sky['700'])
           }
         },
         // Theme 11 colors
@@ -379,7 +379,7 @@ module.exports = {
           '--color-light': toRGB(colors.slate['100']),
           '--color-dark': toRGB(colors.slate['800']),
           '&.dark': {
-            '--color-primary': toRGB(colors.sky['800'])
+            '--color-primary': toRGB(colors.sky['700'])
           }
         },
         // Theme 12 colors
@@ -397,7 +397,7 @@ module.exports = {
           '--color-light': toRGB(colors.slate['100']),
           '--color-dark': toRGB(colors.slate['800']),
           '&.dark': {
-            '--color-primary': toRGB(colors.sky['800'])
+            '--color-primary': toRGB(colors.sky['700'])
           }
         },
         // Theme 13 colors
@@ -415,7 +415,7 @@ module.exports = {
           '--color-light': toRGB(colors.slate['100']),
           '--color-dark': toRGB(colors.slate['800']),
           '&.dark': {
-            '--color-primary': toRGB(colors.sky['800'])
+            '--color-primary': toRGB(colors.sky['700'])
           }
         },
         // Theme 14 colors
@@ -433,7 +433,7 @@ module.exports = {
           '--color-light': toRGB(colors.slate['100']),
           '--color-dark': toRGB(colors.slate['800']),
           '&.dark': {
-            '--color-primary': toRGB(colors.sky['800'])
+            '--color-primary': toRGB(colors.sky['700'])
           }
         },
         // Theme 15 colors
@@ -451,7 +451,7 @@ module.exports = {
           '--color-light': toRGB(colors.slate['100']),
           '--color-dark': toRGB(colors.slate['800']),
           '&.dark': {
-            '--color-primary': toRGB(colors.sky['800'])
+            '--color-primary': toRGB(colors.sky['700'])
           }
         },
         // Theme 16 colors
@@ -469,7 +469,7 @@ module.exports = {
           '--color-light': toRGB(colors.slate['100']),
           '--color-dark': toRGB(colors.slate['800']),
           '&.dark': {
-            '--color-primary': toRGB(colors.sky['800'])
+            '--color-primary': toRGB(colors.sky['700'])
           }
         },
         // Theme 17 colors
@@ -487,7 +487,7 @@ module.exports = {
           '--color-light': toRGB(colors.slate['100']),
           '--color-dark': toRGB(colors.slate['800']),
           '&.dark': {
-            '--color-primary': toRGB(colors.sky['800'])
+            '--color-primary': toRGB(colors.sky['700'])
           }
         },
         '.theme-19': {
@@ -504,7 +504,7 @@ module.exports = {
           '--color-light': toRGB(colors.slate['100']),
           '--color-dark': toRGB(colors.slate['800']),
           '&.dark': {
-            '--color-primary': toRGB(colors.sky['800'])
+            '--color-primary': toRGB(colors.sky['700'])
           }
         },
         '.theme-20': {
@@ -521,7 +521,7 @@ module.exports = {
           '--color-light': toRGB(colors.slate['100']),
           '--color-dark': toRGB(colors.slate['800']),
           '&.dark': {
-            '--color-primary': toRGB(colors.sky['800'])
+            '--color-primary': toRGB(colors.sky['700'])
           }
         },
         '.theme-21': {
@@ -538,7 +538,7 @@ module.exports = {
           '--color-light': toRGB(colors.slate['100']),
           '--color-dark': toRGB(colors.slate['800']),
           '&.dark': {
-            '--color-primary': toRGB(colors.sky['800'])
+            '--color-primary': toRGB(colors.sky['700'])
           }
         },
         '.theme-22': {
@@ -555,7 +555,7 @@ module.exports = {
           '--color-light': toRGB(colors.slate['100']),
           '--color-dark': toRGB(colors.slate['800']),
           '&.dark': {
-            '--color-primary': toRGB(colors.sky['800'])
+            '--color-primary': toRGB(colors.sky['700'])
           }
         }
       })
