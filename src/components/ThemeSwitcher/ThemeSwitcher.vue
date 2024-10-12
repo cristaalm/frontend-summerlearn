@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { Slideover } from "@/components/base/Headless";
 import Lucide from "@/components/base/Lucide";
+// @ts-ignore
+import { logoutColorScheme } from '@/utils/switchColorScheme'
 import {
   useColorSchemeStore,
   colorSchemes,
@@ -31,6 +33,7 @@ const setColorSchemeClass = () => {
 };
 const colorSchemeStore = useColorSchemeStore();
 const switchColorScheme = (colorScheme: ColorSchemes) => {
+  logoutColorScheme(colorScheme);
   useColorSchemeStore().setColorScheme(colorScheme);
   setColorSchemeClass();
 };

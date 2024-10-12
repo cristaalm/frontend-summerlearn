@@ -18,9 +18,11 @@ const props = withDefaults(
       | 'tail-spin'
       | 'three-dots'
     color?: string
+    customClass?: string // Nueva propiedad para clases personalizadas
   }>(),
   {
-    color: '#2d3748'
+    color: '#2d3748',
+    customClass: '' // Valor por defecto para las clases
   }
 )
 
@@ -28,7 +30,7 @@ const darkMode = computed(() => useDarkModeStore().darkMode)
 const iconColor = computed(() => {
   return !darkMode.value ? props.color : '#ffffff'
 })
-const { icon } = props
+const { icon, customClass: customClass } = props
 </script>
 
 <template>
@@ -39,6 +41,7 @@ const { icon } = props
       viewBox="0 0 55 80"
       xmlns="http://www.w3.org/2000/svg"
       :fill="iconColor"
+      :class="customClass"
       class="w-full h-full"
     >
       <g transform="matrix(1 0 0 -1 0 80)">
@@ -93,7 +96,8 @@ const { icon } = props
     >
       <g fill="none" fill-rule="evenodd">
         <g transform="translate(1 1)">
-          <circle cx="5" cy="50" r="5" :fill="iconColor">
+          <circle cx="5" cy="50" r="5" :fill="iconColor"
+          :class="customClass">
             <animate
               attributeName="cy"
               begin="0s"
@@ -111,7 +115,8 @@ const { icon } = props
               repeatCount="indefinite"
             />
           </circle>
-          <circle cx="27" cy="5" r="5" :fill="iconColor">
+          <circle cx="27" cy="5" r="5" :fill="iconColor"
+          :class="customClass">
             <animate
               attributeName="cy"
               begin="0s"
@@ -133,7 +138,8 @@ const { icon } = props
               repeatCount="indefinite"
             />
           </circle>
-          <circle cx="49" cy="50" r="5" :fill="iconColor">
+          <circle cx="49" cy="50" r="5" :fill="iconColor"
+          :class="customClass">
             <animate
               attributeName="cy"
               begin="0s"
@@ -162,6 +168,7 @@ const { icon } = props
       viewBox="0 0 135 140"
       xmlns="http://www.w3.org/2000/svg"
       :fill="iconColor"
+      :class="customClass"
       class="w-full h-full"
     >
       <rect y="10" width="15" height="120" rx="6">
@@ -261,6 +268,7 @@ const { icon } = props
       viewBox="0 0 135 135"
       xmlns="http://www.w3.org/2000/svg"
       :fill="iconColor"
+      :class="customClass"
       class="w-full h-full"
     >
       <path
@@ -294,6 +302,7 @@ const { icon } = props
       viewBox="0 0 105 105"
       xmlns="http://www.w3.org/2000/svg"
       :fill="iconColor"
+      :class="customClass"
       class="w-full h-full"
     >
       <circle cx="12.5" cy="12.5" r="12.5">
@@ -393,6 +402,7 @@ const { icon } = props
       viewBox="0 0 140 64"
       xmlns="http://www.w3.org/2000/svg"
       :fill="iconColor"
+      :class="customClass"
       class="w-full h-full"
     >
       <path
@@ -586,7 +596,8 @@ const { icon } = props
     >
       <g fill="none" fill-rule="evenodd">
         <g transform="translate(2 1)" :stroke="iconColor" stroke-width="1.5">
-          <circle cx="42.601" cy="11.462" r="5" fill-opacity="1" :fill="iconColor">
+          <circle cx="42.601" cy="11.462" r="5" fill-opacity="1" :fill="iconColor"
+          :class="customClass">
             <animate
               attributeName="fill-opacity"
               begin="0s"
@@ -596,7 +607,8 @@ const { icon } = props
               repeatCount="indefinite"
             />
           </circle>
-          <circle cx="49.063" cy="27.063" r="5" fill-opacity="0" :fill="iconColor">
+          <circle cx="49.063" cy="27.063" r="5" fill-opacity="0" :fill="iconColor"
+          :class="customClass">
             <animate
               attributeName="fill-opacity"
               begin="0s"
@@ -606,7 +618,8 @@ const { icon } = props
               repeatCount="indefinite"
             />
           </circle>
-          <circle cx="42.601" cy="42.663" r="5" fill-opacity="0" :fill="iconColor">
+          <circle cx="42.601" cy="42.663" r="5" fill-opacity="0" :fill="iconColor"
+          :class="customClass">
             <animate
               attributeName="fill-opacity"
               begin="0s"
@@ -616,7 +629,8 @@ const { icon } = props
               repeatCount="indefinite"
             />
           </circle>
-          <circle cx="27" cy="49.125" r="5" fill-opacity="0" :fill="iconColor">
+          <circle cx="27" cy="49.125" r="5" fill-opacity="0" :fill="iconColor"
+          :class="customClass">
             <animate
               attributeName="fill-opacity"
               begin="0s"
@@ -626,7 +640,8 @@ const { icon } = props
               repeatCount="indefinite"
             />
           </circle>
-          <circle cx="11.399" cy="42.663" r="5" fill-opacity="0" :fill="iconColor">
+          <circle cx="11.399" cy="42.663" r="5" fill-opacity="0" :fill="iconColor"
+          :class="customClass">
             <animate
               attributeName="fill-opacity"
               begin="0s"
@@ -636,7 +651,8 @@ const { icon } = props
               repeatCount="indefinite"
             />
           </circle>
-          <circle cx="4.938" cy="27.063" r="5" fill-opacity="0" :fill="iconColor">
+          <circle cx="4.938" cy="27.063" r="5" fill-opacity="0" :fill="iconColor"
+          :class="customClass">
             <animate
               attributeName="fill-opacity"
               begin="0s"
@@ -646,7 +662,8 @@ const { icon } = props
               repeatCount="indefinite"
             />
           </circle>
-          <circle cx="11.399" cy="11.462" r="5" fill-opacity="0" :fill="iconColor">
+          <circle cx="11.399" cy="11.462" r="5" fill-opacity="0" :fill="iconColor"
+          :class="customClass">
             <animate
               attributeName="fill-opacity"
               begin="0s"
@@ -656,7 +673,8 @@ const { icon } = props
               repeatCount="indefinite"
             />
           </circle>
-          <circle cx="27" cy="5" r="5" fill-opacity="0" :fill="iconColor">
+          <circle cx="27" cy="5" r="5" fill-opacity="0" :fill="iconColor"
+          :class="customClass">
             <animate
               attributeName="fill-opacity"
               begin="0s"
@@ -695,7 +713,8 @@ const { icon } = props
               repeatCount="indefinite"
             />
           </path>
-          <circle :fill="iconColor" cx="36" cy="18" r="1">
+          <circle :fill="iconColor"
+          :class="customClass" cx="36" cy="18" r="1">
             <animateTransform
               attributeName="transform"
               type="rotate"
@@ -714,6 +733,7 @@ const { icon } = props
       viewBox="0 0 120 30"
       xmlns="http://www.w3.org/2000/svg"
       :fill="iconColor"
+      :class="customClass"
       class="w-full h-full"
     >
       <circle cx="15" cy="15" r="15">

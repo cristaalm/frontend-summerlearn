@@ -23,7 +23,12 @@ export const loginColorSheme = () => {
     switchColorScheme(getColorSchemeUser())
 }
 
-export const logoutColorScheme = () => {
+export const logoutColorScheme = (theme = '') => {
+    if (theme) {
+        setLocalStorage('userTheme', theme)
+        switchColorScheme(theme)
+        return
+    }
     setLocalStorage('userTheme', getColorScheme())
     switchColorScheme('theme-19');
 }

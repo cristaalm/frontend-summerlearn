@@ -79,8 +79,8 @@ watch(birthdate, (value) => {
             </div>
         </div>
 
-        <div v-if="loading" class="flex items-center justify-center h-40">
-            <LoadingIcon icon="three-dots" class="h-10" color="#78c18d" />
+        <div v-if="loading" class="flex items-center justify-center h-40 ">
+            <LoadingIcon icon="three-dots" class="h-10" customClass="fill-theme-1" />
         </div>
 
 

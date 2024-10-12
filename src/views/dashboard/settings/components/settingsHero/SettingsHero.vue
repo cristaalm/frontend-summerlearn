@@ -34,7 +34,7 @@ watch(() => loadingUserPhoto, (newLoading) => {
                         class="object-cover w-full h-full rounded-full " />
 
                     <div v-if="loadingImage || loadingUserPhoto && !errorUserPhoto"
-                        class="absolute inset-0 flex items-center justify-center bg-green/70 rounded-full">
+                        class="absolute inset-0 flex items-center justify-center bg-theme-2/70 rounded-full">
                         <LoadingIcon icon="tail-spin" class="absolute h-20 z-50" color="white" />
                     </div>
 

@@ -20,7 +20,7 @@ import {
 import { watch, reactive, ref, computed, onMounted, provide } from 'vue'
 import SimpleBar from 'simplebar'
 //@ts-ignore
-import { logoutColorScheme } from '@/utils/switchColorSheme'
+import { logoutColorScheme } from '@/utils/switchColorScheme'
 
 // ? ############################ USER INFO ############################ 
 
