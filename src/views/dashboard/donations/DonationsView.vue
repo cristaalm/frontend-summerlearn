@@ -96,7 +96,7 @@ onMounted(() => {
             <div class="pb-5 mb-5 border-b border-dashed border-slate-300/70">
               <div class="text-base text-slate-500  dark:text-slate-200" v-if="!loading">Donación semanal</div>
               <div class="flex items-center mt-1">
-                <div class="flex items-center text-xl font-medium">
+                <div class="flex items-center text-xl font-medium dark:text-slate-400">
                   <span class="mr-px">$</span>{{ totalDonationsWeek }}
                   <span class="ml-1.5 text-sm">MXN</span>
                 </div>
@@ -104,7 +104,7 @@ onMounted(() => {
             </div>
             <ReportBarChart3 class="relative z-10 -ml-1" :height="80" />
 
-            <span class="flex items-center mt-6 font-medium text-primary">Donaciones diarias</span>
+            <span class="flex items-center mt-6 font-medium text-primary dark:text-slate-200">Donaciones diarias</span>
           </div>
 
           <!--? Card -->
