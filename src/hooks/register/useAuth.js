@@ -3,7 +3,6 @@ import { ref } from 'vue'
 import { Baseurl } from '@/utils/global'
 import { unformatPhone } from '@/logic/formatNumber'
 
-
 export function useAuth({
   password,
   firstName,
@@ -18,6 +17,7 @@ export function useAuth({
   const router = useRouter()
   const error = ref('')
   const loading = ref(false)
+  const success = ref(false)
 
   const registerUser = async () => {
     error.value = ''
@@ -54,7 +54,10 @@ export function useAuth({
     if (response.ok) {
       localStorage.setItem('access_token', data.access)
       localStorage.setItem('refresh_token', data.refresh)
-      router.push({ name: 'dashboard' })
+      success.value = true
+      setTimeout(() => {
+        router.push({ name: 'dashboard' })
+      }, 3000)
     } else {
       console.error('Registration failed', data)
       error.value = 'Hubo un problema en el registro'
@@ -66,6 +69,7 @@ export function useAuth({
   return {
     error,
     loading,
-    registerUser
+    registerUser,
+    success
   }
 }

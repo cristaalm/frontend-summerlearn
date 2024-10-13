@@ -77,7 +77,7 @@ const alertVariant = computed(() => {
             <!-- avisos de privacidad -->
             <div class="flex items-center mt-5 text-xs sm:text-sm">
               Lee nuestros
-              <a class="ml-1 text-primary dark:text-slate-200" href="/privacy" target="_blank">
+              <a class="ml-1 text-primary dark:text-slate-400" href="/privacy" target="_blank">
                 Avisos de privacidad
               </a>
             </div>
@@ -98,9 +98,9 @@ const alertVariant = computed(() => {
       <!-- ? ######################## Mensaje de éxito ######################## ? -->
       <div class="relative z-10 flex flex-col justify-center w-full h-full py-2 lg:py-32" v-else>
         <div class="mt-10 text-center">
-          <Lucide icon="CheckCircle" class="w-16 h-16 text-theme-1 mx-auto" />
-          <div class="text-3xl font-bold mt-4">¡Bienvenido!</div>
-          <div class="mt-4 text-slate-600 flex flex-col gap-2">
+          <Lucide icon="CheckCircle" class="w-16 h-16 text-theme-1 dark:text-green-500 mx-auto" />
+          <div class="text-3xl font-bold mt-4 dark:text-slate-200">¡Bienvenido!</div>
+          <div class="mt-4 text-slate-600 dark:text-slate-400 flex flex-col gap-2">
             <p class="text-lg">Has iniciado sesión correctamente.</p>
             <p class="text-lg">Redirigiendo...</p>
           </div>

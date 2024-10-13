@@ -39,7 +39,7 @@ const { validateText, validateInputPhone, validate } = useValidationFunctions({
   valid,
   status
 })
-const { registerUser, loading } = useAuth({
+const { registerUser, loading, success } = useAuth({
   password,
   firstName,
   lastName,
@@ -78,7 +78,7 @@ const handleSubmit = () => {
     <div :class="[
       'relative z-50 h-full col-span-12 p-7 sm:p-14 bg-white rounded-2xl lg:bg-transparent lg:pr-10 lg:col-span-5 xl:pr-24 2xl:col-span-4 lg:p-0'
     ]">
-      <div class="relative z-10 flex flex-col justify-center w-full h-full py-2">
+      <div class="relative z-10 flex flex-col justify-center w-full h-full py-2" v-if="!success">
         <div class="flex flex-row justify-start items-center pt-5">
           <span @click="router.push({ name: 'home' })"
             class="flex flex-row gap-2 transition-all duration-200 hover:scale-95 !text-black dark:!text-slate-200 !border-transparent cursor-pointer">
@@ -91,7 +91,7 @@ const handleSubmit = () => {
             Registrarse como
             <span class="font-bold text-blue">{{
               perfil == 5 ? 'Beneficiario' : perfil == 4 ? 'Voluntario' : 'Donante'
-              }}</span>
+            }}</span>
           </div>
           <div class="mt-6">
             <!--? ################### FIRSTNAME ###################### -->
@@ -266,6 +266,31 @@ const handleSubmit = () => {
           </div>
         </div>
       </div>
+
+      <!-- ? ######################## Mensaje de éxito ######################## ? -->
+
+      <div class="relative z-10 flex flex-col justify-center w-full h-full py-2" v-else>
+        <div class="mt-10 text-center">
+          <Lucide icon="CheckCircle" class="w-16 h-16 text-theme-1 dark:text-green-500 mx-auto" />
+          <div class="text-3xl font-bold mt-4 dark:text-slate-200">¡Registro Exitoso!</div>
+          <div class="mt-4 text-slate-600 dark:text-slate-400 flex flex-col gap-2">
+            <p class="text-lg">¡Tu registro ha sido completado con éxito!</p>
+            <p class="text-lg">
+              Tendrás acceso a tu perfil con algunas limitaciones.
+            </p>
+            <p class="text-lg">
+              Espera a que un administrador valide tu cuenta.
+            </p>
+          </div>
+          <div class="mt-6">
+            <button @click="router.push({ name: 'login' })"
+              class="bg-theme-2 dark:bg-slate-700 dark:text-white py-3 px-6 rounded-lg hover:bg-theme-1 dark:hover:bg-slate-600 hover:text-black dark:hover:text-slate-200 transition-all duration-200">
+              Regresar al inicio de sesión
+            </button>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
   <div

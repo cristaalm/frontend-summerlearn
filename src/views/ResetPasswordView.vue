@@ -117,9 +117,9 @@ const alertVariant = computed(() => {
 
       <div class="relative z-10 flex flex-col justify-center w-full h-full py-2 lg:py-32" v-else>
         <div class="mt-10 text-center">
-          <Lucide icon="CheckCircle" class="w-16 h-16 text-theme-1 mx-auto" />
-          <div class="text-3xl font-bold mt-4">¡Listo!</div>
-          <div class="mt-4 text-slate-600 flex flex-col gap-2">
+          <Lucide icon="CheckCircle" class="w-16 h-16 text-theme-1 dark:text-green-500 mx-auto" />
+          <div class="text-3xl font-bold mt-4 dark:text-slate-200">¡Listo!</div>
+          <div class="mt-4 text-slate-600 dark:text-slate-400 flex flex-col gap-2">
             <p class="text-lg">¡Contraseña actualizada!</p>
             <p class="text-lg">
               Tu contraseña ha sido actualizada correctamente.

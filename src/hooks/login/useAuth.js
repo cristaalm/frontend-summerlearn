@@ -27,7 +27,9 @@ export function useAuth() {
         loginSuccess.value = 'Inicio de sesión exitoso'
         localStorage.setItem('access_token', data.access)
         localStorage.setItem('refresh_token', data.refresh)
-        router.push({ name: 'dashboard' })
+        setTimeout(() => {
+          router.push({ name: 'dashboard' })
+        }, 3000)
       } else {
         error.value = 'Correo electrónico o contraseña incorrectos'
       }

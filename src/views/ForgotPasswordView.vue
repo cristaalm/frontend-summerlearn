@@ -73,9 +73,9 @@ const alertVariant = computed(() => { return successMail.value ? 'soft-success' 
 
       <div class="relative z-10 flex flex-col justify-center w-full h-full py-2 lg:py-32" v-else>
         <div class="mt-10 text-center">
-          <Lucide icon="CheckCircle" class="w-16 h-16 text-theme-1 mx-auto" />
-          <div class="text-3xl font-bold mt-4">¡Listo!</div>
-          <div class="mt-4 text-slate-600 flex flex-col gap-2">
+          <Lucide icon="CheckCircle" class="w-16 h-16 text-theme-1 dark:text-green-500 mx-auto" />
+          <div class="text-3xl font-bold mt-4 dark:text-slate-200">¡Listo!</div>
+          <div class="mt-4 text-slate-600 dark:text-slate-400 flex flex-col gap-2">
             <p class="text-lg">¡Correo enviado!</p>
             <p class="text-lg">
               Hemos enviado un correo electrónico a <span class="font-medium dark:text-slate-200">{{ email }}</span> con
@@ -85,7 +85,7 @@ const alertVariant = computed(() => { return successMail.value ? 'soft-success' 
           </div>
           <div class="mt-6">
             <button @click="router.push({ name: 'login' })"
-              class="bg-theme-2 text-white py-3 px-6 rounded-lg hover:bg-theme-1 hover:text-black transition-all duration-200">
+              class="bg-theme-2 dark:bg-slate-700 dark:text-white py-3 px-6 rounded-lg hover:bg-theme-1 dark:hover:bg-slate-600 hover:text-black dark:hover:text-slate-200 transition-all duration-200">
               Regresar al inicio de sesión
             </button>
           </div>
