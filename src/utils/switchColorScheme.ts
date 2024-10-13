@@ -49,5 +49,9 @@ export const logoutColorScheme = (
   }
   setLocalStorage('userDarkMode', useDarkModeStore().darkMode)
   setLocalStorage('userTheme', getColorScheme())
+  changeLoginColorScheme()
+}
+
+export const changeLoginColorScheme = (): void => {
   switchColorScheme('theme-19', false)
 }

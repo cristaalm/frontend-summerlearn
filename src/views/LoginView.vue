@@ -8,9 +8,10 @@ import { useFormValidation } from '@/hooks/login/useFormValidation'
 import { useAuth } from '@/hooks/login/useAuth'
 import { useRouter } from 'vue-router'
 import { useRefs } from '@/hooks/login/useRefs'
-import { computed } from 'vue'
+import { computed, onMounted } from 'vue'
 import ThemeSwitcher from '@/components/ThemeSwitcher'
 import DynamicText from '@/components/DynamicText'
+import { changeLoginColorScheme } from '@/utils/switchColorScheme'
 
 const { showPassword } = useRefs()
 const { loginUser, loading, error, loginSuccess } = useAuth()
@@ -21,6 +22,11 @@ const router = useRouter()
 const alertVariant = computed(() => {
   return loginSuccess.value ? 'soft-success' : error.value ? 'soft-danger' : ''
 })
+
+onMounted(() => {
+  changeLoginColorScheme()
+})
+
 </script>
 
 <template>

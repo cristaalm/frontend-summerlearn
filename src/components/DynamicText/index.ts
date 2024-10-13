@@ -1,3 +1,3 @@
-import DinamicText from './DinamicText.vue'
+import DynamicText from './DynamicText.vue'
 
-export default DinamicText
+export default DynamicText
