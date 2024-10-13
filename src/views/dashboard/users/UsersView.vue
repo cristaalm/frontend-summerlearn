@@ -31,7 +31,6 @@ onMounted(() => {
 </script>
 
 <template>
-
   <div class="grid grid-cols-12 gap-y-10 gap-x-6">
     <div class="col-span-12">
       <div class="flex flex-col md:h-10 gap-y-3 md:items-center md:flex-row">
@@ -57,7 +56,7 @@ onMounted(() => {
                 <Lucide icon="Search"
                   class="absolute inset-y-0 left-0 z-10 w-4 h-4 my-auto ml-3 stroke-[1.3] text-slate-500" />
                 <FormInput v-model="searchQuery" type="text" placeholder="Buscar nombre de usuario..."
-                  class="pl-9 sm:w-72 rounded-[0.5rem]" />
+                  class="pl-9 sm:w-72 rounded-[0.5rem] dark:text-slate-200" />
               </div>
             </div>
             <div class="flex flex-col sm:flex-row gap-x-3 gap-y-2 sm:ml-auto">
@@ -66,23 +65,23 @@ onMounted(() => {
                   <Lucide icon="ArrowDownWideNarrow" class="stroke-[1.3] w-4 h-4 mr-2" />
                   Filtrar
                   <div
-                    class="flex items-center justify-center h-5 px-1.5 ml-2 text-xs font-medium border rounded-full bg-slate-100">
+                    class="flex items-center justify-center h-5 px-1.5 ml-2 text-xs font-medium border rounded-full bg-slate-100 dark:text-black">
                     {{ filtersCount }}
                   </div>
                 </Popover.Button>
                 <Popover.Panel placement="bottom-end">
                   <div class="p-2 space-y-4">
                     <div>
-                      <div class="text-left text-slate-500">Estado</div>
-                      <FormSelect v-model="selectedStatus" class="flex-1 mt-2">
+                      <div class="text-left text-slate-500 dark:text-slate-200">Estado</div>
+                      <FormSelect v-model="selectedStatus" class="flex-1 mt-2 dark:text-slate-200">
                         <option :value="null">Todos</option>
                         <option :value="1">Activo</option>
                         <option :value="2">Inactivo</option>
                       </FormSelect>
                     </div>
                     <div>
-                      <div class="text-left text-slate-500">Rol</div>
-                      <FormSelect v-model="selectedRole" class="flex-1 mt-2">
+                      <div class="text-left text-slate-500 dark:text-slate-200">Rol</div>
+                      <FormSelect v-model="selectedRole" class="flex-1 mt-2 dark:text-slate-200">
                         <!--? Mostrar 'Cargando roles...' cuando loadingRoles es true -->
                         <template v-if="loadingRoles">
                           <option>Cargando roles...</option>
@@ -116,29 +115,35 @@ onMounted(() => {
             </div>
           </div>
           <div class="overflow-auto xl:overflow-visible">
-            <Table class="border-b border-slate-200/60">
+            <Table class="border-b border-slate-200/60 dark:border-slate-700">
               <Table.Thead>
                 <Table.Tr>
-                  <Table.Td class="w-5 py-4 font-medium border-t bg-slate-50 border-slate-200/60 text-slate-500">
+                  <Table.Td
+                    class="w-5 py-4 font-medium border-t bg-slate-50 dark:bg-transparent border-slate-200/60 text-slate-500 dark:text-slate-200">
                     Foto
                   </Table.Td>
-                  <Table.Td class="py-4 font-medium border-t bg-slate-50 border-slate-200/60 text-slate-500">
+                  <Table.Td
+                    class="w-5 py-4 font-medium border-t bg-slate-50 dark:bg-transparent border-slate-200/60 text-slate-500 dark:text-slate-200">
                     Nombre / Correo electrónico
                   </Table.Td>
-                  <Table.Td class="py-4 font-medium border-t bg-slate-50 border-slate-200/60 text-slate-500">
+                  <Table.Td
+                    class="w-5 py-4 font-medium border-t bg-slate-50 dark:bg-transparent border-slate-200/60 text-slate-500 dark:text-slate-200">
                     Edad
                   </Table.Td>
-                  <Table.Td class="py-4 font-medium border-t bg-slate-50 border-slate-200/60 text-slate-500">
+                  <Table.Td
+                    class="w-5 py-4 font-medium border-t bg-slate-50 dark:bg-transparent border-slate-200/60 text-slate-500 dark:text-slate-200">
                     Teléfono
                   </Table.Td>
-                  <Table.Td class="py-4 font-medium border-t bg-slate-50 border-slate-200/60 text-slate-500">
+                  <Table.Td
+                    class="w-5 py-4 font-medium border-t bg-slate-50 dark:bg-transparent border-slate-200/60 text-slate-500 dark:text-slate-200">
                     Rol
                   </Table.Td>
-                  <Table.Td class="py-4 font-medium border-t bg-slate-50 border-slate-200/60 text-slate-500">
+                  <Table.Td
+                    class="w-5 py-4 font-medium border-t bg-slate-50 dark:bg-transparent border-slate-200/60 text-slate-500 dark:text-slate-200">
                     Estado
                   </Table.Td>
                   <Table.Td
-                    class="py-4 font-medium text-center border-t w-36 bg-slate-50 border-slate-200/60 text-slate-500">
+                    class="py-4 font-medium text-center border-t w-36 bg-slate-50 dark:bg-transparent border-slate-200/60 text-slate-500 dark:text-slate-200">
                   </Table.Td>
                 </Table.Tr>
               </Table.Thead>
@@ -177,7 +182,7 @@ onMounted(() => {
               <Table.Tbody v-if="!loading && totalPages > 0">
                 <template v-for="user in paginatedUsers" :key="user.id">
                   <Table.Tr class="[&_td]:last:border-b-0">
-                    <Table.Td class="py-4 border-dashed dark:bg-darkmode-600">
+                    <Table.Td class="py-4 border-dashed dark:bg-darkmode-600 dark:text-slate-200">
                       <div class="flex">
                         <div class="w-9 h-9 image-fit zoom-in">
                           <Tippy as="img" alt="Tailwise - Admin Dashboard Template"
@@ -186,70 +191,73 @@ onMounted(() => {
                         </div>
                       </div>
                     </Table.Td>
-                    <Table.Td class="py-4 border-dashed dark:bg-darkmode-600">
+                    <Table.Td class="py-4 border-dashed dark:bg-darkmode-600 dark:text-slate-200">
                       <div class="font-medium whitespace-nowrap">
                         {{ user.name }}
                       </div>
-                      <div class="text-slate-500 text-xs whitespace-nowrap mt-0.5">
+                      <div class="text-slate-400 text-xs whitespace-nowrap mt-0.5">
                         {{ user.email }}
                       </div>
                     </Table.Td>
-                    <Table.Td class="py-4 border-dashed dark:bg-darkmode-600">
+                    <Table.Td class="py-4 border-dashed dark:bg-darkmode-600 dark:text-slate-200">
                       <div class="whitespace-nowrap">
                         {{ calculateAge(user.birthdate) }}
                       </div>
                     </Table.Td>
-                    <Table.Td class="py-4 border-dashed dark:bg-darkmode-600">
-                      <div class="flex items-center text-primary">
+                    <Table.Td class="py-4 border-dashed dark:bg-darkmode-600 dark:text-slate-200">
+                      <div class="flex items-center text-primary dark:text-slate-200">
                         <Lucide icon="Phone" class="w-4 h-4 mr-2" />
                         {{ formatPhone(user.phone) }}
                       </div>
                     </Table.Td>
-                    <Table.Td class="py-4 border-dashed dark:bg-darkmode-600">
+                    <Table.Td class="py-4 border-dashed dark:bg-darkmode-600 dark:text-slate-200">
                       <div class="whitespace-nowrap">
                         {{ roles[user.rol - 1].name }}
                       </div>
                     </Table.Td>
-                    <Table.Td class="py-4 border-dashed dark:bg-darkmode-600">
+                    <Table.Td class="py-4 border-dashed dark:bg-darkmode-600 dark:text-slate-200">
                       <div :class="[
                         'flex items-center justify-start',
-                        { 'text-success': user.status == 1 },
-                        { 'text-danger': user.status !== 1 },
-                        { 'text-[#FFA500]': user.status == 0 }
+                        { 'text-success dark:text-green-400': user.status == 1 },
+                        { 'text-danger dark:text-red-400': user.status !== 1 },
+                        { 'text-[#FFA500] dark:text-[#ffb941]': user.status == 0 }
                       ]">
                         <Lucide v-if="user.status == 1 || user.status == 2" icon="Database"
-                          class="w-3.5 h-3.5 stroke-[1.7]" />
+                          class="w-3.5 h-3.5 stroke-[1.7] dark:stroke-current" />
                         <div class="ml-1.5 whitespace-nowrap max-h-8 flex flex-row items-center justify-center gap-2">
                           <div class="w-4 h-4" v-if="user.status == 0">
-                            <LoadingIcon icon="bars" class="w-8 h-8" color="#FFA500" />
+                            <LoadingIcon icon="bars" class="w-8 h-8" customClass="fill-[#FFA500] dark:fill-[#ffb941]" />
                           </div>
-                          <span v-if="user.status == 0" class="text-amber-500">Cambiando....</span>
-                          <span v-else-if="user.status == 1" class="text-success">Activo</span>
-                          <span v-else class="text-danger">Inactivo</span>
+                          <span v-if="user.status == 0" class="text-amber-500 dark:text-[#ffb941]">Cambiando....</span>
+                          <span v-else-if="user.status == 1" class="text-success dark:text-green-400">Activo</span>
+                          <span v-else class="text-danger dark:text-red-400">Inactivo</span>
                         </div>
                       </div>
                     </Table.Td>
-                    <Table.Td class="relative py-4 border-dashed dark:bg-darkmode-600">
+                    <Table.Td class="relative py-4 border-dashed dark:bg-darkmode-600 dark:text-slate-200">
                       <div class="flex items-center justify-center">
                         <Menu class="h-5">
-                          <Menu.Button class="w-5 h-5 text-black">
-                            <Lucide icon="MoreVertical" class="w-5 h-5 stroke-black fill-black" />
+                          <Menu.Button class="w-5 h-5 text-black dark:text-slate-200">
+                            <Lucide icon="MoreVertical"
+                              class="w-5 h-5 stroke-black dark:stroke-slate-200 fill-black dark:fill-slate-200" />
                           </Menu.Button>
-                          <Menu.Items class="w-40">
-                            <Menu.Item class="text-warning">
-                              <Lucide icon="CheckSquare" class="w-4 h-4 mr-2" />
+                          <Menu.Items class="w-40 dark:bg-darkmode-600">
+                            <Menu.Item class="text-warning dark:text-yellow-500">
+                              <Lucide icon="CheckSquare" class="w-4 h-4 mr-2 dark:stroke-yellow-500" />
                               Editar
                             </Menu.Item>
-                            <Menu.Item :class="`${user.status == 1 ? 'text-blue' : 'text-[#ff6f0f]'}`" @click="() => {
-                              updateStatus({ user }).then((updatedUser) => {
-                                const index = users.findIndex((u) => u.id == updatedUser.id)
-                                if (index !== -1) {
-                                  users[index] = updatedUser
-                                }
-                              })
-                            }
-                              ">
-                              <Lucide icon="RefreshCw" class="w-4 h-4 mr-2" />
+                            <Menu.Item
+                              :class="`${user.status == 1 ? 'text-blue dark:text-blue-400' : 'text-[#ff6f0f] dark:text-[#ff6f0f]'}`"
+                              @click="() => {
+                                updateStatus({ user }).then((updatedUser) => {
+                                  const index = users.findIndex((u) => u.id == updatedUser.id)
+                                  if (index !== -1) {
+                                    users[index] = updatedUser
+                                  }
+                                })
+                              }
+                                ">
+                              <Lucide icon="RefreshCw" class="w-4 h-4 mr-2 dark:stroke-current" />
                               Cambiar Estado
                             </Menu.Item>
                           </Menu.Items>
@@ -281,7 +289,8 @@ onMounted(() => {
                 <Lucide icon="ChevronsRight" class="w-4 h-4" />
               </Pagination.Link>
             </Pagination>
-            <FormSelect class="sm:w-20 rounded-[0.5rem]" v-model="pageSize" @change="changePageSize">
+            <FormSelect class="sm:w-20 rounded-[0.5rem] dark:text-slate-200" v-model="pageSize"
+              @change="changePageSize">
               <option value="10">10</option>
               <option value="20">20</option>
               <option value="30">30</option>

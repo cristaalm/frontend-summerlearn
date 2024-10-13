@@ -30,14 +30,14 @@ const alertVariant = computed(() => { return successMail.value ? 'soft-success' 
       <div class="relative z-10 flex flex-col justify-center w-full h-full py-2 lg:py-32" v-if="!successMail">
         <div class="flex flex-row justify-start items-center">
           <span @click="router.push({ name: 'login' })"
-            class="flex flex-row gap-2 transition-all duration-200 hover:scale-95 !bg-white/[0.12] !text-black !border-transparent cursor-pointer">
+            class="flex flex-row gap-2 transition-all duration-200 hover:scale-95 !text-black dark:!text-slate-200 !border-transparent cursor-pointer">
             <Lucide icon="ArrowLeft" class="w-5 h-5" />
             Regresar
           </span>
         </div>
-        <div class="mt-10">
+        <div class="mt-10 dark:text-slate-200">
           <div class="text-2xl font-medium">Recuperar Contraseña</div>
-          <div class="mt-2.5 text-slate-600 flex flex-col gap-2">
+          <div class="mt-2.5 text-slate-600 dark:text-slate-400 flex flex-col gap-2">
             <p>¿No recuerdas tu contraseña?</p>
             <p>
               No te preocupes, te enviaremos un correo electrónico con un enlace para restablecer tu
@@ -78,7 +78,8 @@ const alertVariant = computed(() => { return successMail.value ? 'soft-success' 
           <div class="mt-4 text-slate-600 flex flex-col gap-2">
             <p class="text-lg">¡Correo enviado!</p>
             <p class="text-lg">
-              Hemos enviado un correo electrónico a <span class="font-medium">{{ email }}</span> con un enlace para
+              Hemos enviado un correo electrónico a <span class="font-medium dark:text-slate-200">{{ email }}</span> con
+              un enlace para
               restablecer tu contraseña.
             </p>
           </div>
@@ -98,8 +99,8 @@ const alertVariant = computed(() => { return successMail.value ? 'soft-success' 
     class="fixed container grid w-screen inset-0 h-screen grid-cols-12 lg:max-w-[1550px] 2xl:max-w-[1750px] pl-14 pr-12 xl:px-24">
     <div :class="[
       'relative h-screen col-span-12 lg:col-span-5 2xl:col-span-4 z-20',
-      'after:bg-white after:hidden after:lg:block after:content-[\'\'] after:absolute after:right-0 after:inset-y-0 after:bg-gradient-to-b after:from-white after:to-slate-100/80 after:w-[800%] after:rounded-[0_1.2rem_1.2rem_0/0_1.7rem_1.7rem_0]',
-      'before:content-[\'\'] before:hidden before:lg:block before:absolute before:right-0 before:inset-y-0 before:my-6 before:bg-gradient-to-b before:from-white/10 before:to-slate-50/10 before:bg-white/50 before:w-[800%] before:-mr-4 before:rounded-[0_1.2rem_1.2rem_0/0_1.7rem_1.7rem_0]'
+      'after:bg-white dark:after:bg-slate-900 after:hidden after:lg:block after:content-[\'\'] after:absolute after:right-0 after:inset-y-0 after:bg-gradient-to-b after:from-white dark:after:from-slate-900 after:to-slate-100/80 dark:after:to-slate-900 after:w-[800%] after:rounded-[0_1.2rem_1.2rem_0/0_1.7rem_1.7rem_0]',
+      'before:content-[\'\'] before:hidden before:lg:block before:absolute before:right-0 before:inset-y-0 before:my-6 before:bg-gradient-to-b dark:before:from-slate-900/10 before:from-white/10 before:to-slate-50/10 dark:before:to-slate-900/10 before:bg-white/50 dark:before:bg-slate-900/50 before:w-[800%] before:-mr-4 before:rounded-[0_1.2rem_1.2rem_0/0_1.7rem_1.7rem_0]'
     ]"></div>
     <div :class="[
       'h-full col-span-7 2xl:col-span-8 lg:relative',

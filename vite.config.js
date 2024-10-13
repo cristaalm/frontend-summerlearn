@@ -16,9 +16,6 @@ export default defineConfig({
   plugins: [vue()],
   resolve: {
     alias: {
-      crypto: 'crypto-browserify',
-      stream: 'stream-browserify',
-      buffer: 'buffer',
       '@': fileURLToPath(new URL('./src', import.meta.url)),
       'tailwind-config': fileURLToPath(new URL('./tailwind.config.js', import.meta.url))
     }

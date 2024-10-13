@@ -8,13 +8,7 @@ import Button from '@/components/base/Button'
 import Table from '@/components/base/Table'
 import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import {
-  useBills,
-  usePagination,
-  useBillSearch,
-  useExportExcel,
-  useExportPDF
-} from '@/hooks/bills'
+import { useBills, usePagination, useBillSearch, useExportExcel, useExportPDF } from '@/hooks/bills'
 
 const router = useRouter()
 const { bills, loading, loadBills, errorBills } = useBills()
@@ -36,7 +30,6 @@ onMounted(() => {
 </script>
 
 <template>
-
   <div class="grid grid-cols-12 gap-y-10 gap-x-6">
     <div class="col-span-12">
       <div class="flex flex-col md:h-10 gap-y-3 md:items-center md:flex-row">
@@ -63,33 +56,35 @@ onMounted(() => {
             <div class="flex flex-col sm:flex-row gap-x-3 gap-y-2 sm:ml-auto">
               <Menu>
                 <Menu.Button :as="Button" variant="outline-secondary"
-                  :class="`w-full sm:w-auto ${loadingExportExcel || loadingExportPDF ? 'text-amber-500' : ' text-black'}`"
+                  :class="`w-full sm:w-auto ${loadingExportExcel || loadingExportPDF ? 'text-amber-500 dark:text-yellow-500' : 'text-black dark:text-slate-200'}`"
                   :disabled="loadingExportExcel || loadingExportPDF">
                   <Lucide v-if="!loadingExportExcel && !loadingExportPDF" icon="Download"
-                    class="stroke-[1.3] w-4 h-4 mr-2" />
+                    class="stroke-[1.3] w-4 h-4 mr-2 dark:stroke-slate-200" />
                   <LoadingIcon v-if="loadingExportExcel || loadingExportPDF" icon="tail-spin"
-                    class="stroke-[1.3] w-4 h-4 mr-2" color="black" />
+                    class="stroke-[1.3] w-4 h-4 mr-2 dark:stroke-slate-200" color="black" />
                   Exportar
-                  <Lucide icon="ChevronDown" class="stroke-[1.3] w-4 h-4 ml-2" />
+                  <Lucide icon="ChevronDown" class="stroke-[1.3] w-4 h-4 ml-2 dark:stroke-slate-200" />
                 </Menu.Button>
-                <Menu.Items class="w-40">
+                <Menu.Items class="w-40 dark:bg-darkmode-600">
                   <Menu.Item>
                     <Button @click="loadExportExcel"
-                      :class="`w-full ${loadingExportExcel ? 'text-amber-500' : ' text-black'}`"
+                      :class="`w-full dark:border-none ${loadingExportExcel ? 'text-amber-500 dark:text-yellow-500' : 'text-black dark:text-slate-200'}`"
                       :disabled="loadingExportExcel">
-                      <Lucide v-if="!loadingExportExcel" icon="FileSpreadsheet" class="stroke-[1.3] w-4 h-4 mr-2" />
-                      <LoadingIcon v-if="loadingExportExcel" icon="tail-spin" class="stroke-[1.3] w-4 h-4 mr-2"
-                        color="black" />
+                      <Lucide v-if="!loadingExportExcel" icon="FileSpreadsheet"
+                        class="stroke-[1.3] w-4 h-4 mr-2 dark:stroke-slate-200" />
+                      <LoadingIcon v-if="loadingExportExcel" icon="tail-spin"
+                        class="stroke-[1.3] w-4 h-4 mr-2 dark:stroke-slate-200" color="black" />
                       Excel
                     </Button>
                   </Menu.Item>
                   <Menu.Item>
                     <Button @click="loadExportPDF"
-                      :class="`w-full ${loadingExportPDF ? 'text-amber-500' : ' text-black'}`"
+                      :class="`w-full dark:border-none ${loadingExportPDF ? 'text-amber-500 dark:text-yellow-500' : 'text-black dark:text-slate-200'}`"
                       :disabled="loadingExportPDF">
-                      <Lucide v-if="!loadingExportPDF" icon="File" class="stroke-[1.3] w-4 h-4 mr-2" />
-                      <LoadingIcon v-if="loadingExportPDF" icon="tail-spin" class="stroke-[1.3] w-4 h-4 mr-2"
-                        color="black" />
+                      <Lucide v-if="!loadingExportPDF" icon="File"
+                        class="stroke-[1.3] w-4 h-4 mr-2 dark:stroke-slate-200" />
+                      <LoadingIcon v-if="loadingExportPDF" icon="tail-spin"
+                        class="stroke-[1.3] w-4 h-4 mr-2 dark:stroke-slate-200" color="black" />
                       PDF
                     </Button>
                   </Menu.Item>
@@ -98,19 +93,23 @@ onMounted(() => {
             </div>
           </div>
           <div class="overflow-auto xl:overflow-visible">
-            <Table class="border-b border-slate-200/60">
+            <Table class="border-b border-slate-200/60 dark:border-slate-700">
               <Table.Thead>
                 <Table.Tr>
-                  <Table.Td class="py-4 font-medium border-t bg-slate-50 border-slate-200/60 text-slate-500">
+                  <Table.Td
+                    class="w-5 py-4 font-medium border-t bg-slate-50 dark:bg-transparent border-slate-200/60 text-slate-500 dark:text-slate-200">
                     Encargado del gasto
                   </Table.Td>
-                  <Table.Td class="py-4 font-medium border-t bg-slate-50 border-slate-200/60 text-slate-500">
+                  <Table.Td
+                    class="w-5 py-4 font-medium border-t bg-slate-50 dark:bg-transparent border-slate-200/60 text-slate-500 dark:text-slate-200">
                     Monto
                   </Table.Td>
-                  <Table.Td class="py-4 font-medium border-t bg-slate-50 border-slate-200/60 text-slate-500">
+                  <Table.Td
+                    class="w-5 py-4 font-medium border-t bg-slate-50 dark:bg-transparent border-slate-200/60 text-slate-500 dark:text-slate-200">
                     Concepto
                   </Table.Td>
-                  <Table.Td class="py-4 font-medium border-t bg-slate-50 border-slate-200/60 text-slate-500">
+                  <Table.Td
+                    class="w-5 py-4 font-medium border-t bg-slate-50 dark:bg-transparent border-slate-200/60 text-slate-500 dark:text-slate-200">
                     Fecha
                   </Table.Td>
                 </Table.Tr>
@@ -118,7 +117,7 @@ onMounted(() => {
 
               <Table.Tbody v-if="loading">
                 <Table.Tr class="[&_td]:last:border-b-0">
-                  <Table.Td colspan="8" class="py-8 text-center text-xl font-bold text-green-500">
+                  <Table.Td colspan="4" class="py-8 text-center text-xl font-bold text-green-500">
                     <div class="flex flex-col w-full justify-center items-center text-nowrap">
                       <LoadingIcon icon="tail-spin" class="h-8" color="black" />
                       <div class="mt-2">Cargando información...</div>
@@ -130,7 +129,7 @@ onMounted(() => {
               <!--? Mostrar mensaje de error cuando hay error -->
               <Table.Tbody v-if="errorBills">
                 <Table.Tr>
-                  <Table.Td colspan="5" class="py-8 text-center text-xl font-bold text-red-500">
+                  <Table.Td colspan="4" class="py-8 text-center text-xl font-bold text-red-500">
                     Error al cargar la información, Inténtelo más tarde
                   </Table.Td>
                 </Table.Tr>
@@ -139,7 +138,7 @@ onMounted(() => {
               <!--? Mostrar mensaje de error cuando no se encuentran usuarios -->
               <Table.Tbody v-if="!loading && totalPages <= 0 && !errorBills">
                 <Table.Tr>
-                  <Table.Td colspan="5" class="py-8 text-center text-xl font-bold text-amber-500">
+                  <Table.Td colspan="4" class="py-8 text-center text-xl font-bold text-amber-500">
                     No se encontraron gasto
                   </Table.Td>
                 </Table.Tr>
@@ -148,16 +147,16 @@ onMounted(() => {
               <Table.Tbody v-if="!loading">
                 <template v-for="(bill, key) in paginatedItems" :key="key">
                   <Table.Tr class="[&_td]:last:border-b-0">
-                    <Table.Td class="py-4 border-dashed dark:bg-darkmode-600">
+                    <Table.Td class="py-4 border-dashed dark:bg-darkmode-600 dark:text-slate-200">
                       {{ bill.donation.name }}
                     </Table.Td>
-                    <Table.Td class="py-4 border-dashed dark:bg-darkmode-600">
+                    <Table.Td class="py-4 border-dashed dark:bg-darkmode-600 dark:text-slate-200">
                       $ {{ bill.amount }}
                     </Table.Td>
-                    <Table.Td class="py-4 border-dashed dark:bg-darkmode-600">
+                    <Table.Td class="py-4 border-dashed dark:bg-darkmode-600 dark:text-slate-200">
                       {{ bill.concept }}
                     </Table.Td>
-                    <Table.Td class="py-4 border-dashed dark:bg-darkmode-600">
+                    <Table.Td class="py-4 border-dashed dark:bg-darkmode-600 dark:text-slate-200">
                       {{ formatDateToDDMMYYYY(bill.date) }}
                     </Table.Td>
                   </Table.Tr>
@@ -185,7 +184,8 @@ onMounted(() => {
                 <Lucide icon="ChevronsRight" class="w-4 h-4" />
               </Pagination.Link>
             </Pagination>
-            <FormSelect class="sm:w-20 rounded-[0.5rem]" v-model="pageSize" @change="changePageSize">
+            <FormSelect class="sm:w-20 rounded-[0.5rem] dark:text-slate-200" v-model="pageSize"
+              @change="changePageSize">
               <option value="10">10</option>
               <option value="20">20</option>
               <option value="30">30</option>

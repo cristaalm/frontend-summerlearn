@@ -1,5 +1,5 @@
 <template>
-  <div class="md:hidden flex flex-col w-full text-black">
+  <div class="md:hidden flex flex-col w-full text-black dark:text-slate-200">
     <div class="w-full flex flex-row justify-between px-10">
       <a class="w-[100px]" href="#home" @click.prevent="smoothScroll('#home')">
         <img

@@ -17,10 +17,10 @@ const router = useRouter();
 <template>
     <div class="relative col-span-12 xl:col-span-3">
         <div class="sticky top-[104px]">
-            <div class="flex flex-col px-5 pt-5 pb-6 box box--stacked">
+            <div class="flex flex-col px-5 pt-5 pb-6 box box--stacked dark:text-slate-400">
                 <button v-for="(menu, menuKey) in formattedMenu" :key="menuKey"
                     @click="router.push({ name: 'settings', params: menu.page })" :class="[
-                        'flex items-center py-3 first:-mt-3 last:-mb-3 [&.active]:text-primary [&.active]:font-medium hover:text-primary',
+                        'flex items-center py-3 first:-mt-3 last:-mb-3 [&.active]:text-primary dark:[&.active]:text-slate-200 [&.active]:font-medium hover:text-primary dark:hover:text-slate-200',
                         { active: props.page === (menu.page == null ? null : menu.page.page) }
                     ]">
                     <Lucide :icon="menu.icon" class="stroke-[1.3] w-4 h-4 mr-3" />

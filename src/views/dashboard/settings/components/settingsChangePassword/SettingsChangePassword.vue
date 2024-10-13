@@ -15,7 +15,8 @@ const { loadingUpdatePassword, updatePassword } = useUpdatePassword({ newPasswor
 
 <template>
     <div class="flex flex-col p-5 box box--stacked">
-        <div class="pb-5 mb-6 font-medium border-b border-dashed border-slate-300/70 text-[0.94rem]">
+        <div
+            class="pb-5 mb-6 font-medium border-b border-dashed border-slate-300/70 text-[0.94rem] dark:text-slate-200">
             Cambiar contraseña
         </div>
 
@@ -27,13 +28,13 @@ const { loadingUpdatePassword, updatePassword } = useUpdatePassword({ newPasswor
                 <label class="inline-block mb-2 sm:mb-0 sm:mr-5 sm:text-right xl:w-60 xl:mr-14">
                     <div class="text-left">
                         <div class="flex items-center">
-                            <div class="font-medium">Contraseña actual</div>
+                            <div class="font-medium dark:text-slate-200">Contraseña actual</div>
                             <div
-                                class="ml-2.5 px-2 py-0.5 bg-slate-100 text-slate-500 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md border border-slate-200">
+                                class="ml-2.5 px-2 py-0.5 bg-slate-100 text-slate-500 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md border border-slate-200 dark:border-slate-500">
                                 Requerido
                             </div>
                         </div>
-                        <div class="mt-1.5 xl:mt-3 text-xs leading-relaxed text-slate-500/80">
+                        <div class="mt-1.5 xl:mt-3 text-xs leading-relaxed text-slate-500/80 dark:text-slate-400">
                             Por favor, ingrese su contraseña actual.
                         </div>
                     </div>
@@ -41,6 +42,7 @@ const { loadingUpdatePassword, updatePassword } = useUpdatePassword({ newPasswor
                 <div class="flex-1 w-full mt-3 xl:mt-0">
                     <InputGroup class="mt-2">
                         <FormInput :type="`${showCurrentPassword ? 'text' : 'password'}`"
+                            class="dark:text-slate-200 dark:placeholder:!text-slate-400"
                             placeholder="Escriba aquí su contraseña actual..." name="password_current" @input="(e) => {
                                 validatePasswordCurrent();
                                 validatePassword(e);
@@ -68,23 +70,25 @@ const { loadingUpdatePassword, updatePassword } = useUpdatePassword({ newPasswor
                 <label class="inline-block mb-2 sm:mb-0 sm:mr-5 sm:text-right xl:w-60 xl:mr-14">
                     <div class="text-left">
                         <div class="flex items-center">
-                            <div class="font-medium">Nueva contraseña</div>
+                            <div class="font-medium dark:text-slate-200">Nueva contraseña</div>
                             <div
-                                class="ml-2.5 px-2 py-0.5 bg-slate-100 text-slate-500 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md border border-slate-200">
+                                class="ml-2.5 px-2 py-0.5 bg-slate-100 text-slate-500 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md border border-slate-200 dark:border-slate-500">
                                 Requerido
                             </div>
                         </div>
-                        <div class="mt-1.5 xl:mt-3 text-xs leading-relaxed text-slate-500/80">
+                        <div class="mt-1.5 xl:mt-3 text-xs leading-relaxed text-slate-500/80 dark:text-slate-400">
                             Por favor, ingrese su nueva contraseña.
                         </div>
                     </div>
                 </label>
                 <div class="flex-1 w-full mt-3 xl:mt-0">
                     <InputGroup class="mt-2">
-                        <FormInput :type="`${showNewPassword ? 'text' : 'password'}`" @input="(e) => {
-                            validatePassword(e);
-                            validateNewPasswordComfirm(e);
-                        }" placeholder=" Escriba aquí su contraseña..." name="new_password" v-model="newPassword" />
+                        <FormInput :type="`${showNewPassword ? 'text' : 'password'}`"
+                            class="dark:text-slate-200 dark:placeholder:!text-slate-400" @input="(e) => {
+                                validatePassword(e);
+                                validateNewPasswordComfirm(e);
+                            }" placeholder=" Escriba aquí su contraseña..." name="new_password"
+                            v-model="newPassword" />
                         <InputGroup.Text @click="() => { showNewPassword = !showNewPassword }" class="cursor-pointer">
                             <button>
                                 <Lucide icon="Eye" class="w-4 h-4 stroke-[1.3] text-green-500" v-if="showNewPassword" />
@@ -127,13 +131,13 @@ const { loadingUpdatePassword, updatePassword } = useUpdatePassword({ newPasswor
                 <label class="inline-block mb-2 sm:mb-0 sm:mr-5 sm:text-right xl:w-60 xl:mr-14">
                     <div class="text-left">
                         <div class="flex items-center">
-                            <div class="font-medium text-nowrap">Confirmar nueva contraseña</div>
+                            <div class="font-medium text-nowrap dark:text-slate-200">Confirmar nueva contraseña</div>
                             <div
-                                class="ml-2.5 px-2 py-0.5 bg-slate-100 text-slate-500 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md border border-slate-200">
+                                class="ml-2.5 px-2 py-0.5 bg-slate-100 text-slate-500 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md border border-slate-200 dark:border-slate-500">
                                 Requerido
                             </div>
                         </div>
-                        <div class="mt-1.5 xl:mt-3 text-xs leading-relaxed text-slate-500/80">
+                        <div class="mt-1.5 xl:mt-3 text-xs leading-relaxed text-slate-500/80 dark:text-slate-400">
                             Por favor, confirme su nueva contraseña.
                         </div>
                     </div>
@@ -141,6 +145,7 @@ const { loadingUpdatePassword, updatePassword } = useUpdatePassword({ newPasswor
                 <div class="flex-1 w-full mt-3 xl:mt-0">
                     <InputGroup class="mt-2">
                         <FormInput placeholder="Escriba nuevamente aquí su contraseña..."
+                            class="dark:text-slate-200 dark:placeholder:!text-slate-400"
                             @input="validateNewPasswordComfirm"
                             :type="`${showNewPasswordConfirm ? 'text' : 'password'}`" name="new_password_confirm"
                             v-model="newPasswordConfirm" />
@@ -160,7 +165,7 @@ const { loadingUpdatePassword, updatePassword } = useUpdatePassword({ newPasswor
 
         </div>
         <div class="flex pt-5 mt-6 border-t border-dashed md:justify-end border-slate-300/70">
-            <Button variant="outline-primary" class="w-full px-10 md:w-auto border-primary/50"
+            <Button variant="outline-success" class="w-full px-10 md:w-auto border-primary/50 dark:text-slate-200"
                 :disabled="!valid || loadingUpdatePassword" @click="updatePassword">
                 <Lucide v-if="!loadingUpdatePassword" icon="Check" class="stroke-[1.3] w-4 h-4 mr-2 -ml-2" />
                 <LoadingIcon v-if="loadingUpdatePassword" icon="tail-spin" class="stroke-[1.3] w-4 h-4 mr-2 -ml-2"
