@@ -332,9 +332,8 @@ const closeSlideOver = () => {
                   }
                 ]" @click="(event: MouseEvent) => {
                   event.preventDefault()
-                  if (!menu.subMenu) {
-                    activeMobileMenu = false
-                  }
+                  activeMobileMenu = false
+
                   linkTo(menu, router)
                   setFormattedMenu([...formattedMenu])
                 }">
