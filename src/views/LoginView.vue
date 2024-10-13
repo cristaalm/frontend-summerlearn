@@ -10,6 +10,7 @@ import { useRouter } from 'vue-router'
 import { useRefs } from '@/hooks/login/useRefs'
 import { computed } from 'vue'
 import ThemeSwitcher from '@/components/ThemeSwitcher'
+import DynamicText from '@/components/DynamicText'
 
 const { showPassword } = useRefs()
 const { loginUser, loading, error, loginSuccess } = useAuth()
@@ -120,16 +121,21 @@ const alertVariant = computed(() => {
       'before:content-[\'\'] before:absolute before:lg:-ml-10 before:left-0 before:inset-y-0 before:bg-gradient-to-b before:from-theme-1 before:to-theme-2 before:w-screen before:lg:w-[800%]',
       'after:content-[\'\'] after:absolute after:inset-y-0 after:left-0 after:w-screen after:lg:w-[800%] after:bg-texture-white after:bg-fixed after:bg-center after:lg:bg-[25rem_-25rem] after:bg-no-repeat'
     ]">
-      <div class="sticky top-0 z-10 flex-col justify-center hidden h-screen ml-16 lg:flex xl:ml-28 2xl:ml-36">
-        <div class="leading-[1.4] text-[2.6rem] xl:text-5xl font-medium xl:leading-[1.2] text-white">
-          Transformemos vidas <br />
-          con educación y solidaridad
-        </div>
-        <div class="mt-5 text-base leading-relaxed xl:text-lg text-white/70">
-          Únete a nuestro equipo de voluntarios y sé parte del cambio. Juntos, llevamos
-          oportunidades educativas a las comunidades que más lo necesitan. ¡Construyamos un futuro
-          más brillante!
-        </div>
+      <DynamicText :phrases="[
+        'Bienvenido a SummerLearn, juntos construimos un futuro brillante.',
+        'Inicia sesión y sé parte de nuestra misión educativa.',
+        'Ayudamos a llevar educación a las comunidades que más lo necesitan.',
+        'Tu esfuerzo hoy cambiará el futuro de muchas escuelas.',
+        'Juntos, apoyamos a estudiantes con pocos recursos a alcanzar sus sueños.',
+        'Cada acción cuenta, únete y marca la diferencia en la educación.',
+        'Accede a nuestra plataforma y coordina proyectos de voluntariado.',
+        'Inicia sesión y transforma la vida de estudiantes con educación de calidad.',
+        'Gracias a ti, llevamos materiales y apoyo a quienes más lo necesitan.',
+        'Sé parte de SummerLearn, creando oportunidades para las próximas generaciones.'
+      ]" />
+      <div class="hidden lg:block absolute bottom-10 left-10 text-white">
+        <h2 class="text-4xl font-bold">SummerLearn</h2>
+        <p class="mt-2 text-lg">Transformando la educación, un paso a la vez.</p>
       </div>
     </div>
   </div>

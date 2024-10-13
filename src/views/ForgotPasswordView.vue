@@ -9,6 +9,7 @@ import { useValidation } from '@/hooks/forgotPassword/useValidation'
 import { useRouter } from 'vue-router'
 import { useSendMail } from '@/hooks/forgotPassword/useSendMail'
 import { computed } from 'vue'
+import DynamicText from '@/components/DynamicText'
 
 const { email } = useRefs()
 const { statusMail } = useValidation({ email })
@@ -22,7 +23,7 @@ const alertVariant = computed(() => { return successMail.value ? 'soft-success' 
   <div
     class="container grid lg:h-screen grid-cols-12 lg:max-w-[1550px] 2xl:max-w-[1750px] py-10 px-5 sm:py-14 sm:px-10 md:px-36 lg:py-0 lg:pl-14 lg:pr-12 xl:px-24">
     <div :class="[
-      'relative z-50 h-full col-span-12 p-7 sm:p-14 bg-white rounded-2xl lg:bg-transparent lg:pr-10 lg:col-span-5 xl:pr-24 2xl:col-span-4 lg:p-0'
+      'relative z-50 h-full col-span-12 p-7 sm:p-14 bg-white dark:bg-slate-900 rounded-2xl lg:bg-transparent lg:pr-10 lg:col-span-5 xl:pr-24 2xl:col-span-4 lg:p-0'
     ]">
 
       <!-- ? ######################## Formulario de recuperación de contraseña ######################## ? -->
@@ -107,16 +108,21 @@ const alertVariant = computed(() => { return successMail.value ? 'soft-success' 
       'before:content-[\'\'] before:absolute before:lg:-ml-10 before:left-0 before:inset-y-0 before:bg-gradient-to-b before:from-theme-1 before:to-theme-2 before:w-screen before:lg:w-[800%]',
       'after:content-[\'\'] after:absolute after:inset-y-0 after:left-0 after:w-screen after:lg:w-[800%] after:bg-texture-white after:bg-fixed after:bg-center after:lg:bg-[25rem_-25rem] after:bg-no-repeat',
     ]">
-      <div class="sticky top-0 z-10 flex-col justify-center hidden h-screen ml-16 lg:flex xl:ml-28 2xl:ml-36">
-        <div class="leading-[1.4] text-[2.6rem] xl:text-5xl font-medium xl:leading-[1.2] text-white">
-          Recupera tu acceso <br />
-          y sigue haciendo la diferencia
-        </div>
-        <div class="mt-5 text-base leading-relaxed xl:text-lg text-white/70">
-          No te preocupes, estamos aquí para ayudarte a restablecer tu cuenta. Sigue los pasos para
-          volver a formar parte de nuestra comunidad de voluntarios y continuar apoyando nuestra
-          misión.
-        </div>
+      <DynamicText :phrases="[
+        'No te preocupes, juntos recuperaremos tu acceso para seguir ayudando a la educación.',
+        'Restablece tu contraseña y sigue siendo parte del cambio en las escuelas que más lo necesitan.',
+        'Perder la contraseña es solo un pequeño obstáculo, tu impacto en la educación es lo que cuenta.',
+        'Estamos aquí para ayudarte a recuperar tu acceso, porque cada esfuerzo en la educación importa.',
+        'Un paso más para volver a nuestra misión: llevar oportunidades educativas a quienes más lo necesitan.',
+        'Recupera tu acceso y continúa transformando el futuro de los estudiantes en comunidades desfavorecidas.',
+        'Cada voluntario cuenta, y te ayudaremos a regresar para seguir apoyando a las escuelas.',
+        'Recupera tu contraseña y sigue marcando la diferencia con tu voluntariado y dedicación.',
+        'Restablecer tu acceso te permitirá seguir brindando apoyo educativo a quienes más lo necesitan.',
+        'Tu compromiso es invaluable, te ayudamos a volver para que sigas siendo parte de nuestra misión.'
+      ]" />
+      <div class="hidden lg:block absolute bottom-10 left-10 text-white">
+        <h2 class="text-4xl font-bold">SummerLearn</h2>
+        <p class="mt-2 text-lg">Transformando la educación, un paso a la vez.</p>
       </div>
     </div>
   </div>

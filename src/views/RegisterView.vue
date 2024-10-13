@@ -10,6 +10,8 @@ import Button from '@/components/base/Button'
 import { useRouter, useRoute } from 'vue-router'
 import { onMounted } from 'vue'
 import ThemeSwitcher from '@/components/ThemeSwitcher'
+import DynamicText from '@/components/DynamicText'
+import { phrases } from '@/utils/phrases'
 
 const { status, resetFields } = useStatus()
 const {
@@ -76,7 +78,7 @@ const handleSubmit = () => {
   <div
     class="container grid lg:h-screen grid-cols-12 lg:max-w-[1550px] 2xl:max-w-[1750px] py-10 px-5 sm:py-14 sm:px-10 md:px-36 lg:py-0 lg:pl-14 lg:pr-12 xl:px-24">
     <div :class="[
-      'relative z-50 h-full col-span-12 p-7 sm:p-14 bg-white rounded-2xl lg:bg-transparent lg:pr-10 lg:col-span-5 xl:pr-24 2xl:col-span-4 lg:p-0'
+      'relative z-50 h-full col-span-12 p-7 sm:p-14 bg-white dark:bg-slate-900 rounded-2xl lg:bg-transparent lg:pr-10 lg:col-span-5 xl:pr-24 2xl:col-span-4 lg:p-0'
     ]">
       <div class="relative z-10 flex flex-col justify-center w-full h-full py-2" v-if="!success">
         <div class="flex flex-row justify-start items-center pt-5">
@@ -305,15 +307,10 @@ const handleSubmit = () => {
       'before:content-[\'\'] before:absolute before:lg:-ml-10 before:left-0 before:inset-y-0 before:bg-gradient-to-b before:from-theme-1 before:to-theme-2 before:w-screen before:lg:w-[800%]',
       'after:content-[\'\'] after:absolute after:inset-y-0 after:left-0 after:w-screen after:lg:w-[800%] after:bg-texture-white after:bg-fixed after:bg-center after:lg:bg-[25rem_-25rem] after:bg-no-repeat'
     ]">
-      <div class="sticky top-0 z-10 flex-col justify-center hidden h-screen ml-16 lg:flex xl:ml-28 2xl:ml-36">
-        <div class="leading-[1.4] text-[2.6rem] xl:text-5xl font-medium xl:leading-[1.2] text-white">
-          Únete a nuestra causa <br />
-          y marca la diferencia
-        </div>
-        <div class="mt-5 text-base leading-relaxed xl:text-lg text-white/70">
-          Regístrate como voluntario y ayúdanos a llevar educación y esperanza a las comunidades que
-          más lo necesitan. ¡Tu compromiso puede transformar vidas!
-        </div>
+      <DynamicText class="hidden lg:sticky" :phrases="phrases[route.params.rol]" />
+      <div class="hidden lg:block absolute bottom-10 left-10 text-white">
+        <h2 class="text-4xl font-bold">SummerLearn</h2>
+        <p class="mt-2 text-lg">Transformando la educación, un paso a la vez.</p>
       </div>
     </div>
   </div>
