@@ -8,14 +8,20 @@ import { useRefs } from '@/hooks/forgotPassword/useRefs'
 import { useValidation } from '@/hooks/forgotPassword/useValidation'
 import { useRouter } from 'vue-router'
 import { useSendMail } from '@/hooks/forgotPassword/useSendMail'
-import { computed } from 'vue'
+import { computed, onMounted } from 'vue'
 import DynamicText from '@/components/DynamicText'
+import { changeLoginColorScheme } from '@/utils/switchColorScheme'
+
 
 const { email } = useRefs()
 const { statusMail } = useValidation({ email })
 const { loadingMail, errorMail, warningMail, successMail, messageMail, sendMail } = useSendMail({ email })
 const router = useRouter()
 const alertVariant = computed(() => { return successMail.value ? 'soft-success' : errorMail.value ? 'soft-danger' : warningMail.value ? 'soft-warning' : '' })
+
+onMounted(() => {
+  changeLoginColorScheme()
+})
 
 </script>
 

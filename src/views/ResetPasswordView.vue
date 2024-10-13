@@ -9,10 +9,12 @@ import { useRefs } from '@/hooks/recovery/useRefs'
 import { status } from '@/hooks/recovery/useStatus'
 import { useValidation } from '@/hooks/recovery/useValidation'
 import { usePasswordSecurity } from '@/hooks/recovery/usePasswordSecurity'
-import { computed } from 'vue'
+import { computed, onMounted } from 'vue'
 import { useChangePassword } from '@/hooks/recovery/useChangePassword'
 import ThemeSwitcher from "@/components/ThemeSwitcher";
 import DynamicText from '@/components/DynamicText'
+import { changeLoginColorScheme } from '@/utils/switchColorScheme'
+
 // Recupera la ruta actual
 const route = useRoute()
 const router = useRouter()
@@ -26,6 +28,10 @@ const { loadingPassword, errorPassword, successPassword, messagePassword, change
 
 const alertVariant = computed(() => {
   return successPassword.value ? 'soft-success' : errorPassword.value ? 'soft-danger' : ''
+})
+
+onMounted(() => {
+  changeLoginColorScheme()
 })
 
 </script>

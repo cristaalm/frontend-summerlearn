@@ -12,6 +12,8 @@ import { onMounted } from 'vue'
 import ThemeSwitcher from '@/components/ThemeSwitcher'
 import DynamicText from '@/components/DynamicText'
 import { phrases } from '@/utils/phrases'
+import { changeLoginColorScheme } from '@/utils/switchColorScheme'
+
 
 const { status, resetFields } = useStatus()
 const {
@@ -57,6 +59,7 @@ const router = useRouter()
 const route = useRoute()
 
 onMounted(() => {
+  changeLoginColorScheme()
   const rol = route.params.rol
 
   if (rol) {
@@ -93,7 +96,7 @@ const handleSubmit = () => {
             Registrarse como
             <span class="font-bold text-blue">{{
               perfil == 5 ? 'Beneficiario' : perfil == 4 ? 'Voluntario' : 'Donante'
-            }}</span>
+              }}</span>
           </div>
           <div class="mt-6">
             <!--? ################### FIRSTNAME ###################### -->
