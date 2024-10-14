@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import '@/assets/css/vendors/simplebar.css'
+import { FormSwitch } from '@/components/base/Form'
+import { useDarkModeStore } from '@/stores/dark-mode' // Importar el store del modo oscuro
 import '@/assets/css/themes/echo.css'
 import { useRoute, useRouter } from 'vue-router'
 import { Menu, Slideover } from '@/components/base/Headless'
@@ -21,6 +23,7 @@ import { watch, reactive, ref, computed, onMounted, provide } from 'vue'
 import SimpleBar from 'simplebar'
 //@ts-ignore
 import { logoutColorScheme } from '@/utils/switchColorScheme'
+import { useColorSchemeStore } from '@/stores/color-scheme'
 
 // ? ############################ USER INFO ############################
 
@@ -34,6 +37,40 @@ const { photoUser, loadingUserPhoto, errorUserPhoto, loadUserPhoto } = useUserPh
 provide('userPhoto', { photoUser, loadingUserPhoto, errorUserPhoto, loadUserPhoto })
 
 // ? ############################ SIDE MENU ############################
+
+// ? ############################ DARK MODE ############################
+
+// Computed para manejar el modo oscuro con un getter/setter
+const darkMode = computed({
+  get: () => useDarkModeStore().darkMode,
+  set: (value: boolean) => {
+    useDarkModeStore().setDarkMode(value)
+    logoutColorScheme(colorSchemeStore.colorScheme, value)
+    setColorSchemeClass() // Actualizar las clases al cambiar el modo oscuro
+  }
+})
+
+// Función para establecer las clases del esquema de color y agregar la clase 'dark' si el modo oscuro está activado
+const setColorSchemeClass = () => {
+  const el = document.querySelector('html')
+  const colorSchemeStore = useColorSchemeStore()
+  const darkModeStore = useDarkModeStore()
+
+  // Obtener la clase actual del esquema de color
+  let classes = colorSchemeStore.colorScheme
+
+  // Verificar si el modo oscuro está activado y agregar la clase 'dark'
+  if (darkModeStore.darkMode) {
+    classes += ' dark'
+  }
+
+  // Establecer las clases en el elemento <html>
+  el?.setAttribute('class', classes)
+}
+
+const colorSchemeStore = useColorSchemeStore()
+
+// ? ############################ DARK MODE ############################
 
 const compactMenu = useCompactMenuStore()
 const setCompactMenu = (val: boolean) => {
@@ -135,6 +172,8 @@ const openSlideOver = () => {
 const closeSlideOver = () => {
   openSlide.value = false
 }
+
+
 </script>
 
 <template>
@@ -458,6 +497,10 @@ const closeSlideOver = () => {
                   <Lucide icon="user" class="dark:!text-slate-200" v-else />
                 </Menu.Button>
                 <Menu.Items class="w-56 mt-1 bg-white shadow-lg rounded-md">
+                  <Menu.Item class="text-danger flex items-center px-4 py-2 hover:bg-gray-100 dark:text-slate-200 dark:hover:text-red-400 dark:hover:bg-slate-600 flex flex-row justify-between" @click.prevent="()=>{darkMode = !darkMode}">
+                    Modo oscuro 
+                    <FormSwitch.Input id="darkmode" type="checkbox" v-model="darkMode" class="shadow-current" />
+                  </Menu.Item>
                   <Menu.Item @click="() => router.push({ name: 'settings' })"
                     class="text-primary flex items-center px-4 py-2 hover:bg-gray-100 dark:text-slate-200 dark:hover:text-sky-500 dark:hover:bg-slate-600">
                     <Lucide icon="Users" class="w-4 h-4 mr-2 dark:text-slate-200 dark:hover:!text-sky-500" />

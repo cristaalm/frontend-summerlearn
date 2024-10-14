@@ -157,18 +157,7 @@ const filteredColorSchemesFrom19 = computed(() => {
                 </div>
               </div>
             </div>
-            <div class="flex items-center flex-row px-8 pt-6 pb-8">
-              <label class="inline-block w-60 mr-14">
-                <div class="text-left">
-                  <div class="flex items-center">
-                    <div class="font-medium dark:text-white">Modo oscuro</div>
-                  </div>
-                </div>
-              </label>
-              <div class="flex-1 w-full mt-0">
-                <FormSwitch.Input id="darkmode" type="checkbox" v-model="darkMode" class=" shadow-current" />
-              </div>
-            </div>
+
           </div>
         </Slideover.Description>
       </Slideover.Panel>
