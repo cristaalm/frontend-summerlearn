@@ -41,9 +41,9 @@ export function useDialogDelete({ areas }) {
     }
   }
 
-  const closedeleteArea = async () => {
+  const closeDeleteArea = () => {
     dialogStatusDelete.value = false // Close modal after deleting
   }
 
-  return { dialogStatusDelete, openDeleteModal, confirmDeleteArea, closedeleteArea }
+  return { dialogStatusDelete, openDeleteModal, confirmDeleteArea, closeDeleteArea }
 }

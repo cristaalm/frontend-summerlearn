@@ -44,7 +44,8 @@ onMounted(async () => {
       <div class="flex flex-col md:h-10 gap-y-3 md:items-center md:flex-row">
         <div class="text-base font-medium group-[.mode--light]:text-white">Agregar Actividad</div>
         <div class="flex flex-col sm:flex-row gap-x-3 gap-y-2 md:ml-auto">
-          <Button variant="primary" @click="() => router.push({ name: 'activities' })">
+          <Button variant="primary" @click="() => router.push({ name: 'activities' })"
+            class="group-[.mode--light]:!bg-white/[0.12] group-[.mode--light]:!text-slate-200 group-[.mode--light]:!border-transparent">
             <Lucide icon="ArrowLeft" class="stroke-[1.3] w-4 h-4 mr-2" /> Regresar
           </Button>
         </div>
@@ -66,19 +67,20 @@ onMounted(async () => {
               <label class="inline-block mb-2 sm:mb-0 sm:mr-5 sm:text-right xl:w-60 xl:mr-14">
                 <div class="text-left">
                   <div class="flex items-center">
-                    <div class="font-medium">Nombre de actividad</div>
-                    <div class="ml-2.5 px-2 py-0.5 bg-slate-100 text-xs rounded-md border border-slate-200">
+                    <div class="font-medium dark:text-slate-200">Nombre de actividad</div>
+                    <div
+                      class="ml-2.5 px-2 py-0.5 bg-slate-100 text-slate-500 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md border border-slate-200 dark:border-slate-500">
                       Requerido
                     </div>
                   </div>
-                  <div class="mt-1.5 xl:mt-3 text-xs text-slate-500/80">
+                  <div class="mt-1.5 xl:mt-3 text-xs text-slate-500/80 dark:text-slate-400">
                     Por favor, ingrese nombre de actividad.
                   </div>
                 </div>
               </label>
               <div class="flex-1 w-full mt-3 xl:mt-0">
                 <FormInput type="text" placeholder="Escriba aquí su nombre de actividad..." v-model="name"
-                  @input="(e) => validate(e, 'name')" />
+                  class="dark:text-slate-200 dark:placeholder:!text-slate-400" @input="(e) => validate(e, 'name')" />
                 <div class="mt-1 text-xs text-red-500 h-4">{{ status.name.message }}</div>
               </div>
             </div>
@@ -88,19 +90,21 @@ onMounted(async () => {
               <label class="inline-block mb-2 sm:mb-0 sm:mr-5 sm:text-right xl:w-60 xl:mr-14">
                 <div class="text-left">
                   <div class="flex items-center">
-                    <div class="font-medium">Descripción</div>
-                    <div class="ml-2.5 px-2 py-0.5 bg-slate-100 text-xs rounded-md border border-slate-200">
+                    <div class="font-medium dark:text-slate-200">Descripción</div>
+                    <div
+                      class="ml-2.5 px-2 py-0.5 bg-slate-100 text-slate-500 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md border border-slate-200 dark:border-slate-500">
                       Requerido
                     </div>
                   </div>
-                  <div class="mt-1.5 xl:mt-3 text-xs text-slate-500/80">
+                  <div class="mt-1.5 xl:mt-3 text-xs text-slate-500/80 dark:text-slate-400">
                     Por favor, ingrese su descripción.
                   </div>
                 </div>
               </label>
               <div class="flex-1 w-full mt-3 xl:mt-0">
                 <FormTextarea style="resize: none; height: 8.6rem" placeholder="Escriba aquí su descripción..."
-                  v-model="description" @input="(e) => validate(e, 'description')" />
+                  class="dark:text-slate-200 dark:placeholder:!text-slate-400" v-model="description"
+                  @input="(e) => validate(e, 'description')" />
                 <div class="mt-1 text-xs text-red-500 h-4">{{ status.description.message }}</div>
               </div>
             </div>
@@ -110,18 +114,20 @@ onMounted(async () => {
               <label class="inline-block mb-2 sm:mb-0 sm:mr-5 sm:text-right xl:w-60 xl:mr-14">
                 <div class="text-left">
                   <div class="flex items-center">
-                    <div class="font-medium">Responsable</div>
-                    <div class="ml-2.5 px-2 py-0.5 bg-slate-100 text-xs rounded-md border border-slate-200">
+                    <div class="font-medium dark:text-slate-200">Responsable</div>
+                    <div
+                      class="ml-2.5 px-2 py-0.5 bg-slate-100 text-slate-500 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md border border-slate-200 dark:border-slate-500">
                       Requerido
                     </div>
                   </div>
-                  <div class="mt-1.5 xl:mt-3 text-xs text-slate-500/80">
+                  <div class="mt-1.5 xl:mt-3 text-xs text-slate-500/80 dark:text-slate-400">
                     Por favor, seleccione el nombre del responsable.
                   </div>
                 </div>
               </label>
               <div class="flex-1 w-full mt-3 xl:mt-0">
-                <FormSelect v-model="responsible" @input="(e) => validate(e, 'responsible')">
+                <FormSelect v-model="responsible" @input="(e) => validate(e, 'responsible')"
+                  class="dark:text-slate-200 dark:placeholder:!text-slate-400">
                   <template v-if="loadingResponsable">
                     <option value="" disabled selected>Cargando...</option>
                   </template>
@@ -148,18 +154,20 @@ onMounted(async () => {
               <label class="inline-block mb-2 sm:mb-0 sm:mr-5 sm:text-right xl:w-60 xl:mr-14">
                 <div class="text-left">
                   <div class="flex items-center">
-                    <div class="font-medium">Programa</div>
-                    <div class="ml-2.5 px-2 py-0.5 bg-slate-100 text-xs rounded-md border border-slate-200">
+                    <div class="font-medium dark:text-slate-200">Programa</div>
+                    <div
+                      class="ml-2.5 px-2 py-0.5 bg-slate-100 text-slate-500 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md border border-slate-200 dark:border-slate-500">
                       Requerido
                     </div>
                   </div>
-                  <div class="mt-1.5 xl:mt-3 text-xs text-slate-500/80">
+                  <div class="mt-1.5 xl:mt-3 text-xs text-slate-500/80 dark:text-slate-400">
                     Por favor, seleccione el programa relacionado.
                   </div>
                 </div>
               </label>
               <div class="flex-1 w-full mt-3 xl:mt-0">
-                <FormSelect v-model="program" @input="(e) => validate(e, 'program')">
+                <FormSelect v-model="program" @input="(e) => validate(e, 'program')"
+                  class="dark:text-slate-200 dark:placeholder:!text-slate-400">
                   <template v-if="loadingPrograms">
                     <option value="" disabled selected>Cargando...</option>
                   </template>
@@ -184,7 +192,7 @@ onMounted(async () => {
           <!--? Fin de Campos Entrada -->
 
           <!-- Submit Button -->
-          <div class="flex py-5 border-t md:justify-end px-7 border-slate-200/80">
+          <div class="flex py-5 border-t md:justify-end px-7 border-slate-200/80 dark:border-slate-600">
             <Button
               :class="`w-full px-10 md:w-auto font-bold ${setActividadesLoading || !valid ? 'border-gray-500 text-gray-500' : 'border-green text-green'}`"
               @click="handleRegister" :disabled="!valid || setActividadesLoading">

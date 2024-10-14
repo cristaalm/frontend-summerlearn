@@ -1,6 +1,9 @@
 <script setup lang="ts">
+// @ts-ignore
 import ToastNotification from '@/components/ToastNotification/'
+import { loginColorSheme } from '@/utils/switchColorScheme'
 import { useThemeStore, getTheme, themes, type Themes } from '@/stores/theme'
+import ThemeSwitcher from '@/components/ThemeSwitcher'
 import { useRoute } from 'vue-router'
 import { onMounted, computed } from 'vue'
 
@@ -13,6 +16,7 @@ const switchTheme = (theme: Themes['name']) => {
 }
 
 onMounted(() => {
+  loginColorSheme()
   const theme = route.query.theme as Themes['name']
   if (route.query.theme !== undefined && themes.map((theme) => theme.name).includes(theme)) {
     switchTheme(theme)
@@ -26,4 +30,5 @@ onMounted(() => {
       <Component />
     </div>
   </ToastNotification>
+  <ThemeSwitcher :slide="true" />
 </template>

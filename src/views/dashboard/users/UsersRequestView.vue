@@ -37,11 +37,11 @@ const saveStatus = (action) => {
     <Dialog.Panel>
       <div class="p-5 text-center">
         <Lucide :icon="statusId === 'accept' ? 'CheckCircleIcon' : 'XCircle'" class="w-16 h-16 mx-auto mt-3"
-          :class="statusId === 'accept' ? 'text-success' : 'text-danger'" />
-        <div class="mt-5 text-3xl">
+          :class="statusId === 'accept' ? 'text-success dark:text-green-500' : 'text-danger dark:text-red-500'" />
+        <div class="mt-5 text-3xl dark:text-slate-200">
           ¿Está seguro de {{ statusId === 'accept' ? 'aceptar' : 'rechazar' }} este registro?
         </div>
-        <div class="mt-2 text-slate-500">
+        <div class="mt-2 text-slate-500 dark:text-slate-400">
           ¿Realmente {{ statusId === 'accept' ? 'aceptar' : 'rechazar' }} este registro?
           <br />
           Este proceso no puede deshacerse.
@@ -75,7 +75,7 @@ const saveStatus = (action) => {
                 <Lucide icon="Search"
                   class="absolute inset-y-0 left-0 z-10 w-4 h-4 my-auto ml-3 stroke-[1.3] text-slate-500" />
                 <FormInput v-model="searchQuery" type="text" placeholder="Buscar nombre de usuario..."
-                  class="pl-9 sm:w-72 rounded-[0.5rem]" />
+                  class="pl-9 sm:w-72 rounded-[0.5rem] dark:text-slate-200" />
               </div>
             </div>
             <div class="flex flex-col sm:flex-row gap-x-3 gap-y-2 sm:ml-auto">
@@ -84,15 +84,15 @@ const saveStatus = (action) => {
                   <Lucide icon="ArrowDownWideNarrow" class="stroke-[1.3] w-4 h-4 mr-2" />
                   Filtrar
                   <div
-                    class="flex items-center justify-center h-5 px-1.5 ml-2 text-xs font-medium border rounded-full bg-slate-100">
+                    class="flex items-center justify-center h-5 px-1.5 ml-2 text-xs font-medium border rounded-full bg-slate-100 dark:text-black">
                     {{ filtersCount }}
                   </div>
                 </Popover.Button>
                 <Popover.Panel placement="bottom-end">
                   <div class="p-2 space-y-4">
                     <div>
-                      <div class="text-left text-slate-500">Rol</div>
-                      <FormSelect v-model="selectedRole" class="flex-1 mt-2">
+                      <div class="text-left text-slate-500 dark:text-slate-200">Rol</div>
+                      <FormSelect v-model="selectedRole" class="flex-1 mt-2 dark:text-slate-200">
                         <option :value="null">Todos</option>
                         <option :value="'Voluntario'">Voluntario</option>
                         <option :value="'Beneficiario'">Beneficiario</option>
@@ -112,23 +112,27 @@ const saveStatus = (action) => {
             </div>
           </div>
           <div class="overflow-auto xl:overflow-visible">
-            <Table class="border-b border-slate-200/60">
+            <Table class="border-b border-slate-200/60 dark:border-slate-700">
               <Table.Thead>
                 <Table.Tr>
-                  <Table.Td class="w-5 py-4 font-medium border-t bg-slate-50 border-slate-200/60 text-slate-500">
+                  <Table.Td
+                    class="w-5 py-4 font-medium border-t bg-slate-50 dark:bg-transparent border-slate-200/60 text-slate-500 dark:text-slate-200">
                     Foto
                   </Table.Td>
-                  <Table.Td class="py-4 font-medium border-t bg-slate-50 border-slate-200/60 text-slate-500">
+                  <Table.Td
+                    class="w-5 py-4 font-medium border-t bg-slate-50 dark:bg-transparent border-slate-200/60 text-slate-500 dark:text-slate-200">
                     Nombre / Correo electrónico
                   </Table.Td>
-                  <Table.Td class="py-4 font-medium border-t bg-slate-50 border-slate-200/60 text-slate-500">
+                  <Table.Td
+                    class="w-5 py-4 font-medium border-t bg-slate-50 dark:bg-transparent border-slate-200/60 text-slate-500 dark:text-slate-200">
                     Rol
                   </Table.Td>
-                  <Table.Td class="py-4 font-medium border-t bg-slate-50 border-slate-200/60 text-slate-500">
+                  <Table.Td
+                    class="w-5 py-4 font-medium border-t bg-slate-50 dark:bg-transparent border-slate-200/60 text-slate-500 dark:text-slate-200">
                     Estado
                   </Table.Td>
                   <Table.Td
-                    class="py-4 font-medium text-center border-t w-36 bg-slate-50 border-slate-200/60 text-slate-500">
+                    class="py-4 font-medium text-center border-t w-36 bg-slate-50 dark:bg-transparent border-slate-200/60 text-slate-500 dark:text-slate-200">
                   </Table.Td>
                 </Table.Tr>
               </Table.Thead>
@@ -136,7 +140,7 @@ const saveStatus = (action) => {
               <!--? Mostrar 'Cargando información...' cuando loading es true -->
               <Table.Tbody v-if="loading">
                 <Table.Tr>
-                  <Table.Td colspan="7" class="py-8 text-center text-xl font-bold text-green-500">
+                  <Table.Td colspan="5" class="py-8 text-center text-xl font-bold text-green-500">
                     <div class="flex flex-col w-full justify-center items-center text-nowrap">
                       <LoadingIcon icon="tail-spin" class="h-8" color="black" />
                       <div class="mt-2">Cargando información...</div>
@@ -148,7 +152,7 @@ const saveStatus = (action) => {
               <!--? Mostrar mensaje de error cuando hay error -->
               <Table.Tbody v-if="error">
                 <Table.Tr>
-                  <Table.Td colspan="7" class="py-8 text-center text-xl font-bold text-red-500">
+                  <Table.Td colspan="5" class="py-8 text-center text-xl font-bold text-red-500">
                     Error al cargar la información, Inténtelo más tarde
                   </Table.Td>
                 </Table.Tr>
@@ -157,7 +161,7 @@ const saveStatus = (action) => {
               <!--? Mostrar mensaje de error cuando no se encuentran usuarios -->
               <Table.Tbody v-if="!loading && totalPages <= 0 && !error">
                 <Table.Tr>
-                  <Table.Td colspan="7" class="py-8 text-center text-xl font-bold text-amber-500">
+                  <Table.Td colspan="5" class="py-8 text-center text-xl font-bold text-amber-500">
                     Ningun usuario encontrado
                   </Table.Td>
                 </Table.Tr>
@@ -167,7 +171,7 @@ const saveStatus = (action) => {
               <Table.Tbody v-if="!loading && totalPages > 0">
                 <template v-for="user in paginatedUsers" :key="user.id">
                   <Table.Tr class="[&_td]:last:border-b-0">
-                    <Table.Td class="py-4 border-dashed dark:bg-darkmode-600">
+                    <Table.Td class="py-4 border-dashed dark:bg-darkmode-600 dark:text-slate-200">
                       <div class="flex">
                         <div class="w-9 h-9 image-fit zoom-in">
                           <Tippy as="img" alt="Tailwise - Admin Dashboard Template"
@@ -176,7 +180,7 @@ const saveStatus = (action) => {
                         </div>
                       </div>
                     </Table.Td>
-                    <Table.Td class="py-4 border-dashed dark:bg-darkmode-600">
+                    <Table.Td class="py-4 border-dashed dark:bg-darkmode-600 dark:text-slate-200">
                       <div class="font-medium whitespace-nowrap">
                         {{ user.name }}
                       </div>
@@ -184,15 +188,15 @@ const saveStatus = (action) => {
                         {{ user.email }}
                       </div>
                     </Table.Td>
-                    <Table.Td class="py-4 border-dashed dark:bg-darkmode-600">
+                    <Table.Td class="py-4 border-dashed dark:bg-darkmode-600 dark:text-slate-200">
                       <div class="whitespace-nowrap">
                         {{ user.rol }}
                       </div>
                     </Table.Td>
-                    <Table.Td class="py-4 border-dashed dark:bg-darkmode-600">
+                    <Table.Td class="py-4 border-dashed dark:bg-darkmode-600 dark:text-slate-200">
                       <div :class="[
                         'flex items-center justify-start',
-                        { 'text-success': user.status == 1 },
+                        { 'text-success dark:text-green': user.status == 1 },
                         { 'text-danger': user.status !== 1 },
                         { 'text-[#FFA500]': user.status == 0 }
                       ]">
@@ -203,25 +207,29 @@ const saveStatus = (action) => {
                             <LoadingIcon icon="bars" class="w-8 h-8" color="#FFA500" />
                           </div>
                           <span v-if="user.status == 0" class="text-amber-500">Cambiando....</span>
-                          <span v-else-if="user.status == 1" class="text-success">Activo</span>
-                          <span v-else class="text-danger">{{ user.status }}</span>
+                          <span v-else-if="user.status == 1" class="text-success dark:text-green">Activo</span>
+                          <span v-else class="text-danger dark:text-red-500 dark:font-bold">{{ user.status }}</span>
                         </div>
                       </div>
                     </Table.Td>
-                    <Table.Td class="relative py-4 border-dashed dark:bg-darkmode-600">
+                    <Table.Td class="relative py-4 border-dashed dark:bg-darkmode-600 dark:text-slate-200">
                       <div class="flex flex-col sm:flex-row gap-x-3 gap-y-2 md:ml-auto">
-                        <Button class="bg-green-300 text-gray-950 hover:bg-green-500 hover:text-white" @click="() => {
-                          openModal(user.id, 'accept')
-                          saveStatus('accept')
-                        }
-                          ">
+                        <Button
+                          class="bg-green-300 dark:hover:bg-green-300 text-gray-950 hover:bg-green-500 dark:border-none dark:bg-green-500 hover:text-white dark:hover:text-black dark:text-white"
+                          @click="() => {
+                            openModal(user.id, 'accept')
+                            saveStatus('accept')
+                          }
+                            ">
                           <Lucide icon="UserCheckIcon" class="stroke-[1.3] w-4 h-4 mr-2" /> Aceptar
                         </Button>
-                        <Button class="bg-red-300 text-gray-950 hover:bg-red-500 hover:text-white" @click="() => {
-                          openModal(user.id, 'reject')
-                          saveStatus('reject')
-                        }
-                          ">
+                        <Button
+                          class="bg-red-300 dark:hover:bg-red-300 text-gray-950 hover:bg-red-500 dark:border-none dark:bg-red-500 hover:text-white dark:hover:text-black dark:text-white"
+                          @click="() => {
+                            openModal(user.id, 'reject')
+                            saveStatus('reject')
+                          }
+                            ">
                           <Lucide icon="UserMinusIcon" class="stroke-[1.3] w-4 h-4 mr-2" /> Rechazar
                         </Button>
                       </div>
@@ -251,7 +259,8 @@ const saveStatus = (action) => {
                 <Lucide icon="ChevronsRight" class="w-4 h-4" />
               </Pagination.Link>
             </Pagination>
-            <FormSelect class="sm:w-20 rounded-[0.5rem]" v-model="pageSize" @change="changePageSize">
+            <FormSelect class="sm:w-20 rounded-[0.5rem] dark:text-slate-200" v-model="pageSize"
+              @change="changePageSize">
               <option value="10">10</option>
               <option value="20">20</option>
               <option value="30">30</option>

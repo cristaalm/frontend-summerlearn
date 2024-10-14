@@ -57,7 +57,7 @@ const smoothScroll = (event) => {
     <div class="flex flex-row justify-center items-center">
       <span
         @click="router.push({ name: 'login' })"
-        :class="`px-6 py-2 text-lg text-nowrap transition-all duration-300 cursor-pointer ${topScroll ? ' hover:text-emerald-600' : 'text-black hover:text-gray-500'}`"
+        :class="`px-6 py-2 text-lg text-nowrap transition-all duration-300 cursor-pointer ${topScroll ? ' hover:text-emerald-600' : 'text-black dark:text-slate-200 hover:text-gray-500'}`"
       >
         {{ $t('navbar.logIn') }}
       </span>

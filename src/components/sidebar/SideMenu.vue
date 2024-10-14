@@ -5,7 +5,6 @@ import { useRoute, useRouter } from 'vue-router'
 import { Menu, Slideover } from '@/components/base/Headless'
 import Tippy from '@/components/base/Tippy'
 import Lucide from '@/components/base/Lucide'
-import Breadcrumb from '@/components/base/Breadcrumb'
 import { useMenuStore } from '@/stores/menu'
 import { useCompactMenuStore } from '@/stores/compact-menu'
 import {
@@ -20,11 +19,14 @@ import {
 } from './side-menu'
 import { watch, reactive, ref, computed, onMounted, provide } from 'vue'
 import SimpleBar from 'simplebar'
+//@ts-ignore
+import { logoutColorScheme } from '@/utils/switchColorScheme'
 
-// ? ############################ USER INFO ############################ 
+// ? ############################ USER INFO ############################
 
-
+// @ts-ignore
 import { useUserPhoto } from '@/hooks/settings/'
+// @ts-ignore
 import { Baseurl } from '@/utils/global'
 
 const { photoUser, loadingUserPhoto, errorUserPhoto, loadUserPhoto } = useUserPhoto()
@@ -133,7 +135,6 @@ const openSlideOver = () => {
 const closeSlideOver = () => {
   openSlide.value = false
 }
-
 </script>
 
 <template>
@@ -142,7 +143,7 @@ const closeSlideOver = () => {
   <!-- BEGIN: Slide Over Content -->
   <Slideover v-model:open="openSlide" @close="closeSlideOver">
     <!-- v-model vinculado a openSlide -->
-    <Slideover.Panel>
+    <Slideover.Panel class="text-black dark:text-slate-200">
       <Slideover.Title class="p-5">
         <h2 class="mr-auto text-base font-medium">Contáctanos</h2>
       </Slideover.Title>
@@ -247,7 +248,7 @@ const closeSlideOver = () => {
   <!-- END: Slide Over Content -->
 
   <div :class="[
-    'echo group bg-gradient-to-b from-slate-200/70 to-slate-50 background relative min-h-screen',
+    'echo group bg-gradient-to-b from-slate-200/70 to-slate-50 dark:from-theme-1 dark:to-slate-800 background relative min-h-screen',
     'before:content-[\'\'] before:h-[370px] before:w-screen before:bg-gradient-to-t before:from-theme-1/80 before:to-theme-2 [&.background--hidden]:before:opacity-0 before:transition-[opacity,height] before:ease-in-out before:duration-300 before:top-0 before:fixed',
     'after:content-[\'\'] after:h-[370px] after:w-screen [&.background--hidden]:after:opacity-0 after:transition-[opacity,height] after:ease-in-out after:duration-300 after:top-0 after:fixed after:bg-texture-white after:bg-contain after:bg-fixed after:bg-[center_-13rem] after:bg-no-repeat',
     { 'background--hidden': topBarActive }
@@ -270,11 +271,11 @@ const closeSlideOver = () => {
           activeMobileMenu = false
         }
           " class="mt-5 ml-5">
-          <Lucide icon="X" class="w-8 h-8 text-white" />
+          <Lucide icon="X" class="w-8 h-8 text-white dark:!text-slate-200" />
         </a>
       </div>
       <div :class="[
-        'h-full box bg-white/[0.95] rounded-none xl:rounded-xl z-20 relative w-[275px] duration-300 transition-[width] group-[.side-menu--collapsed]:xl:w-[91px] group-[.side-menu--collapsed.side-menu--on-hover]:xl:shadow-[6px_0_12px_-4px_#0000000f] group-[.side-menu--collapsed.side-menu--on-hover]:xl:w-[275px] overflow-hidden flex flex-col'
+        'h-full box bg-white/[0.95] darl:bg-slate-700 rounded-none xl:rounded-xl z-20 relative w-[275px] duration-300 transition-[width] group-[.side-menu--collapsed]:xl:w-[91px] group-[.side-menu--collapsed.side-menu--on-hover]:xl:shadow-[6px_0_12px_-4px_#0000000f] group-[.side-menu--collapsed.side-menu--on-hover]:xl:w-[275px] overflow-hidden flex flex-col'
       ]" @mouseover="(event) => {
         event.preventDefault()
         compactMenuOnHover = true
@@ -298,18 +299,18 @@ const closeSlideOver = () => {
             }
               ">
             <div
-              class="flex items-center justify-center w-[34px] rounded-lg h-[34px] bg-gradient-to-b from-theme-1 to-theme-2/80 transition-transform ease-in-out group-[.side-menu--collapsed.side-menu--on-hover]:xl:-rotate-360">
+              class="flex items-center justify-center w-[34px] rounded-lg h-[34px] bg-gradient-to-b from-theme-2 dark:from-slate-600 to-theme-2/80 dark:to-slate-600/80 transition-transform ease-in-out group-[.side-menu--collapsed.side-menu--on-hover]:xl:-rotate-360">
               <!-- Logo -->
               <img src="/logo_icono.png" />
             </div>
             <div
-              class="ml-3.5 group-[.side-menu--collapsed.side-menu--on-hover]:xl:opacity-100 group-[.side-menu--collapsed]:xl:opacity-0 transition-opacity font-medium">
+              class="dark:text-slate-200 ml-3.5 group-[.side-menu--collapsed.side-menu--on-hover]:xl:opacity-100 group-[.side-menu--collapsed]:xl:opacity-0 transition-opacity font-medium">
               SummerLearn
             </div>
           </a>
           <a href="" @click="toggleCompactMenu"
             class="hidden group-[.side-menu--collapsed.side-menu--on-hover]:xl:opacity-100 group-[.side-menu--collapsed]:xl:rotate-180 group-[.side-menu--collapsed]:xl:opacity-0 transition-[opacity,transform] 3xl:flex items-center justify-center w-[20px] h-[20px] ml-auto border rounded-full border-slate-600/40 hover:bg-slate-600/5">
-            <Lucide icon="ArrowLeft" class="w-3.5 h-3.5 stroke-[1.3]" />
+            <Lucide icon="ArrowLeft" class="w-3.5 h-3.5 stroke-[1.3] dark:text-slate-200" />
           </a>
         </div>
         <div ref="scrollableRef" :class="[
@@ -331,26 +332,27 @@ const closeSlideOver = () => {
                   }
                 ]" @click="(event: MouseEvent) => {
                   event.preventDefault()
-                  if (!menu.subMenu) {
-                    activeMobileMenu = false
-                  }
+                  activeMobileMenu = false
+
                   linkTo(menu, router)
                   setFormattedMenu([...formattedMenu])
-                }
-                  ">
+                }">
                   <Lucide :icon="menu.icon" class="side-menu__link__icon" />
                   <div class="side-menu__link__title">{{ menu.title }}</div>
                   <div v-if="menu.badge" class="side-menu__link__badge">
                     {{ menu.badge }}
                   </div>
-                  <Lucide v-if="menu.subMenu" icon="ChevronDown" class="side-menu__link__chevron" />
+                  <Lucide v-if="menu.subMenu" icon="ChevronDown"
+                    @click.stop.prevent="menu.activeDropdown = !menu.activeDropdown"
+                    class="side-menu__link__chevron dark:!text-slate-200" />
                 </a>
+
                 <!-- BEGIN: Second Child -->
                 <Transition @enter="enter" @leave="leave">
-                  <ul v-if="menu.subMenu && menu.activeDropdown">
-                    <li v-for="(subMenu, subMenuKey) in menu.subMenu" :key="subMenuKey">
+                  <ul v-if="menu.subMenu && menu.activeDropdown" class="bg-slate-800">
+                    <li v-for="(subMenu, subMenuKey) in menu.subMenu" :key="subMenuKey" class="">
                       <a href="" :class="[
-                        'side-menu__link',
+                        'side-menu__link ',
                         { 'side-menu__link--active': subMenu.active },
                         {
                           'side-menu__link--active-dropdown': subMenu.activeDropdown
@@ -369,7 +371,7 @@ const closeSlideOver = () => {
                         <div v-if="subMenu.badge" class="side-menu__link__badge">
                           {{ subMenu.badge }}
                         </div>
-                        <Lucide v-if="subMenu.subMenu" icon="ChevronDown" class="side-menu__link__chevron" />
+                        <Lucide v-if="subMenu.subMenu" icon="ChevronDown" class="side-menu__link__chevron " />
                       </a>
                       <!-- BEGIN: Third Child -->
                       <Transition @enter="enter" @leave="leave">
@@ -419,14 +421,14 @@ const closeSlideOver = () => {
           { 'top-bar--active': topBarActive }
         ]">
           <div
-            class="container flex items-center justify-between w-full h-full transition-[padding,background-color,border-color] ease-in-out duration-300 box bg-transparent border-transparent shadow-none group-[.top-bar--active]:box group-[.top-bar--active]:px-5 group-[.top-bar--active]:bg-transparent group-[.top-bar--active]:border-transparent group-[.top-bar--active]:bg-gradient-to-r group-[.top-bar--active]:from-theme-1 group-[.top-bar--active]:to-theme-2">
+            class="container flex items-center justify-between w-full h-full transition-[padding,background-color,border-color] ease-in-out duration-300 bg-transparent border-transparent shadow-none group-[.top-bar--active]:box group-[.top-bar--active]:px-5 group-[.top-bar--active]:bg-transparent group-[.top-bar--active]:border-transparent group-[.top-bar--active]:bg-gradient-to-r group-[.top-bar--active]:from-theme-1 group-[.top-bar--active]:to-theme-2">
             <div class="flex items-center gap-1 xl:hidden">
               <a href="" @click="(event) => {
                 event.preventDefault()
                 activeMobileMenu = true
               }
                 " class="p-2 text-white rounded-full hover:bg-white/5">
-                <Lucide icon="AlignJustify" class="w-[18px] h-[18px]" />
+                <Lucide icon="AlignJustify" class="w-[18px] h-[18px] dark:!text-slate-200" />
               </a>
             </div>
             <div class="relative justify-center flex-1 hidden xl:flex" @click="() => {
@@ -450,23 +452,26 @@ const closeSlideOver = () => {
               <Menu>
                 <Menu.Button class="overflow-hidden rounded-full w-9 h-9 border-3 border-white/15 image-fit">
                   <!-- Verifica si loadingUserPhoto es falso y photoUser tiene un valor válido -->
-                  <img alt="User Photo" v-if="!loadingUserPhoto" :src="`${Baseurl}${photoUser}`" class="bg-white" />
+                  <img alt="User Photo" v-if="!loadingUserPhoto" :src="`${Baseurl}${photoUser}`"
+                    class="bg-white dark:bg-slate-600" />
                   <!-- Mostrar un placeholder o ícono en caso de que loadingUserPhoto sea falso pero photoUser sea null -->
-                  <Lucide icon="user" v-else />
+                  <Lucide icon="user" class="dark:!text-slate-200" v-else />
                 </Menu.Button>
                 <Menu.Items class="w-56 mt-1 bg-white shadow-lg rounded-md">
                   <Menu.Item @click="() => router.push({ name: 'settings' })"
-                    class="text-primary flex items-center px-4 py-2 hover:bg-gray-100">
-                    <Lucide icon="Users" class="w-4 h-4 mr-2" />
+                    class="text-primary flex items-center px-4 py-2 hover:bg-gray-100 dark:text-slate-200 dark:hover:text-sky-500 dark:hover:bg-slate-600">
+                    <Lucide icon="Users" class="w-4 h-4 mr-2 dark:text-slate-200 dark:hover:!text-sky-500" />
                     Configuración
                   </Menu.Item>
                   <Menu.Item @click="() => {
                     clearLocalStorage()
                     menuStore.resetMenu()
+                    logoutColorScheme('default', false)
                     router.push({ name: 'login' })
                   }
-                    " class="text-danger flex items-center px-4 py-2 hover:bg-gray-100">
-                    <Lucide icon="Power" class="w-4 h-4 mr-2" />
+                    "
+                    class="text-danger flex items-center px-4 py-2 hover:bg-gray-100 dark:text-slate-200 dark:hover:text-red-400 dark:hover:bg-slate-600 ">
+                    <Lucide icon="Power" class="w-4 h-4 mr-2 dark:text-slate-200 dark:hover:!text-red-400" />
                     Cerrar Sesión
                   </Menu.Item>
                 </Menu.Items>

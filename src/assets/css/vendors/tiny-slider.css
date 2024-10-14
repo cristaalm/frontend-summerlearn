@@ -1,229 +1,112 @@
+@import "tiny-slider/dist/tiny-slider.css";
+
 .tns-outer {
-  padding: 0 !important;
-}
-.tns-outer [hidden] {
-  display: none !important;
-}
-.tns-outer [aria-controls],
-.tns-outer [data-action] {
-  cursor: pointer;
-}
-.tns-slider {
-  transition: all 0s;
-}
-.tns-slider > .tns-item {
-  box-sizing: border-box;
-}
-.tns-horizontal.tns-subpixel {
-  white-space: nowrap;
-}
-.tns-horizontal.tns-subpixel > .tns-item {
-  display: inline-block;
-  vertical-align: top;
-  white-space: normal;
-}
-.tns-horizontal.tns-no-subpixel:after {
-  content: '';
-  display: table;
-  clear: both;
-}
-.tns-horizontal.tns-no-subpixel > .tns-item {
-  float: left;
-}
-.tns-horizontal.tns-carousel.tns-no-subpixel > .tns-item {
-  margin-right: -100%;
-}
-.tns-no-calc {
-  position: relative;
-  left: 0;
-}
-.tns-gallery {
-  position: relative;
-  left: 0;
-  min-height: 1px;
-}
-.tns-gallery > .tns-item {
-  position: absolute;
-  left: -100%;
-  transition:
-    transform 0s,
-    opacity 0s;
-}
-.tns-gallery > .tns-slide-active {
-  position: relative;
-  left: auto !important;
-}
-.tns-gallery > .tns-moving {
-  transition: all 0.25s;
-}
-.tns-autowidth {
-  display: inline-block;
-}
-.tns-lazy-img {
-  transition: opacity 0.6s;
-  opacity: 0.6;
-}
-.tns-lazy-img.tns-complete {
-  opacity: 1;
-}
-.tns-ah {
-  transition: height 0s;
-}
-.tns-ovh {
-  overflow: hidden;
-}
-.tns-visually-hidden {
-  position: absolute;
-  left: -10000em;
-}
-.tns-transparent {
-  opacity: 0;
-  visibility: hidden;
-}
-.tns-fadeIn {
-  opacity: 1;
-  filter: alpha(opacity=100);
-  z-index: 0;
-}
-.tns-normal,
-.tns-fadeOut {
-  opacity: 0;
-  filter: alpha(opacity=0);
-  z-index: -1;
-}
-.tns-vpfix {
-  white-space: nowrap;
-}
-.tns-vpfix > div,
-.tns-vpfix > li {
-  display: inline-block;
-}
-.tns-t-subp2 {
-  margin: 0 auto;
-  width: 310px;
-  position: relative;
-  height: 10px;
-  overflow: hidden;
-}
-.tns-t-ct {
-  width: 2333.3333333%;
-  width: calc(100% * 70 / 3);
-  position: absolute;
-  right: 0;
-}
-.tns-t-ct:after {
-  content: '';
-  display: table;
-  clear: both;
-}
-.tns-t-ct > div {
-  width: 1.4285714%;
-  width: calc(100% / 70);
-  height: 10px;
-  float: left;
-}
-.tns-outer {
-  position: relative;
-}
-.tns-outer .tns-controls button {
-  width: 1.25rem;
-  height: 1.25rem;
-  background-color: #e2e8f0;
-  color: transparent;
-  border-radius: 9999px;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  margin-top: auto;
-  margin-bottom: auto;
-  z-index: 10;
-  outline: none;
-}
-.tns-outer .tns-controls button:hover {
-  background-color: #cbd5e1;
-}
-.tns-outer .tns-controls button[data-controls='prev'] {
-  left: 0;
-  margin-left: calc(1.5rem * -1);
-}
-.tns-outer .tns-controls button[data-controls='prev']:before {
-  content: '';
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='rgb(102 113 132)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='lucide lucide-chevron-down'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
-  background-size: 80%;
-  width: 100%;
-  height: 100%;
-  background-position: center;
-  transform: rotate(90deg);
-  position: absolute;
-  margin: auto;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-}
-.tns-outer .tns-controls button[data-controls='next'] {
-  right: 0;
-  margin-right: calc(1.5rem * -1);
-}
-.tns-outer .tns-controls button[data-controls='next']:before {
-  content: '';
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='rgb(102 113 132)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='lucide lucide-chevron-down'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
-  background-size: 80%;
-  width: 100%;
-  height: 100%;
-  background-position: center;
-  transform: rotate(-90deg);
-  position: absolute;
-  margin: auto;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-}
-.tns-outer .tns-nav {
-  margin-bottom: -1.8rem;
-  width: 100%;
-  position: absolute;
-  bottom: 0;
-  z-index: 10;
-  display: flex;
-  justify-content: center;
-}
-.tns-outer .tns-nav button {
-  width: 0.75rem;
-  height: 0.75rem;
-  background-color: #cbd5e1;
-  border-radius: 9999px;
-  margin-left: 0.25rem;
-  margin-right: 0.25rem;
-  outline: none;
-}
-.tns-outer .tns-nav button.tns-nav-active {
-  background-color: #64748b;
-}
-.tns-outer button[data-action] {
-  display: none;
-}
-.tns-outer .tns-visually-hidden {
-  display: none;
-}
-.dark .tns-outer .tns-controls button {
-  background-color: rgb(var(--color-darkmode-300) / 1);
-}
-.dark .tns-outer .tns-controls button:hover {
-  background-color: rgb(var(--color-darkmode-200) / 1);
-}
-.dark .tns-outer .tns-nav button {
-  background-color: rgb(var(--color-darkmode-300) / 1);
-}
-.dark .tns-outer .tns-nav button.tns-nav-active {
-  background-color: rgb(var(--color-darkmode-200) / 1);
-}
-.dark .tns-outer button[data-action] {
-  display: none;
-}
-.dark .tns-outer .tns-visually-hidden {
-  display: none;
+    position: relative;
+    .tns-controls button {
+        width: theme("spacing.5");
+        height: theme("spacing.5");
+        background-color: theme("colors.slate.200");
+        color: transparent;
+        border-radius: theme("borderRadius.full");
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        margin-top: auto;
+        margin-bottom: auto;
+        z-index: theme("zIndex.10");
+        outline: none;
+        &:hover {
+            background-color: theme("colors.slate.300");
+        }
+        &[data-controls="prev"] {
+            left: 0;
+            margin-left: calc(theme("spacing.6") * -1);
+            &:before {
+                content: "";
+                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='rgb(102 113 132)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='lucide lucide-chevron-down'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+                background-size: 80%;
+                width: 100%;
+                height: 100%;
+                background-position: center;
+                transform: rotate(90deg);
+                position: absolute;
+                margin: auto;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+            }
+        }
+        &[data-controls="next"] {
+            right: 0;
+            margin-right: calc(theme("spacing.6") * -1);
+            &:before {
+                content: "";
+                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='rgb(102 113 132)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='lucide lucide-chevron-down'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+                background-size: 80%;
+                width: 100%;
+                height: 100%;
+                background-position: center;
+                transform: rotate(-90deg);
+                position: absolute;
+                margin: auto;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+            }
+        }
+    }
+    .tns-nav {
+        margin-bottom: -1.8rem;
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+        z-index: theme("zIndex.10");
+        display: flex;
+        justify-content: center;
+        button {
+            width: theme("spacing.3");
+            height: theme("spacing.3");
+            background-color: theme("colors.slate.300");
+            border-radius: theme("borderRadius.full");
+            margin-left: theme("spacing.1");
+            margin-right: theme("spacing.1");
+            outline: none;
+            &.tns-nav-active {
+                background-color: theme("colors.slate.500");
+            }
+        }
+    }
+    button[data-action] {
+        display: none;
+    }
+    .tns-visually-hidden {
+        display: none;
+    }
 }
 
-/*# sourceMappingURL=tiny-slider.css.map */
+.dark {
+    .tns-outer {
+        .tns-controls button {
+            background-color: theme("colors.darkmode.300");
+            &:hover {
+                background-color: theme("colors.darkmode.200");
+            }
+        }
+        .tns-nav {
+            button {
+                background-color: theme("colors.darkmode.300");
+                &.tns-nav-active {
+                    background-color: theme("colors.darkmode.200");
+                }
+            }
+        }
+        button[data-action] {
+            display: none;
+        }
+        .tns-visually-hidden {
+            display: none;
+        }
+    }
+}

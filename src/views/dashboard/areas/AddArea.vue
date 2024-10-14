@@ -40,10 +40,10 @@ const handleRegister = () => {
           <Button variant="primary"
             class="group-[.mode--light]:!bg-white/[0.12] group-[.mode--light]:!text-slate-200 group-[.mode--light]:!border-transparent"
             @click="() => {
-                router.push({
-                  name: 'areas'
-                })
-              }
+              router.push({
+                name: 'areas'
+              })
+            }
               ">
             <Lucide icon="ArrowLeft" class="stroke-[1.3] w-4 h-4 mr-2" /> Regresar
           </Button>
@@ -64,20 +64,20 @@ const handleRegister = () => {
               <label class="inline-block mb-2 sm:mb-0 sm:mr-5 sm:text-right xl:w-60 xl:mr-14">
                 <div class="text-left">
                   <div class="flex items-center">
-                    <div class="font-medium">Nombre del área</div>
+                    <div class="font-medium dark:text-slate-200">Nombre del área</div>
                     <div
-                      class="ml-2.5 px-2 py-0.5 bg-slate-100 text-slate-500 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md border border-slate-200">
+                      class="ml-2.5 px-2 py-0.5 bg-slate-100 text-slate-500 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md border border-slate-200 dark:border-slate-500">
                       Requerido
                     </div>
                   </div>
-                  <div class="mt-1.5 xl:mt-3 text-xs leading-relaxed text-slate-500/80">
+                  <div class="mt-1.5 xl:mt-3 text-xs leading-relaxed text-slate-500/80 dark:text-slate-400">
                     Por favor, ingrese el nombre del área.
                   </div>
                 </div>
               </label>
               <div class="flex-1 w-full mt-3 xl:mt-0">
                 <FormInput type="text" placeholder="Escriba aquí su nombre del área..." v-model="name"
-                  @input="(e) => validate(e, 'name')" />
+                  class="dark:text-slate-200 dark:placeholder:!text-slate-400" @input="(e) => validate(e, 'name')" />
                 <div class="mt-1 text-xs text-red-500 h-4">
                   {{ status.name.message }}
                 </div>
@@ -88,19 +88,21 @@ const handleRegister = () => {
               <label class="inline-block mb-2 sm:mb-0 sm:mr-5 sm:text-right xl:w-60 xl:mr-14">
                 <div class="text-left">
                   <div class="flex items-center">
-                    <div class="font-medium">Responsable</div>
-                    <div class="ml-2.5 px-2 py-0.5 bg-slate-100 text-xs rounded-md border border-slate-200">
+                    <div class="font-medium dark:text-slate-200">Responsable</div>
+                    <div
+                      class="ml-2.5 px-2 py-0.5 bg-slate-100 text-slate-500 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md border border-slate-200 dark:border-slate-500">
                       Requerido
                     </div>
                   </div>
-                  <div class="mt-1.5 xl:mt-3 text-xs text-slate-500/80">
+                  <div class="mt-1.5 xl:mt-3 text-xs text-slate-500/80 dark:text-slate-400">
                     Por favor, seleccione el nombre del responsable.
                   </div>
                 </div>
               </label>
 
               <div class="flex-1 w-full mt-3 xl:mt-0">
-                <FormSelect v-model="responsable" @input="(e) => validate(e, 'responsable')">
+                <FormSelect v-model="responsable" @input="(e) => validate(e, 'responsable')"
+                  class="dark:text-slate-200 dark:placeholder:!text-slate-400">
                   <template v-if="loading">
                     <option value="" disabled selected>Cargando...</option>
                   </template>
@@ -125,9 +127,9 @@ const handleRegister = () => {
 
           <!--? ######################### BOTON DE REGISTRO ######################### -->
 
-          <div class="flex py-5 border-t md:justify-end px-7 border-slate-200/80">
-            <Button
-              :class="`w-full px-10 md:w-auto font-bold ${setAreaLoading || !valid ? 'border-gray-500 text-gray-500' : 'border-green text-green'}`"
+          <div class="flex py-5 border-t md:justify-end px-7 border-slate-200/80 dark:border-slate-600">
+            <Button variant="outline-success"
+              :class="`w-full px-10 md:w-auto font-bold ${setAreaLoading || !valid ? 'border-gray-500 text-gray-500' : 'border-green text-green dark:text-slate-200'}`"
               @click="handleRegister" :disabled="!valid || setAreaLoading">
               <LoadingIcon v-if="setAreaLoading" icon="tail-spin" class="stroke-[1.3] w-4 h-4 mr-2 -ml-2"
                 color="black" />

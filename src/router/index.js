@@ -1,6 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { useMenuStore } from '@/stores/menu'
-import { getRoleFromToken } from '@/utils/getRolFromToken'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css' // Asegúrate de importar el CSS
 
@@ -325,14 +323,6 @@ const router = createRouter({
 
 router.beforeEach(async (to, from, next) => {
   NProgress.start() // Iniciar la barra de progreso
-
-  const menuStore = useMenuStore()
-  const role = await getRoleFromToken()
-
-  if (role) {
-    menuStore.loadMenu(role) // Actualiza el menú según el rol
-  }
-
   next() // Continúa con la navegación
 })
 

@@ -1,5 +1,7 @@
 <template>
-  <footer class="text-black py-10 flex flex-row justify-center items-center w-full bg-footerColor">
+  <footer
+    class="text-black dark:text-slate-200 py-10 flex flex-row justify-center items-center w-full bg-footerColor"
+  >
     <div class="container">
       <div class="flex flex-row w-full">
         <div class="w-1/2 flex flex-col justify-center items-start">
@@ -22,7 +24,7 @@
             <!-- Dropdown for language selection -->
             <select
               id="language-select"
-              class="block appearance-none bg-yellow/20 border border-yellow/30 text-black py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-yellow/20 focus:border-yellow/300 cursor-pointer"
+              class="block appearance-none bg-yellow/20 border border-yellow/30 text-black dark:text-slate-200 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-yellow/20 focus:border-yellow/300 cursor-pointer"
               v-model="language"
               @change="changeLanguage"
             >
