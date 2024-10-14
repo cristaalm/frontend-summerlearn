@@ -3,7 +3,7 @@ import { computed, onMounted } from 'vue'
 import { type ChartData, type ChartOptions } from 'chart.js/auto'
 import { useColorSchemeStore } from '@/stores/color-scheme'
 import { useDarkModeStore } from '@/stores/dark-mode'
-import Chart from '@/components/Base/Chart'
+import Chart from '@/components/base/Chart'
 import { getColor } from '@/utils/colors'
 import { useWeeklyDonations } from '@/hooks/donations/'
 
