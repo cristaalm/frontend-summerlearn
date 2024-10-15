@@ -497,13 +497,13 @@ const closeSlideOver = () => {
                   <Lucide icon="user" class="dark:!text-slate-200" v-else />
                 </Menu.Button>
                 <Menu.Items class="w-56 mt-1 bg-white shadow-lg rounded-md">
-                  <Menu.Item class="text-danger flex items-center px-4 py-2 hover:bg-gray-100 dark:text-slate-200 dark:hover:text-red-400 dark:hover:bg-slate-600 flex flex-row justify-between" @click.prevent="()=>{darkMode = !darkMode}">
+                  <Menu.Item class="text-primary flex items-center px-4 py-2 hover:bg-gray-100 dark:text-slate-200 dark:hover:text-sky-500 dark:hover:bg-slate-600 flex flex-row justify-between" @click.prevent="()=>{darkMode = !darkMode}">
                     Modo oscuro 
-                    <FormSwitch.Input id="darkmode" type="checkbox" v-model="darkMode" class="shadow-current" />
+                    <FormSwitch.Input id="darkmode" type="checkbox" v-model="darkMode" class="shadow-current " />
                   </Menu.Item>
                   <Menu.Item @click="() => router.push({ name: 'settings' })"
                     class="text-primary flex items-center px-4 py-2 hover:bg-gray-100 dark:text-slate-200 dark:hover:text-sky-500 dark:hover:bg-slate-600">
-                    <Lucide icon="Users" class="w-4 h-4 mr-2 dark:text-slate-200 dark:hover:!text-sky-500" />
+                    <Lucide icon="Users" class="w-4 h-4 mr-2  " />
                     Configuración
                   </Menu.Item>
                   <Menu.Item @click="() => {
@@ -514,7 +514,7 @@ const closeSlideOver = () => {
                   }
                     "
                     class="text-danger flex items-center px-4 py-2 hover:bg-gray-100 dark:text-slate-200 dark:hover:text-red-400 dark:hover:bg-slate-600 ">
-                    <Lucide icon="Power" class="w-4 h-4 mr-2 dark:text-slate-200 dark:hover:!text-red-400" />
+                    <Lucide icon="Power" class="w-4 h-4 mr-2 " />
                     Cerrar Sesión
                   </Menu.Item>
                 </Menu.Items>
