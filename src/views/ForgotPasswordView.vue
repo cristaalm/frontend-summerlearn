@@ -8,9 +8,9 @@ import { useRefs } from '@/hooks/forgotPassword/useRefs'
 import { useValidation } from '@/hooks/forgotPassword/useValidation'
 import { useRouter } from 'vue-router'
 import { useSendMail } from '@/hooks/forgotPassword/useSendMail'
-import { computed, onMounted } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import DynamicText from '@/components/DynamicText'
-import { changeLoginColorScheme } from '@/utils/switchColorScheme'
+import { changeLoginColorScheme, changeColorScheme} from '@/utils/switchColorScheme'
 
 
 const { email } = useRefs()
@@ -22,6 +22,22 @@ const alertVariant = computed(() => { return successMail.value ? 'soft-success' 
 onMounted(() => {
   changeLoginColorScheme()
 })
+
+const colorSchame = ref('theme-19')
+const changeColor = () => {
+  
+  if (colorSchame.value === 'theme-19') {
+    colorSchame.value = 'theme-20';
+  } else if (colorSchame.value === 'theme-20') {
+    colorSchame.value = 'theme-21';
+  } else if (colorSchame.value === 'theme-21') {
+    colorSchame.value = 'theme-22';
+  } else {
+    colorSchame.value = 'theme-19'; // Volver a theme-19
+  }
+  changeColorScheme(colorSchame.value);
+}
+
 
 </script>
 
@@ -125,8 +141,8 @@ onMounted(() => {
         'Recupera tu contraseña y sigue marcando la diferencia con tu voluntariado y dedicación.',
         'Restablecer tu acceso te permitirá seguir brindando apoyo educativo a quienes más lo necesitan.',
         'Tu compromiso es invaluable, te ayudamos a volver para que sigas siendo parte de nuestra misión.'
-      ]" />
-      <div class="hidden lg:block absolute bottom-10 left-10 text-white">
+      ]" :changeColor="changeColor" />
+      <div class="hidden lg:block absolute bottom-40 left-40 text-white">
         <h2 class="text-4xl font-bold">SummerLearn</h2>
         <p class="mt-2 text-lg">Transformando la educación, un paso a la vez.</p>
       </div>
