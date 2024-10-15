@@ -2,7 +2,7 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 
 // Definir la prop para las frases
-const { phrases } = defineProps<{ phrases: string[] }>()
+const { phrases, changeColor } = defineProps<{ phrases: string[], changeColor: () => void }>()
 
 // Estado reactivo para el texto actual y visibilidad del componente
 const dynamicText = ref<string>('')
@@ -39,7 +39,9 @@ const typeEffect = (): void => {
     // Si terminó de escribir la frase, esperar antes de comenzar a borrar
     if (!isDeleting && letterIndex === currentPhrase.length) {
         setTimeout(() => (isDeleting = true), delayBetweenPhrases)
+        changeColor();
     } else if (isDeleting && letterIndex === 0) {
+        changeColor();
         // Cambiar a la siguiente frase después de borrar
         isDeleting = false
         phraseIndex++

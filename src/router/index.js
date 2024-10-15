@@ -240,7 +240,13 @@ const router = createRouter({
           path: '/dashboard/performance',
           name: 'performance',
           component: () =>
-            import('@/views/dashboard/performance/PerformanceView.vue').catch(
+            import('@/views/dashboard/performance/PerformanceView.vue')
+        },
+        {
+          path: '/dashboard/AddPerformance',
+          name: 'addPerformance',
+          component: () =>
+            import('@/views/dashboard/performance/AddPerformance.vue').catch(
               () => import('@/views/dashboard/notFoundView/NotFoundView.vue')
             )
         },
