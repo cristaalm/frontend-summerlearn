@@ -55,3 +55,7 @@ export const logoutColorScheme = (
 export const changeLoginColorScheme = (): void => {
   switchColorScheme('theme-19', false)
 }
+
+export const changeColorScheme = (scheme: ColorSchemes): void => {
+  switchColorScheme(scheme , false)
+}

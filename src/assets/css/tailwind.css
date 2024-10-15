@@ -4805,6 +4805,10 @@ select {
   bottom: 2.5rem;
 }
 
+.bottom-60 {
+  bottom: 15rem;
+}
+
 .bottom-\[100\%\] {
   bottom: 100%;
 }
@@ -4851,6 +4855,18 @@ select {
 
 .top-\[50\%\] {
   top: 50%;
+}
+
+.left-40 {
+  left: 10rem;
+}
+
+.bottom-40 {
+  bottom: 10rem;
+}
+
+.left-20 {
+  left: 5rem;
 }
 
 .z-10 {
@@ -6994,6 +7010,18 @@ select {
   padding-top: 54px;
 }
 
+.pl-16 {
+  padding-left: 4rem;
+}
+
+.pl-20 {
+  padding-left: 5rem;
+}
+
+.pl-1 {
+  padding-left: 0.25rem;
+}
+
 .text-left {
   text-align: left;
 }
@@ -7876,6 +7904,13 @@ select {
   transition-duration: 150ms;
 }
 
+.before\:transition-all::before {
+  content: var(--tw-content);
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
 .before\:duration-200::before {
   content: var(--tw-content);
   transition-duration: 200ms;
@@ -8070,6 +8105,13 @@ select {
 .after\:transition-\[opacity\2c height\]::after {
   content: var(--tw-content);
   transition-property: opacity,height;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.after\:transition-all::after {
+  content: var(--tw-content);
+  transition-property: all;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
 }
