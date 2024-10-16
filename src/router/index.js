@@ -237,13 +237,29 @@ const router = createRouter({
             )
         },
         {
+          path: '/dashboard/childrens',
+          name: 'childrens',
+          component: () =>
+            import('@/views/dashboard/children/ChildrenView.vue').catch(
+              () => import('@/views/dashboard/notFoundView/NotFoundView.vue')
+            )
+        },
+        {
+          path: '/dashboard/children/add', 
+          name: 'addChildrens',
+          component: () =>
+            import('@/views/dashboard/children/AddChildView.vue').catch(
+              () => import('@/views/dashboard/notFoundView/NotFoundView.vue')
+            )
+        },
+        {
           path: '/dashboard/performance',
           name: 'performance',
           component: () =>
             import('@/views/dashboard/performance/PerformanceView.vue')
         },
         {
-          path: '/dashboard/AddPerformance',
+          path: '/dashboard/performance/add',
           name: 'addPerformance',
           component: () =>
             import('@/views/dashboard/performance/AddPerformance.vue').catch(

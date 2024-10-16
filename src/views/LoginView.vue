@@ -20,6 +20,10 @@ const router = useRouter()
 const colorSchame = ref('theme-19')
 const changeColor = () => {
   
+  if (loginSuccess.value) {
+    return 
+  }
+
   if (colorSchame.value === 'theme-19') {
     colorSchame.value = 'theme-20';
   } else if (colorSchame.value === 'theme-20') {
