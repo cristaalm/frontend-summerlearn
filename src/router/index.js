@@ -253,13 +253,23 @@ const router = createRouter({
             )
         },
         {
+          path: '/dashboard/subscriptionsgrid',
+          name: 'subscriptionsGrid',
+          component: () =>
+            import('@/views/dashboard/subscriptions/SubscriptionsGridView.vue').catch(
+              () => import('@/views/dashboard/notFoundView/NotFoundView.vue')
+            )
+        },
+        {
           path: '/dashboard/performance',
           name: 'performance',
           component: () =>
-            import('@/views/dashboard/performance/PerformanceView.vue')
+            import('@/views/dashboard/performance/PerformanceView.vue').catch(
+              () => import('@/views/dashboard/notFoundView/NotFoundView.vue')
+            )
         },
         {
-          path: '/dashboard/performance/add',
+          path: '/dashboard/AddPerformance',
           name: 'addPerformance',
           component: () =>
             import('@/views/dashboard/performance/AddPerformance.vue').catch(
