@@ -245,7 +245,7 @@ const router = createRouter({
             )
         },
         {
-          path: '/dashboard/children/add', 
+          path: '/dashboard/childrens/add', 
           name: 'addChildrens',
           component: () =>
             import('@/views/dashboard/children/AddChildView.vue').catch(
