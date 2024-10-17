@@ -153,7 +153,7 @@ const alertVariant = computed(() => {
         'Gracias a ti, llevamos materiales y apoyo a quienes más lo necesitan.',
         'Sé parte de SummerLearn, creando oportunidades para las próximas generaciones.'
       ]" :changeColor="changeColor" />
-      <div class="hidden lg:block absolute bottom-40 left-40 text-white">
+      <br><div class="hidden lg:block absolute bottom-40 ml-4 md:ml-20 lg:ml-[70px] xl:ml-[110px] text-white">
         <h2 class="text-4xl font-bold">SummerLearn</h2>
         <p class="mt-2 text-lg">Transformando la educación, un paso a la vez.</p>
       </div>

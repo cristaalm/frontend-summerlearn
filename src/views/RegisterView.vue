@@ -329,19 +329,8 @@ const handleSubmit = () => {
       'before:content-[\'\'] before:absolute before:lg:-ml-10 before:left-0 before:inset-y-0 before:bg-gradient-to-b before:from-theme-1 before:to-theme-2 before:w-screen before:lg:w-[800%]',
       'after:content-[\'\'] after:absolute after:inset-y-0 after:left-0 after:w-screen after:lg:w-[800%] after:bg-texture-white after:bg-fixed after:bg-center after:lg:bg-[25rem_-25rem] after:bg-no-repeat',
     ]">
-      <DynamicText :phrases="[
-        'Estás a un paso de volver a tu cuenta y seguir apoyando la educación de quienes más lo necesitan.',
-        'Actualiza tu contraseña y regresa a nuestra misión de transformar vidas a través de la educación.',
-        'Cambia tu contraseña para continuar siendo parte del cambio en las escuelas con menos recursos.',
-        'Tu nuevo acceso está casi listo, el futuro de muchas comunidades te espera.',
-        'Recupera tu seguridad y sigue brindando oportunidades educativas a estudiantes de bajos recursos.',
-        'Una contraseña nueva, el mismo compromiso con la educación y el voluntariado.',
-        'Estamos casi listos, ajusta tu acceso y regresa a nuestra labor de mejorar la educación.',
-        'Con una nueva contraseña, sigues impulsando sueños y oportunidades para estudiantes.',
-        'Este es solo un paso más para continuar haciendo una diferencia en la educación de los más necesitados.',
-        'Cambia tu contraseña y sigue ayudando a construir un futuro más brillante para las escuelas rurales.'
-      ]" :changeColor="changeColor" />
-      <div class="hidden lg:block absolute bottom-40 left-40 text-white">
+      <DynamicText class="hidden lg:sticky" :phrases="phrases[route.params.rol]" />
+      <br><div class="hidden lg:block absolute bottom-40 ml-4 md:ml-20 lg:ml-[70px] xl:ml-[110px] text-white">
         <h2 class="text-4xl font-bold">SummerLearn</h2>
         <p class="mt-2 text-lg">Transformando la educación, un paso a la vez.</p>
       </div>
