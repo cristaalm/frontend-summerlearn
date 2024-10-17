@@ -190,6 +190,12 @@ export const useMenuStore = defineStore('menu', {
           break
         case 5:
           menuItems = [
+            'MI(S) HIJO(S)',
+            {
+              icon: 'BookUser',
+              pageName: 'childrens',
+              title: 'Hijos'
+            },
             'GESTIÓN DE PROGRAMAS',
             {
               icon: 'BookMarked',
@@ -200,7 +206,8 @@ export const useMenuStore = defineStore('menu', {
               icon: 'BarChartBig',
               pageName: 'performance_view',
               title: 'Desempeño'
-            }
+            },
+            
             // 'CONTÁCTANOS',
             // {
             //   icon: 'MessagesSquare',

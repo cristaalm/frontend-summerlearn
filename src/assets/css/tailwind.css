@@ -4481,42 +4481,12 @@ select {
   --color-primary: 3 105 161;
 }
 
-.theme-3 {
-  --color-theme-1: 88 28 135;
-  --color-theme-2: 14 116 144;
-  --color-theme-3: 14 116 144;
-  --color-primary: 88 28 135;
-  --color-secondary: 226 232 240;
-  --color-success: 13 148 136;
-  --color-info: 8 145 178;
-  --color-warning: 202 138 4;
-  --color-pending: 194 65 12;
-  --color-danger: 185 28 28;
-  --color-light: 241 245 249;
-  --color-dark: 30 41 59;
-}
-
 .theme-3.dark {
   --color-primary: 3 105 161;
 }
 
 .theme-4.dark {
   --color-primary: 3 105 161;
-}
-
-.theme-5 {
-  --color-theme-1: 3 105 161;
-  --color-theme-2: 159 18 57;
-  --color-theme-3: 159 18 57;
-  --color-primary: 3 105 161;
-  --color-secondary: 226 232 240;
-  --color-success: 13 148 136;
-  --color-info: 8 145 178;
-  --color-warning: 202 138 4;
-  --color-pending: 194 65 12;
-  --color-danger: 185 28 28;
-  --color-light: 241 245 249;
-  --color-dark: 30 41 59;
 }
 
 .theme-5.dark {

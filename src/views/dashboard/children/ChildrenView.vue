@@ -135,7 +135,7 @@ onMounted(() => {
                       </div>
                     </Table.Td>
                     <Table.Td class="py-4 border-dashed dark:bg-darkmode-600 dark:text-slate-200">
-                      <div class="text-slate-400 text-xs whitespace-nowrap mt-0.5">
+                      <div class="font-medium whitespace-nowrap">
                         {{ calculateAge(children.birthdate) }} 
                       </div>
                     </Table.Td>
