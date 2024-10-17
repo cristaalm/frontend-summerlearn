@@ -25,13 +25,16 @@ import { logoutColorScheme } from '@/utils/switchColorScheme'
 // ? ############################ USER INFO ############################
 
 // @ts-ignore
-import { useUserPhoto } from '@/hooks/settings/'
+import { useUserPhoto, useUser } from '@/hooks/settings/'
 // @ts-ignore
 import { Baseurl } from '@/utils/global'
 
 const { photoUser, loadingUserPhoto, errorUserPhoto, loadUserPhoto } = useUserPhoto()
+const { user, loadingUser, errorUser, loadUser } = useUser()
 
 provide('userPhoto', { photoUser, loadingUserPhoto, errorUserPhoto, loadUserPhoto })
+provide('user', { user, loadingUser, errorUser, loadUser })
+
 
 // ? ############################ SIDE MENU ############################
 
@@ -101,6 +104,7 @@ const clearLocalStorage = () => {
 
 onMounted(() => {
   loadUserPhoto()
+  loadUser()
 
   if (scrollableRef.value) {
     new SimpleBar(scrollableRef.value)

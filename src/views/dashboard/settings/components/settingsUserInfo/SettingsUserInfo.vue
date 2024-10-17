@@ -1,64 +1,46 @@
 <script setup>
 import { useStatus, useRefs, useValidateFunctions, useUpdateUser } from '@/hooks/settings/userInfoUpdate/'
 import { FormInput } from "@/components/base/Form";
-import { watch, computed, onMounted } from 'vue'
+import { watch, computed, onMounted, inject } from 'vue'
 import LoadingIcon from '@/components/base/LoadingIcon'
 import Litepicker from '@/components/base/Litepicker'
 import Lucide from '@/components/base/Lucide'
 import Button from '@/components/base/Button'
 
-const props = defineProps({
-    user: {
-        type: Object,
-        required: true
-    },
-    loading: {
-        type: Boolean,
-        required: true
-    },
-    error: {
-        type: Boolean,
-        required: true
-    },
-    loadUser: {
-        type: Function,
-        required: true,
-    }
-})
-
+const { user, loadingUser, errorUser, loadUser } = inject('user')
 const { status } = useStatus()
 const { firstName, lastName, phone, birthdate, valid } = useRefs()
 const { validateText, validateDate, validateInputPhone, validate } = useValidateFunctions({ valid, status })
 const validChanges = computed(() => {
-    return valid.value && (firstName.value !== props.user.firstName || lastName.value !== props.user.lastName || phone.value !== props.user.phone || birthdate.value !== props.user.birthdate.split('-').reverse().join('/'))
+    return valid.value && (firstName.value !== user.value.firstName || lastName.value !== user.value.lastName || phone.value !== user.value.phone || birthdate.value !== user.value.birthdate.split('-').reverse().join('/'))
 })
 
-const { loadingUser, updateUser } = useUpdateUser({ phone, firstName, lastName, birthdate, valid, validate, loadUser: props.loadUser })
+const { loadingUserEdit, updateUser } = useUpdateUser({ phone, firstName, lastName, birthdate, valid, validate, loadUser })
 // Año mínimo para la fecha de nacimiento
 const minYear = new Date().getFullYear() - 18
 
 onMounted(() => {
     const assignUserValues = () => {
         // Asignar los valores del usuario a los campos
-        if (props.user.firstName) firstName.value = props.user.firstName
+        if (user.value.firstName) firstName.value = user.value.firstName
         let e = { target: { value: firstName.value, name: 'firstName' } }
         validateText(e)
 
-        if (props.user.lastName) lastName.value = props.user.lastName
+        if (user.value.lastName) lastName.value = user.value.lastName
         e = { target: { value: lastName.value, name: 'lastName' } }
         validateText(e)
 
-        if (props.user.phone) phone.value = props.user.phone
+        if (user.value.phone) phone.value = user.value.phone
         e = { target: { value: phone.value, name: 'phone' } }
         validateInputPhone(e)
         validateText(e)
 
-        if (props.user.birthdate) birthdate.value = props.user.birthdate.split('-').reverse().join('/')
+        if (user.value.birthdate) birthdate.value = user.value.birthdate.split('-').reverse().join('/')
 
         validate()
     }
 
-    watch(() => props.user, assignUserValues, { immediate: true })
+    watch(() => user.value, assignUserValues, { immediate: true })
 })
 
 watch(birthdate, (value) => {
@@ -73,19 +55,19 @@ watch(birthdate, (value) => {
             Tu información personal
         </div>
 
-        <div v-if="error" class="flex items-center justify-center h-40">
+        <div v-if="errorUser" class="flex items-center justify-center h-40">
             <div class="text-red-500 text-center flex flex-col w-full justify-center items-center">
                 <Lucide icon="AlertTriangle" class="w-20 h-20" />
                 <div class="mt-2 text-2xl">Error al cargar la información, intenta más tarde.</div>
             </div>
         </div>
 
-        <div v-if="loading" class="flex items-center justify-center h-40 ">
+        <div v-if="loadingUser" class="flex items-center justify-center h-40 ">
             <LoadingIcon icon="three-dots" class="h-10" customClass="fill-theme-1" />
         </div>
 
 
-        <div v-if="!loading && !error">
+        <div v-if="!loadingUser && !errorUser">
 
             <!-- ? ################################# Nombre completo ################################# ? -->
 
@@ -188,13 +170,13 @@ watch(birthdate, (value) => {
 
 
         </div>
-        <div class="flex pt-5 mt-6 border-t border-dashed md:justify-end border-slate-300/70" v-if="!error">
+        <div class="flex pt-5 mt-6 border-t border-dashed md:justify-end border-slate-300/70" v-if="!errorUser">
             <Button variant="outline-success" class="w-full px-10 md:w-auto border-primary/50 dark:text-slate-200"
-                :disabled="!valid || !validChanges || loadingUser" @click="updateUser">
-                <Lucide v-if="!loadingUser" icon="Check" class="stroke-[1.3] w-4 h-4 mr-2 -ml-2" />
-                <LoadingIcon v-if="loadingUser" icon="tail-spin" class="stroke-[1.3] w-4 h-4 mr-2 -ml-2"
+                :disabled="!valid || !validChanges || loadingUser || loadingUserEdit" @click="updateUser">
+                <Lucide v-if="!loadingUserEdit" icon="Check" class="stroke-[1.3] w-4 h-4 mr-2 -ml-2" />
+                <LoadingIcon v-if="loadingUserEdit" icon="tail-spin" class="stroke-[1.3] w-4 h-4 mr-2 -ml-2"
                     color="black" />
-                {{ loadingUser ? 'Guardando cambios...' : 'Guardar cambios' }}
+                {{ loadingUserEdit ? 'Guardando cambios...' : 'Guardar cambios' }}
             </Button>
         </div>
     </div>

@@ -13,16 +13,16 @@ export function useUpdateUser({
   loadUser
 }) {
   const errorUser = ref('')
-  const loadingUser = ref(false)
+  const loadingUserEdit = ref(false)
   const showToast = inject('showToast')
 
   const updateUser = async () => {
     errorUser.value = ''
-    loadingUser.value = true
+    loadingUserEdit.value = true
     validate() // Validar antes de ejecutar la llamada
     if (!valid.value) {
       showToast({ message: 'Por favor, completa los campos correctamente', tipo: 'error' })
-      loadingUser.value = false
+      loadingUserEdit.value = false
       return
     }
 
@@ -60,12 +60,12 @@ export function useUpdateUser({
       console.error('Error en la solicitud:', err)
       showToast({ message: 'Hubo un problema en la solicitud', tipo: 'error' })
     } finally {
-      loadingUser.value = false
+      loadingUserEdit.value = false
     }
   }
 
   return {
-    loadingUser,
+    loadingUserEdit,
     updateUser
   }
 }

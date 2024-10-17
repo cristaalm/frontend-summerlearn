@@ -7,10 +7,10 @@ import { Baseurl } from "@/utils/global";
 
 
 const inputFile = ref(null);
-const { photoUser, loadingUserPhoto, errorUserPhoto, loadUserPhoto } = inject('userPhoto');
+const { photoUser, loadingUserPhoto, errorUserPhoto } = inject('userPhoto');
 
 // enviamos la imagen del usuario proporsionada por el padre a la función useValidationImage
-const { profileImage, errorMessagePhoto, validateImage, triggerFileSelect, loadingImage } = useValidationImage({ imageUser: photoUser, inputFile });
+const { profileImage, validateImage, triggerFileSelect, loadingImage } = useValidationImage({ imageUser: photoUser, inputFile });
 
 // Actualiza profileImage cuando loading cambia a false
 watch(() => loadingUserPhoto, (newLoading) => {

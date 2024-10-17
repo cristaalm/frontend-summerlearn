@@ -10,6 +10,16 @@ body::-webkit-scrollbar-thumb {
   border-radius: 5px; /* Ajusta el radio de las esquinas */
 }
 
+.dark .scrollbar-custom::-webkit-scrollbar {
+  /* slate-900 */
+  background-color: rgb(40, 51, 78); /* Color variable */
+}
+
+.dark .scrollbar-custom::-webkit-scrollbar-thumb {
+  /* slate-700 */
+  background: rgb(27, 37, 59); /* Color variable */
+}
+
 /* ?  ############## NProgress ############## ? */
 
 #nprogress .bar {
@@ -121,7 +131,7 @@ html.theme-8 {
 
 html.theme-9 {
   --scrollbar-bg: #9fd5bf;
-  --scrollbar-thumb: #0E3B43;
+  --scrollbar-thumb: #0e3b43;
   --nprogress-bar-bg: #357266;
   --nprogress-spinner: #357266;
   --nprogress-shadow: #357266;
@@ -129,10 +139,10 @@ html.theme-9 {
 
 html.theme-10 {
   --scrollbar-bg: #b7b7a3;
-  --scrollbar-thumb: #4D4D42;
-  --nprogress-bar-bg: #6C6C60;
-  --nprogress-spinner: #6C6C60;
-  --nprogress-shadow: #6C6C60;
+  --scrollbar-thumb: #4d4d42;
+  --nprogress-bar-bg: #6c6c60;
+  --nprogress-spinner: #6c6c60;
+  --nprogress-shadow: #6c6c60;
 }
 
 html.theme-11 {
@@ -199,7 +209,6 @@ html.theme-18 {
   --nprogress-shadow: #2f3e46;
 }
 
-
 html.dark {
   --scrollbar-bg: #3e3e3e;
   --scrollbar-thumb: #1e1e1e;
@@ -209,11 +218,11 @@ html.dark {
 }
 
 html.theme-19 {
-  --scrollbar-bg: #5BCAE6;
-  --scrollbar-thumb: #1E6B88;
-  --nprogress-bar-bg: #5BCAE6;
-  --nprogress-spinner: #1E6B88;
-  --nprogress-shadow: #1E6B88;
+  --scrollbar-bg: #5bcae6;
+  --scrollbar-thumb: #1e6b88;
+  --nprogress-bar-bg: #5bcae6;
+  --nprogress-spinner: #1e6b88;
+  --nprogress-shadow: #1e6b88;
 }
 
 html.theme-20 {

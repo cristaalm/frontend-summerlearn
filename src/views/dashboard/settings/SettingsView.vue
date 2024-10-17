@@ -47,8 +47,7 @@ onMounted(() => {
           <SettingsHero />
 
           <!-- INFO USER -->
-          <SettingsUserInfo v-if="page === null" :user="user" :loading="loadingUser" :error="errorUser ? true : false"
-            :loadUser="loadUser" />
+          <SettingsUserInfo v-if="page === null" />
 
           <!-- CHANGE PASSWORD -->
           <SettingsChangePassword v-if="page === 'changePassword'" />

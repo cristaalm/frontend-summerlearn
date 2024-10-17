@@ -188,14 +188,6 @@ const router = createRouter({
               throw error // Re-lanzamos el error si necesitas que sea gestionado en otro lugar
             })
         },
-        // {
-        //   path: '/dashboard/activities',
-        //   name: 'activities',
-        //   component: () =>
-        //     import('@/views/dashboard/activities/ActivitiesView.vue').catch(
-        //       () => import('@/views/dashboard/notFoundView/NotFoundView.vue')
-        //     )
-        // },
         {
           path: '/dashboard/activities/add',
           name: 'addActividades',
