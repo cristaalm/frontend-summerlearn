@@ -7,6 +7,7 @@ import { Menu, Popover, Dialog } from '@/components/base/Headless'
 import Pagination from '@/components/base/Pagination'
 import Table from '@/components/base/Table'
 import LoadingIcon from '@/components/base/LoadingIcon'
+import { ref, onMounted } from 'vue'
 import Button from '@/components/base/Button'
 import {
   useFilter,
@@ -21,7 +22,6 @@ import {
   useExportPDF
 } from '@/hooks/actividades/'
 import { useObjectives } from '@/services/actividades/useObjectives'
-import { ref, onMounted } from 'vue'
 // useSetActividades, useSetObjectives
 import { useSetObjectives } from '@/hooks/actividades/addActividades'
 import { useValidationAddObjective } from '@/hooks/actividades/addActividades/useValidationAddObjective'
@@ -59,7 +59,6 @@ const { status, description, valid, validate } = useValidationAddObjective()
 const { loadExportExcel, loadingExportExcel } = useExportExcel()
 const { loadExportPDF, loadingExportPDF } = useExportPDF()
 const router = useRouter()
-const id_actividad = ref(null) // Variable reactiva para guardar el ID
 
 const handleObjective = async () => {
   if (valid.value) {
@@ -74,6 +73,7 @@ const handleObjective = async () => {
   loadObjectives(id_actividad.value)
 }
 
+const id_actividad = ref(null) // Variable reactiva para guardar el ID
 // Función para guardar el ID
 const guardarId = (id) => {
   id_actividad.value = id // Guarda el ID en la variable reactiva
@@ -87,9 +87,14 @@ onMounted(() => {
 
 <template>
   <!-- BEGIN: Modal Content -->
-  <Dialog :open="dialogStatusDelete" @close="() => {
-    dialogStatusDelete.value = false
-  }">
+  <Dialog
+    :open="dialogStatusDelete"
+    @close="
+      () => {
+        dialogStatusDelete.value = false
+      }
+    "
+  >
     <Dialog.Panel>
       <div class="p-5 text-center">
         <Lucide icon="XCircle" class="w-16 h-16 mx-auto mt-3 text-danger dark:text-red-500" />
@@ -101,10 +106,21 @@ onMounted(() => {
         </div>
       </div>
       <div class="px-5 pb-8 text-center space-x-8">
-        <Button type="button" variant="outline-secondary" @click="closeDeleteActividad" class="w-24 mr-1">
+        <Button
+          type="button"
+          variant="outline-secondary"
+          @click="closeDeleteActividad"
+          class="w-24 mr-1"
+        >
           Cancelar
         </Button>
-        <Button type="button" variant="danger" class="w-24" @click="confirmDeleteActividad" ref="deleteButtonRef">
+        <Button
+          type="button"
+          variant="danger"
+          class="w-24"
+          @click="confirmDeleteActividad"
+          ref="deleteButtonRef"
+        >
           Eliminar
         </Button>
       </div>
@@ -113,9 +129,14 @@ onMounted(() => {
   <!-- END: Modal Content -->
 
   <!-- BEGIN: Modal Content Objective-->
-  <Dialog :open="dialogStatusDeleteObjective" @close="() => {
-    dialogStatusDeleteObjective.value = false
-  }">
+  <Dialog
+    :open="dialogStatusDeleteObjective"
+    @close="
+      () => {
+        dialogStatusDeleteObjective.value = false
+      }
+    "
+  >
     <Dialog.Panel>
       <div class="p-5 text-center">
         <Lucide icon="XCircle" class="w-16 h-16 mx-auto mt-3 text-danger dark:text-red-500" />
@@ -127,10 +148,21 @@ onMounted(() => {
         </div>
       </div>
       <div class="px-5 pb-8 text-center space-x-8">
-        <Button type="button" variant="outline-secondary" @click="closeDeleteObjective" class="w-24 mr-1">
+        <Button
+          type="button"
+          variant="outline-secondary"
+          @click="closeDeleteObjective"
+          class="w-24 mr-1"
+        >
           Cancelar
         </Button>
-        <Button type="button" variant="danger" class="w-24" @click="confirmDeleteObjective" ref="deleteButtonRef">
+        <Button
+          type="button"
+          variant="danger"
+          class="w-24"
+          @click="confirmDeleteObjective"
+          ref="deleteButtonRef"
+        >
           Eliminar
         </Button>
       </div>
@@ -143,17 +175,23 @@ onMounted(() => {
     <Dialog.Panel class="w-full max-w-full">
       <div class="p-5 text-right">
         <div class="flex justify-end items-center space-x-4">
-          <Button variant="primary"
+          <Button
+            variant="primary"
             class="group-[.mode--light]:!bg-white/[0.12] group-[.mode--light]:!text-slate-200 group-[.mode--light]:!border-transparent"
-            @click="() => {
-              openObjectiveModalAdd(id_actividad)
-            }
-              ">
+            @click="
+              () => {
+                openObjectiveModalAdd(id_actividad)
+              }
+            "
+          >
             <Lucide icon="PenLine" class="stroke-[1.3] w-4 h-4 mr-2 dark:stroke-slate-200" />
             Agregar objetivo
           </Button>
-          <Lucide icon="XCircle" class="w-10 h-full mx-auto text-danger cursor-pointer dark:text-red-500"
-            @click="closeAddObjective" />
+          <Lucide
+            icon="XCircle"
+            class="w-10 h-full mx-auto text-danger cursor-pointer dark:text-red-500"
+            @click="closeAddObjective"
+          />
         </div>
       </div>
       <!-- <div class="bold p-2">{{ id_actividad }}</div> -->
@@ -163,11 +201,13 @@ onMounted(() => {
             <Table.Thead>
               <Table.Tr>
                 <Table.Td
-                  class="w-5 py-4 font-medium border-t bg-slate-50 dark:bg-transparent border-slate-200/60 text-slate-500 dark:text-slate-200">
+                  class="w-5 py-4 font-medium border-t bg-slate-50 dark:bg-transparent border-slate-200/60 text-slate-500 dark:text-slate-200"
+                >
                   Objetivo
                 </Table.Td>
                 <Table.Td
-                  class="w-5 py-4 font-medium border-t bg-slate-50 dark:bg-transparent border-slate-200/60 text-slate-500 dark:text-slate-200">
+                  class="w-5 py-4 font-medium border-t bg-slate-50 dark:bg-transparent border-slate-200/60 text-slate-500 dark:text-slate-200"
+                >
                 </Table.Td>
               </Table.Tr>
             </Table.Thead>
@@ -175,7 +215,10 @@ onMounted(() => {
             <!-- loadingObjectives state -->
             <Table.Tbody v-if="loadingObjectives">
               <Table.Tr>
-                <Table.Td colspan="2" class="py-8 text-center text-xl font-bold text-green-500 dark:text-green-300">
+                <Table.Td
+                  colspan="2"
+                  class="py-8 text-center text-xl font-bold text-green-500 dark:text-green-300"
+                >
                   <div class="flex flex-col justify-center items-center">
                     <LoadingIcon icon="tail-spin" class="h-8 dark:stroke-green-300" color="black" />
                     <div class="mt-2 dark:text-slate-200">Cargando información...</div>
@@ -187,7 +230,10 @@ onMounted(() => {
             <!-- errorObjectives state -->
             <Table.Tbody v-if="errorObjectives">
               <Table.Tr>
-                <Table.Td colspan="2" class="py-8 text-center text-xl font-bold text-red-500 dark:text-red-300">
+                <Table.Td
+                  colspan="2"
+                  class="py-8 text-center text-xl font-bold text-red-500 dark:text-red-300"
+                >
                   Error al cargar la información, inténtelo más tarde
                 </Table.Td>
               </Table.Tr>
@@ -196,7 +242,10 @@ onMounted(() => {
             <!-- No results state -->
             <Table.Tbody v-if="!loadingObjectives && totalPages <= 0 && !errorObjectives">
               <Table.Tr>
-                <Table.Td colspan="2" class="py-8 text-center text-xl font-bold text-amber-500 dark:text-amber-300">
+                <Table.Td
+                  colspan="2"
+                  class="py-8 text-center text-xl font-bold text-amber-500 dark:text-amber-300"
+                >
                   No se encontraron objectives
                 </Table.Td>
               </Table.Tr>
@@ -206,27 +255,38 @@ onMounted(() => {
             <Table.Tbody v-if="!loadingObjectives && paginatedItems.length > 0">
               <template v-for="objective in objectives" :key="objective.id">
                 <Table.Tr class="[&_td]:last:border-b-0">
-                  <Table.Td class="py-4 border-dashed dark:bg-darkmode-600 dark:text-slate-200 text-center">
+                  <Table.Td
+                    class="py-4 border-dashed dark:bg-darkmode-600 dark:text-slate-200 text-center"
+                  >
                     <div class="font-medium whitespace-nowrap">
                       {{ objective.description }}
                     </div>
                   </Table.Td>
 
-                  <Table.Td class="relative py-4 border-dashed dark:bg-darkmode-600 dark:text-slate-200">
+                  <Table.Td
+                    class="relative py-4 border-dashed dark:bg-darkmode-600 dark:text-slate-200"
+                  >
                     <div class="flex items-center justify-end">
                       <Menu class="h-5">
                         <Menu.Button class="w-5 h-5 text-black dark:text-slate-200">
-                          <Lucide icon="MoreVertical"
-                            class="w-5 h-5 stroke-black dark:stroke-slate-200 fill-black dark:fill-slate-200" />
+                          <Lucide
+                            icon="MoreVertical"
+                            class="w-5 h-5 stroke-black dark:stroke-slate-200 fill-black dark:fill-slate-200"
+                          />
                         </Menu.Button>
                         <Menu.Items class="w-40">
                           <Menu.Item class="text-warning dark:text-yellow-300">
-                            <Lucide icon="CheckSquare" class="w-4 h-4 mr-2 dark:stroke-yellow-300" />
+                            <Lucide
+                              icon="CheckSquare"
+                              class="w-4 h-4 mr-2 dark:stroke-yellow-300"
+                            />
                             Editar
                           </Menu.Item>
 
-                          <Menu.Item class="text-danger dark:text-red-300"
-                            @click="openDeleteModalObjective(objective.id)">
+                          <Menu.Item
+                            class="text-danger dark:text-red-300"
+                            @click="openDeleteModalObjective(objective.id)"
+                          >
                             <Lucide icon="Trash" class="w-4 h-4 mr-2 dark:stroke-red-300" />
                             Eliminar
                           </Menu.Item>
@@ -245,20 +305,32 @@ onMounted(() => {
   <!-- END: Modal Content -->
 
   <!-- BEGIN: Super Large Modal Content dialogStatusObjectiveAdd -->
-  <Dialog size="xl" :open="dialogStatusObjectiveAdd" @close="dialogStatusObjectiveAdd.value = false">
+  <Dialog
+    size="xl"
+    :open="dialogStatusObjectiveAdd"
+    @close="dialogStatusObjectiveAdd.value = false"
+  >
     <Dialog.Panel class="w-full max-w-full">
       <div class="p-5">
         <div class="flex justify-end">
-          <Lucide icon="XCircle" class="w-10 h-10 text-danger cursor-pointer dark:text-red-500"
-            @click="closeAddObjectiveCreate" />
+          <Lucide
+            icon="XCircle"
+            class="w-10 h-10 text-danger cursor-pointer dark:text-red-500"
+            @click="closeAddObjectiveCreate"
+          />
         </div>
       </div>
 
       <div class="px-5 pb-8 text-center">
         <div class="overflow-x-auto">
           <!--? Inicio de Alerta de Error -->
-          <Alert variant="outline-danger" v-if="setObjectiveError" :message="setObjectiveError" :dismissible="true"
-            class="flex items-center px-4 py-3 my-7 dark:text-red-500" />
+          <Alert
+            variant="outline-danger"
+            v-if="setObjectiveError"
+            :message="setObjectiveError"
+            :dismissible="true"
+            class="flex items-center px-4 py-3 my-7 dark:text-red-500"
+          />
           <!--? Fin de Alerta de Error -->
           <div class="flex-col block xl:items-center sm:flex xl:flex-row">
             <label class="inline-block mb-2 sm:mb-0 sm:mr-5 sm:text-right xl:w-60 xl:mr-14">
@@ -266,7 +338,8 @@ onMounted(() => {
                 <div class="flex items-center">
                   <div class="font-medium dark:text-slate-200">Objetivo</div>
                   <div
-                    class="ml-2.5 px-2 py-0.5 bg-slate-100 text-slate-500 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md border border-slate-200 dark:border-slate-500">
+                    class="ml-2.5 px-2 py-0.5 bg-slate-100 text-slate-500 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md border border-slate-200 dark:border-slate-500"
+                  >
                     Requerido
                   </div>
                 </div>
@@ -277,25 +350,39 @@ onMounted(() => {
             </label>
             <div class="flex-1 w-full mt-3 xl:mt-1 mr-1 mb-6">
               <!-- <div class="flex w-full xl:mt-1 mr-1 mb-1"> -->
-              <FormTextarea style="resize: none; height: 8.6rem"
-                placeholder="Escriba aquí la descripción de su objetivo..." v-model="description"
+              <FormTextarea
+                style="resize: none; height: 8.6rem"
+                placeholder="Escriba aquí la descripción de su objetivo..."
+                v-model="description"
                 class="dark:text-slate-200 dark:placeholder:text-slate-400"
-                @input="(e) => validate(e, 'description')" />
+                @input="(e) => validate(e, 'description')"
+              />
               <div class="amt-1 text-xs text-red-500 dark:text-red-400 h-4 text-left">
                 {{ status.description.message }}
               </div>
             </div>
           </div>
           <!-- Submit Button -->
-          <div class="flex py-5 border-t md:justify-end px-7 border-slate-200/80 dark:border-slate-600">
+          <div
+            class="flex py-5 border-t md:justify-end px-7 border-slate-200/80 dark:border-slate-600"
+          >
             <Button
               :class="`w-full px-10 md:w-auto font-bold ${setObjectiveLoading || !valid ? 'border-gray-500 text-gray-500 dark:text-gray-500' : 'border-green text-green dark:text-green'}`"
-              @click="handleObjective" :disabled="!valid || setObjectiveLoading">
-              <LoadingIcon v-if="setObjectiveLoading" icon="tail-spin"
-                class="stroke-[1.3] w-4 h-4 mr-2 -ml-2 dark:stroke-green-500" color="black" />
+              @click="handleObjective"
+              :disabled="!valid || setObjectiveLoading"
+            >
+              <LoadingIcon
+                v-if="setObjectiveLoading"
+                icon="tail-spin"
+                class="stroke-[1.3] w-4 h-4 mr-2 -ml-2 dark:stroke-green-500"
+                color="black"
+              />
 
-              <Lucide v-if="!setObjectiveLoading" icon="Check"
-                class="stroke-[1.3] w-4 h-4 mr-2 dark:stroke-green-500" />
+              <Lucide
+                v-if="!setObjectiveLoading"
+                icon="Check"
+                class="stroke-[1.3] w-4 h-4 mr-2 dark:stroke-green-500"
+              />
               {{ setObjectiveLoading ? 'Registrando...' : 'Registrar' }}
             </Button>
           </div>
@@ -310,14 +397,17 @@ onMounted(() => {
       <div class="flex flex-col md:h-10 gap-y-3 md:items-center md:flex-row">
         <div class="text-base font-medium group-[.mode--light]:text-white">Actividades</div>
         <div class="flex flex-col sm:flex-row gap-x-3 gap-y-2 md:ml-auto">
-          <Button variant="primary"
+          <Button
+            variant="primary"
             class="group-[.mode--light]:!bg-white/[0.12] group-[.mode--light]:!text-slate-200 group-[.mode--light]:!border-transparent"
-            @click="() => {
-              router.push({
-                name: 'addActividades'
-              })
-            }
-              ">
+            @click="
+              () => {
+                router.push({
+                  name: 'addActividades'
+                })
+              }
+            "
+          >
             <Lucide icon="PenLine" class="stroke-[1.3] w-4 h-4 mr-2" /> Agregar nueva actividad
           </Button>
         </div>
@@ -327,44 +417,79 @@ onMounted(() => {
           <div class="flex flex-col p-5 sm:items-center sm:flex-row gap-y-2">
             <div>
               <div class="relative">
-                <Lucide icon="Search"
-                  class="absolute inset-y-0 left-0 z-10 w-4 h-4 my-auto ml-3 stroke-[1.3] text-slate-500" />
-                <FormInput v-model="searchQuery" type="text" placeholder="Buscar nombre de actividad..."
-                  class="pl-9 sm:w-72 rounded-[0.5rem] dark:text-slate-200" />
+                <Lucide
+                  icon="Search"
+                  class="absolute inset-y-0 left-0 z-10 w-4 h-4 my-auto ml-3 stroke-[1.3] text-slate-500"
+                />
+                <FormInput
+                  v-model="searchQuery"
+                  type="text"
+                  placeholder="Buscar nombre de actividad..."
+                  class="pl-9 sm:w-72 rounded-[0.5rem] dark:text-slate-200"
+                />
               </div>
             </div>
             <div class="flex flex-col sm:flex-row gap-x-3 gap-y-2 sm:ml-auto">
               <Menu>
-                <Menu.Button :as="Button" variant="outline-secondary"
+                <Menu.Button
+                  :as="Button"
+                  variant="outline-secondary"
                   :class="`w-full sm:w-auto ${loadingExportExcel || loadingExportPDF ? 'text-amber-500 dark:text-yellow-500' : ' text-black dark:text-slate-200'}`"
-                  :disabled="loadingExportExcel || loadingExportPDF">
-                  <Lucide v-if="!loadingExportExcel && !loadingExportPDF" icon="Download"
-                    class="stroke-[1.3] w-4 h-4 mr-2 dark:stroke-slate-200" />
-                  <LoadingIcon v-if="loadingExportExcel || loadingExportPDF" icon="tail-spin"
-                    class="stroke-[1.3] w-4 h-4 mr-2" customClass="dark:stroke-amber-500" />
+                  :disabled="loadingExportExcel || loadingExportPDF"
+                >
+                  <Lucide
+                    v-if="!loadingExportExcel && !loadingExportPDF"
+                    icon="Download"
+                    class="stroke-[1.3] w-4 h-4 mr-2 dark:stroke-slate-200"
+                  />
+                  <LoadingIcon
+                    v-if="loadingExportExcel || loadingExportPDF"
+                    icon="tail-spin"
+                    class="stroke-[1.3] w-4 h-4 mr-2"
+                    customClass="dark:stroke-amber-500"
+                  />
                   Exportar
-                  <Lucide icon="ChevronDown" class="stroke-[1.3] w-4 h-4 ml-2 dark:stroke-slate-200" />
+                  <Lucide
+                    icon="ChevronDown"
+                    class="stroke-[1.3] w-4 h-4 ml-2 dark:stroke-slate-200"
+                  />
                 </Menu.Button>
                 <Menu.Items class="w-40">
                   <Menu.Item @click="loadExportExcel">
                     <Button
                       :class="`w-full dark:border-none ${loadingExportExcel ? 'text-amber-500 dark:text-yellow-500' : ' text-black dark:text-slate-200'}`"
-                      :disabled="loadingExportExcel">
-                      <Lucide v-if="!loadingExportExcel" icon="FileSpreadsheet"
-                        class="stroke-[1.3] w-4 h-4 mr-2 dark:stroke-slate-200" />
-                      <LoadingIcon v-if="loadingExportExcel" icon="tail-spin"
-                        class="stroke-[1.3] w-4 h-4 mr-2 dark:stroke-amber-500" color="black" />
+                      :disabled="loadingExportExcel"
+                    >
+                      <Lucide
+                        v-if="!loadingExportExcel"
+                        icon="FileSpreadsheet"
+                        class="stroke-[1.3] w-4 h-4 mr-2 dark:stroke-slate-200"
+                      />
+                      <LoadingIcon
+                        v-if="loadingExportExcel"
+                        icon="tail-spin"
+                        class="stroke-[1.3] w-4 h-4 mr-2 dark:stroke-amber-500"
+                        color="black"
+                      />
                       Excel
                     </Button>
                   </Menu.Item>
                   <Menu.Item @click="loadExportPDF">
                     <Button
                       :class="`w-full dark:border-none ${loadingExportPDF ? 'text-amber-500 dark:text-yellow-500' : ' text-black dark:text-slate-200'}`"
-                      :disabled="loadingExportPDF">
-                      <Lucide v-if="!loadingExportPDF" icon="File"
-                        class="stroke-[1.3] w-4 h-4 mr-2 dark:stroke-slate-200" />
-                      <LoadingIcon v-if="loadingExportPDF" icon="tail-spin"
-                        class="stroke-[1.3] w-4 h-4 mr-2 dark:stroke-amber-500" color="black" />
+                      :disabled="loadingExportPDF"
+                    >
+                      <Lucide
+                        v-if="!loadingExportPDF"
+                        icon="File"
+                        class="stroke-[1.3] w-4 h-4 mr-2 dark:stroke-slate-200"
+                      />
+                      <LoadingIcon
+                        v-if="loadingExportPDF"
+                        icon="tail-spin"
+                        class="stroke-[1.3] w-4 h-4 mr-2 dark:stroke-amber-500"
+                        color="black"
+                      />
                       PDF
                     </Button>
                   </Menu.Item>
@@ -375,7 +500,8 @@ onMounted(() => {
                   <Lucide icon="ArrowDownWideNarrow" class="stroke-[1.3] w-4 h-4 mr-2" />
                   Filtrar
                   <div
-                    class="flex items-center justify-center h-5 px-1.5 ml-2 text-xs font-medium border rounded-full bg-slate-100 dark:text-black">
+                    class="flex items-center justify-center h-5 px-1.5 ml-2 text-xs font-medium border rounded-full bg-slate-100 dark:text-black"
+                  >
                     {{ activeFilters }}
                   </div>
                 </Popover.Button>
@@ -390,10 +516,15 @@ onMounted(() => {
                       </FormSelect>
                     </div>
                     <div class="flex items-center mt-4">
-                      <Button variant="secondary" @click="() => {
-                        close()
-                      }
-                        " class="w-32 ml-auto">
+                      <Button
+                        variant="secondary"
+                        @click="
+                          () => {
+                            close()
+                          }
+                        "
+                        class="w-32 ml-auto"
+                      >
                         Cerrar
                       </Button>
                     </div>
@@ -407,31 +538,38 @@ onMounted(() => {
               <Table.Thead>
                 <Table.Tr>
                   <Table.Td
-                    class="w-5 py-4 font-medium border-t bg-slate-50 dark:bg-transparent border-slate-200/60 text-slate-500 dark:text-slate-200 whitespace-normal">
+                    class="w-5 py-4 font-medium border-t bg-slate-50 dark:bg-transparent border-slate-200/60 text-slate-500 dark:text-slate-200 whitespace-normal"
+                  >
                     Nombre
                   </Table.Td>
                   <Table.Td
-                    class="w-5 py-4 font-medium border-t bg-slate-50 dark:bg-transparent border-slate-200/60 text-slate-500 dark:text-slate-200 whitespace-normal">
+                    class="w-5 py-4 font-medium border-t bg-slate-50 dark:bg-transparent border-slate-200/60 text-slate-500 dark:text-slate-200 whitespace-normal"
+                  >
                     Fecha
                   </Table.Td>
                   <Table.Td
-                    class="w-5 py-4 font-medium border-t bg-slate-50 dark:bg-transparent border-slate-200/60 text-slate-500 dark:text-slate-200 whitespace-normal">
+                    class="w-5 py-4 font-medium border-t bg-slate-50 dark:bg-transparent border-slate-200/60 text-slate-500 dark:text-slate-200 whitespace-normal"
+                  >
                     Programa
                   </Table.Td>
                   <Table.Td
-                    class="w-5 py-4 font-medium border-t bg-slate-50 dark:bg-transparent border-slate-200/60 text-slate-500 dark:text-slate-200 whitespace-normal">
+                    class="w-5 py-4 font-medium border-t bg-slate-50 dark:bg-transparent border-slate-200/60 text-slate-500 dark:text-slate-200 whitespace-normal"
+                  >
                     Área
                   </Table.Td>
                   <Table.Td
-                    class="w-5 py-4 font-medium border-t bg-slate-50 dark:bg-transparent border-slate-200/60 text-slate-500 dark:text-slate-200 whitespace-normal">
+                    class="w-5 py-4 font-medium border-t bg-slate-50 dark:bg-transparent border-slate-200/60 text-slate-500 dark:text-slate-200 whitespace-normal"
+                  >
                     # Voluntario
                   </Table.Td>
                   <Table.Td
-                    class="w-5 py-4 font-medium border-t bg-slate-50 dark:bg-transparent border-slate-200/60 text-slate-500 dark:text-slate-200 whitespace-normal">
+                    class="w-5 py-4 font-medium border-t bg-slate-50 dark:bg-transparent border-slate-200/60 text-slate-500 dark:text-slate-200 whitespace-normal"
+                  >
                     # Beneficiario
                   </Table.Td>
                   <Table.Td
-                    class="w-5 py-4 font-medium border-t bg-slate-50 dark:bg-transparent border-slate-200/60 text-slate-500 dark:text-slate-200 whitespace-normal">
+                    class="w-5 py-4 font-medium border-t bg-slate-50 dark:bg-transparent border-slate-200/60 text-slate-500 dark:text-slate-200 whitespace-normal"
+                  >
                   </Table.Td>
                 </Table.Tr>
               </Table.Thead>
@@ -470,22 +608,30 @@ onMounted(() => {
               <Table.Tbody v-if="!loading">
                 <template v-for="actividades in paginatedItems" :key="actividades.id">
                   <Table.Tr class="[&_td]:last:border-b-0">
-                    <Table.Td class="py-4 border-dashed dark:bg-darkmode-600 dark:text-slate-200 text-center">
+                    <Table.Td
+                      class="py-4 border-dashed dark:bg-darkmode-600 dark:text-slate-200 text-center"
+                    >
                       <div class="font-medium dark:text-slate-200">
                         {{ actividades.name }}
                       </div>
                     </Table.Td>
-                    <Table.Td class="py-4 border-dashed dark:bg-darkmode-600 dark:text-slate-200 text-center">
+                    <Table.Td
+                      class="py-4 border-dashed dark:bg-darkmode-600 dark:text-slate-200 text-center"
+                    >
                       <div href="" class="font-medium whitespace-normal">
                         {{ actividades.date }}
                       </div>
                     </Table.Td>
-                    <Table.Td class="py-4 border-dashed dark:bg-darkmode-600 dark:text-slate-200 text-center">
+                    <Table.Td
+                      class="py-4 border-dashed dark:bg-darkmode-600 dark:text-slate-200 text-center"
+                    >
                       <div href="" class="font-medium whitespace-normal">
                         {{ actividades.program_name }}
                       </div>
                     </Table.Td>
-                    <Table.Td class="py-4 border-dashed dark:bg-darkmode-600 dark:text-slate-200 text-center">
+                    <Table.Td
+                      class="py-4 border-dashed dark:bg-darkmode-600 dark:text-slate-200 text-center"
+                    >
                       <div href="" class="font-medium whitespace-normal">
                         {{ actividades.area_name }}
                       </div>
@@ -496,34 +642,55 @@ onMounted(() => {
                     <Table.Td class="py-4 border-dashed dark:bg-darkmode-600 dark:text-slate-200">
                       <div href="" class="font-medium whitespace-nowrap text-center">0</div>
                     </Table.Td>
-                    <Table.Td class="relative py-4 border-dashed dark:bg-darkmode-600 dark:text-slate-200">
+                    <Table.Td
+                      class="relative py-4 border-dashed dark:bg-darkmode-600 dark:text-slate-200"
+                    >
                       <div class="flex items-center justify-end">
                         <Menu class="h-5">
                           <Menu.Button class="w-5 h-5 text-black dark:text-slate-200">
-                            <Lucide icon="MoreVertical"
-                              class="w-5 h-5 stroke-black dark:stroke-slate-200 fill-black dark:fill-slate-200" />
+                            <Lucide
+                              icon="MoreVertical"
+                              class="w-5 h-5 stroke-black dark:stroke-slate-200 fill-black dark:fill-slate-200"
+                            />
                           </Menu.Button>
                           <Menu.Items class="w-40">
                             <Menu.Item class="text-warning dark:text-yellow-300">
-                              <Lucide icon="CheckSquare" class="w-4 h-4 mr-2 dark:stroke-yellow-300" />
+                              <Lucide
+                                icon="CheckSquare"
+                                class="w-4 h-4 mr-2 dark:stroke-yellow-300"
+                              />
                               Editar
                             </Menu.Item>
                             <Menu.Item class="text-green dark:text-green-300">
-                              <Lucide icon="CircleCheckBig" class="w-4 h-4 mr-2 dark:stroke-green-300" />
+                              <Lucide
+                                icon="CircleCheckBig"
+                                class="w-4 h-4 mr-2 dark:stroke-green-300"
+                              />
                               Agregar horario
                             </Menu.Item>
-                            <Menu.Item class="text-blue dark:text-blue-300" @click="() => {
-                              openObjectiveModal(actividades.id)
-                              guardarId(actividades.id)
-                            }
-                              ">
-                              <Lucide icon="CircleCheckBig" class="w-4 h-4 mr-2 dark:stroke-blue-300" />
+                            <Menu.Item
+                              class="text-blue dark:text-blue-300"
+                              @click="
+                                () => {
+                                  openObjectiveModal(actividades.id)
+                                  guardarId(actividades.id)
+                                }
+                              "
+                            >
+                              <Lucide
+                                icon="CircleCheckBig"
+                                class="w-4 h-4 mr-2 dark:stroke-blue-300"
+                              />
                               Agregar objetivos
                             </Menu.Item>
-                            <Menu.Item class="text-danger dark:text-red-300" @click="() => {
-                              openDeleteModal(actividades.id)
-                            }
-                              ">
+                            <Menu.Item
+                              class="text-danger dark:text-red-300"
+                              @click="
+                                () => {
+                                  openDeleteModal(actividades.id)
+                                }
+                              "
+                            >
                               <Lucide icon="Trash" class="w-4 h-4 mr-2 dark:stroke-red-300" />
                               Eliminar
                             </Menu.Item>
@@ -537,7 +704,9 @@ onMounted(() => {
             </Table>
           </div>
 
-          <div class="flex flex-col-reverse flex-wrap items-center p-5 flex-reverse gap-y-2 sm:flex-row">
+          <div
+            class="flex flex-col-reverse flex-wrap items-center p-5 flex-reverse gap-y-2 sm:flex-row"
+          >
             <Pagination class="flex-1 w-full mr-auto sm:w-auto">
               <Pagination.Link @click="changePage(1)">
                 <Lucide icon="ChevronsLeft" class="w-4 h-4" />
@@ -557,8 +726,11 @@ onMounted(() => {
                 <Lucide icon="ChevronsRight" class="w-4 h-4" />
               </Pagination.Link>
             </Pagination>
-            <FormSelect class="sm:w-20 rounded-[0.5rem] dark:text-slate-200" v-model="pageSize"
-              @change="changePageSize">
+            <FormSelect
+              class="sm:w-20 rounded-[0.5rem] dark:text-slate-200"
+              v-model="pageSize"
+              @change="changePageSize"
+            >
               <option value="10">10</option>
               <option value="20">20</option>
               <option value="30">30</option>

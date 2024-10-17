@@ -4805,6 +4805,10 @@ select {
   bottom: 2.5rem;
 }
 
+.bottom-40 {
+  bottom: 10rem;
+}
+
 .bottom-\[100\%\] {
   bottom: 100%;
 }
@@ -4815,6 +4819,10 @@ select {
 
 .left-10 {
   left: 2.5rem;
+}
+
+.left-40 {
+  left: 10rem;
 }
 
 .left-\[100\%\] {
@@ -5109,10 +5117,6 @@ select {
 
 .mr-1\.5 {
   margin-right: 0.375rem;
-}
-
-.mr-14 {
-  margin-right: 3.5rem;
 }
 
 .mr-2 {
@@ -5513,10 +5517,6 @@ select {
 
 .w-6 {
   width: 1.5rem;
-}
-
-.w-60 {
-  width: 15rem;
 }
 
 .w-7 {
@@ -7972,6 +7972,13 @@ select {
   transition-duration: 150ms;
 }
 
+.before\:transition-all::before {
+  content: var(--tw-content);
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
 .before\:duration-200::before {
   content: var(--tw-content);
   transition-duration: 200ms;
@@ -8166,6 +8173,13 @@ select {
 .after\:transition-\[opacity\2c height\]::after {
   content: var(--tw-content);
   transition-property: opacity,height;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.after\:transition-all::after {
+  content: var(--tw-content);
+  transition-property: all;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
 }
@@ -9366,16 +9380,6 @@ select {
 .dark\:hover\:bg-slate-600:hover:is(.dark *) {
   --tw-bg-opacity: 1;
   background-color: rgb(71 85 105 / var(--tw-bg-opacity));
-}
-
-.dark\:hover\:\!text-red-400:hover:is(.dark *) {
-  --tw-text-opacity: 1 !important;
-  color: rgb(248 113 113 / var(--tw-text-opacity)) !important;
-}
-
-.dark\:hover\:\!text-sky-500:hover:is(.dark *) {
-  --tw-text-opacity: 1 !important;
-  color: rgb(14 165 233 / var(--tw-text-opacity)) !important;
 }
 
 .dark\:hover\:text-black:hover:is(.dark *) {

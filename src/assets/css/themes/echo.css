@@ -93,8 +93,8 @@
       &__icon {
         flex: none;
         opacity: theme('opacity.80');
-        stroke: theme('colors.theme.1');
-        fill: theme('colors.theme.1' / 10%);
+        stroke: theme('colors.theme.2');
+        fill: theme('colors.theme.2' / 20%);
       }
       &__title {
         overflow: hidden;

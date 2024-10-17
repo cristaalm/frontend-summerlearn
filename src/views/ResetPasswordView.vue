@@ -9,11 +9,11 @@ import { useRefs } from '@/hooks/recovery/useRefs'
 import { status } from '@/hooks/recovery/useStatus'
 import { useValidation } from '@/hooks/recovery/useValidation'
 import { usePasswordSecurity } from '@/hooks/recovery/usePasswordSecurity'
-import { computed, onMounted } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useChangePassword } from '@/hooks/recovery/useChangePassword'
 import ThemeSwitcher from "@/components/ThemeSwitcher";
 import DynamicText from '@/components/DynamicText'
-import { changeLoginColorScheme } from '@/utils/switchColorScheme'
+import { changeLoginColorScheme, changeColorScheme } from '@/utils/switchColorScheme'
 
 // Recupera la ruta actual
 const route = useRoute()
@@ -33,6 +33,21 @@ const alertVariant = computed(() => {
 onMounted(() => {
   changeLoginColorScheme()
 })
+
+const colorSchame = ref('theme-19')
+const changeColor = () => {
+  
+  if (colorSchame.value === 'theme-19') {
+    colorSchame.value = 'theme-20';
+  } else if (colorSchame.value === 'theme-20') {
+    colorSchame.value = 'theme-21';
+  } else if (colorSchame.value === 'theme-21') {
+    colorSchame.value = 'theme-22';
+  } else {
+    colorSchame.value = 'theme-19'; // Volver a theme-19
+  }
+  changeColorScheme(colorSchame.value);
+}
 
 </script>
 
@@ -163,8 +178,8 @@ onMounted(() => {
         'Con una nueva contraseña, sigues impulsando sueños y oportunidades para estudiantes.',
         'Este es solo un paso más para continuar haciendo una diferencia en la educación de los más necesitados.',
         'Cambia tu contraseña y sigue ayudando a construir un futuro más brillante para las escuelas rurales.'
-      ]" />
-      <div class="hidden lg:block absolute bottom-10 left-10 text-white">
+      ]" :changeColor="changeColor" />
+      <br><div class="hidden lg:block absolute bottom-40 ml-4 md:ml-20 lg:ml-[70px] xl:ml-[110px] text-white">
         <h2 class="text-4xl font-bold">SummerLearn</h2>
         <p class="mt-2 text-lg">Transformando la educación, un paso a la vez.</p>
       </div>

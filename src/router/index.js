@@ -229,10 +229,42 @@ const router = createRouter({
             )
         },
         {
+          path: '/dashboard/childrens',
+          name: 'childrens',
+          component: () =>
+            import('@/views/dashboard/children/ChildrenView.vue').catch(
+              () => import('@/views/dashboard/notFoundView/NotFoundView.vue')
+            )
+        },
+        {
+          path: '/dashboard/childrens/add', 
+          name: 'addChildrens',
+          component: () =>
+            import('@/views/dashboard/children/AddChildView.vue').catch(
+              () => import('@/views/dashboard/notFoundView/NotFoundView.vue')
+            )
+        },
+        {
+          path: '/dashboard/subscriptionsgrid',
+          name: 'subscriptionsGrid',
+          component: () =>
+            import('@/views/dashboard/subscriptions/SubscriptionsGridView.vue').catch(
+              () => import('@/views/dashboard/notFoundView/NotFoundView.vue')
+            )
+        },
+        {
           path: '/dashboard/performance',
           name: 'performance',
           component: () =>
             import('@/views/dashboard/performance/PerformanceView.vue').catch(
+              () => import('@/views/dashboard/notFoundView/NotFoundView.vue')
+            )
+        },
+        {
+          path: '/dashboard/AddPerformance',
+          name: 'addPerformance',
+          component: () =>
+            import('@/views/dashboard/performance/AddPerformance.vue').catch(
               () => import('@/views/dashboard/notFoundView/NotFoundView.vue')
             )
         },

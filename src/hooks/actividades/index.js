@@ -9,6 +9,7 @@ import { useDialogDeleteObjective } from './dialog/useDialogDeleteObjective'
 import { useDialogObjective } from './dialog/useDialogObjective'
 import { useExportPDF } from './exports/useExportPDF'
 import { useExportExcel } from './exports/useExportExcel'
+import { useSearch } from './useSearch'
 
 export {
   useFilter,
@@ -21,5 +22,6 @@ export {
   useDialogDeleteObjective,
   useDialogObjective,
   useExportPDF,
-  useExportExcel
+  useExportExcel,
+  useSearch
 }

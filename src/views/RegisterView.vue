@@ -8,13 +8,30 @@ import { useRefs } from '@/hooks/register/useRefs'
 import { useAuth } from '@/hooks/register/useAuth'
 import Button from '@/components/base/Button'
 import { useRouter, useRoute } from 'vue-router'
-import { onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
 import ThemeSwitcher from '@/components/ThemeSwitcher'
 import DynamicText from '@/components/DynamicText'
 import { phrases } from '@/utils/phrases'
-import { changeLoginColorScheme } from '@/utils/switchColorScheme'
+import { changeLoginColorScheme, changeColorScheme } from '@/utils/switchColorScheme'
 
+const colorSchame = ref('theme-19')
+const changeColor = () => {
+  
+  // if (valid.value) {
+  //   return 
+  // }
 
+  if (colorSchame.value === 'theme-19') {
+    colorSchame.value = 'theme-20';
+  } else if (colorSchame.value === 'theme-20') {
+    colorSchame.value = 'theme-21';
+  } else if (colorSchame.value === 'theme-21') {
+    colorSchame.value = 'theme-22';
+  } else {
+    colorSchame.value = 'theme-19'; // Volver a theme-19
+  }
+  changeColorScheme(colorSchame.value);
+}
 const { status, resetFields } = useStatus()
 const {
   password,
@@ -75,6 +92,8 @@ const handleSubmit = () => {
     registerUser()
   }
 }
+
+
 </script>
 
 <template>
@@ -308,10 +327,10 @@ const handleSubmit = () => {
     <div :class="[
       'h-full col-span-7 2xl:col-span-8 lg:relative',
       'before:content-[\'\'] before:absolute before:lg:-ml-10 before:left-0 before:inset-y-0 before:bg-gradient-to-b before:from-theme-1 before:to-theme-2 before:w-screen before:lg:w-[800%]',
-      'after:content-[\'\'] after:absolute after:inset-y-0 after:left-0 after:w-screen after:lg:w-[800%] after:bg-texture-white after:bg-fixed after:bg-center after:lg:bg-[25rem_-25rem] after:bg-no-repeat'
+      'after:content-[\'\'] after:absolute after:inset-y-0 after:left-0 after:w-screen after:lg:w-[800%] after:bg-texture-white after:bg-fixed after:bg-center after:lg:bg-[25rem_-25rem] after:bg-no-repeat',
     ]">
       <DynamicText class="hidden lg:sticky" :phrases="phrases[route.params.rol]" />
-      <div class="hidden lg:block absolute bottom-10 left-10 text-white">
+      <br><div class="hidden lg:block absolute bottom-40 ml-4 md:ml-20 lg:ml-[70px] xl:ml-[110px] text-white">
         <h2 class="text-4xl font-bold">SummerLearn</h2>
         <p class="mt-2 text-lg">Transformando la educación, un paso a la vez.</p>
       </div>
