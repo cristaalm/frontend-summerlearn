@@ -23,7 +23,7 @@ window.addEventListener('scroll', () => {
 <template>
   <!-- flex flex-col md:flex-row w-full fixed transition-all duration-300 min-h-[80px] bg-emerald-50 z-50 -->
   <div
-    :class="`flex flex-col md:flex-row w-full fixed transition-all duration-300 min-h-[80px] bg-opacity-70 backdrop-filter backdrop-blur-sm z-50 ${color || !topScroll ? 'bg-gray-800 md:bg-blued/70' : ''} `"
+    :class="`flex flex-col md:flex-row w-full fixed transition-all duration-300 min-h-[80px] bg-opacity-70 backdrop-filter backdrop-blur-sm z-50 ${color || !topScroll ? 'bg-gray-800 md:bg-blued/60' : ''} `"
   >
     <div class="flex flex-row w-full md:container md:m-auto justify-between">
       <div class="md:m-2 lg:m-0 xl:m-2 text-4xl font-bold lg:w-full">

@@ -51,6 +51,12 @@ module.exports = {
         yellowd: '#FDFFAA',
         redd: '#FFC3C3',
         blued: '#86E6FF',
+        hgeen1: '#67de96',
+        hgeen2: '#1aca60',
+        hyellow1: '#f0e035',
+        hyellow2: '#f88e15',
+        hred1: '#ffa094',
+        hred2: '#db3e29',
         theme: {
           1: 'rgb(var(--color-theme-1) / <alpha-value>)',
           2: 'rgb(var(--color-theme-2) / <alpha-value>)'
