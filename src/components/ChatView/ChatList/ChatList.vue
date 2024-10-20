@@ -1,23 +1,27 @@
 <script setup>
-import { inject, watch } from "vue";
+import { inject, ref } from "vue";
 import { Baseurl } from "@/utils/global";
 import { formatMessageDate } from "@/utils/formatDate";
 import LoadingIcon from '@/components/base/LoadingIcon';
 
-const { chats, loadingChats, errorChats, loadChats } = inject("chats");
+// Inyectar los datos de los chats
+const { chats, loadingChats } = inject("socket");
+const { selectChat, selectedChatIndex } = inject("selectChat");
 
 </script>
 
 <template>
     <template v-if="!loadingChats && chats.length > 0">
-        <div class="h-[530px]">
-            <template v-for="(chat, index) in chats" :key="index">
-                <div
-                    class="flex items-center gap-4 px-2 py-2.5 -mx-2 rounded-lg cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-600 transition-all">
+        <div class="h-[530px] gap-1 flex flex-col">
+            <template v-for="chat in chats" :key="chat.id">
+                <div @click="selectChat(chat.id)" :class="{
+                    'bg-blue-100 dark:bg-slate-700': selectedChatIndex === chat.id,
+                    'hover:bg-slate-200 dark:hover:bg-slate-600': selectedChatIndex !== chat.id
+                }"
+                    class="flex items-center gap-4 px-2 py-2.5 -mx-2 rounded-lg cursor-pointer transition-all duration-300">
                     <div class="relative">
                         <div class="w-12 h-12 overflow-hidden border-2 rounded-full image-fit border-slate-200/70">
-                            <img alt="Tailwise - Admin Dashboard Template"
-                                :src="`${Baseurl}${chat.user.users_photo}`" />
+                            <img alt="Tailwise - Admin Dashboard Template" :src="`${Baseurl}${chat.user.userPhoto}`" />
                         </div>
                     </div>
                     <div class="w-full">
@@ -34,7 +38,7 @@ const { chats, loadingChats, errorChats, loadChats } = inject("chats");
                         </div>
                         <div class="flex items-center mt-1.5">
                             <div class="text-slate-500/90 max-w-[7rem] md:max-w-[10rem] truncate dark:text-slate-400">
-                                {{ chat.lastMessage.content }}
+                                {{ chat.lastMessage?.typing ? 'Escribiendo...' : chat.lastMessage.content }}
                             </div>
                         </div>
                     </div>

@@ -1,4 +1,5 @@
 import Chat from './Chat.vue'
-import Chats from './Chats.vue'
+import ChatList from './ChatList/ChatList.vue'
+import SectionSelect from './SectionSelect/SectionSelect.vue'
 
-export { Chat, Chats }
+export { Chat, ChatList, SectionSelect }

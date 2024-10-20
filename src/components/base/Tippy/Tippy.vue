@@ -25,11 +25,14 @@ const props = withDefaults(defineProps<TippyProps>(), {
 
 const tippyRef = ref<PopperElement>()
 
-const init = (el: PopperElement, props: TippyProps) => {
-  tippy(el, {
-    plugins: [animateFillPlugin],
-    content: props.content,
+// Inicializar tippy con opciones y contenido
+const initTippy = (el: PopperElement, content: string, options?: Partial<Props>) => {
+  const instance = tippy(el, {
+    content: content,
     arrow: roundArrow,
+    animateFill: false,
+    animation: 'shift-away',
+    plugins: [animateFillPlugin],
     popperOptions: {
       modifiers: [
         {
@@ -40,48 +43,54 @@ const init = (el: PopperElement, props: TippyProps) => {
         }
       ]
     },
-    animateFill: false,
-    animation: 'shift-away',
-    ...props.options
+    ...options,
   })
+  return instance
 }
 
+// Actualizar el contenido del tooltip
+const updateContent = (newContent: string) => {
+  if (tippyRef.value && tippyRef.value._tippy) {
+    tippyRef.value._tippy.setContent(newContent)
+  }
+}
+
+// Enlazar la instancia de tippy
 const bindInstance = (el: PopperElement) => {
   if (props.refKey) {
-    const bind = inject<ProvideTippy>(`bind[${props.refKey}]`, () => {})
+    const bind = inject<ProvideTippy>(`bind[${props.refKey}]`, () => { })
     if (bind) {
       bind(el)
     }
   }
 }
 
-const vTippyDirective = {
-  mounted(el: PopperElement) {
-    tippyRef.value = el
-  }
-}
-
+// Habilitar/deshabilitar el tooltip según props.disable
 const isDisabled = () => {
-  if (tippyRef.value && tippyRef.value._tippy !== undefined) {
+  if (tippyRef.value && tippyRef.value._tippy) {
     props.disable ? tippyRef.value._tippy.disable() : tippyRef.value._tippy.enable()
   }
 }
 
-watch(props, () => {
-  isDisabled()
+// Reactividad para cuando cambie el contenido del tooltip
+watch(() => props.content, (newContent) => {
+  updateContent(newContent)
 })
 
+// Montaje de tippy.js en el elemento
 onMounted(() => {
   if (tippyRef.value) {
-    init(tippyRef.value, props)
+    const instance = initTippy(tippyRef.value, props.content, props.options)
+    tippyRef.value = instance.popper // Aseguramos que tippyRef guarda la instancia
     bindInstance(tippyRef.value)
     isDisabled()
   }
 })
+
 </script>
 
 <template>
-  <component :is="as" v-tippy-directive class="cursor-pointer">
+  <component :is="as" ref="tippyRef" class="cursor-pointer">
     <slot></slot>
   </component>
 </template>

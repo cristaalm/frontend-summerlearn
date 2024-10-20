@@ -19,7 +19,7 @@ import {
   enter,
   leave
 } from './side-menu'
-import { watch, reactive, ref, computed, onMounted, provide } from 'vue'
+import { watch, reactive, ref, computed, onMounted, provide, onUnmounted } from 'vue'
 import SimpleBar from 'simplebar'
 //@ts-ignore
 import { logoutColorScheme } from '@/utils/switchColorScheme'
@@ -40,6 +40,26 @@ provide('user', { user, loadingUser, errorUser, loadUser })
 
 
 // ? ############################ SIDE MENU ############################
+
+// ? ############################ SOCKET ############################
+
+
+import { useWebSocket } from "@/hooks/chat";
+
+const { mountedSocket, unmountedSocket, chats, messages, loadingChats, loadingMessages, newMessage, sendMessage, isTyping, loadingSendMessage } = useWebSocket();
+
+provide('socket', { chats, messages, loadingChats, loadingMessages, newMessage, sendMessage, isTyping, loadingSendMessage });
+
+onMounted(() => {
+  mountedSocket();
+});
+
+onUnmounted(() => {
+  unmountedSocket();
+});
+
+// ? ############################ SOCKET ############################
+
 
 // ? ############################ DARK MODE ############################
 
@@ -501,9 +521,14 @@ const closeSlideOver = () => {
                   <Lucide icon="user" class="dark:!text-slate-200" v-else />
                 </Menu.Button>
                 <Menu.Items class="w-56 mt-1 bg-white shadow-lg rounded-md">
-                  <Menu.Item class="text-primary flex items-center px-4 py-2 hover:bg-gray-100 dark:text-slate-200 dark:hover:text-sky-500 dark:hover:bg-slate-600 flex flex-row justify-between" @click.prevent="()=>{darkMode = !darkMode}">
-                    Modo oscuro 
-                    <FormSwitch.Input id="darkmode" type="checkbox" v-model="darkMode" class="shadow-current " />
+                  <Menu.Item
+                    class="text-primary flex items-center px-4 py-2 hover:bg-gray-100 dark:text-slate-200 dark:hover:text-sky-500 dark:hover:bg-slate-600 flex-row justify-between cursor-pointer"
+                    @click.prevent="() => { darkMode = !darkMode }">
+                    Modo oscuro
+                    <div class="cursor-pointer">
+                      <FormSwitch.Input id="darkmode" type="checkbox" v-model="darkMode"
+                        class="shadow-current pointer-events-none" />
+                    </div>
                   </Menu.Item>
                   <Menu.Item @click="() => router.push({ name: 'settings' })"
                     class="text-primary flex items-center px-4 py-2 hover:bg-gray-100 dark:text-slate-200 dark:hover:text-sky-500 dark:hover:bg-slate-600">

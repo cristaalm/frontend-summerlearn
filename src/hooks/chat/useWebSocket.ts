@@ -1,69 +1,185 @@
-import { ref, inject, watch } from 'vue'
+import { ref, inject, watch, Ref } from 'vue'
+// @ts-ignore
+import getIdByToken from '@/logic/getIdByToken'
 
-export function useWebSocket({
-  scrollToBottom,
-  channelName
-}: {
-  scrollToBottom: () => void
-  channelName?: string
-}) {
-  const showToast =
-    inject<
-      (params: { message: string; tipo?: string; duration?: number; persistente?: boolean }) => void
-    >('showToast') // Inyectamos el Toast
-  // Array de mensajes
-  const messages = ref<
-    { id: number; content: string; error: boolean; date: string; messageId: number }[]
-  >([])
-  const newMessage = ref('')
+interface ToastParams {
+  message: string
+  tipo?: string
+  duration?: number
+  persistente?: boolean
+}
+
+interface Message {
+  id: string
+  message: string
+  date: string
+  user: number
+  chat: string
+}
+
+interface Chat {
+  id: string
+  date: string
+  user: {
+    id: number
+    name: string
+    email: string
+    rol: string
+    userPhoto: string
+  }
+  lastMessage: {
+    content: string
+    date: string
+    id: string
+    typing?: boolean
+  }
+}
+
+export function useWebSocket() {
+  const showToast = inject<(params: ToastParams) => void>('showToast') // Inyectamos el Toast
   let socket: WebSocket | null = null
-  let currentChannelName = ref(channelName) // Trackeamos el canal actual
+  const messages = ref<Message[]>([])
+  const chats = ref<Chat[]>([])
+  const newMessage = ref('')
+  const state = ref('start')
+  const loadingChats = ref(false)
+  const loadingMessages = ref(false)
+  const loadingSendMessage = ref(false)
+  let pingInterval: NodeJS.Timeout | null = null // Variable para almacenar el intervalo de pings
 
   const connectWebSocket = () => {
     if (socket) {
-      socket.close() // Cerramos la conexión si ya existe
+      socket.close()
+      socket = null
     }
 
-    if (currentChannelName.value) {
-      socket = new WebSocket(`ws://localhost:8000/ws/chat/${currentChannelName.value}/`)
-      setupSocketEvents() // Configuramos eventos después de conectarnos
+    loadingChats.value = true
+    loadingMessages.value = true
+
+    const access_token: string | null = localStorage.getItem('access_token')
+
+    if (!access_token) {
+      showToast?.({ message: 'Credenciales invalidas', tipo: 'error' })
+      return
+    }
+
+    const idUser = getIdByToken(access_token).user_id
+
+    if (!idUser) {
+      showToast?.({ message: 'Credenciales invalidas', tipo: 'error' })
+      return
+    }
+
+    socket = new WebSocket(`ws://localhost:8000/ws/chat/${idUser}/?token=${access_token}`)
+    setupSocketEvents() // Configuramos eventos después de conectarnos
+
+    // Iniciar el envío de pings cada 30 segundos
+    pingInterval = setInterval(() => {
+      if (socket && socket.readyState === WebSocket.OPEN) {
+        socket.send(JSON.stringify({ type: 'ping' })) // Enviar un mensaje de ping
+      }
+    }, 30000) // 30 segundos
+  }
+
+  const sendMessage = (recipient_id: number) => {
+    if (socket && socket.readyState === WebSocket.OPEN) {
+      socket.send(
+        JSON.stringify({
+          type: 'send_message',
+          content: {
+            message: newMessage.value,
+            recipient_id: recipient_id,
+            date: new Date().toISOString()
+          }
+        })
+      )
+      loadingSendMessage.value = true
+      newMessage.value = '' // Limpiamos el campo de mensaje
+    }
+  }
+
+  const isTyping = (recipient_id: number, isTyping: boolean) => {
+    if (socket && socket.readyState === WebSocket.OPEN) {
+      socket.send(
+        JSON.stringify({
+          type: 'typing',
+          content: {
+            recipient_id: recipient_id,
+            isTyping: isTyping
+          }
+        })
+      )
     }
   }
 
   const setupSocketEvents = () => {
     if (!socket) return
 
-    // Escuchamos los nuevos mensajes
+    socket.onopen = () => {
+      socket!.send(
+        JSON.stringify({
+          type: 'start',
+          content: {}
+        })
+      )
+    }
+
     socket.onmessage = function (event) {
       const data = JSON.parse(event.data)
-      if (data.type === 'success') {
-        addMessage({
-          id: data.content.user_id,
-          date: data.content.date,
-          content: data.content.message,
-          error: false,
-          messageId: data.content.message_id
-        })
+      if (data.type === 'init_chats') {
+        // resivimos los chats de la base de datos
+        chats.value = data.content
+        loadingChats.value = false
       }
-      if (data.type === 'error') {
-        // @ts-ignore
-        showToast({ message: data.content.error, tipo: 'error' })
-        addMessage({
-          id: data.content.user_id,
-          date: data.content.date,
-          content: data.content.message,
-          error: true,
-          messageId: data.content.message_id
-        })
+      if (data.type === 'init_messages') {
+        // resivimos los mensajes de la base de datos
+        messages.value = data.content
+        loadingMessages.value = false
+      }
+      if (data.type === 'message_received') {
+        // Resivimos si el chat ya existe
+        if (chats.value.find((chat) => chat.id === data.content.chat.chat_id)) {
+          // si existe el chat lo actualizamos
+          const chatIndex = chats.value.findIndex((chat) => chat.id === data.content.chat.chat_id)
+          chats.value[chatIndex].lastMessage = data.content.chat.lastMessage
+          data.content.chat = data.content.chat.chat_id
+          messages.value.push(data.content)
+        } else {
+          // si no existe el chat lo agregamos
+          chats.value.push(data.content.chat)
+          data.content.chat = data.content.chat.chat_id
+          messages.value.push(data.content)
+        }
+        sortChats()
+      }
+      if (data.type === 'message_sent') {
+        // resivimos nuestro mensaje enviado en tiempo real
+        loadingSendMessage.value = false
+        const chatIndex = chats.value.findIndex((chat) => chat.id === data.content.chat.chat_id)
+        chats.value[chatIndex].lastMessage = data.content.chat.lastMessage
+        data.content.chat = data.content.chat.chat_id
+        messages.value.push(data.content)
+        sortChats()
+      }
+      if (data.type === 'typing') {
+        const chatIndex = chats.value.findIndex((chat) => chat.id === data.content.id)
+        chats.value[chatIndex].lastMessage.typing = data.content.isTyping
       }
       if (data.type === 'critical_error') {
-        // @ts-ignore
-        showToast({ message: data.content.error, tipo: 'error' })
-        console.error(data.content.console)
+        showToast?.({ message: data.content.error, tipo: 'error' })
       }
     }
 
-    // Manejo de errores
+    const sortChats = () => {
+      chats.value.sort((a, b) => {
+        console.log(a)
+        console.log(b)
+        const dateA = new Date(a.lastMessage.date)
+        const dateB = new Date(b.lastMessage.date)
+        return dateB.getTime() - dateA.getTime()
+      })
+    }
+
     socket.onerror = function (error) {
       console.error('WebSocket error:', error)
     }
@@ -71,64 +187,36 @@ export function useWebSocket({
     // Reconexión automática en caso de desconexión
     socket.onclose = function (event) {
       console.log('WebSocket cerrado, intentando reconectar...')
+      if (pingInterval !== null) {
+        clearInterval(pingInterval) // Detenemos el intervalo de pings al cerrar el socket
+      }
       setTimeout(() => connectWebSocket(), 1000) // Intenta reconectar después de 1 segundo
-    }
-  }
-
-  const addMessage = ({
-    content,
-    error = false,
-    id,
-    date,
-    messageId
-  }: {
-    content: string
-    error: boolean
-    id: number
-    date: string
-    messageId: number
-  }) => {
-    const message = { id, date, content, error, messageId }
-    messages.value.push(message)
-    scrollToBottom()
-  }
-
-  const sendMessage = () => {
-    if (socket) {
-      socket.send(
-        JSON.stringify({
-          message: newMessage.value,
-          date: new Date().toISOString(),
-          token: localStorage.getItem('access_token')
-        })
-      )
-      newMessage.value = '' // Limpiamos el campo de mensaje
     }
   }
 
   const mountedSocket = () => {
     connectWebSocket()
-
-    // Detecta cambios en el channelName para reconectar
-    watch(currentChannelName, (newChannel) => {
-      if (newChannel) {
-        connectWebSocket()
-      }
-    })
   }
 
   const unmountedSocket = () => {
     if (socket) {
       socket.close() // Cerramos la conexión cuando se desmonta
     }
+    if (pingInterval !== null) {
+      clearInterval(pingInterval) // Detenemos el intervalo de pings al cerrar el socket
+    }
   }
 
   return {
-    messages,
-    newMessage,
     mountedSocket,
     unmountedSocket,
+    messages,
+    chats,
+    loadingChats,
+    loadingMessages,
+    loadingSendMessage,
+    newMessage,
     sendMessage,
-    currentChannelName // Agregamos esta variable para actualizar el canal
+    isTyping
   }
 }

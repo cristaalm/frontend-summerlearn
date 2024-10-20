@@ -6,7 +6,7 @@ export function useScroll() {
   function scrollToBottom() {
     if (scrollableRef.value) {
       scrollableRef.value.scrollTo({
-        top: scrollableRef.value.scrollHeight,
+        top: scrollableRef.value.scrollHeight, // Hasta abajo
         behavior: 'smooth' // Desplazamiento suave
       })
     }
