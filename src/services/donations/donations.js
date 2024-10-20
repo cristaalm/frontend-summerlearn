@@ -1,19 +1,42 @@
 import { Baseurl } from '@/utils/global'
+import getIdByToken from '@/logic/getIdByToken'
 
 export const getDonations = async () => {
-  const response = await fetch(`${Baseurl}donations/`, {
+  const token = localStorage.getItem('access_token')
+
+  // Verificamos si el token existe
+  if (!token) {
+    throw new Error('Token not found')
+  }
+
+  // Obtenemos el id y el rol del usuario
+  const { user_id: id, rol: role } = getIdByToken(token)
+
+  let donacion = ''
+  if (role == 1) {
+    donacion = 'donations/'
+  } else {
+    donacion = `donations/?user_id=${id}`
+  }
+
+  console.log(role)
+
+  const response = await fetch(`${Baseurl}${donacion}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${localStorage.getItem('access_token')}`
+      Authorization: `Bearer ${token}`
     }
   })
 
+  if (!response.ok) {
+    throw new Error('Failed to fetch donations')
+  }
+
   const json = await response.json()
-  const donation = json
 
   return (
-    donation
+    json
       ?.map((donation) => ({
         id: donation.donations_id,
         concept: donation.donations_concept,

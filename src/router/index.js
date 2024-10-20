@@ -306,7 +306,7 @@ const router = createRouter({
           component: () =>
             import('@/views/dashboard/donations/DonationsView.vue').catch(
               () => import('@/views/dashboard/notFoundView/NotFoundView.vue')
-            )
+          )
         },
         {
           path: '/dashboard/donations/add',

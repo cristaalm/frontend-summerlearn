@@ -1,11 +1,30 @@
 import { Baseurl } from '@/utils/global'
+import getIdByToken from '@/logic/getIdByToken'
 
 export const getBills = async () => {
-  const response = await fetch(`${Baseurl}bills/`, {
+
+  const token = localStorage.getItem('access_token')
+
+  // Verificamos si el token existe
+  if (!token) {
+    throw new Error('Token not found')
+  }
+
+  // Obtenemos el id y el rol del usuario
+  const { user_id: id, rol: role } = getIdByToken(token)
+
+  let gasto = ''
+  if (role == 1) {
+    gasto = 'bills/'
+  } else {
+    gasto = `bills/?user_id=${id}`
+  }
+
+  const response = await fetch(`${Baseurl}${gasto}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${localStorage.getItem('access_token')}`
+      Authorization: `Bearer ${token}`
     }
   })
 
