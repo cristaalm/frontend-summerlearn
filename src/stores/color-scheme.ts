@@ -9,7 +9,7 @@ export const colorSchemes = [
   'theme-19',
   'theme-20',
   'theme-21',
-  'theme-22',
+  'theme-22'
 ] as const
 
 export type ColorSchemes = (typeof colorSchemes)[number]
@@ -21,11 +21,12 @@ interface ColorSchemeState {
 export const getColorScheme = () => {
   const colorScheme = localStorage.getItem('colorScheme')
   if (colorScheme === null) {
-    console.log('colorScheme is null')
     localStorage.setItem('colorScheme', 'theme-19')
     return 'theme-19'
   }
-  return colorSchemes.filter((item, key) => {return item === colorScheme})[0] 
+  return colorSchemes.filter((item, key) => {
+    return item === colorScheme
+  })[0]
 }
 
 export const useColorSchemeStore = defineStore('colorScheme', {

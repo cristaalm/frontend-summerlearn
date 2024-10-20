@@ -19,8 +19,6 @@ export const getDonations = async () => {
     donacion = `donations/?user_id=${id}`
   }
 
-  console.log(role)
-
   const response = await fetch(`${Baseurl}${donacion}`, {
     method: 'GET',
     headers: {

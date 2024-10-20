@@ -15,7 +15,6 @@ const selectChat = (index) => {
 const section = ref("chats");
 const changeSection = (newSection) => {
   section.value = newSection;
-  console.log(section.value);
 };
 
 

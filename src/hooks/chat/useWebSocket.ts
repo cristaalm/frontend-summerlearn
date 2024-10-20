@@ -172,8 +172,6 @@ export function useWebSocket() {
 
     const sortChats = () => {
       chats.value.sort((a, b) => {
-        console.log(a)
-        console.log(b)
         const dateA = new Date(a.lastMessage.date)
         const dateB = new Date(b.lastMessage.date)
         return dateB.getTime() - dateA.getTime()
