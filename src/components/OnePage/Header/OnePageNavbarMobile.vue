@@ -7,27 +7,29 @@
       </a>
       <div class="flex flex-row justify-center items-center">
         <button>
-          <Menu class="w-12 hover:scale-105 transition-all duration-300" v-if="!enableMenu" @click="toggleMenu" />
+          <Menu
+            :class="`w-12 hover:scale-105 transition-all duration-300 ${topScroll ? 'text-black' : 'text-slate-200'}`"
+            v-if="!enableMenu" @click="toggleMenu" />
           <Close class="w-12 hover:scale-105 transition-all duration-300 text-white" v-else @click="toggleMenu" />
         </button>
       </div>
     </div>
-    <div class="w-full h-[0px] overflow-hidden flex flex-col gap-5 justify-between" ref="navbarMenu">
+    <div class="w-full h-[0px] overflow-hidden flex flex-col gap-5" ref="navbarMenu">
       <div class="flex flex-col gap-4">
         <a href="#home" @click.prevent="smoothScroll('#home')" @click="toggleMenu"
-          :class="`h-full flex flex-row justify-center items-center text-4xl py-4 transition-all duration-300 text-white hover:text-blue-light hover:bg-blued`">
+          :class="`h-full flex flex-row justify-center items-center text-4xl py-4 transition-all duration-300 text-white hover:text-black hover:bg-blued`">
           {{ $t('navbar.home') }}
         </a>
         <a href="#mission" @click.prevent="smoothScroll('#mission')" @click="toggleMenu"
-          :class="`h-full flex flex-row justify-center items-center text-4xl py-4 transition-all duration-300 text-white hover:text-green-light hover:bg-greend`">
+          :class="`h-full flex flex-row justify-center items-center text-4xl py-4 transition-all duration-300 text-white hover:text-black hover:bg-greend`">
           {{ $t('navbar.mission') }}
         </a>
         <a href="#impact" @click.prevent="smoothScroll('#impact')" @click="toggleMenu"
-          :class="`h-full flex flex-row justify-center items-center text-4xl py-4 transition-all duration-300 text-white hover:text-yellow-light hover:bg-yellowd`">
+          :class="`h-full flex flex-row justify-center items-center text-4xl py-4 transition-all duration-300 text-white hover:text-black hover:bg-yellowd`">
           {{ $t('navbar.impact') }}
         </a>
         <a href="#joinOurTeam" @click.prevent="smoothScroll('#joinOurTeam')" @click="toggleMenu"
-          :class="`h-full flex flex-row justify-center items-center text-4xl py-4 transition-all duration-300 text-white hover:text-red-light hover:bg-redd`">
+          :class="`h-full flex flex-row justify-center items-center text-4xl py-4 transition-all duration-300 text-white hover:text-black hover:bg-redd`">
           {{ $t('navbar.joinOurTeam') }}
         </a>
       </div>
