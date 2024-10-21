@@ -46,9 +46,9 @@ provide('user', { user, loadingUser, errorUser, loadUser })
 
 import { useWebSocket } from "@/hooks/chat";
 
-const { mountedSocket, unmountedSocket, chats, messages, loadingChats, loadingMessages, newMessage, sendMessage, isTyping, loadingSendMessage } = useWebSocket();
+const { mountedSocket, unmountedSocket, chats, messages, loadingChats, loadingMessages, newMessage, sendMessage, isTyping, loadingSendMessage, changeSeen } = useWebSocket();
 
-provide('socket', { chats, messages, loadingChats, loadingMessages, newMessage, sendMessage, isTyping, loadingSendMessage });
+provide('socket', { chats, messages, loadingChats, loadingMessages, newMessage, sendMessage, isTyping, loadingSendMessage, changeSeen });
 
 onMounted(() => {
   mountedSocket();

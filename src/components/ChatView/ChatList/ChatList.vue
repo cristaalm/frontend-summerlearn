@@ -1,12 +1,23 @@
 <script setup>
-import { inject, ref } from "vue";
+import { inject, ref, watch } from "vue";
 import { Baseurl } from "@/utils/global";
 import { formatMessageDate } from "@/utils/formatDate";
 import LoadingIcon from '@/components/base/LoadingIcon';
+import Lucide from "@/components/base/Lucide";
 
 // Inyectar los datos de los chats
-const { chats, loadingChats } = inject("socket");
+const { chats, loadingChats, changeSeen } = inject("socket");
 const { selectChat, selectedChatIndex } = inject("selectChat");
+
+watch(selectedChatIndex, (newValue) => {
+    if (newValue !== null) {
+        const chatIndex = chats.value.findIndex((chat) => chat.id === newValue);
+        if (chatIndex !== -1) {
+            changeSeen(chats.value[chatIndex].user.id, chats.value[chatIndex].id);
+        }
+    }
+});
+
 
 </script>
 
@@ -27,18 +38,23 @@ const { selectChat, selectedChatIndex } = inject("selectChat");
                     <div class="w-full">
                         <div class="flex items-center w-full">
                             <div
-                                class="font-medium max-w-[7rem] md:max-w-[8rem] truncate text-black dark:text-slate-200">
+                                class="font-medium max-w-[10rem] md:max-w-[13rem] truncate text-black dark:text-slate-200">
                                 {{ chat.user.name }}
                             </div>
                             <div class="flex items-center gap-2 ml-auto">
                                 <div class="text-xs text-slate-400/90">
-                                    {{ formatMessageDate(chat.lastMessage.date) }}
+                                    {{ chat?.lastMessage ? formatMessageDate(chat.lastMessage.date) : '' }}
                                 </div>
                             </div>
                         </div>
                         <div class="flex items-center mt-1.5">
-                            <div class="text-slate-500/90 max-w-[7rem] md:max-w-[10rem] truncate dark:text-slate-400">
-                                {{ chat.lastMessage?.typing ? 'Escribiendo...' : chat.lastMessage.content }}
+                            <div class="text-slate-500/90 max-w-[9rem] md:max-w-[12rem] truncate dark:text-slate-400">
+                                {{ chat?.lastMessage ? chat.lastMessage?.typing ? 'Escribiendo...' :
+                                chat.lastMessage.content : '' }}
+                            </div>
+                            <div class="flex items-center gap-2 ml-auto">
+                                <Lucide v-if="!chat.seenChat" icon="Circle"
+                                    class="w-3 h-3 text-blue-500 fill-blue-500" />
                             </div>
                         </div>
                     </div>

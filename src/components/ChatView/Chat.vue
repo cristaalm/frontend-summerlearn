@@ -13,10 +13,12 @@ import SimpleBar from "simplebar";
 import LoadingIcon from '@/components/base/LoadingIcon';
 
 const { selectedChatIndex, selectChatInfo, messagesSelectChat } = inject("selectChat");
-const { loadingMessages, newMessage, sendMessage, isTyping, loadingSendMessage } = inject("socket");
+const { loadingMessages, newMessage, sendMessage, isTyping, loadingSendMessage, changeSeen, chats } = inject("socket");
 const { photoUser } = inject("userPhoto");
 const showToast = inject('showToast')
 const { scrollToBottom, scrollableRef } = useScroll();
+
+
 
 const typing = ref(false);
 let typingTimeout = null; // Almacena el timeout para detectar inactividad al escribir
@@ -59,7 +61,12 @@ onMounted(() => {
     setTimeout(() => {
       scrollToBottom();
     }, 100);
+
+    if (selectChatInfo.value) {
+      changeSeen(selectChatInfo.value.user.id, selectChatInfo.value.id);
+    }
   });
+
 });
 
 const copiedEmail = () => {
@@ -154,7 +161,7 @@ const copiedEmail = () => {
           <FormTextarea @keydown.enter.prevent="sendMessageToRecipient" @keydown="handleTyping"
             :disabled="loadingMessages || loadingSendMessage"
             class="-mb-1.5 pr-16 rounded-xl resize dark:placeholder:text-slate-400 dark:text-slate-200 scrollbar-custom"
-            v-model="newMessage" placeholder="Type a message..." maxlength="500" />
+            v-model="newMessage" placeholder="Escriba un mensaje..." maxlength="500" />
           <div class="absolute inset-y-0 right-0 flex items-center justify-center w-[3.8rem]">
             <button
               :class="`flex items-center justify-center border-transparent rounded-full w-9 h-9 box ${loadingMessages || loadingSendMessage ? ' cursor-not-allowed' : 'cursor-pointer'}`"

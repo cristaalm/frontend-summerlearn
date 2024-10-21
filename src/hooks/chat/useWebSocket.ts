@@ -1,6 +1,8 @@
 import { ref, inject, watch, Ref } from 'vue'
 // @ts-ignore
 import getIdByToken from '@/logic/getIdByToken'
+// @ts-ignore
+import { Baseurl2 } from '@/utils/global'
 
 interface ToastParams {
   message: string
@@ -20,6 +22,7 @@ interface Message {
 interface Chat {
   id: string
   date: string
+  seenChat: boolean
   user: {
     id: number
     name: string
@@ -70,7 +73,7 @@ export function useWebSocket() {
       return
     }
 
-    socket = new WebSocket(`ws://localhost:8000/ws/chat/${idUser}/?token=${access_token}`)
+    socket = new WebSocket(`${Baseurl2}ws/chat/${idUser}/?token=${access_token}`)
     setupSocketEvents() // Configuramos eventos después de conectarnos
 
     // Iniciar el envío de pings cada 30 segundos
@@ -112,6 +115,22 @@ export function useWebSocket() {
     }
   }
 
+  const changeSeen = (recipient_id: number, chat_id: string) => {
+    const chatIndex = chats.value.findIndex((chat) => chat.id === chat_id)
+    if (socket && socket.readyState === WebSocket.OPEN) {
+      if (chats.value[chatIndex].seenChat) return
+      socket.send(
+        JSON.stringify({
+          type: 'seen',
+          content: {
+            recipient_id: recipient_id
+          }
+        })
+      )
+    }
+    chats.value[chatIndex].seenChat = true
+  }
+
   const setupSocketEvents = () => {
     if (!socket) return
 
@@ -130,6 +149,7 @@ export function useWebSocket() {
         // resivimos los chats de la base de datos
         chats.value = data.content
         loadingChats.value = false
+        sortChats()
       }
       if (data.type === 'init_messages') {
         // resivimos los mensajes de la base de datos
@@ -138,26 +158,29 @@ export function useWebSocket() {
       }
       if (data.type === 'message_received') {
         // Resivimos si el chat ya existe
-        if (chats.value.find((chat) => chat.id === data.content.chat.chat_id)) {
+        if (chats.value.find((chat) => chat.id === data.content.chat.id)) {
           // si existe el chat lo actualizamos
-          const chatIndex = chats.value.findIndex((chat) => chat.id === data.content.chat.chat_id)
+          const chatIndex = chats.value.findIndex((chat) => chat.id === data.content.chat.id)
           chats.value[chatIndex].lastMessage = data.content.chat.lastMessage
-          data.content.chat = data.content.chat.chat_id
+          chats.value[chatIndex].seenChat = data.content.chat.seenChat
+          data.content.chat = data.content.chat.id
           messages.value.push(data.content)
         } else {
           // si no existe el chat lo agregamos
           chats.value.push(data.content.chat)
-          data.content.chat = data.content.chat.chat_id
+          data.content.chat = data.content.chat.id
           messages.value.push(data.content)
         }
         sortChats()
+        // Reproduce el sonido de notificación
+        playNotificationSound()
       }
       if (data.type === 'message_sent') {
         // resivimos nuestro mensaje enviado en tiempo real
         loadingSendMessage.value = false
-        const chatIndex = chats.value.findIndex((chat) => chat.id === data.content.chat.chat_id)
+        const chatIndex = chats.value.findIndex((chat) => chat.id === data.content.chat.id)
         chats.value[chatIndex].lastMessage = data.content.chat.lastMessage
-        data.content.chat = data.content.chat.chat_id
+        data.content.chat = data.content.chat.id
         messages.value.push(data.content)
         sortChats()
       }
@@ -172,6 +195,7 @@ export function useWebSocket() {
 
     const sortChats = () => {
       chats.value.sort((a, b) => {
+        if (!a.lastMessage || !b.lastMessage) return 0
         const dateA = new Date(a.lastMessage.date)
         const dateB = new Date(b.lastMessage.date)
         return dateB.getTime() - dateA.getTime()
@@ -189,6 +213,29 @@ export function useWebSocket() {
         clearInterval(pingInterval) // Detenemos el intervalo de pings al cerrar el socket
       }
       setTimeout(() => connectWebSocket(), 1000) // Intenta reconectar después de 1 segundo
+    }
+  }
+
+  let userHasInteracted = false // Variable para rastrear la interacción del usuario
+
+  // Evento para detectar interacción del usuario
+  const enableAudioPlayback = () => {
+    userHasInteracted = true // El usuario ha interactuado
+    document.removeEventListener('click', enableAudioPlayback) // Remover el listener después de la interacción
+  }
+
+  // Añadir el evento una vez al cargar la página
+  document.addEventListener('click', enableAudioPlayback)
+
+  const playNotificationSound = () => {
+    if (userHasInteracted) {
+      // Solo se permite si el usuario ha interactuado
+      const audio = new Audio('/notification_message.mp3')
+      audio.play().catch((error) => {
+        console.error('Error reproduciendo el sonido:', error)
+      })
+    } else {
+      console.warn('El usuario no ha interactuado con la página, el sonido no puede reproducirse.')
     }
   }
 
@@ -215,6 +262,7 @@ export function useWebSocket() {
     loadingSendMessage,
     newMessage,
     sendMessage,
-    isTyping
+    isTyping,
+    changeSeen
   }
 }
