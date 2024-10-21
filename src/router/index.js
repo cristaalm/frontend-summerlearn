@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { Baseurl } from '@/utils/global'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css' // Asegúrate de importar el CSS
 
@@ -122,11 +123,41 @@ const router = createRouter({
     {
       path: '/dashboard',
       component: () => import('@/views/dashboard').catch(() => import('@/views/NotFoundView.vue')),
-      beforeEnter: (to, from, next) => {
-        const isAuth = !!localStorage.getItem('access_token') // Verifica si hay un token
-        if (!isAuth) {
-          return next({ name: 'login' }) //Redirige en caso de que no esté autenticado
+      beforeEnter: async (to, from, next) => {
+        // obtener el token de refresco
+        const refresh_token = localStorage.getItem('refresh_token') || null
+
+        // Verificar si el token de refresco está presente
+        if (!refresh_token) return next({ name: 'login' })
+
+        // si from es login y to es dashboard, entonces redirige a dashboard
+        if (from.name === 'login' && to.name === 'dashboard') return next()
+
+        // Si el token de refresco está presente, intenta refrescar el token de acceso
+        const response = await fetch(`${Baseurl}auth/refresh-token/`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            refresh: refresh_token
+          })
+        })
+
+        // Si la respuesta no es exitosa, redirige al login y elimina el token de acceso y refresco
+        if (!response.ok) {
+          localStorage.removeItem('access_token')
+          localStorage.removeItem('refresh_token')
+          // seteamos el tema por defecto
+          localStorage.setItem('darkMode', false)
+          localStorage.setItem('colorScheme', 'theme-19')
+          return next({ name: 'login' })
         }
+
+        // Si la respuesta es exitosa, guarda el nuevo token de acceso y permite el acceso
+        const data = await response.json()
+        localStorage.setItem('access_token', data.access)
+
         next() // Permite acceso
       },
       children: [
@@ -306,7 +337,7 @@ const router = createRouter({
           component: () =>
             import('@/views/dashboard/donations/DonationsView.vue').catch(
               () => import('@/views/dashboard/notFoundView/NotFoundView.vue')
-          )
+            )
         },
         {
           path: '/dashboard/donations/add',

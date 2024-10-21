@@ -5,7 +5,6 @@ import { useUser } from "@/hooks/settings/";
 import { useRoute } from 'vue-router'
 
 const page = ref(null);
-const { user, loadingUser, errorUser, loadUser } = useUser();
 const route = useRoute();
 
 const loadPageFromQuery = () => {
@@ -22,7 +21,6 @@ watch(
 
 onMounted(() => {
   loadPageFromQuery(); // Inicializar el valor de `page` desde los query params
-  loadUser();
 });
 
 </script>
