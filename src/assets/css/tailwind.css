@@ -5625,6 +5625,10 @@ select {
   max-width: 64rem;
 }
 
+.max-w-\[10rem\] {
+  max-width: 10rem;
+}
+
 .max-w-\[200px\] {
   max-width: 200px;
 }
@@ -5655,10 +5659,6 @@ select {
 
 .max-w-full {
   max-width: 100%;
-}
-
-.max-w-\[10rem\] {
-  max-width: 10rem;
 }
 
 .flex-1 {
@@ -9835,6 +9835,10 @@ select {
     max-width: 10rem;
   }
 
+  .md\:max-w-\[12rem\] {
+    max-width: 12rem;
+  }
+
   .md\:max-w-\[400px\] {
     max-width: 400px;
   }
@@ -9845,14 +9849,6 @@ select {
 
   .md\:max-w-none {
     max-width: none;
-  }
-
-  .md\:max-w-\[12rem\] {
-    max-width: 12rem;
-  }
-
-  .md\:max-w-\[13rem\] {
-    max-width: 13rem;
   }
 
   .md\:flex-row {

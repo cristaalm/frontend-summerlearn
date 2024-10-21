@@ -12,6 +12,14 @@ const selectChat = (index) => {
   selectedChatIndex.value = index;
 };
 
+
+// si preciona esc deseleccionar el chat
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    selectedChatIndex.value = null;
+  }
+});
+
 const section = ref("chats");
 const changeSection = (newSection) => {
   section.value = newSection;

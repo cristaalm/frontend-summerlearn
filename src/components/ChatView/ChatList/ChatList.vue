@@ -38,7 +38,7 @@ watch(selectedChatIndex, (newValue) => {
                     <div class="w-full">
                         <div class="flex items-center w-full">
                             <div
-                                class="font-medium max-w-[10rem] md:max-w-[13rem] truncate text-black dark:text-slate-200">
+                                class="font-medium max-w-[10rem] md:max-w-[10rem] truncate text-black dark:text-slate-200">
                                 {{ chat.user.name }}
                             </div>
                             <div class="flex items-center gap-2 ml-auto">
@@ -50,7 +50,7 @@ watch(selectedChatIndex, (newValue) => {
                         <div class="flex items-center mt-1.5">
                             <div class="text-slate-500/90 max-w-[9rem] md:max-w-[12rem] truncate dark:text-slate-400">
                                 {{ chat?.lastMessage ? chat.lastMessage?.typing ? 'Escribiendo...' :
-                                chat.lastMessage.content : '' }}
+                                    chat.lastMessage.content : '' }}
                             </div>
                             <div class="flex items-center gap-2 ml-auto">
                                 <Lucide v-if="!chat.seenChat" icon="Circle"
