@@ -5629,6 +5629,10 @@ select {
   max-width: 10rem;
 }
 
+.max-w-\[15px\] {
+  max-width: 15px;
+}
+
 .max-w-\[200px\] {
   max-width: 200px;
 }

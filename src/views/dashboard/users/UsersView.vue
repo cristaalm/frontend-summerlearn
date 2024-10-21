@@ -39,10 +39,10 @@ onMounted(() => {
           <Button variant="primary"
             class="group-[.mode--light]:!bg-white/[0.12] group-[.mode--light]:!text-slate-200 group-[.mode--light]:!border-transparent"
             @click="() => {
-                router.push({
-                  name: 'addUser'
-                })
-              }
+              router.push({
+                name: 'addUser'
+              })
+            }
               ">
             <Lucide icon="PenLine" class="stroke-[1.3] w-4 h-4 mr-2" /> Agregar nuevo usuario
           </Button>
@@ -103,8 +103,8 @@ onMounted(() => {
                     </div>
                     <div class="flex items-center mt-4">
                       <Button variant="secondary" @click="() => {
-                          close()
-                        }
+                        close()
+                      }
                         " class="w-32 ml-auto">
                         Close
                       </Button>
@@ -131,7 +131,7 @@ onMounted(() => {
                     Edad
                   </Table.Td>
                   <Table.Td
-                    class="w-5 py-4 font-medium border-t bg-slate-50 dark:bg-transparent border-slate-200/60 text-slate-500 dark:text-slate-200">
+                    class="w-5 py-4 font-medium border-t bg-slate-50 dark:bg-transparent border-slate-200/60 text-slate-500 dark:text-slate-200 min-w-[150px]">
                     Teléfono
                   </Table.Td>
                   <Table.Td
@@ -143,7 +143,7 @@ onMounted(() => {
                     Estado
                   </Table.Td>
                   <Table.Td
-                    class="py-4 font-medium text-center border-t w-36 bg-slate-50 dark:bg-transparent border-slate-200/60 text-slate-500 dark:text-slate-200">
+                    class="py-4 font-medium text-center border-t w-36 bg-slate-50 dark:bg-transparent border-slate-200/60 text-slate-500 dark:text-slate-200 max-w-[15px]">
                   </Table.Td>
                 </Table.Tr>
               </Table.Thead>
@@ -249,13 +249,13 @@ onMounted(() => {
                             <Menu.Item
                               :class="`${user.status == 1 ? 'text-blue dark:text-blue-400' : 'text-[#ff6f0f] dark:text-[#ff6f0f]'}`"
                               @click="() => {
-                                  updateStatus({ user }).then((updatedUser) => {
-                                    const index = users.findIndex((u) => u.id == updatedUser.id)
-                                    if (index !== -1) {
-                                      users[index] = updatedUser
-                                    }
-                                  })
-                                }
+                                updateStatus({ user }).then((updatedUser) => {
+                                  const index = users.findIndex((u) => u.id == updatedUser.id)
+                                  if (index !== -1) {
+                                    users[index] = updatedUser
+                                  }
+                                })
+                              }
                                 ">
                               <Lucide icon="RefreshCw" class="w-4 h-4 mr-2 dark:stroke-current" />
                               Cambiar Estado
