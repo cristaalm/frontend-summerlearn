@@ -49,6 +49,8 @@ export function useWebSocket() {
   const loadingMessages = ref(false)
   const loadingSendMessage = ref(false)
   let pingInterval: NodeJS.Timeout | null = null // Variable para almacenar el intervalo de pings
+  let access_token = localStorage.getItem('access_token')
+  const refresh_token = localStorage.getItem('refresh_token')
 
   const connectWebSocket = () => {
     if (socket) {
@@ -58,8 +60,6 @@ export function useWebSocket() {
 
     loadingChats.value = true
     loadingMessages.value = true
-
-    const access_token: string | null = localStorage.getItem('access_token')
 
     if (!access_token) {
       showToast?.({ message: 'Credenciales invalidas', tipo: 'error' })
@@ -73,13 +73,19 @@ export function useWebSocket() {
       return
     }
 
-    socket = new WebSocket(`${Baseurl2}ws/chat/${idUser}/?token=${access_token}`)
+    socket = new WebSocket(`${Baseurl2}ws/chat/${idUser}/`)
     setupSocketEvents() // Configuramos eventos después de conectarnos
 
     // Iniciar el envío de pings cada 30 segundos
     pingInterval = setInterval(() => {
       if (socket && socket.readyState === WebSocket.OPEN) {
-        socket.send(JSON.stringify({ type: 'ping' })) // Enviar un mensaje de ping
+        socket.send(
+          JSON.stringify({
+            type: 'ping',
+            token: access_token,
+            refresh_token: refresh_token
+          })
+        ) // Enviar un mensaje de ping
       }
     }, 30000) // 30 segundos
   }
@@ -89,6 +95,8 @@ export function useWebSocket() {
       socket.send(
         JSON.stringify({
           type: 'send_message',
+          token: access_token,
+          refresh_token: refresh_token,
           content: {
             message: newMessage.value,
             recipient_id: recipient_id,
@@ -106,6 +114,8 @@ export function useWebSocket() {
       socket.send(
         JSON.stringify({
           type: 'typing',
+          token: access_token,
+          refresh_token: refresh_token,
           content: {
             recipient_id: recipient_id,
             isTyping: isTyping
@@ -122,6 +132,8 @@ export function useWebSocket() {
       socket.send(
         JSON.stringify({
           type: 'seen',
+          token: access_token,
+          refresh_token: refresh_token,
           content: {
             recipient_id: recipient_id
           }
@@ -138,6 +150,8 @@ export function useWebSocket() {
       socket!.send(
         JSON.stringify({
           type: 'start',
+          token: access_token,
+          refresh_token: refresh_token,
           content: {}
         })
       )
@@ -187,6 +201,10 @@ export function useWebSocket() {
       if (data.type === 'typing') {
         const chatIndex = chats.value.findIndex((chat) => chat.id === data.content.id)
         chats.value[chatIndex].lastMessage.typing = data.content.isTyping
+      }
+      if (data.type === 'token_refreshed') {
+        localStorage.setItem('access_token', data.content.new_access_token)
+        access_token = data.content.new_access_token
       }
       if (data.type === 'critical_error') {
         showToast?.({ message: data.content.error, tipo: 'error' })
