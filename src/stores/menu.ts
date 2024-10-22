@@ -144,13 +144,6 @@ export const useMenuStore = defineStore('menu', {
               icon: 'PiggyBank',
               pageName: 'donations',
               title: 'Donaciones',
-              subMenu: [
-                {
-                  icon: 'ReceiptText',
-                  pageName: 'expenses',
-                  title: 'Gastos'
-                }
-              ]
             },
             'CONTACTOS',
             {
