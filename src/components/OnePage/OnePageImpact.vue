@@ -8,11 +8,11 @@
           data-aos="fade-right" data-aos-delay="100" />
         <div className="flex flex-col justify-center space-y-4" data-aos="fade-left" data-aos-delay="100">
           <div className="space-y-2">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl">
+            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl text-center text-[#6C2004]">
               {{ $t('impact.title') }}
             </h2>
             <p
-              className="max-w-[600px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed text-justify">
+              className="max-w-[600px] pt-6 text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed text-justify text-black">
               {{ $t('impact.description') }}
             </p>
           </div>

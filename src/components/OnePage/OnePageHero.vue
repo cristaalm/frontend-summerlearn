@@ -24,10 +24,10 @@ const smoothScroll = (event) => {
           data-aos-delay="100"
         >
           <div class="space-y-6">
-            <h1 class="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none">
+            <h1 class="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none text-hblue1">
               {{ $t('hero.title') }}
             </h1>
-            <p class="max-w-[600px] text-muted-foreground md:text-xl text-justify">
+            <p class="max-w-[600px] text-muted-foreground md:text-xl text-justify text-black">
               {{ $t('hero.description') }}
             </p>
           </div>

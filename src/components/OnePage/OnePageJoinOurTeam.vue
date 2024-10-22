@@ -17,10 +17,10 @@ const router = useRouter()
         <div class="container px-4 md:px-6">
           <div class="flex flex-col items-center justify-center space-y-4 text-center">
             <div class="space-y-2">
-              <h2 class="text-3xl font-bold tracking-tighter sm:text-5xl text-nowrap">
+              <h2 class="text-3xl font-bold tracking-tighter sm:text-5xl text-nowrap text-hblue2">
                 {{ $t('joinOurTeam.volunteer.title') }}
               </h2>
-              <p class="max-w-[900px] md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed text-justify">
+              <p class="max-w-[900px] md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed text-justify text-black">
                 {{ $t('joinOurTeam.volunteer.description') }}
               </p>
             </div>
@@ -40,11 +40,11 @@ const router = useRouter()
         <div class="container px-4 md:px-6">
           <div class="flex flex-col items-center justify-center space-y-4 text-center">
             <div class="space-y-2">
-              <h2 class="text-3xl font-bold tracking-tighter sm:text-5xl text-nowrap">
+              <h2 class="text-3xl font-bold tracking-tighter sm:text-5xl text-nowrap text-hblue2">
                 {{ $t('joinOurTeam.beneficiary.title') }}
               </h2>
               <p
-                class="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed text-justify">
+                class="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed text-justify text-black">
                 {{ $t('joinOurTeam.beneficiary.description') }}
               </p>
             </div>
@@ -64,11 +64,11 @@ const router = useRouter()
         <div class="container px-4 md:px-6">
           <div class="flex flex-col items-center justify-center space-y-4 text-center">
             <div class="space-y-2">
-              <h2 class="text-3xl font-bold tracking-tighter sm:text-5xl text-nowrap">
+              <h2 class="text-3xl font-bold tracking-tighter sm:text-5xl text-nowrap text-hblue2">
                 {{ $t('joinOurTeam.donor.title') }}
               </h2>
               <p
-                class="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed text-justify">
+                class="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed text-justify text-black">
                 {{ $t('joinOurTeam.donor.description') }}
               </p>
             </div>
