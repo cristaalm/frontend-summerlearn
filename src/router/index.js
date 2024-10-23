@@ -1,7 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { Baseurl } from '@/utils/global'
+import { ref } from 'vue'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css' // Asegúrate de importar el CSS
+
+const flag = ref(false)
 
 NProgress.configure({
   showSpinner: false, // Oculta el spinner (círculo giratorio) al final de la barra de progreso
@@ -132,6 +135,10 @@ const router = createRouter({
 
         // si from es login y to es dashboard, entonces redirige a dashboard
         if (from.name === 'login' && to.name === 'dashboard') return next()
+        if (flag.value) {
+          flag.value = false
+          return next()
+        }
 
         // Si el token de refresco está presente, intenta refrescar el token de acceso
         const response = await fetch(`${Baseurl}auth/refresh-token/`, {
@@ -372,7 +379,49 @@ const router = createRouter({
 
 router.beforeEach(async (to, from, next) => {
   NProgress.start() // Iniciar la barra de progreso
-  next() // Continúa con la navegación
+
+  // Verificar si el usuario intenta acceder a una ruta fuera del dashboard
+  if (!to.path.startsWith('/dashboard')) {
+    const access_token = localStorage.getItem('access_token')
+    const refresh_token = localStorage.getItem('refresh_token')
+
+    // Si ambos tokens están presentes, intentar refrescar el access_token
+    if (access_token && refresh_token) {
+      try {
+        const response = await fetch(`${Baseurl}auth/refresh-token/`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            refresh: refresh_token
+          })
+        })
+
+        if (response.ok) {
+          const data = await response.json()
+          localStorage.setItem('access_token', data.access) // Guardar el nuevo token de acceso
+
+          // Si el refresco del token es exitoso, redirigir al dashboard
+          flag.value = true
+          return next({ name: 'dashboard' })
+        } else {
+          // Si la respuesta no es exitosa, redirigir al login y eliminar los tokens
+          localStorage.removeItem('access_token')
+          localStorage.removeItem('refresh_token')
+          // seteamos el tema por defecto
+          localStorage.setItem('darkMode', false)
+          localStorage.setItem('colorScheme', 'theme-19')
+          return next({ name: from.name })
+        }
+      } catch (error) {
+        console.error('Error al refrescar el token de acceso:', error)
+        // Si ocurre un error, continuar con la navegación normal
+      }
+    }
+  }
+
+  next() // Continúa con la navegación si no se cumple ninguna de las condiciones anteriores
 })
 
 router.afterEach(() => {
