@@ -18,7 +18,7 @@ export default {
     impact: {
       title: 'Our Impact',
       description:
-        'Our Impact Since our founding, we have worked with many schools and volunteers to provide basic education to children in need. Our programs have helped improve literacy rates, increase access to educational resources, and empower local communities to play an active role in their children’s education.'
+        'Our impact since our founding, we have worked with many schools and volunteers to provide basic education to children in need. Our programs have helped improve literacy rates, increase access to educational resources, and empower local communities to play an active role in their children’s education.'
     },
     mission: {
       title: 'Our Mission',
@@ -98,7 +98,7 @@ export default {
     impact: {
       title: 'Nuestro Impacto',
       description:
-        'Nuestro impacto Desde nuestra fundación, hemos trabajado con muchas escuelas y voluntarios para proporcionar educación básica a niños necesitados. Nuestros programas han ayudado a mejorar las tasas de alfabetización, aumentar el acceso a recursos educativos y empoderar a las comunidades locales para desempeñar un papel activo en la educación de sus hijos.'
+        'Nuestro impacto desde nuestra fundación, hemos trabajado con muchas escuelas y voluntarios para proporcionar educación básica a niños necesitados. Nuestros programas han ayudado a mejorar las tasas de alfabetización, aumentar el acceso a recursos educativos y empoderar a las comunidades locales para desempeñar un papel activo en la educación de sus hijos.'
     },
     mission: {
       title: 'Nuestra Misión',

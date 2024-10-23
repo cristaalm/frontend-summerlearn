@@ -23,33 +23,33 @@ const smoothScroll = (event) => {
 </script>
 
 <template>
-  <div class="hidden md:flex flex-row justify-between lg:gap-10 w-full">
+  <div class="hidden md:flex flex-row justify-between lg:gap-10 w-full ">
     <nav class="flex flex-row text-2xl lg:gap-2 navbar">
       <a
         href="#home"
         @click="smoothScroll"
-        :class="`h-full flex justify-center items-center px-4 whitespace-nowrap transition-all duration-300 ${topScroll ? ' hover:text-blued' : 'text-gray-900 hover:text-gray-500 '}`"
+        :class="`h-full flex justify-center items-center text-black px-4 whitespace-nowrap transition-all duration-300 ${topScroll ? ' hover:text-hblue1' : 'text-white hover:text-blued '}`"
       >
         {{ $t('navbar.home') }}
       </a>
       <a
         href="#mission"
         @click="smoothScroll"
-        :class="`h-full flex justify-center items-center px-4 whitespace-nowrap transition-all duration-300 ${topScroll ? ' hover:text-green' : 'text-gray-900 hover:text-gray-500 '}`"
+        :class="`h-full flex justify-center items-center text-black px-4 whitespace-nowrap transition-all duration-300 ${topScroll ? ' hover:text-hgeen1' : 'text-white hover:text-hgeen1 '}`"
       >
         {{ $t('navbar.mission') }}
       </a>
       <a
         href="#impact"
         @click="smoothScroll"
-        :class="`h-full flex justify-center items-center px-4 whitespace-nowrap transition-all duration-300 ${topScroll ? ' hover:text-yellow' : 'text-gray-900 hover:text-gray-500 '}`"
+        :class="`h-full flex justify-center items-center text-black px-4 whitespace-nowrap transition-all duration-300 ${topScroll ? ' hover:text-hyellow1' : 'text-white hover:text-hyellow1 '}`"
       >
         {{ $t('navbar.impact') }}
       </a>
       <a
         href="#joinOurTeam"
         @click="smoothScroll"
-        :class="`h-full flex justify-center items-center px-4 whitespace-nowrap min-w-[150px] transition-all duration-300 ${topScroll ? ' hover:text-redd' : 'text-gray-900 hover:text-gray-500'}`"
+        :class="`h-full flex justify-center items-center text-black px-4 whitespace-nowrap min-w-[150px] transition-all duration-300 ${topScroll ? ' hover:text-hred1' : 'text-white hover:text-hred1'}`"
       >
         {{ $t('navbar.joinOurTeam') }}
       </a>
@@ -57,7 +57,7 @@ const smoothScroll = (event) => {
     <div class="flex flex-row justify-center items-center">
       <span
         @click="router.push({ name: 'login' })"
-        :class="`px-6 py-2 text-lg text-nowrap transition-all duration-300 cursor-pointer ${topScroll ? ' hover:text-emerald-600' : 'text-black dark:text-slate-200 hover:text-gray-500'}`"
+        :class="`px-6 py-2 text-lg text-nowrap transition-all duration-300 text-black cursor-pointer ${topScroll ? ' hover:text-hgeen1' : 'text-white dark:text-slate-200 hover:text-hgeen2'}`"
       >
         {{ $t('navbar.logIn') }}
       </span>
