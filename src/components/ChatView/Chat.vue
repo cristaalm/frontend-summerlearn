@@ -81,7 +81,7 @@ const copiedEmail = () => {
 </script>
 
 <template>
-  <template v-if="selectedChatIndex !== null">
+  <template v-if="selectedChatIndex !== 'chats' && selectedChatIndex !== 'contacts'">
     <div class="flex flex-col w-full lg:w-2/3 lg:p-5 lg:pt-0 gap-y-7">
       <div class="flex flex-col p-5 box box--stacked">
         <div class="flex items-center gap-3.5 border-b border-dashed border-black dark:border-slate-400 pb-5">
@@ -101,7 +101,7 @@ const copiedEmail = () => {
           </div>
           <div class="flex gap-2 ml-auto">
             <Tippy as="a" @click="copiedEmail"
-              class="flex items-center justify-center border rounded-full w-9 h-9 border-primary/30 dark:border-slate-200/30 bg-primary/5 dark:bg-slate-200/5"
+              class="flex items-center justify-center border rounded-full w-9 h-9 border-primary/30 dark:border-slate-200/30 bg-primary/5 dark:bg-slate-200/5 dark:hover:bg-slate-900 dark:hover:text-slate-200 transition-all duration-300"
               :content="selectChatInfo.user.email">
               <Lucide icon="Mail" class="w-4 h-4 text-primary dark:text-slate-200 fill-primary/10" />
             </Tippy>
@@ -176,12 +176,24 @@ const copiedEmail = () => {
     </div>
   </template>
 
-  <template v-if="selectedChatIndex === null">
+  <template v-if="selectedChatIndex === 'chats'">
     <div class="flex flex-col w-full lg:w-2/3 lg:p-5 lg:pt-0 gap-y-7">
       <div class="flex flex-col box box--stacked">
         <div class="flex items-center justify-center h-[728px]">
           <div class="text-slate-500 dark:text-slate-400 text-2xl">
             Seleccione un chat para empezar a chatear
+          </div>
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <template v-if="selectedChatIndex === 'contacts'">
+    <div class="flex flex-col w-full lg:w-2/3 lg:p-5 lg:pt-0 gap-y-7">
+      <div class="flex flex-col box box--stacked">
+        <div class="flex items-center justify-center h-[728px]">
+          <div class="text-slate-500 dark:text-slate-400 text-2xl">
+            Inicia un chat con tus contactos
           </div>
         </div>
       </div>

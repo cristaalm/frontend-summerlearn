@@ -1,8 +1,9 @@
-import { ref, inject, watch, Ref } from 'vue'
+import { ref, inject } from 'vue'
 // @ts-ignore
 import getIdByToken from '@/logic/getIdByToken'
 // @ts-ignore
 import { Baseurl2 } from '@/utils/global'
+import { useEvents, useUtilsSocket, useActions } from './socket/'
 
 interface ToastParams {
   message: string
@@ -38,27 +39,87 @@ interface Chat {
   }
 }
 
+interface Contact {
+  id: string
+  date: string
+  seenChat: boolean
+  user: {
+    id: number
+    name: string
+    email: string
+    rol: string
+    userPhoto: string
+  }
+  lastMessage: null
+}
+
 export function useWebSocket() {
   const showToast = inject<(params: ToastParams) => void>('showToast') // Inyectamos el Toast
-  let socket: WebSocket | null = null
-  const messages = ref<Message[]>([])
-  const chats = ref<Chat[]>([])
-  const newMessage = ref('')
-  const state = ref('start')
-  const loadingChats = ref(false)
-  const loadingMessages = ref(false)
-  const loadingSendMessage = ref(false)
+  const socket = ref<WebSocket | null>(null) // Variable reactiva para almacenar el socket
+  const messages = ref<Message[]>([]) // Variable reactiva para almacenar los mensajes
+  const chats = ref<Chat[]>([]) // Variable reactiva para almacenar los chats
+  const contacts = ref<Contact[]>([]) // Variable reactiva para almacenar los contactos
+  const newMessage = ref('') // Variable reactiva para almacenar el nuevo mensaje
+  const loadingChats = ref(false) // Variable reactiva para mostrar el estado de carga de los chats
+  const loadingMessages = ref(false) // Variable reactiva para mostrar el estado de carga de los mensajes
+  const loadingContacts = ref(false) // Variable reactiva para mostrar el estado de carga de los contactos
+  const loadingSendMessage = ref(false) // Variable reactiva para mostrar el estado de carga al enviar un mensaje
   let pingInterval: NodeJS.Timeout | null = null // Variable para almacenar el intervalo de pings
-  let access_token = localStorage.getItem('access_token')
-  const refresh_token = localStorage.getItem('refresh_token')
+  let access_token = localStorage.getItem('access_token') // Obtenemos el token de acceso
+  const refresh_token = localStorage.getItem('refresh_token') // Obtenemos el token de refresco
+
+  const manualClose = ref(false)
+
+  // ? ################## EVENTOS INDIVIDUALES ################## ? //
+
+  const { sendMessage, isTyping, changeSeen } = useEvents(
+    socket,
+    access_token,
+    refresh_token,
+    newMessage,
+    loadingSendMessage,
+    chats
+  )
+
+  // ? ################## UTILIDADES ################## ? //
+
+  const { sortChats, playNotificationSound } = useUtilsSocket(chats)
+
+  // ? ################## ACCIONES DE RESPUESTA ################## ? //
+
+  const {
+    init_chats,
+    init_messages,
+    message_received,
+    message_sent,
+    typing,
+    token_refreshed,
+    critical_error,
+    init_contacts
+  } = useActions({
+    chats,
+    loadingChats,
+    sortChats,
+    messages,
+    contacts,
+    loadingMessages,
+    loadingContacts,
+    playNotificationSound,
+    loadingSendMessage,
+    access_token,
+    showToast
+  })
+  // ? ################## SOCKET FUNCTIONS ################## ? //
 
   const connectWebSocket = () => {
-    if (socket) {
-      socket.close()
-      socket = null
+    // Función para conectar el WebSocket
+    if (socket && socket.value) {
+      socket.value.close()
+      socket.value = null
     }
 
     loadingChats.value = true
+    loadingContacts.value = true
     loadingMessages.value = true
 
     if (!access_token) {
@@ -73,13 +134,13 @@ export function useWebSocket() {
       return
     }
 
-    socket = new WebSocket(`${Baseurl2}ws/chat/${idUser}/`)
+    socket.value = new WebSocket(`${Baseurl2}ws/chat/${idUser}/`)
     setupSocketEvents() // Configuramos eventos después de conectarnos
 
     // Iniciar el envío de pings cada 30 segundos
     pingInterval = setInterval(() => {
-      if (socket && socket.readyState === WebSocket.OPEN) {
-        socket.send(
+      if (socket.value && socket.value.readyState === WebSocket.OPEN) {
+        socket.value.send(
           JSON.stringify({
             type: 'ping',
             token: access_token,
@@ -90,66 +151,47 @@ export function useWebSocket() {
     }, 30000) // 30 segundos
   }
 
-  const sendMessage = (recipient_id: number) => {
-    if (socket && socket.readyState === WebSocket.OPEN) {
-      socket.send(
-        JSON.stringify({
-          type: 'send_message',
-          token: access_token,
-          refresh_token: refresh_token,
-          content: {
-            message: newMessage.value,
-            recipient_id: recipient_id,
-            date: new Date().toISOString()
-          }
-        })
-      )
-      loadingSendMessage.value = true
-      newMessage.value = '' // Limpiamos el campo de mensaje
+  const mountedSocket = () => {
+    connectWebSocket()
+  }
+
+  const unmountedSocket = () => {
+    if (socket.value) {
+      manualClose.value = true
+      socket.value.close() // Cerramos la conexión cuando se desmonta
+    }
+    if (pingInterval !== null) {
+      clearInterval(pingInterval) // Detenemos el intervalo de pings al cerrar el socket
     }
   }
 
-  const isTyping = (recipient_id: number, isTyping: boolean) => {
-    if (socket && socket.readyState === WebSocket.OPEN) {
-      socket.send(
-        JSON.stringify({
-          type: 'typing',
-          token: access_token,
-          refresh_token: refresh_token,
-          content: {
-            recipient_id: recipient_id,
-            isTyping: isTyping
-          }
-        })
-      )
-    }
-  }
-
-  const changeSeen = (recipient_id: number, chat_id: string) => {
-    const chatIndex = chats.value.findIndex((chat) => chat.id === chat_id)
-    if (socket && socket.readyState === WebSocket.OPEN) {
-      if (chats.value[chatIndex].seenChat) return
-      socket.send(
-        JSON.stringify({
-          type: 'seen',
-          token: access_token,
-          refresh_token: refresh_token,
-          content: {
-            recipient_id: recipient_id
-          }
-        })
-      )
-    }
-    chats.value[chatIndex].seenChat = true
-  }
+  // ? ################## SOCKET EVENTS ################## ? //
 
   const setupSocketEvents = () => {
-    if (!socket) return
+    if (!socket.value) return
 
-    socket.onopen = () => {
-      socket!.send(
+    socket.value.onopen = () => {
+      socket.value!.send(
         JSON.stringify({
-          type: 'start',
+          type: 'start_chats',
+          token: access_token,
+          refresh_token: refresh_token,
+          content: {}
+        })
+      )
+
+      socket.value!.send(
+        JSON.stringify({
+          type: 'start_messages',
+          token: access_token,
+          refresh_token: refresh_token,
+          content: {}
+        })
+      )
+
+      socket.value!.send(
+        JSON.stringify({
+          type: 'start_contacts',
           token: access_token,
           refresh_token: refresh_token,
           content: {}
@@ -157,116 +199,48 @@ export function useWebSocket() {
       )
     }
 
-    socket.onmessage = function (event) {
+    socket.value.onmessage = function (event) {
       const data = JSON.parse(event.data)
       if (data.type === 'init_chats') {
-        // resivimos los chats de la base de datos
-        chats.value = data.content
-        loadingChats.value = false
-        sortChats()
+        init_chats(data)
       }
       if (data.type === 'init_messages') {
-        // resivimos los mensajes de la base de datos
-        messages.value = data.content
-        loadingMessages.value = false
+        init_messages(data)
+      }
+      if (data.type == 'init_contacts') {
+        init_contacts(data)
       }
       if (data.type === 'message_received') {
-        // Resivimos si el chat ya existe
-        if (chats.value.find((chat) => chat.id === data.content.chat.id)) {
-          // si existe el chat lo actualizamos
-          const chatIndex = chats.value.findIndex((chat) => chat.id === data.content.chat.id)
-          chats.value[chatIndex].lastMessage = data.content.chat.lastMessage
-          chats.value[chatIndex].seenChat = data.content.chat.seenChat
-          data.content.chat = data.content.chat.id
-          messages.value.push(data.content)
-        } else {
-          // si no existe el chat lo agregamos
-          chats.value.push(data.content.chat)
-          data.content.chat = data.content.chat.id
-          messages.value.push(data.content)
-        }
-        sortChats()
-        // Reproduce el sonido de notificación
-        playNotificationSound()
+        message_received(data)
       }
       if (data.type === 'message_sent') {
-        // resivimos nuestro mensaje enviado en tiempo real
-        loadingSendMessage.value = false
-        const chatIndex = chats.value.findIndex((chat) => chat.id === data.content.chat.id)
-        chats.value[chatIndex].lastMessage = data.content.chat.lastMessage
-        data.content.chat = data.content.chat.id
-        messages.value.push(data.content)
-        sortChats()
+        message_sent(data)
       }
       if (data.type === 'typing') {
-        const chatIndex = chats.value.findIndex((chat) => chat.id === data.content.id)
-        chats.value[chatIndex].lastMessage.typing = data.content.isTyping
+        typing(data)
       }
       if (data.type === 'token_refreshed') {
-        localStorage.setItem('access_token', data.content.new_access_token)
-        access_token = data.content.new_access_token
+        token_refreshed(data)
       }
       if (data.type === 'critical_error') {
-        showToast?.({ message: data.content.error, tipo: 'error' })
+        critical_error(data)
       }
     }
 
-    const sortChats = () => {
-      chats.value.sort((a, b) => {
-        if (!a.lastMessage || !b.lastMessage) return 0
-        const dateA = new Date(a.lastMessage.date)
-        const dateB = new Date(b.lastMessage.date)
-        return dateB.getTime() - dateA.getTime()
-      })
-    }
-
-    socket.onerror = function (error) {
+    socket.value.onerror = function (error) {
       console.error('WebSocket error:', error)
     }
 
     // Reconexión automática en caso de desconexión
-    socket.onclose = function (event) {
+    socket.value.onclose = function (event) {
       console.log('WebSocket cerrado, intentando reconectar...')
       if (pingInterval !== null) {
         clearInterval(pingInterval) // Detenemos el intervalo de pings al cerrar el socket
       }
-      setTimeout(() => connectWebSocket(), 1000) // Intenta reconectar después de 1 segundo
-    }
-  }
-
-  let userHasInteracted = false // Variable para rastrear la interacción del usuario
-
-  // Evento para detectar interacción del usuario
-  const enableAudioPlayback = () => {
-    userHasInteracted = true // El usuario ha interactuado
-    document.removeEventListener('click', enableAudioPlayback) // Remover el listener después de la interacción
-  }
-
-  // Añadir el evento una vez al cargar la página
-  document.addEventListener('click', enableAudioPlayback)
-
-  const playNotificationSound = () => {
-    if (userHasInteracted) {
-      // Solo se permite si el usuario ha interactuado
-      const audio = new Audio('/notification_message.mp3')
-      audio.play().catch((error) => {
-        console.error('Error reproduciendo el sonido:', error)
-      })
-    } else {
-      console.warn('El usuario no ha interactuado con la página, el sonido no puede reproducirse.')
-    }
-  }
-
-  const mountedSocket = () => {
-    connectWebSocket()
-  }
-
-  const unmountedSocket = () => {
-    if (socket) {
-      socket.close() // Cerramos la conexión cuando se desmonta
-    }
-    if (pingInterval !== null) {
-      clearInterval(pingInterval) // Detenemos el intervalo de pings al cerrar el socket
+      if (!manualClose.value) {
+        setTimeout(() => connectWebSocket(), 1000) // Intenta reconectar después de 1 segundo
+      }
+      manualClose.value = false
     }
   }
 
@@ -275,7 +249,9 @@ export function useWebSocket() {
     unmountedSocket,
     messages,
     chats,
+    contacts,
     loadingChats,
+    loadingContacts,
     loadingMessages,
     loadingSendMessage,
     newMessage,

@@ -1,6 +1,15 @@
 export function formatMessageDate(dateString: string): string {
-  const date = new Date(dateString)
+  const date = new Date(dateString) // Convertir fecha con la zona horaria incluida
   const now = new Date()
+
+  // Obtener el desplazamiento de la zona horaria en minutos y ajustarlo en horas
+  const timeZoneOffset = date.getTimezoneOffset() // Diferencia en minutos entre UTC y la fecha
+
+  // Ajustar la fecha para tener en cuenta la zona horaria local (sumar/restar)
+  date.setMinutes(date.getMinutes() - timeZoneOffset)
+
+  // Ajustar la fecha actual también
+  now.setMinutes(now.getMinutes() - now.getTimezoneOffset())
 
   // Verificar si es hoy
   const isToday = date.toDateString() === now.toDateString()
@@ -23,7 +32,7 @@ export function formatMessageDate(dateString: string): string {
 
   if (isToday) {
     // Si es hoy, devolver solo la hora
-    return date.toLocaleString('en-US', timeOptions)
+    return date.toLocaleString('es-ES', timeOptions)
   } else if (isYesterday) {
     // Si fue ayer, devolver "Ayer"
     return 'Ayer'
