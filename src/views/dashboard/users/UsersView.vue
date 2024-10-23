@@ -3,12 +3,13 @@ import { FormInput, FormSelect } from '@/components/base/Form'
 import Pagination from '@/components/base/Pagination'
 import { Menu, Popover } from '@/components/base/Headless'
 import { useUsers, useSearch, usePagination, useStatusUser } from '@/hooks/users/'
-import { onMounted } from 'vue'
+import { onMounted, provide, ref, inject } from 'vue'
 import Lucide from '@/components/base/Lucide'
 import Button from '@/components/base/Button'
 import Table from '@/components/base/Table'
 import Tippy from '@/components/base/Tippy'
 import LoadingIcon from '@/components/base/LoadingIcon'
+import EditUserModal from '@/components/Dashboard/Users/EditUser/EditUserModal.vue'
 import { useRoles } from '@/hooks/roles/useRoles'
 import { calculateAge } from '@/logic/'
 import { useRouter } from 'vue-router'
@@ -18,10 +19,24 @@ import { formatPhone } from '@/logic/formatNumber'
 const { users, loading, error, loadUsers } = useUsers()
 const { roles, loadingRoles, errorRoles, loadRoles } = useRoles()
 const { searchQuery, selectedStatus, selectedRole, filteredUsers, filtersCount } = useSearch(users)
-const { currentPage, pageSize, totalPages, paginatedUsers, changePage, changePageSize } =
-  usePagination(filteredUsers)
+const { currentPage, pageSize, totalPages, paginatedUsers, changePage, changePageSize } = usePagination(filteredUsers)
 const { updateStatus } = useStatusUser()
 const router = useRouter()
+
+provide('roles', { roles, loadingRoles, errorRoles })
+const { user: currentUser } = inject('user')
+
+const ModalEditUser = ref(false);
+const userInfoProvide = ref(null);
+const setModalEditUser = ({ open, userInfo = null }) => {
+  if (open) {
+    if (!userInfoProvide) return
+    ModalEditUser.value = open;
+    userInfoProvide.value = userInfo;
+  } else {
+    ModalEditUser.value = open;
+  }
+};
 
 // Cargar las áreas al iniciar el componente
 onMounted(() => {
@@ -31,6 +46,9 @@ onMounted(() => {
 </script>
 
 <template>
+
+  <EditUserModal :ModalEditUser="ModalEditUser" :setModalEditUser="setModalEditUser" :infoUser="userInfoProvide" />
+
   <div class="grid grid-cols-12 gap-y-10 gap-x-6">
     <div class="col-span-12">
       <div class="flex flex-col md:h-10 gap-y-3 md:items-center md:flex-row">
@@ -237,17 +255,27 @@ onMounted(() => {
                     <Table.Td class="relative py-4 border-dashed dark:bg-darkmode-600 dark:text-slate-200">
                       <div class="flex items-center justify-center">
                         <Menu class="h-5">
+
                           <Menu.Button class="w-5 h-5 text-black dark:text-slate-200">
-                            <Lucide icon="MoreVertical"
+                            <Lucide icon="MoreVertical" v-if="user.id !== currentUser.id"
                               class="w-5 h-5 stroke-black dark:stroke-slate-200 fill-black dark:fill-slate-200" />
+                            <Lucide icon="User" v-if="user.id === currentUser.id"
+                              class="w-5 h-5 stroke-black dark:stroke-slate-200 fill-black dark:fill-slate-200" />
+
                           </Menu.Button>
+
                           <Menu.Items class="w-40 dark:bg-darkmode-600">
-                            <Menu.Item class="text-warning dark:text-yellow-500">
+                            <Menu.Item class="text-warning dark:text-yellow-500" v-if="user.id !== currentUser.id"
+                              @click="(event: MouseEvent) => {
+                                event.preventDefault();
+                                setModalEditUser({ open: true, userInfo: user });
+                              }">
                               <Lucide icon="CheckSquare" class="w-4 h-4 mr-2 dark:stroke-yellow-500" />
                               Editar
                             </Menu.Item>
-                            <Menu.Item
-                              :class="`${user.status == 1 ? 'text-blue dark:text-blue-400' : 'text-[#ff6f0f] dark:text-[#ff6f0f]'}`"
+
+                            <Menu.Item v-if="user.id !== currentUser.id"
+                              :class="`${user.status == 1 ? 'text-blue dark:text-blue-400' : user.status == 2 ? 'text-[#ff6f0f] dark:text-[#ff6f0f]' : 'text-slate-800 dark:text-slate-400'} flex flex-row justify-center items-center`"
                               @click="() => {
                                 updateStatus({ user }).then((updatedUser) => {
                                   const index = users.findIndex((u) => u.id == updatedUser.id)
@@ -259,6 +287,12 @@ onMounted(() => {
                                 ">
                               <Lucide icon="RefreshCw" class="w-4 h-4 mr-2 dark:stroke-current" />
                               Cambiar Estado
+                            </Menu.Item>
+
+                            <Menu.Item class="text-warning dark:text-yellow-500" v-if="user.id === currentUser.id"
+                              @click="() => router.push({ name: 'settings' })">
+                              <Lucide icon="CheckSquare" class="w-4 h-4 mr-2 stroke-warning dark:stroke-yellow-500" />
+                              Editar
                             </Menu.Item>
                           </Menu.Items>
                         </Menu>
