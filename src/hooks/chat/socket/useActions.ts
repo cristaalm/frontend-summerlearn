@@ -52,6 +52,7 @@ export function useActions({
   chats,
   loadingChats,
   sortChats,
+  sortContacts,
   messages,
   contacts,
   loadingContacts,
@@ -64,6 +65,7 @@ export function useActions({
   chats: Ref<Chat[]>
   loadingChats: Ref<boolean>
   sortChats: () => void
+  sortContacts: () => void
   messages: Ref<Message[]>
   contacts: Ref<Contact[]>
   loadingContacts: Ref<boolean>
@@ -131,6 +133,7 @@ export function useActions({
   const init_contacts = (data: any) => {
     contacts.value = data.content
     loadingContacts.value = false
+    sortContacts()
   }
 
   return {

@@ -83,7 +83,7 @@ export function useWebSocket() {
 
   // ? ################## UTILIDADES ################## ? //
 
-  const { sortChats, playNotificationSound } = useUtilsSocket(chats)
+  const { sortChats, playNotificationSound, sortContacts } = useUtilsSocket(chats, contacts)
 
   // ? ################## ACCIONES DE RESPUESTA ################## ? //
 
@@ -100,6 +100,7 @@ export function useWebSocket() {
     chats,
     loadingChats,
     sortChats,
+    sortContacts,
     messages,
     contacts,
     loadingMessages,
