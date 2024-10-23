@@ -418,6 +418,14 @@ router.beforeEach(async (to, from, next) => {
         console.error('Error al refrescar el token de acceso:', error)
         // Si ocurre un error, continuar con la navegación normal
       }
+    } else if (access_token || refresh_token) {
+      // Si solo uno de los tokens está presente, eliminar ambos y redirigir al login
+      localStorage.removeItem('access_token')
+      localStorage.removeItem('refresh_token')
+      // seteamos el tema por defecto
+      localStorage.setItem('darkMode', false)
+      localStorage.setItem('colorScheme', 'theme-19')
+      return next({ name: from.name })
     }
   }
 
