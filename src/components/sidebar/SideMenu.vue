@@ -58,6 +58,7 @@ onUnmounted(() => {
   unmountedSocket();
 });
 
+const notification = computed(() => chats.value.findIndex((chat) => chat.seenChat === false) !== -1);
 // ? ############################ SOCKET ############################
 
 
@@ -401,6 +402,9 @@ const closeSlideOver = () => {
                   setFormattedMenu([...formattedMenu])
                 }">
                   <Lucide :icon="menu.icon" class="side-menu__link__icon" />
+                  <span v-if="notification && menu.pageName == 'chat'" class="relative">
+                    <span class="absolute bottom-1 -left-6 w-2 h-2 bg-theme-1 rounded-full dark:bg-blue-500"></span>
+                  </span>
                   <div class="side-menu__link__title">{{ menu.title }}</div>
                   <div v-if="menu.badge" class="side-menu__link__badge">
                     {{ menu.badge }}
@@ -485,6 +489,13 @@ const closeSlideOver = () => {
         ]">
           <div
             class="container flex items-center justify-between w-full h-full transition-[padding,background-color,border-color] ease-in-out duration-300 bg-transparent border-transparent shadow-none group-[.top-bar--active]:box group-[.top-bar--active]:px-5 group-[.top-bar--active]:bg-transparent group-[.top-bar--active]:border-transparent group-[.top-bar--active]:bg-gradient-to-r group-[.top-bar--active]:from-theme-1 group-[.top-bar--active]:to-theme-2">
+            <!-- mostramos el nombre y el correo del usuario -->
+            <div class="lg:flex flex-col gap-2 hidden">
+              <div class="text-white dark:text-slate-200 font-semibold text-lg">{{ user ? user.firstName : '' }} {{ user
+                ?
+                user.lastName : '' }}
+              </div>
+            </div>
             <div class="flex items-center gap-1 xl:hidden">
               <a href="" @click="(event) => {
                 event.preventDefault()
