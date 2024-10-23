@@ -19,9 +19,9 @@ const { email, password, valid, validateInput } = useFormValidation({ error })
 const router = useRouter()
 const colorSchame = ref('theme-19')
 const changeColor = () => {
-  
+
   if (loginSuccess.value) {
-    return 
+    return
   }
 
   if (colorSchame.value === 'theme-19') {
@@ -70,13 +70,15 @@ const alertVariant = computed(() => {
           <div class="mt-6">
             <FormLabel>Correo electrónico <span class="text-red-600 bold">*</span></FormLabel>
             <FormInput type="text" class="block px-4 py-3.5 rounded-[0.6rem] border-slate-300/80"
-              placeholder="correo@mail.com" v-model="email" @input="validateInput('email')" />
+              placeholder="correo@mail.com" v-model="email" @input="validateInput('email')"
+              @keydown.enter.prevent="() => { if (valid && !loading && loginSuccess == '') loginUser({ email, password }) }" />
 
             <FormLabel class="mt-4">Contraseña <span class="text-red-600 bold">*</span></FormLabel>
 
             <div class="flex-1 w-full mt-3 xl:mt-0">
               <InputGroup class="mt-2">
                 <FormInput placeholder="************" :type="`${showPassword ? 'text' : 'password'}`"
+                  @keydown.enter.prevent="() => { if (valid && !loading && loginSuccess == '') loginUser({ email, password }) }"
                   htmlid="inputPassword" class="block px-4 py-3.5" name="password" v-model="password"
                   @input="validateInput('password')" />
                 <InputGroup.Text @click="() => {
@@ -153,7 +155,8 @@ const alertVariant = computed(() => {
         'Gracias a ti, llevamos materiales y apoyo a quienes más lo necesitan.',
         'Sé parte de SummerLearn, creando oportunidades para las próximas generaciones.'
       ]" :changeColor="changeColor" />
-      <br><div class="hidden lg:block absolute bottom-40 ml-4 md:ml-20 lg:ml-[70px] xl:ml-[110px] text-white">
+      <br>
+      <div class="hidden lg:block absolute bottom-40 ml-4 md:ml-20 lg:ml-[70px] xl:ml-[110px] text-white">
         <h2 class="text-4xl font-bold">SummerLearn</h2>
         <p class="mt-2 text-lg">Transformando la educación, un paso a la vez.</p>
       </div>
