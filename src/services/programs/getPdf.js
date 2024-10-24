@@ -2,7 +2,7 @@
 import { Baseurl } from '@/utils/global'
 
 export const getPDF = async () => {
-  const response = await fetch(`${Baseurl}/programs/exportar-pdf/`, {
+  const response = await fetch(`${Baseurl}programs/exportar-pdf/`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
