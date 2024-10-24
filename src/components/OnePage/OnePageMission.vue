@@ -15,7 +15,7 @@
       </div>
       <div className="mx-auto grid max-w-5xl items-center gap-6 py-12 lg:grid-cols-2 lg:gap-12 text-justify">
         <img src="/src/assets/images/Photo5.png" alt="Mission"
-          className="mx-auto aspect-video overflow-hidden rounded-xl object-cover object-center sm:w-full lg:order-last"
+          className="mx-auto aspect-video overflow-hidden rounded-xl object-cover object-center sm:w-full lg:order-last shadow-xl"
           width="550" height="310" data-aos="fade-left" data-aos-delay="100" />
         <div className="flex flex-col justify-center space-y-4">
           <ul className="grid gap-6">

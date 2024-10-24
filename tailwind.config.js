@@ -50,7 +50,7 @@ module.exports = {
         greend: '#a6f6bd',
         yellowd: '#FDFFAA',
         redd: '#FFC3C3',
-        blued: '#86E6FF',
+        blued: '#3D9BB7',
         hgeen1: '#67de96',
         hgeen2: '#1aca60',
         hyellow1: '#f0e035',

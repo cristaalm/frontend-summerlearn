@@ -4,7 +4,7 @@
     <div className="container px-4 md:px-6">
       <div className="mx-auto grid max-w-5xl items-center gap-6 py-12 lg:grid-cols-2 lg:gap-12">
         <img src="/src/assets/images/Photo6.png" width="550" height="310" alt="About"
-          className="mx-auto aspect-video overflow-hidden rounded-xl object-cover object-center sm:w-full"
+          className="mx-auto aspect-video overflow-hidden rounded-xl object-cover object-center sm:w-full shadow-xl"
           data-aos="fade-right" data-aos-delay="100" />
         <div className="flex flex-col justify-center space-y-4" data-aos="fade-left" data-aos-delay="100">
           <div className="space-y-2">
