@@ -1,16 +1,10 @@
 <script setup>
-import {
-    FormLabel,
-    FormSwitch,
-    FormInput,
-    FormSelect,
-} from "@/components/Base/Form";
-import { Menu, Dialog } from "@/components/base/Headless";
+import { FormSelect } from "@/components/base/Form";
+import { Dialog } from "@/components/base/Headless";
 import LoadingIcon from '@/components/base/LoadingIcon'
-import TinySlider from "@/components/base/TinySlider";
 import Button from "@/components/base/Button";
 import Lucide from "@/components/base/Lucide";
-import { ref, inject, watch, onMounted, onUnmounted } from "vue";
+import { ref, inject, watch, onUnmounted } from "vue";
 import { useRolUser } from '@/hooks/users/editUser/useRolUser'
 import { Baseurl } from "@/utils/global";
 
