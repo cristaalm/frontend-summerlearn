@@ -80,7 +80,7 @@ onUnmounted(() => {
 
                 <div class="dark:border-slate-600 border-slate-300 border-b">
                     <div
-                        class="flex-col block pt-5 my-5 xl:items-center sm:flex xl:flex-row mx-5 px-5 py-2 rounded-lg dark:border-slate-600 border bg-theme-1/10 dark:bg-slate-700">
+                        class="flex-col block py-5 my-5 xl:items-center sm:flex xl:flex-row mx-5 px-5 rounded-lg dark:border-slate-600 border bg-theme-1/10 dark:bg-slate-700">
                         <label class="inline-block mb-2 sm:mb-0 sm:mr-5 sm:text-right xl:w-60 xl:mr-14">
                             <div class="text-left">
                                 <div class="flex items-center">
