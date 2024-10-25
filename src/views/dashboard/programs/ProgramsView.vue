@@ -1,18 +1,12 @@
 <script setup>
-import {
-  useFilter,
-  usePagination,
-  usePrograms,
-  useDialogDelete,
-  useStatusProgram,
-  useExportExcel,
-  useExportPDF
-} from '@/hooks/programs/'
+import { useFilter, usePagination, usePrograms, useStatusProgram, useExportExcel, useExportPDF } from '@/hooks/programs/'
+import { DeleteProgramModal } from '@/components/Dashboard/programs/'
+import { useDialogDeleteProgram } from '@/hooks/programs/dialog'
 import formatDate from '@/logic/formatDate'
 import { FormInput, FormSelect } from '@/components/base/Form'
 import { Menu, Popover, Dialog } from '@/components/base/Headless'
 import { useRouter } from 'vue-router'
-import { onMounted } from 'vue'
+import { onMounted, provide } from 'vue'
 import LoadingIcon from '@/components/base/LoadingIcon'
 import Pagination from '@/components/base/Pagination'
 import Button from '@/components/base/Button'
@@ -21,14 +15,14 @@ import Table from '@/components/base/Table'
 
 const { programs, loading, error, loadPrograms } = usePrograms()
 const { searchQuery, selectedStatus, filteredItems, activeFilters } = useFilter(programs)
-const { currentPage, pageSize, totalPages, paginatedItems, changePage, changePageSize } =
-  usePagination(filteredItems)
-const { dialogStatusDelete, openDeleteModal, confirmDeleteProgram, closeDeleteProgram } =
-  useDialogDelete({ programs })
+const { currentPage, pageSize, totalPages, paginatedItems, changePage, changePageSize } = usePagination(filteredItems)
 const { updateStatus } = useStatusProgram()
 const { loadExportExcel, loadingExportExcel } = useExportExcel()
 const { loadExportPDF, loadingExportPDF } = useExportPDF()
+const { ModalDeleteProgram, setModalDeleteProgram, programInfoProvideDelete } = useDialogDeleteProgram()
 const router = useRouter()
+
+provide('programs', { programs })
 
 onMounted(() => {
   loadPrograms()
@@ -36,35 +30,9 @@ onMounted(() => {
 </script>
 
 <template>
-  <!--? ######################## DIALOG DELETE PROGRAM ######################## -->
 
-  <!-- BEGIN: Modal Content -->
-  <Dialog :open="dialogStatusDelete" @close="() => {
-    dialogStatusDelete.value = false
-  }">
-    <Dialog.Panel>
-      <div class="p-5 text-center">
-        <Lucide icon="XCircle" class="w-16 h-16 mx-auto mt-3 text-danger dark:text-red-500" />
-        <div class="mt-5 text-3xl text-slate-900 dark:text-slate-200">¿Está seguro?</div>
-        <div class="mt-2 text-slate-500 dark:text-slate-400">
-          ¿Realmente desea eliminar este registro?
-          <br />
-          Este proceso eliminara las actividades asociadas a este programa.
-        </div>
-      </div>
-      <div class="px-5 pb-8 text-center space-x-8">
-        <Button type="button" variant="outline-secondary" @click="closeDeleteProgram"
-          class="w-24 mr-1 text-slate-900 dark:text-slate-200">
-          Cancelar
-        </Button>
-        <Button type="button" variant="danger" class="w-24 text-slate-900 dark:text-slate-200"
-          @click="confirmDeleteProgram" ref="deleteButtonRef">
-          Eliminar
-        </Button>
-      </div>
-    </Dialog.Panel>
-  </Dialog>
-  <!-- END: Modal Content -->
+  <DeleteProgramModal :ModalDeleteProgram="ModalDeleteProgram" :setModalDeleteProgram="setModalDeleteProgram"
+    :infoProgram="programInfoProvideDelete" />
 
   <div class="grid grid-cols-12 gap-y-10 gap-x-6">
     <div class="col-span-12">
@@ -206,7 +174,7 @@ onMounted(() => {
               <!--? Mostrar 'Cargando información...' cuando loading es true -->
               <Table.Tbody v-if="loading">
                 <Table.Tr>
-                  <Table.Td colspan="4" class="py-8 text-center text-xl font-bold text-green-500">
+                  <Table.Td colspan="6" class="py-8 text-center text-xl font-bold text-green-500">
                     <div class="flex flex-col w-full justify-center items-center text-nowrap">
                       <LoadingIcon icon="tail-spin" class="h-8" color="black" />
                       <div class="mt-2">Cargando información...</div>
@@ -218,7 +186,7 @@ onMounted(() => {
               <!--? Mostrar mensaje de error cuando hay error -->
               <Table.Tbody v-if="error">
                 <Table.Tr>
-                  <Table.Td colspan="4" class="py-8 text-center text-xl font-bold text-red-500">
+                  <Table.Td colspan="6" class="py-8 text-center text-xl font-bold text-red-500">
                     Error al cargar la información, Inténtelo más tarde
                   </Table.Td>
                 </Table.Tr>
@@ -227,7 +195,7 @@ onMounted(() => {
               <!--? Mostrar mensaje de error cuando no se encuentran programas -->
               <Table.Tbody v-if="!loading && totalPages <= 0 && !error">
                 <Table.Tr>
-                  <Table.Td colspan="4" class="py-8 text-center text-xl font-bold text-amber-500">
+                  <Table.Td colspan="6" class="py-8 text-center text-xl font-bold text-amber-500">
                     No se encontraron programas
                   </Table.Td>
                 </Table.Tr>
@@ -308,7 +276,7 @@ onMounted(() => {
                               {{ program.status !== 1 ? 'Activar' : 'Desactivar' }}
                             </Menu.Item>
                             <Menu.Item class="text-danger dark:text-red-400" @click="() => {
-                              openDeleteModal(program.id)
+                              setModalDeleteProgram({ open: true, programInfo: program })
                             }
                               ">
                               <Lucide icon="CheckSquare" class="w-4 h-4 mr-2 stroke-danger dark:stroke-red-400" />
