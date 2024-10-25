@@ -95,7 +95,7 @@ onMounted(() => {
               <div class="relative">
                 <Lucide icon="Search"
                   class="absolute inset-y-0 left-0 z-10 w-4 h-4 my-auto ml-3 stroke-[1.3] text-slate-500" />
-                <FormInput v-model="searchQuery" type="text" placeholder="Buscar nombre de área..."
+                <FormInput v-model="searchQuery" type="text" placeholder="Buscar área..."
                   class="pl-9 sm:w-72 rounded-[0.5rem] dark:text-slate-200" />
               </div>
             </div>
