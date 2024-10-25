@@ -266,7 +266,7 @@ onMounted(() => {
 
                           <Menu.Items class="w-40 dark:bg-darkmode-600">
                             <Menu.Item class="text-warning dark:text-yellow-500" v-if="user.id !== currentUser.id"
-                              @click="(event: MouseEvent) => {
+                              @click="(event) => {
                                 event.preventDefault();
                                 setModalEditUser({ open: true, userInfo: user });
                               }">
