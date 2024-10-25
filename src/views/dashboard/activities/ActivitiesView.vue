@@ -2,7 +2,15 @@
 import { useRouter } from 'vue-router'
 import Alert from '@/components/base/Alert'
 import Lucide from '@/components/base/Lucide'
-import { FormInput, FormTextarea, FormSelect } from '@/components/base/Form'
+import {
+  FormLabel,
+  FormCheck,
+  FormInput,
+  FormSelect,
+  FormSwitch,
+  FormHelp
+} from '@/components/base/Form'
+// import { FormInput, FormTextarea, FormSelect } from '@/components/base/Form'
 import { Menu, Popover, Dialog } from '@/components/base/Headless'
 import Pagination from '@/components/base/Pagination'
 import Table from '@/components/base/Table'
@@ -17,6 +25,7 @@ import {
   useActividades,
   useDialogDelete,
   useDialogDeleteObjective,
+  useDialogSchedules,
   useDialogObjective,
   useExportExcel,
   useExportPDF
@@ -40,6 +49,9 @@ const { currentPage, pageSize, totalPages, paginatedItems, changePage, changePag
 
 const { dialogStatusDelete, openDeleteModal, confirmDeleteActividad, closeDeleteActividad } =
   useDialogDelete({ actividades })
+
+const { dialogStatusSchedules, openSchedulesModal, confirmSchedulesModal, closeSchedulesModal } =
+  useDialogSchedules({ actividades })
 const {
   dialogStatusDeleteObjective,
   openDeleteModalObjective,
@@ -87,14 +99,7 @@ onMounted(() => {
 
 <template>
   <!-- BEGIN: Modal Content -->
-  <Dialog
-    :open="dialogStatusDelete"
-    @close="
-      () => {
-        dialogStatusDelete.value = false
-      }
-    "
-  >
+  <Dialog :open="dialogStatusDelete" @close="dialogStatusDelete.value = false">
     <Dialog.Panel>
       <div class="p-5 text-center">
         <Lucide icon="XCircle" class="w-16 h-16 mx-auto mt-3 text-danger dark:text-red-500" />
@@ -392,6 +397,166 @@ onMounted(() => {
   </Dialog>
   <!-- END: Modal Content -->
 
+  <!-- BEGIN: Super Large Modal Content dialogStatusSchedules -->
+  <Dialog size="xl" :open="dialogStatusSchedules" @close="dialogStatusSchedules.value = false">
+    <Dialog.Panel class="w-full max-w-full">
+      <div class="p-5 text-right">
+        <div class="flex space-x-4">
+          <div class="flex overflow-auto xl:overflow-visible">
+            <Table>
+              <Table.Thead>
+                <Table.Tr>
+                  <Table.Td
+                    class="py-4 font-medium first:rounded-tl-lg border-slate-200/80 last:rounded-tr-lg bg-slate-50 text-slate-500"
+                  >
+                  </Table.Td>
+                  <Table.Td
+                    class="py-4 font-medium first:rounded-tl-lg border-slate-200/80 last:rounded-tr-lg bg-slate-50 text-slate-500"
+                  >
+                    <div class="flex flex-col items-center">
+                      <Lucide icon="MailCheck" class="w-6 h-6" />
+                      <div class="mt-1.5">Email</div>
+                    </div>
+                  </Table.Td>
+                  <Table.Td
+                    class="py-4 font-medium first:rounded-tl-lg border-slate-200/80 last:rounded-tr-lg bg-slate-50 text-slate-500"
+                  >
+                    <div class="flex flex-col items-center">
+                      <Lucide icon="Globe" class="w-6 h-6" />
+                      <div class="mt-1.5">Browser</div>
+                    </div>
+                  </Table.Td>
+                  <Table.Td
+                    class="py-4 font-medium first:rounded-tl-lg border-slate-200/80 last:rounded-tr-lg bg-slate-50 text-slate-500"
+                  >
+                    <div class="flex flex-col items-center">
+                      <Lucide icon="Smartphone" class="w-6 h-6" />
+                      <div class="mt-1.5">App</div>
+                    </div>
+                  </Table.Td>
+                </Table.Tr>
+              </Table.Thead>
+              <Table.Tbody>
+                <Table.Tr class="[&_td]:last:border-b-0">
+                  <Table.Td class="py-4 border-dashed border-slate-300/70 dark:bg-darkmode-600">
+                    <div class="whitespace-nowrap">Unusual login activity detected</div>
+                  </Table.Td>
+                  <Table.Td class="py-4 border-dashed border-slate-300/70 dark:bg-darkmode-600">
+                    <div class="text-center">
+                      <FormCheck.Input id="checkbox-switch-3" type="checkbox" value="" />
+                    </div>
+                  </Table.Td>
+                  <Table.Td class="py-4 border-dashed border-slate-300/70 dark:bg-darkmode-600">
+                    <div class="text-center">
+                      <FormCheck.Input id="checkbox-switch-3" type="checkbox" value="" />
+                    </div>
+                  </Table.Td>
+                  <Table.Td class="py-4 border-dashed border-slate-300/70 dark:bg-darkmode-600">
+                    <div class="text-center">
+                      <FormCheck.Input id="checkbox-switch-3" type="checkbox" value="" />
+                    </div>
+                  </Table.Td>
+                </Table.Tr>
+                <Table.Tr class="[&_td]:last:border-b-0">
+                  <Table.Td class="py-4 border-dashed border-slate-300/70 dark:bg-darkmode-600">
+                    <div class="flex items-center whitespace-nowrap">
+                      Password change request
+                      <Lucide class="w-4 h-4 ml-1.5 text-slate-400 stroke-[1.3]" icon="Info" />
+                    </div>
+                  </Table.Td>
+                  <Table.Td class="py-4 border-dashed border-slate-300/70 dark:bg-darkmode-600">
+                    <div class="text-center">
+                      <FormCheck.Input id="checkbox-switch-3" type="checkbox" value="" />
+                    </div>
+                  </Table.Td>
+                  <Table.Td class="py-4 border-dashed border-slate-300/70 dark:bg-darkmode-600">
+                    <div class="text-center">
+                      <FormCheck.Input id="checkbox-switch-3" type="checkbox" value="" />
+                    </div>
+                  </Table.Td>
+                  <Table.Td class="py-4 border-dashed border-slate-300/70 dark:bg-darkmode-600">
+                    <div class="text-center">
+                      <FormCheck.Input id="checkbox-switch-3" type="checkbox" value="" />
+                    </div>
+                  </Table.Td>
+                </Table.Tr>
+                <Table.Tr class="[&_td]:last:border-b-0">
+                  <Table.Td class="py-4 border-dashed border-slate-300/70 dark:bg-darkmode-600">
+                    <div class="whitespace-nowrap">New message received</div>
+                  </Table.Td>
+                  <Table.Td class="py-4 border-dashed border-slate-300/70 dark:bg-darkmode-600">
+                    <div class="text-center">
+                      <FormCheck.Input id="checkbox-switch-3" type="checkbox" value="" />
+                    </div>
+                  </Table.Td>
+                  <Table.Td class="py-4 border-dashed border-slate-300/70 dark:bg-darkmode-600">
+                    <div class="text-center">
+                      <FormCheck.Input id="checkbox-switch-3" type="checkbox" value="" />
+                    </div>
+                  </Table.Td>
+                  <Table.Td class="py-4 border-dashed border-slate-300/70 dark:bg-darkmode-600">
+                    <div class="text-center">
+                      <FormCheck.Input id="checkbox-switch-3" type="checkbox" value="" />
+                    </div>
+                  </Table.Td>
+                </Table.Tr>
+                <Table.Tr class="[&_td]:last:border-b-0">
+                  <Table.Td class="py-4 border-dashed border-slate-300/70 dark:bg-darkmode-600">
+                    <div class="whitespace-nowrap">Account activity summary</div>
+                  </Table.Td>
+                  <Table.Td class="py-4 border-dashed border-slate-300/70 dark:bg-darkmode-600">
+                    <div class="text-center">
+                      <FormCheck.Input id="checkbox-switch-3" type="checkbox" value="" />
+                    </div>
+                  </Table.Td>
+                  <Table.Td class="py-4 border-dashed border-slate-300/70 dark:bg-darkmode-600">
+                    <div class="text-center">
+                      <FormCheck.Input id="checkbox-switch-3" type="checkbox" value="" />
+                    </div>
+                  </Table.Td>
+                  <Table.Td class="py-4 border-dashed border-slate-300/70 dark:bg-darkmode-600">
+                    <div class="text-center">
+                      <FormCheck.Input id="checkbox-switch-3" type="checkbox" value="" />
+                    </div>
+                  </Table.Td>
+                </Table.Tr>
+                <Table.Tr class="[&_td]:last:border-b-0">
+                  <Table.Td class="py-4 border-dashed border-slate-300/70 dark:bg-darkmode-600">
+                    <div class="flex items-center whitespace-nowrap">
+                      Security alert: Unrecognized device
+                      <Lucide class="w-4 h-4 ml-1.5 text-slate-400 stroke-[1.3]" icon="Info" />
+                    </div>
+                  </Table.Td>
+                  <Table.Td class="py-4 border-dashed border-slate-300/70 dark:bg-darkmode-600">
+                    <div class="text-center">
+                      <FormCheck.Input id="checkbox-switch-3" type="checkbox" value="" />
+                    </div>
+                  </Table.Td>
+                  <Table.Td class="py-4 border-dashed border-slate-300/70 dark:bg-darkmode-600">
+                    <div class="text-center">
+                      <FormCheck.Input id="checkbox-switch-3" type="checkbox" value="" />
+                    </div>
+                  </Table.Td>
+                  <Table.Td class="py-4 border-dashed border-slate-300/70 dark:bg-darkmode-600">
+                    <div class="text-center">
+                      <FormCheck.Input id="checkbox-switch-3" type="checkbox" value="" />
+                    </div>
+                  </Table.Td>
+                </Table.Tr>
+              </Table.Tbody>
+            </Table>
+          </div>
+          <Lucide
+            icon="XCircle"
+            class="w-10 h-full mx-auto text-danger cursor-pointer dark:text-red-500"
+            @click="closeSchedules"
+          />
+        </div>
+      </div>
+    </Dialog.Panel>
+  </Dialog>
+  <!-- END: Modal Content -->
+
   <div class="grid grid-cols-12 gap-y-10 gap-x-6">
     <div class="col-span-12">
       <div class="flex flex-col md:h-10 gap-y-3 md:items-center md:flex-row">
@@ -661,7 +826,14 @@ onMounted(() => {
                               />
                               Editar
                             </Menu.Item>
-                            <Menu.Item class="text-green dark:text-green-300">
+                            <Menu.Item
+                              class="text-green dark:text-green-300"
+                              @click="
+                                () => {
+                                  openSchedulesModal(actividades.id)
+                                }
+                              "
+                            >
                               <Lucide
                                 icon="CircleCheckBig"
                                 class="w-4 h-4 mr-2 dark:stroke-green-300"
