@@ -64,7 +64,7 @@ const copiedEmail = (email) => {
                         </Tippy>
                         <Tippy as="button" @click="() => { changeContactToChat({ contact }) }"
                             class="flex items-center justify-center border rounded-full w-9 h-9 border-primary/30 dark:border-slate-200/30 bg-primary/5 dark:bg-slate-200/5 dark:hover:bg-slate-900 dark:hover:text-slate-200 transition-all duration-300"
-                            content="comenzar chat">
+                            content="Comenzar chat">
                             <Lucide icon="Send"
                                 class="w-4 h-4 text-primary dark:text-slate-200 fill-primary/10 -ml-[2px] -mb-[2px]" />
                         </Tippy>
