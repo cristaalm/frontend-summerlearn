@@ -1,3 +1,5 @@
+import { ref } from 'vue'
+
 export function useDialogDeleteArea() {
   const ModalDeleteArea = ref(false)
   const areaInfoProvideDelete = ref(null)
