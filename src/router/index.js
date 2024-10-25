@@ -333,7 +333,10 @@ const router = createRouter({
         {
           path: '/dashboard/programs',
           name: 'programs',
-          component: () => import('@/views/dashboard/programs/ProgramsView.vue')
+          component: () =>
+            import('@/views/dashboard/programs/ProgramsView.vue').catch(
+              () => import('@/views/dashboard/notFoundView/NotFoundView.vue')
+            )
         },
         {
           path: '/dashboard/donations',

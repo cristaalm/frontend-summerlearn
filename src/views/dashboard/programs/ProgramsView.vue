@@ -24,11 +24,6 @@ const { ModalDeleteProgram, setModalDeleteProgram, programInfoProvideDelete } = 
 const { ModalEditProgram, setModalEditProgram, programInfoProvideEdit } = useDialogEditProgram()
 const router = useRouter()
 
-// debugger programs de usePrograms
-watch(programs, (newPrograms) => {
-  console.log('Programs:', newPrograms)
-})
-
 // ? Providers para los Modals de Editar y Eliminar
 
 const { users, loadingResponsable, errorResponsable, loadUsers } = useUsers()
