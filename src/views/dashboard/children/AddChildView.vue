@@ -16,7 +16,7 @@ const { validate, valid, status, name, birthdate, curp, validateInputCurp } = us
 const { setChildrenLoading, setChildrenError, addChildren } = useSetChildren()
 
 const router = useRouter()
-const minYear = new Date().getFullYear()-6
+const minYear = new Date().getFullYear() - 6
 
 
 onMounted(() => {
@@ -81,7 +81,10 @@ const handleRegister = () => {
               </label>
               <div class="flex-1 w-full mt-3 xl:mt-0">
                 <FormInput type="text" placeholder="Escriba aquí su nombre del niño/a..." v-model="name"
-                  class="dark:text-slate-200 dark:placeholder:!text-slate-400" @input="(e) => validate(e, 'name')" />
+                  @keydown.enter.prevent="() => {
+                    if (valid && !setChildrenLoading) handleRegister()
+                  }" class="dark:text-slate-200 dark:placeholder:!text-slate-400"
+                  @input="(e) => validate(e, 'name')" />
                 <div class="mt-1 text-xs text-red-500 h-4">
                   {{ status.name.message }}
                 </div>
@@ -104,7 +107,7 @@ const handleRegister = () => {
                 </div>
               </label>
               <div class="flex-1 w-full mt-3 xl:mt-0">
-                <Litepicker v-model="birthdate" name="birthdate" 
+                <Litepicker v-model="birthdate" name="birthdate"
                   class="cursor-[pointer!important] dark:text-slate-200 dark:placeholder:!text-slate-400" readonly
                   :options="{
                     autoApply: false,
@@ -138,10 +141,12 @@ const handleRegister = () => {
               </label>
               <div class="flex-1 w-full mt-3 xl:mt-0">
                 <FormInput type="text" placeholder="Escriba aquí la CURP del niño/a..." v-model="curp"
-                  class="dark:text-slate-200 dark:placeholder:!text-slate-400" @input="(e) => {
+                  @keydown.enter.prevent="() => {
+                    if (valid && !setChildrenLoading) handleRegister()
+                  }" class="dark:text-slate-200 dark:placeholder:!text-slate-400" @input="(e) => {
                     validate(e, 'curp')
                     validateInputCurp(e)
-                    } " />
+                  }" />
                 <div class="mt-1 text-xs text-red-500 h-4">
                   {{ status.curp.message }}
                 </div>

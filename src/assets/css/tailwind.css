@@ -5244,6 +5244,18 @@ select {
   margin-top: 1px;
 }
 
+.mr-10 {
+  margin-right: 2.5rem;
+}
+
+.mb-0 {
+  margin-bottom: 0px;
+}
+
+.mr-14 {
+  margin-right: 3.5rem;
+}
+
 .block {
   display: block;
 }
@@ -5641,6 +5653,30 @@ select {
 
 .w-screen {
   width: 100vw;
+}
+
+.w-60 {
+  width: 15rem;
+}
+
+.w-1\/4 {
+  width: 25%;
+}
+
+.w-2\/4 {
+  width: 50%;
+}
+
+.w-2\/5 {
+  width: 40%;
+}
+
+.w-3\/5 {
+  width: 60%;
+}
+
+.w-2\/6 {
+  width: 33.333333%;
 }
 
 .min-w-0 {
@@ -6088,6 +6124,10 @@ select {
 
 .overflow-x-hidden {
   overflow-x: hidden;
+}
+
+.overflow-y-visible {
+  overflow-y: visible;
 }
 
 .truncate {
@@ -7928,6 +7968,10 @@ select {
       max-width: 1320px;
     }
   }
+}
+
+.\*\:w-full > * {
+  width: 100%;
 }
 
 .placeholder\:text-slate-400\/90::-moz-placeholder {
@@ -10425,6 +10469,10 @@ select {
 
   .xl\:mt-8 {
     margin-top: 2rem;
+  }
+
+  .xl\:mr-10 {
+    margin-right: 2.5rem;
   }
 
   .xl\:flex {
