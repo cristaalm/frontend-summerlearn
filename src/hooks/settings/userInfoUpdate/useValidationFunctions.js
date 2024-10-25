@@ -115,6 +115,7 @@ export function useValidateFunctions({ valid, status }) {
     validateText,
     validateDate,
     validateInputPhone,
-    validate
+    validate,
+    formatPhone
   }
 }
