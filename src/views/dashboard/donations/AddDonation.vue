@@ -73,7 +73,9 @@ const handleRegister = () => {
               </label>
               <div class="flex-1 w-full mt-3 xl:mt-0">
                 <FormInput type="text" placeholder="Escriba aquí el concepto..." v-model="concept"
-                  class="dark:text-slate-200 dark:placeholder:!text-slate-400" />
+                  @keydown.enter.prevent="() => {
+                    if (valid && !setDonationLoading) handleRegister()
+                  }" class="dark:text-slate-200 dark:placeholder:!text-slate-400" />
                 <div class="mt-1 text-xs text-red-500 h-4">
                   {{ status.concept.message }}
                 </div>
@@ -98,8 +100,9 @@ const handleRegister = () => {
               <div class="flex-1 w-full mt-3 xl:mt-0">
                 <InputGroup>
                   <InputGroup.Text> $ </InputGroup.Text>
-                  <FormInput type="text" placeholder="Escriba aquí su monto..." v-model="amount"
-                    class="dark:text-slate-200 dark:placeholder:!text-slate-400" @input="validateInputAmount" />
+                  <FormInput type="text" placeholder="Escriba aquí su monto..." v-model="amount" @keydown.enter.prevent="() => {
+                    if (valid && !setDonationLoading) handleRegister()
+                  }" class="dark:text-slate-200 dark:placeholder:!text-slate-400" @input="validateInputAmount" />
                 </InputGroup>
 
                 <div class="mt-1 text-xs text-red-500 h-4">

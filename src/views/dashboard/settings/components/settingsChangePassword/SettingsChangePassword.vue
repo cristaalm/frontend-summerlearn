@@ -41,8 +41,9 @@ const { loadingUpdatePassword, updatePassword } = useUpdatePassword({ newPasswor
                 </label>
                 <div class="flex-1 w-full mt-3 xl:mt-0">
                     <InputGroup class="mt-2">
-                        <FormInput :type="`${showCurrentPassword ? 'text' : 'password'}`"
-                            class="dark:text-slate-200 dark:placeholder:!text-slate-400"
+                        <FormInput :type="`${showCurrentPassword ? 'text' : 'password'}`" @keydown.enter.prevent="() => {
+                            if (valid && !loadingUpdatePassword) updatePassword()
+                        }" class="dark:text-slate-200 dark:placeholder:!text-slate-400"
                             placeholder="Escriba aquí su contraseña actual..." name="password_current" @input="(e) => {
                                 validatePasswordCurrent();
                                 validatePassword(e);
@@ -83,12 +84,12 @@ const { loadingUpdatePassword, updatePassword } = useUpdatePassword({ newPasswor
                 </label>
                 <div class="flex-1 w-full mt-3 xl:mt-0">
                     <InputGroup class="mt-2">
-                        <FormInput :type="`${showNewPassword ? 'text' : 'password'}`"
-                            class="dark:text-slate-200 dark:placeholder:!text-slate-400" @input="(e) => {
-                                validatePassword(e);
-                                validateNewPasswordComfirm(e);
-                            }" placeholder=" Escriba aquí su contraseña..." name="new_password"
-                            v-model="newPassword" />
+                        <FormInput :type="`${showNewPassword ? 'text' : 'password'}`" @keydown.enter.prevent="() => {
+                            if (valid && !loadingUpdatePassword) updatePassword()
+                        }" class="dark:text-slate-200 dark:placeholder:!text-slate-400" @input="(e) => {
+                            validatePassword(e);
+                            validateNewPasswordComfirm(e);
+                        }" placeholder=" Escriba aquí su contraseña..." name="new_password" v-model="newPassword" />
                         <InputGroup.Text @click="() => { showNewPassword = !showNewPassword }" class="cursor-pointer">
                             <button>
                                 <Lucide icon="Eye" class="w-4 h-4 stroke-[1.3] text-green-500" v-if="showNewPassword" />
@@ -144,8 +145,9 @@ const { loadingUpdatePassword, updatePassword } = useUpdatePassword({ newPasswor
                 </label>
                 <div class="flex-1 w-full mt-3 xl:mt-0">
                     <InputGroup class="mt-2">
-                        <FormInput placeholder="Escriba nuevamente aquí su contraseña..."
-                            class="dark:text-slate-200 dark:placeholder:!text-slate-400"
+                        <FormInput placeholder="Escriba nuevamente aquí su contraseña..." @keydown.enter.prevent="() => {
+                            if (valid && !loadingUpdatePassword) updatePassword()
+                        }" class="dark:text-slate-200 dark:placeholder:!text-slate-400"
                             @input="validateNewPasswordComfirm"
                             :type="`${showNewPasswordConfirm ? 'text' : 'password'}`" name="new_password_confirm"
                             v-model="newPasswordConfirm" />

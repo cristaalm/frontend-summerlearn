@@ -10,9 +10,9 @@ import Button from '@/components/base/Button'
 const { user, loadingUser, errorUser, loadUser } = inject('user')
 const { status } = useStatus()
 const { firstName, lastName, phone, birthdate, valid } = useRefs()
-const { validateText, validateDate, validateInputPhone, validate } = useValidateFunctions({ valid, status })
+const { validateText, validateDate, validateInputPhone, validate, formatPhone } = useValidateFunctions({ valid, status })
 const validChanges = computed(() => {
-    return valid.value && (firstName.value !== user.value.firstName || lastName.value !== user.value.lastName || phone.value !== user.value.phone || birthdate.value !== user.value.birthdate.split('-').reverse().join('/'))
+    return valid.value && (firstName.value !== user.value.firstName || lastName.value !== user.value.lastName || formatPhone(phone.value.replace(/\D/g, '')) !== formatPhone(user.value.phone.replace(/\D/g, '')) || birthdate.value !== user.value.birthdate.split('-').reverse().join('/'))
 })
 
 const { loadingUserEdit, updateUser } = useUpdateUser({ phone, firstName, lastName, birthdate, valid, validate, loadUser })
@@ -34,6 +34,7 @@ onMounted(() => {
         e = { target: { value: phone.value, name: 'phone' } }
         validateInputPhone(e)
         validateText(e)
+        if (user.value.phone) phone.value = formatPhone(user.value.phone)
 
         if (user.value.birthdate) birthdate.value = user.value.birthdate.split('-').reverse().join('/')
 
@@ -89,9 +90,15 @@ watch(birthdate, (value) => {
                 <div class="flex-1 w-full mt-3 xl:mt-0">
                     <div class="flex flex-col items-center md:flex-row">
                         <FormInput type="text" name="firstName" v-model="firstName" @input="validateText"
+                            @keydown.enter.prevent="() => {
+                                if (valid && validChanges && !loadingUserEdit && !loadingUser) updateUser()
+                            }"
                             class="first:rounded-b-none first:md:rounded-bl-md first:md:rounded-r-none [&:not(:first-child):not(:last-child)]:-mt-px [&:not(:first-child):not(:last-child)]:md:mt-0 [&:not(:first-child):not(:last-child)]:md:-ml-px [&:not(:first-child):not(:last-child)]:rounded-none last:rounded-t-none last:md:rounded-l-none last:md:rounded-tr-md last:-mt-px last:md:mt-0 last:md:-ml-px focus:z-10 dark:text-slate-200"
                             placeholder="Escriba aquí su nombre..." />
                         <FormInput type="text" name="lastName" v-model="lastName" @input="validateText"
+                            @keydown.enter.prevent="() => {
+                                if (valid && validChanges && !loadingUserEdit && !loadingUser) updateUser()
+                            }"
                             class="first:rounded-b-none first:md:rounded-bl-md first:md:rounded-r-none [&:not(:first-child):not(:last-child)]:-mt-px [&:not(:first-child):not(:last-child)]:md:mt-0 [&:not(:first-child):not(:last-child)]:md:-ml-px [&:not(:first-child):not(:last-child)]:rounded-none last:rounded-t-none last:md:rounded-l-none last:md:rounded-tr-md last:-mt-px last:md:mt-0 last:md:-ml-px focus:z-10 dark:text-slate-200"
                             placeholder="Escriba aquí su apellido..." />
                     </div>
@@ -159,7 +166,9 @@ watch(birthdate, (value) => {
                 </label>
                 <div class="flex-1 w-full mt-3 xl:mt-0">
                     <FormInput type="text" placeholder="Escriba aquí su teléfono celular..." name="phone"
-                        class="dark:text-slate-200 dark:placeholder:!text-slate-400" v-model="phone" @input="(e) => {
+                        @keydown.enter.prevent="() => {
+                            if (valid && validChanges && !loadingUserEdit && !loadingUser) updateUser()
+                        }" class="dark:text-slate-200 dark:placeholder:!text-slate-400" v-model="phone" @input="(e) => {
                             validateInputPhone(e)
                             validateText(e)
                         }

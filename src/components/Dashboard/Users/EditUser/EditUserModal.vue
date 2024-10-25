@@ -1,16 +1,10 @@
 <script setup>
-import {
-    FormLabel,
-    FormSwitch,
-    FormInput,
-    FormSelect,
-} from "@/components/Base/Form";
-import { Menu, Dialog } from "@/components/base/Headless";
+import { FormSelect } from "@/components/base/Form";
+import { Dialog } from "@/components/base/Headless";
 import LoadingIcon from '@/components/base/LoadingIcon'
-import TinySlider from "@/components/base/TinySlider";
 import Button from "@/components/base/Button";
 import Lucide from "@/components/base/Lucide";
-import { ref, inject, watch, onMounted, onUnmounted } from "vue";
+import { ref, inject, watch } from "vue";
 import { useRolUser } from '@/hooks/users/editUser/useRolUser'
 import { Baseurl } from "@/utils/global";
 
@@ -23,7 +17,7 @@ const props = defineProps({
 
 const { roles, loadingRoles, errorRoles } = inject('roles')
 const selectedRole = ref(null)
-const { updateRol, loadingEditRol, successEditRol, errorEditRol } = useRolUser()
+const { updateRol, loadingEditRol } = useRolUser()
 
 watch(() => props.infoUser, (newVal) => {
     if (newVal) {
@@ -34,13 +28,6 @@ watch(() => props.infoUser, (newVal) => {
 const handleUpdateRol = () => {
     updateRol({ user: props.infoUser, newRol: selectedRole, setModalEditUser: props.setModalEditUser })
 }
-
-onUnmounted(() => {
-    props.infoUser = null
-    selectedRole.value = null
-    successEditRol.value = false
-    errorEditRol.value = false
-})
 
 </script>
 
@@ -93,7 +80,11 @@ onUnmounted(() => {
                             </div>
                         </label>
                         <div class="flex-1 w-full mt-3 xl:mt-0">
-                            <FormSelect v-model="selectedRole" class="flex-1 mt-2 dark:text-slate-200">
+                            <FormSelect v-model="selectedRole" class="flex-1 mt-2 dark:text-slate-200"
+                                @keydown.enter.prevent="() => {
+                                    if (selectedRole === infoUser.rol) return
+                                    handleUpdateRol()
+                                }">
                                 <!--? Mostrar 'Cargando roles...' cuando loadingRoles es true -->
                                 <template v-if="loadingRoles">
                                     <option>Cargando roles...</option>

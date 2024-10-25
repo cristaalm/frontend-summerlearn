@@ -106,39 +106,6 @@ onMounted(() => {
 
             <span class="flex items-center mt-6 font-medium text-primary dark:text-slate-200">Donaciones diarias</span>
           </div>
-
-          <!--? Card -->
-
-          <!-- <div class="flex flex-col col-span-12 p-5 md:col-span-6 2xl:col-span-3 box box--stacked">
-                        <Menu class="absolute top-0 right-0 mt-5 mr-5">
-                            <Menu.Button class="w-5 h-5 text-slate-500">
-                                <Lucide icon="MoreVertical" class="w-6 h-6 stroke-slate-400/70 fill-slate-400/70" />
-                            </Menu.Button>
-                        </Menu>
-                        <div class="flex items-center">
-                            <div
-                                class="flex items-center justify-center w-12 h-12 border rounded-full border-primary/10 bg-primary/10">
-                                <Lucide icon="Zap" class="w-6 h-6 text-primary fill-primary/10" />
-                            </div>
-                            <div class="ml-4">
-                                <div class="text-base font-medium">Rendimiento</div>
-                                <div class="text-slate-500 mt-0.5">En 9 Dias</div>
-                            </div>
-                        </div>
-                        <div class="relative mt-5 mb-6">
-                            <ReportDonutChart3 class="relative z-10" :height="100" />
-                        </div>
-                        <div class="flex flex-wrap items-center justify-center gap-y-3 gap-x-5">
-                            <div class="flex items-center">
-                                <div class="w-2 h-2 rounded-full bg-primary/70"></div>
-                                <div class="ml-2.5">Order Volume</div>
-                            </div>
-                            <div class="flex items-center">
-                                <div class="w-2 h-2 rounded-full bg-danger/70"></div>
-                                <div class="ml-2.5">Coverage Area</div>
-                            </div>
-                        </div>
-                    </div> -->
         </div>
 
         <!--? contenedor de las estadisticas de usuarios -->
@@ -225,7 +192,7 @@ onMounted(() => {
                     <Lucide icon="Search"
                       class="absolute inset-y-0 left-0 z-10 w-4 h-4 my-auto ml-3 stroke-[1.3] text-slate-500" />
                     <FormInput v-model="searchQuery" type="text" placeholder="Buscar nombre de donante..."
-                      class="pl-9 sm:w-64 rounded-[0.5rem]" />
+                      class="pl-9 sm:w-64 rounded-[0.5rem] dark:text-slate-200 dark:placeholder:text-slate-400" />
                   </div>
                 </div>
                 <div class="flex flex-col sm:flex-row gap-x-3 gap-y-2 sm:ml-auto">

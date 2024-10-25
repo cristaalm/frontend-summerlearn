@@ -4,28 +4,46 @@ import Lucide from '@/components/base/Lucide'
 import { Menu, Dialog } from '@/components/base/Headless'
 import Pagination from '@/components/base/Pagination'
 import { FormInput, FormSelect } from '@/components/base/Form'
+import { useUsers } from '@/hooks/users/useUserCoordinator'
 import Table from '@/components/base/Table'
 import LoadingIcon from '@/components/base/LoadingIcon'
 import Button from '@/components/base/Button'
-// import { useFilter, usePagination, useAreas } from '@/hooks/areas/' // error areglado ><
-import { onMounted } from 'vue'
+import EditAreaModal from '@/components/Dashboard/areas/EditAreaModal.vue'
+import { onMounted, provide, ref } from 'vue'
 import { useFilter, useAreas, usePagination, useDialogDelete } from '@/hooks/areas/'
 
 const { areas, loading, error, loadAreas } = useAreas()
 const { searchQuery, filteredItems } = useFilter(areas)
-const { currentPage, pageSize, totalPages, paginatedItems, changePage, changePageSize } =
-  usePagination(filteredItems)
+const { currentPage, pageSize, totalPages, paginatedItems, changePage, changePageSize } = usePagination(filteredItems)
 const router = useRouter()
-const { dialogStatusDelete, openDeleteModal, confirmDeleteArea, closeDeleteArea } = useDialogDelete(
-  { areas }
-)
+const { dialogStatusDelete, openDeleteModal, confirmDeleteArea, closeDeleteArea } = useDialogDelete({ areas })
+
+const { users, loading: loadingUsers, error: errorUsers, loadUsers } = useUsers()
+
+provide('cordinator', { users, loadingUsers, errorUsers, loadUsers })
+
+const ModalEditArea = ref(false);
+const areaInfoProvide = ref(null);
+const setModalEditArea = ({ open, userInfo = null }) => {
+  if (open) {
+    if (!areaInfoProvide) return
+    ModalEditArea.value = open;
+    areaInfoProvide.value = userInfo;
+  } else {
+    ModalEditArea.value = open;
+  }
+};
 
 onMounted(() => {
   loadAreas()
+  loadUsers()
 })
 </script>
 
 <template>
+
+  <EditAreaModal :ModalEditArea="ModalEditArea" :setModalEditArea="setModalEditArea" :infoArea="areaInfoProvide" />
+
   <!-- BEGIN: Modal Content -->
   <Dialog :open="dialogStatusDelete" @close="() => {
     dialogStatusDelete.value = false
@@ -77,7 +95,7 @@ onMounted(() => {
               <div class="relative">
                 <Lucide icon="Search"
                   class="absolute inset-y-0 left-0 z-10 w-4 h-4 my-auto ml-3 stroke-[1.3] text-slate-500" />
-                <FormInput v-model="searchQuery" type="text" placeholder="Buscar nombre de área..."
+                <FormInput v-model="searchQuery" type="text" placeholder="Buscar área..."
                   class="pl-9 sm:w-72 rounded-[0.5rem] dark:text-slate-200" />
               </div>
             </div>
@@ -152,7 +170,8 @@ onMounted(() => {
                               class="w-5 h-5 stroke-black dark:stroke-slate-200 fill-black dark:fill-slate-200" />
                           </Menu.Button>
                           <Menu.Items class="w-40">
-                            <Menu.Item class="text-warning dark:text-yellow-400">
+                            <Menu.Item class="text-warning dark:text-yellow-400"
+                              @click="() => { setModalEditArea({ open: true, userInfo: area }) }">
                               <Lucide icon="CheckSquare" class="w-4 h-4 mr-2 dark:stroke-yellow-400" />
                               Editar
                             </Menu.Item>

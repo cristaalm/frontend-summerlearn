@@ -93,7 +93,9 @@ const handleRegister = () => {
               </label>
               <div class="flex-1 w-full mt-3 xl:mt-0">
                 <FormInput type="text" placeholder="Escriba aqui el nombre del programa..." v-model="name"
-                  class="dark:text-slate-200 dark:placeholder:!text-slate-400" />
+                  @keydown.enter.prevent="() => {
+                    if (valid && !setProgramLoading) handleRegister()
+                  }" class="dark:text-slate-200 dark:placeholder:!text-slate-400" />
                 <div class="mt-1 text-xs text-red-500 h-4">
                   {{ status.name.message }}
                 </div>
@@ -117,7 +119,10 @@ const handleRegister = () => {
               </label>
 
               <div class="flex-1 w-full mt-3 xl:mt-0">
-                <FormSelect v-model="grade" class="dark:text-slate-200 dark:placeholder:!text-slate-400">
+                <FormSelect v-model="grade" class="dark:text-slate-200 dark:placeholder:!text-slate-400"
+                  @keydown.enter.prevent="() => {
+                    if (valid && !setProgramLoading) handleRegister()
+                  }">
                   <template v-if="loadingGrades">
                     <option value="" disabled selected>Cargando...</option>
                   </template>
@@ -194,7 +199,10 @@ const handleRegister = () => {
               </label>
 
               <div class="flex-1 w-full mt-3 xl:mt-0">
-                <FormSelect v-model="responsible" class="dark:text-slate-200 dark:placeholder:!text-slate-400">
+                <FormSelect v-model="responsible" class="dark:text-slate-200 dark:placeholder:!text-slate-400"
+                  @keydown.enter.prevent="() => {
+                    if (valid && !setProgramLoading) handleRegister()
+                  }">
                   <template v-if="loadingResponsable">
                     <option value="" disabled selected>Cargando...</option>
                   </template>
@@ -235,7 +243,10 @@ const handleRegister = () => {
               </label>
 
               <div class="flex-1 w-full mt-3 xl:mt-0">
-                <FormSelect v-model="area" class="dark:text-slate-200 dark:placeholder:!text-slate-400">
+                <FormSelect v-model="area" class="dark:text-slate-200 dark:placeholder:!text-slate-400"
+                  @keydown.enter.prevent="() => {
+                    if (valid && !setProgramLoading) handleRegister()
+                  }">
                   <template v-if="loadingAreas">
                     <option value="" disabled selected>Cargando...</option>
                   </template>
