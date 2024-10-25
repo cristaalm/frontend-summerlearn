@@ -5470,6 +5470,58 @@ select {
   max-height: 530px;
 }
 
+.max-h-\[calc\(100vh-128px\)\] {
+  max-height: calc(100vh - 128px);
+}
+
+.max-h-\[calc\(100\%-128px-78px\)\] {
+  max-height: calc(100% - 128px - 78px);
+}
+
+.max-h-\[calc\(100\%-250px\)\] {
+  max-height: calc(100% - 250px);
+}
+
+.max-h-\[calc\(100\%-550px\)\] {
+  max-height: calc(100% - 550px);
+}
+
+.max-h-\[calc\(550px\)\] {
+  max-height: calc(550px);
+}
+
+.max-h-\[calc\(100\%-1050px\)\] {
+  max-height: calc(100% - 1050px);
+}
+
+.max-h-\[90vh\] {
+  max-height: 90vh;
+}
+
+.max-h-\[80vh\] {
+  max-height: 80vh;
+}
+
+.max-h-\[10vh\] {
+  max-height: 10vh;
+}
+
+.max-h-\[75vh\] {
+  max-height: 75vh;
+}
+
+.max-h-\[50vh\] {
+  max-height: 50vh;
+}
+
+.max-h-\[60vh\] {
+  max-height: 60vh;
+}
+
+.max-h-\[70vh\] {
+  max-height: 70vh;
+}
+
 .min-h-\[530px\] {
   min-height: 530px;
 }
@@ -5699,6 +5751,10 @@ select {
   max-width: 200px;
 }
 
+.max-w-\[300px\] {
+  max-width: 300px;
+}
+
 .max-w-\[600px\] {
   max-width: 600px;
 }
@@ -5831,6 +5887,63 @@ select {
   animation: spin 1s linear infinite;
 }
 
+@keyframes ping {
+  75%, 100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+.animate-ping {
+  animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes pulse {
+  50% {
+    opacity: .5;
+  }
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(-25%);
+    animation-timing-function: cubic-bezier(0.8,0,1,1);
+  }
+
+  50% {
+    transform: none;
+    animation-timing-function: cubic-bezier(0,0,0.2,1);
+  }
+}
+
+.animate-bounce {
+  animation: bounce 1s infinite;
+}
+
+@keyframes toastEnter {
+  0% {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-toast-enter {
+  animation: toastEnter 0.5s ease-out forwards;
+}
+
+.animate-none {
+  animation: none;
+}
+
 .cursor-\[pointer\!important\] {
   cursor: pointer !important;
 }
@@ -5849,6 +5962,10 @@ select {
 
 .cursor-text {
   cursor: text;
+}
+
+.\!cursor-pointer {
+  cursor: pointer !important;
 }
 
 .select-none {
@@ -8651,6 +8768,18 @@ select {
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
+.hover\:scale-150:hover {
+  --tw-scale-x: 1.5;
+  --tw-scale-y: 1.5;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.hover\:scale-125:hover {
+  --tw-scale-x: 1.25;
+  --tw-scale-y: 1.25;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
 .hover\:border-slate-100:hover {
   --tw-border-opacity: 1;
   border-color: rgb(241 245 249 / var(--tw-border-opacity));
@@ -8946,6 +9075,12 @@ select {
 
 .disabled\:opacity-70:disabled {
   opacity: 0.7;
+}
+
+.group:hover .group-hover\:scale-125 {
+  --tw-scale-x: 1.25;
+  --tw-scale-y: 1.25;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
 .group.right .group-\[\.right\]\:ml-auto {
@@ -9686,6 +9821,26 @@ select {
   --tw-gradient-to: #0f172a var(--tw-gradient-to-position);
 }
 
+.dark\:-moz-read-only\:bg-slate-800:-moz-read-only:is(.dark *) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(30 41 59 / var(--tw-bg-opacity));
+}
+
+.dark\:read-only\:bg-slate-800:read-only:is(.dark *) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(30 41 59 / var(--tw-bg-opacity));
+}
+
+.dark\:-moz-read-only\:\!bg-slate-800:-moz-read-only:is(.dark *) {
+  --tw-bg-opacity: 1 !important;
+  background-color: rgb(30 41 59 / var(--tw-bg-opacity)) !important;
+}
+
+.dark\:read-only\:\!bg-slate-800:read-only:is(.dark *) {
+  --tw-bg-opacity: 1 !important;
+  background-color: rgb(30 41 59 / var(--tw-bg-opacity)) !important;
+}
+
 .dark\:hover\:border-transparent:hover:is(.dark *) {
   border-color: transparent;
 }
@@ -9778,6 +9933,11 @@ select {
 
 .disabled\:dark\:bg-darkmode-800\/50:is(.dark *):disabled {
   background-color: rgb(var(--color-darkmode-800) / 0.5);
+}
+
+.dark\:disabled\:bg-slate-800:disabled:is(.dark *) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(30 41 59 / var(--tw-bg-opacity));
 }
 
 @media (min-width: 640px) {

@@ -4,15 +4,7 @@ import Button from '@/components/base/Button'
 import Alert from '@/components/base/Alert'
 import Litepicker from '@/components/base/Litepicker'
 import LoadingIcon from '@/components/base/LoadingIcon'
-import {
-  useRefs,
-  useValidations,
-  useStatus,
-  useAreas,
-  useUsers,
-  useSetProgram,
-  useGrades
-} from '@/hooks/programs/addProgram/'
+import { useRefs, useValidations, useStatus, useAreas, useUsers, useSetProgram, useGrades } from '@/hooks/programs/addProgram/'
 import { FormInput, FormSelect } from '@/components/base/Form'
 import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'

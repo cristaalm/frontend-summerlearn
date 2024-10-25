@@ -1,3 +1,4 @@
 import { useDialogDeleteProgram } from './useDialogDeteleProgram'
+import { useDialogEditProgram } from './useDialogEditProgram'
 
-export { useDialogDeleteProgram }
+export { useDialogDeleteProgram, useDialogEditProgram }
