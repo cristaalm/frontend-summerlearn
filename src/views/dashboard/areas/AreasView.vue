@@ -8,31 +8,23 @@ import { useUsers } from '@/hooks/users/useUserCoordinator'
 import Table from '@/components/base/Table'
 import LoadingIcon from '@/components/base/LoadingIcon'
 import Button from '@/components/base/Button'
-import EditAreaModal from '@/components/Dashboard/areas/EditAreaModal.vue'
+import { EditAreaModal, DeleteAreaModal } from '@/components/Dashboard/areas/'
+import { useDialogDeleteArea, useDialogEditArea } from '@/hooks/areas/Dialogs'
 import { onMounted, provide, ref } from 'vue'
-import { useFilter, useAreas, usePagination, useDialogDelete } from '@/hooks/areas/'
+import { useFilter, useAreas, usePagination } from '@/hooks/areas/'
 
 const { areas, loading, error, loadAreas } = useAreas()
 const { searchQuery, filteredItems } = useFilter(areas)
 const { currentPage, pageSize, totalPages, paginatedItems, changePage, changePageSize } = usePagination(filteredItems)
+const { setModalEditArea, areaInfoProvideEdit, ModalEditArea } = useDialogEditArea()
+const { setModalDeleteArea, ModalDeleteArea, areaInfoProvideDelete } = useDialogDeleteArea()
 const router = useRouter()
-const { dialogStatusDelete, openDeleteModal, confirmDeleteArea, closeDeleteArea } = useDialogDelete({ areas })
 
 const { users, loading: loadingUsers, error: errorUsers, loadUsers } = useUsers()
 
 provide('cordinator', { users, loadingUsers, errorUsers, loadUsers })
+provide('areas', { areas })
 
-const ModalEditArea = ref(false);
-const areaInfoProvide = ref(null);
-const setModalEditArea = ({ open, userInfo = null }) => {
-  if (open) {
-    if (!areaInfoProvide) return
-    ModalEditArea.value = open;
-    areaInfoProvide.value = userInfo;
-  } else {
-    ModalEditArea.value = open;
-  }
-};
 
 onMounted(() => {
   loadAreas()
@@ -42,35 +34,11 @@ onMounted(() => {
 
 <template>
 
-  <EditAreaModal :ModalEditArea="ModalEditArea" :setModalEditArea="setModalEditArea" :infoArea="areaInfoProvide" />
+  <EditAreaModal :ModalEditArea="ModalEditArea" :setModalEditArea="setModalEditArea" :infoArea="areaInfoProvideEdit" />
 
-  <!-- BEGIN: Modal Content -->
-  <Dialog :open="dialogStatusDelete" @close="() => {
-    dialogStatusDelete.value = false
-  }">
-    <Dialog.Panel>
-      <div class="p-5 text-center">
-        <Lucide icon="XCircle" class="w-16 h-16 mx-auto mt-3 text-danger dark:text-red-500" />
-        <div class="mt-5 text-3xl dark:text-slate-200">¿Está seguro?</div>
-        <div class="mt-2 text-slate-500 dark:text-slate-400">
-          ¿Realmente desea eliminar este registro?
-          <br />
-          Este proceso no puede deshacerse.
-        </div>
-      </div>
-      <div class="px-5 pb-8 text-center space-x-8">
-        <Button type="button" variant="outline-secondary" @click="closeDeleteArea"
-          class="w-24 mr-1 dark:text-slate-200">
-          Cancelar
-        </Button>
-        <Button type="button" variant="danger" class="w-24 dark:text-slate-200" @click="confirmDeleteArea"
-          ref="deleteButtonRef">
-          Eliminar
-        </Button>
-      </div>
-    </Dialog.Panel>
-  </Dialog>
-  <!-- END: Modal Content -->
+  <DeleteAreaModal :ModalDeleteArea="ModalDeleteArea" :setModalDeleteArea="setModalDeleteArea"
+    :infoArea="areaInfoProvideDelete" />
+
   <div class="grid grid-cols-12 gap-y-10 gap-x-6">
     <div class="col-span-12">
       <div class="flex flex-col md:h-10 gap-y-3 md:items-center md:flex-row">
@@ -171,14 +139,13 @@ onMounted(() => {
                           </Menu.Button>
                           <Menu.Items class="w-40">
                             <Menu.Item class="text-warning dark:text-yellow-400"
-                              @click="() => { setModalEditArea({ open: true, userInfo: area }) }">
+                              @click="() => { setModalEditArea({ open: true, areaInfo: area }) }">
                               <Lucide icon="CheckSquare" class="w-4 h-4 mr-2 dark:stroke-yellow-400" />
                               Editar
                             </Menu.Item>
                             <Menu.Item class="text-danger dark:text-red-400" @click="() => {
-                              openDeleteModal(area.id)
-                            }
-                              ">
+                              setModalDeleteArea({ open: true, areaInfo: area })
+                            }">
                               <Lucide icon="Trash" class="w-4 h-4 mr-2 dark:stroke-red-400" />
                               Eliminar
                             </Menu.Item>
