@@ -31,6 +31,12 @@ const valid = ref(false)
 
 //debug de los campos
 watch([() => nameProgram.value, () => selectedUser.value, () => selectedArea.value, () => selectedGrade.value, () => durationProgram.value], (newVal) => {
+    // validamos el nombre del programa que cumpla con el siguiente regex /^[0-9a-zA-ZáéíóúÁÉÍÓÚñÑ\s.,!?;:-]+$/
+    if (!/^[0-9a-zA-ZáéíóúÁÉÍÓÚñÑ\s.,!?;:-]+$/.test(nameProgram.value)) {
+        valid.value = false
+        return
+    }
+    // validamos si los campos son diferentes a los originales
     if (newVal[0] !== props.infoProgram.name || newVal[1] !== props.infoProgram.user.id || selectedArea.value !== props.infoProgram.area.id || selectedGrade.value !== props.infoProgram.grade.id || durationProgram.value !== `${formatDate(props.infoProgram.start)} - ${formatDate(props.infoProgram.end)}`) {
         valid.value = true
     } else {
@@ -168,11 +174,11 @@ const handleUpdateProgram = () => {
                                     if (valid && !loadingEditProgram) handleUpdateProgram()
                                 }">
                                 <template v-if="loadingGrades">
-                                    <option :value="infoProgram.user.id">Cargando escolaridades...</option>
+                                    <option :value="infoProgram.grade.id">Cargando escolaridades...</option>
                                 </template>
 
                                 <template v-if="errorGrades">
-                                    <option :value="infoProgram.user.id">Error al cargar las escolaridades</option>
+                                    <option :value="infoProgram.grade.id">Error al cargar las escolaridades</option>
                                 </template>
 
                                 <template v-if="!loadingGrades">
@@ -208,11 +214,11 @@ const handleUpdateProgram = () => {
                                     if (valid && !loadingEditProgram) handleUpdateProgram()
                                 }">
                                 <template v-if="loadingAreas">
-                                    <option :value="infoProgram.user.id">Cargando Áreas...</option>
+                                    <option :value="infoProgram.area.id">Cargando Áreas...</option>
                                 </template>
 
                                 <template v-if="errorAreas">
-                                    <option :value="infoProgram.user.id">Error al cargar las Áreas</option>
+                                    <option :value="infoProgram.area.id">Error al cargar las Áreas</option>
                                 </template>
 
                                 <template v-if="!loadingAreas">

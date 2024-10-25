@@ -24,6 +24,14 @@ const valid = ref(false)
 
 //debug de los campos
 watch([() => nameArea.value, () => selectedUser.value], (newVal) => {
+
+    // validamos que el nombre cumpla con el siguiente regex /^[0-9a-zA-ZáéíóúÁÉÍÓÚñÑ\s.,!?;:-]+$/
+    if (!/^[0-9a-zA-ZáéíóúÁÉÍÓÚñÑ\s.,!?;:-]+$/.test(nameArea.value)) {
+        valid.value = false
+        return
+    }
+
+    // validamos que los campos no sean iguales a los que ya estan
     if (newVal[0] !== props.infoArea.name || newVal[1] !== props.infoArea.user.id) {
         valid.value = true
     } else {
