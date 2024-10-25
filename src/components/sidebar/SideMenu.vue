@@ -512,15 +512,14 @@ const closeSlideOver = () => {
 
             <div class="flex justify-end px-4 space-x-5">
               <!-- Close Button Menu -->
-              <Menu class="overflow-hidden w-9 h-9 border-3 relative group">
+              <!-- <Menu class="overflow-hidden w-9 h-9 border-3 relative group">
                 <Menu.Button @click="openSlideOver">
-                  <!-- Llamada a la función para abrir el SlideOver -->
                   <Tippy as="a" class="flex items-center justify-center ml-auto w-9 h-9" content="Contáctanos">
                     <img alt="Tailwise - Admin Dashboard Template" :src="`/directorio-telefonico.png`" />
                     <Lucide icon="MessagesSquare" class="w-9 h-9 text-white mx-auto" />
                   </Tippy>
                 </Menu.Button>
-              </Menu>
+              </Menu> -->
 
               <!-- User Profile Menu -->
               <Menu>
