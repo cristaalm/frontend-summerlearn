@@ -158,14 +158,17 @@ const copiedEmail = () => {
           </div>
         </div>
         <div class="relative">
-          <FormTextarea @keydown.enter.prevent="sendMessageToRecipient" @keydown="handleTyping"
-            :disabled="loadingMessages || loadingSendMessage"
+          <FormTextarea @keydown.enter.prevent="() => {
+            if (newMessage.trim() === '') return
+            sendMessageToRecipient()
+          }" @keydown="handleTyping" :disabled="loadingMessages || loadingSendMessage"
             class="-mb-1.5 pr-16 rounded-xl resize dark:placeholder:text-slate-400 dark:text-slate-200 scrollbar-custom"
             v-model="newMessage" placeholder="Escriba un mensaje..." maxlength="500" />
           <div class="absolute inset-y-0 right-0 flex items-center justify-center w-[3.8rem]">
             <button
               :class="`flex items-center justify-center border-transparent rounded-full w-9 h-9 box ${loadingMessages || loadingSendMessage ? ' cursor-not-allowed' : 'cursor-pointer'}`"
-              @click="sendMessageToRecipient" :disabled="loadingMessages || loadingSendMessage">
+              @click="sendMessageToRecipient"
+              :disabled="loadingMessages || loadingSendMessage || newMessage.trim() === ''">
               <Lucide v-if="!loadingMessages && !loadingSendMessage" icon="Send"
                 class="stroke-[1.3] w-4 h-4 -ml-0.5 text-slate-500 dark:text-blue-400" />
               <LoadingIcon v-else icon="tail-spin" class="h-5" color="black" />
