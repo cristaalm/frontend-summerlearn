@@ -18,6 +18,8 @@ import LoadingIcon from '@/components/base/LoadingIcon'
 import Pagination from '@/components/base/Pagination'
 import { FormInput, FormSelect } from '@/components/base/Form'
 import Table from '@/components/base/Table'
+import getIdByToken from '@/logic/getIdByToken'
+
 
 const router = useRouter()
 const { barDonations, donations, loading, loadDonations, errorDonations } = useDonations()
@@ -39,6 +41,9 @@ onMounted(() => {
   loadDonations()
   loadDonationsWeek()
 })
+
+const {  rol: role } = getIdByToken(localStorage.getItem('access_token'))
+console.log(role)
 </script>
 
 <template>
@@ -109,7 +114,7 @@ onMounted(() => {
         </div>
 
         <!--? contenedor de las estadisticas de usuarios -->
-
+      <div v-if="role == 1">
         <div v-if="!errorDonations" class="flex flex-col p-5 box box--stacked">
           <div class="grid grid-cols-4 gap-5">
             <div
@@ -175,12 +180,17 @@ onMounted(() => {
           </div>
         </div>
 
+
+
         <div v-if="errorDonations" class="flex flex-col p-5 box box--stacked">
           <div class="flex flex-row w-full">
             <div class="text-center text-3xl w-full text-red-500">A ocurrido un error...</div>
           </div>
         </div>
       </div>
+    </div>
+
+    <div></div>  
 
       <div class="grid grid-cols-12 gap-y-10 gap-x-6">
         <div class="col-span-12">
