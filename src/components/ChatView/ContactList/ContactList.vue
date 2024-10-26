@@ -12,11 +12,15 @@ const { btnSectionChat } = inject('btnSectionChat');
 const showToast = inject('showToast')
 
 const changeContactToChat = ({ contact }) => {
-    // pasamos el contacto a la lista del chat
-    chats.value.unshift(contact); // Agregamos el contacto a la lista de chats
-    contacts.value = contacts.value.filter((c) => c.id !== contact.id); // Eliminamos el contacto de la lista de contactos
+    // verificamos si el contacto ya esta en la lista de chats
+    const chat = chats.value.find((c) => c.id === contact.id);
+    if (!chat) {
+        // si no esta, lo agregamos de forma visual
+        chats.value.unshift(contact); // Agregamos el contacto a la lista de chats
+    }
+    // cambiamos de seccion y seleccionamos el chat correspondiente
     btnSectionChat();
-    selectChat(contact.id); // Seleccionamos el chat
+    selectChat(contact.id);
 }
 
 const copiedEmail = (email) => {
