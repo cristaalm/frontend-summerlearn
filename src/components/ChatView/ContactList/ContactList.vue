@@ -23,15 +23,19 @@ const changeContactToChat = ({ contact }) => {
     selectChat(contact.id);
 }
 
-const copiedEmail = (email) => {
-    navigator.clipboard.writeText(email)
-        .then(() => {
-            showToast({ message: "Correo copiado al portapapeles", tipo: "info" });
-        })
-        .catch(() => {
-            showToast({ message: "Error al copiar el correo al portapapeles", tipo: "error" });
-        });
+const sendEmail = (email) => {
+    window.location.href = `mailto:${email}`;
 };
+
+// const copiedEmail = (email) => {
+//     navigator.clipboard.writeText(email)
+//         .then(() => {
+//             showToast({ message: "Correo copiado al portapapeles", tipo: "info" });
+//         })
+//         .catch(() => {
+//             showToast({ message: "Error al copiar el correo al portapapeles", tipo: "error" });
+//         });
+// };
 
 </script>
 
@@ -61,7 +65,7 @@ const copiedEmail = (email) => {
                         </div>
                     </div>
                     <div class="relative flex flex-row gap-2">
-                        <Tippy as="button" @click="() => { copiedEmail(contact.user.email) }"
+                        <Tippy as="button" @click="() => sendEmail(contact.user.email)"
                             class="flex items-center justify-center border rounded-full w-9 h-9 border-primary/30 dark:border-slate-200/30 bg-primary/5 dark:bg-slate-200/5 dark:hover:bg-slate-900 dark:hover:text-slate-200 transition-all duration-300"
                             :content="contact.user.email">
                             <Lucide icon="Mail" class="w-4 h-4 text-primary dark:text-slate-200 fill-primary/10" />
