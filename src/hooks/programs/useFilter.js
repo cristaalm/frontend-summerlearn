@@ -19,7 +19,8 @@ export function useFilter(items) {
         duration.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
         item.user.name.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
         item.grade.description.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-        status.toLowerCase().includes(searchQuery.value.toLowerCase())
+        status.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+        item.area.name.toLowerCase().includes(searchQuery.value.toLowerCase())
       const matchesStatus = selectedStatus.value === null || item.status === selectedStatus.value
 
       return matchesQuery && matchesStatus

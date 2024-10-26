@@ -87,12 +87,12 @@ const handleUpdateRol = () => {
                                 }">
                                 <!--? Mostrar 'Cargando roles...' cuando loadingRoles es true -->
                                 <template v-if="loadingRoles">
-                                    <option>Cargando roles...</option>
+                                    <option :value="infoUser.rol">Cargando roles...</option>
                                 </template>
 
                                 <!--? Mostrar mensaje de error cuando hay errorRoles -->
                                 <template v-if="errorRoles">
-                                    <option>Error al cargar roles</option>
+                                    <option :value="infoUser.rol">Error al cargar roles</option>
                                 </template>
 
                                 <!--? Mostrar los roles cuando no está cargando y no existe ningun errorRoles -->

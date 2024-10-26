@@ -57,7 +57,6 @@ const iconMap = {
   'outline-success': 'CheckCircle',
   'outline-warning': 'AlertTriangle',
   'outline-pending': 'Clock',
-  'outline-danger': 'AlertTriangle',
   'outline-dark': 'Moon',
   'soft-primary': 'CheckCircle',
   'soft-secondary': 'Info',
