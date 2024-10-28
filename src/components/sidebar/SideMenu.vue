@@ -435,7 +435,7 @@ const closeSlideOver = () => {
                 <!-- BEGIN: Second Child -->
                 <Transition @enter="enter" @leave="leave">
                   <ul v-if="menu.subMenu && menu.activeDropdown" class="bg-slate-800">
-                    <li v-for="(subMenu, subMenuKey) in menu.subMenu" :key="subMenuKey" class="">
+                    <li v-for="(subMenu, subMenuKey) in menu.subMenu" :key="subMenuKey">
                       <a href="" :class="[
                         'side-menu__link ',
                         { 'side-menu__link--active': subMenu.active },

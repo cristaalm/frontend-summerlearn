@@ -54,7 +54,7 @@ const { selectChat } = inject("selectChat")
             <div class="flex flex-col p-5 box box--stacked">
                 <Tab.Panels>
                     <Tab.Panel>
-                        <div class="">
+                        <div>
                             <div class="relative">
                                 <Lucide icon="Search"
                                     class="absolute inset-y-0 left-0 z-10 w-4 h-4 my-auto ml-4 stroke-[1.3] text-slate-500/90 dark:text-slate-200 dark:placeholder:text-slate-400" />
@@ -70,7 +70,7 @@ const { selectChat } = inject("selectChat")
                 </Tab.Panels>
                 <Tab.Panels>
                     <Tab.Panel>
-                        <div class="">
+                        <div>
                             <div class="relative">
                                 <Lucide icon="Search"
                                     class="absolute inset-y-0 left-0 z-10 w-4 h-4 my-auto ml-4 stroke-[1.3] text-slate-500/90 dark:text-slate-200 dark:placeholder:text-slate-400" />

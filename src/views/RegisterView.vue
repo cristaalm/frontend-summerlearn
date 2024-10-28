@@ -16,7 +16,7 @@ import { changeLoginColorScheme, changeColorScheme } from '@/utils/switchColorSc
 
 const colorSchame = ref('theme-19')
 const changeColor = () => {
-  
+
   // if (valid.value) {
   //   return 
   // }
@@ -115,7 +115,7 @@ const handleSubmit = () => {
             Registrarse como
             <span class="font-bold text-blue">{{
               perfil == 5 ? 'Beneficiario' : perfil == 4 ? 'Voluntario' : 'Donante'
-              }}</span>
+            }}</span>
           </div>
           <div class="mt-6">
             <!--? ################### FIRSTNAME ###################### -->
@@ -189,7 +189,7 @@ const handleSubmit = () => {
                 showPassword = !showPassword
               }
                 " class="cursor-pointer flex flex-col justify-center items-center">
-                <button class="">
+                <button>
                   <Lucide icon="Eye" class="w-4 h-4 stroke-[1.3] text-green-500" v-if="showPassword" />
                   <Lucide icon="EyeOff" class="w-4 h-4 stroke-[1.3] text-red-500" v-else />
                 </button>
@@ -237,7 +237,7 @@ const handleSubmit = () => {
                 showPasswordConfirm = !showPasswordConfirm
               }
                 " class="cursor-pointer flex flex-col justify-center items-center">
-                <button class="">
+                <button>
                   <Lucide icon="Eye" class="w-4 h-4 stroke-[1.3] text-green-500" v-if="showPasswordConfirm" />
                   <Lucide icon="EyeOff" class="w-4 h-4 stroke-[1.3] text-red-500" v-else />
                 </button>
@@ -330,7 +330,8 @@ const handleSubmit = () => {
       'after:content-[\'\'] after:absolute after:inset-y-0 after:left-0 after:w-screen after:lg:w-[800%] after:bg-texture-white after:bg-fixed after:bg-center after:lg:bg-[25rem_-25rem] after:bg-no-repeat',
     ]">
       <DynamicText class="hidden lg:sticky" :phrases="phrases[route.params.rol]" />
-      <br><div class="hidden lg:block absolute bottom-40 ml-4 md:ml-20 lg:ml-[70px] xl:ml-[110px] text-white">
+      <br>
+      <div class="hidden lg:block absolute bottom-40 ml-4 md:ml-20 lg:ml-[70px] xl:ml-[110px] text-white">
         <h2 class="text-4xl font-bold">SummerLearn</h2>
         <p class="mt-2 text-lg">Transformando la educación, un paso a la vez.</p>
       </div>
