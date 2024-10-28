@@ -32,7 +32,7 @@ const handleDeleteArea = () => {
                 <div class="w-16 h-16 mx-auto mt-3 ">
                     <Lucide v-if="!loadingDeleteArea" icon="XCircle"
                         class="w-full h-full text-danger dark:text-red-500" />
-                    <LoadingIcon v-else icon="tail-spin" class="" color="black" />
+                    <LoadingIcon v-else icon="tail-spin" color="black" />
                 </div>
                 <div class="mt-5 text-3xl dark:text-slate-200">¿Está seguro?</div>
                 <div class="mt-2 text-slate-500 dark:text-slate-400">

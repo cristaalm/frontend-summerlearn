@@ -34,6 +34,9 @@ watch(selectedChatIndex, (newValue) => {
                         <div class="w-12 h-12 overflow-hidden border-2 rounded-full image-fit border-slate-200/70">
                             <img alt="Tailwise - Admin Dashboard Template" :src="`${Baseurl}${chat.user.userPhoto}`" />
                         </div>
+                        <div v-if="chat.user.isOnline"
+                            class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-white rounded-full dark:bg-green-400 dark:border-slate-200">
+                        </div>
                     </div>
                     <div class="w-full">
                         <div class="flex items-center w-full">

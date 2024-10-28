@@ -36,7 +36,7 @@ onMounted(() => {
 
 const colorSchame = ref('theme-19')
 const changeColor = () => {
-  
+
   if (colorSchame.value === 'theme-19') {
     colorSchame.value = 'theme-20';
   } else if (colorSchame.value === 'theme-20') {
@@ -74,7 +74,7 @@ const changeColor = () => {
                 showPassword = !showPassword
               }
                 " class="cursor-pointer flex flex-col justify-center items-center">
-                <button class="">
+                <button>
                   <Lucide icon="Eye" class="w-4 h-4 stroke-[1.3] text-green-500" v-if="showPassword" />
                   <Lucide icon="EyeOff" class="w-4 h-4 stroke-[1.3] text-red-500" v-else />
                 </button>
@@ -113,7 +113,7 @@ const changeColor = () => {
                 showPasswordConfirm = !showPasswordConfirm
               }
                 " class="cursor-pointer flex flex-col justify-center items-center">
-                <button class="">
+                <button>
                   <Lucide icon="Eye" class="w-4 h-4 stroke-[1.3] text-green-500" v-if="showPasswordConfirm" />
                   <Lucide icon="EyeOff" class="w-4 h-4 stroke-[1.3] text-red-500" v-else />
                 </button>
@@ -179,7 +179,8 @@ const changeColor = () => {
         'Este es solo un paso más para continuar haciendo una diferencia en la educación de los más necesitados.',
         'Cambia tu contraseña y sigue ayudando a construir un futuro más brillante para las escuelas rurales.'
       ]" :changeColor="changeColor" />
-      <br><div class="hidden lg:block absolute bottom-40 ml-4 md:ml-20 lg:ml-[70px] xl:ml-[110px] text-white">
+      <br>
+      <div class="hidden lg:block absolute bottom-40 ml-4 md:ml-20 lg:ml-[70px] xl:ml-[110px] text-white">
         <h2 class="text-4xl font-bold">SummerLearn</h2>
         <p class="mt-2 text-lg">Transformando la educación, un paso a la vez.</p>
       </div>

@@ -9,6 +9,7 @@ interface Chat {
     email: string
     rol: string
     userPhoto: string
+    isOnline: boolean
   }
   lastMessage: {
     content: string
