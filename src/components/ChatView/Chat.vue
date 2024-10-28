@@ -85,10 +85,13 @@ const copiedEmail = () => {
     <div class="flex flex-col w-full lg:w-2/3 lg:p-5 lg:pt-0 gap-y-7">
       <div class="flex flex-col p-5 box box--stacked">
         <div class="flex items-center gap-3.5 border-b border-dashed border-black dark:border-slate-400 pb-5">
-          <div>
+          <div class="relative">
             <div
               class="w-12 h-12 overflow-hidden rounded-full image-fit border-[3px] border-slate-200/70 dark:border-slate-500/70">
               <img alt="Tailwise - Admin Dashboard Template" :src="`${Baseurl}${selectChatInfo.user.userPhoto}`" />
+            </div>
+            <div v-if="selectChatInfo.user.isOnline"
+              class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-white rounded-full dark:bg-green-400 dark:border-slate-200">
             </div>
           </div>
           <div>

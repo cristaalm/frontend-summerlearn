@@ -30,6 +30,7 @@ interface Chat {
     email: string
     rol: string
     userPhoto: string
+    isOnline: boolean
   }
   lastMessage: {
     content: string
@@ -49,6 +50,7 @@ interface Contact {
     email: string
     rol: string
     userPhoto: string
+    isOnline: boolean
   }
   lastMessage: null
 }
@@ -56,6 +58,7 @@ interface Contact {
 export function useWebSocket() {
   const showToast = inject<(params: ToastParams) => void>('showToast') // Inyectamos el Toast
   const socket = ref<WebSocket | null>(null) // Variable reactiva para almacenar el socket
+  const socketGlobal = ref<WebSocket | null>(null) // Variable reactiva para almacenar el socket global
   const messages = ref<Message[]>([]) // Variable reactiva para almacenar los mensajes
   const chats = ref<Chat[]>([]) // Variable reactiva para almacenar los chats
   const contacts = ref<Contact[]>([]) // Variable reactiva para almacenar los contactos
@@ -135,6 +138,7 @@ export function useWebSocket() {
       return
     }
 
+    socketGlobal.value = new WebSocket(`${Baseurl2}ws/chat/general/`)
     socket.value = new WebSocket(`${Baseurl2}ws/chat/${idUser}/`)
     setupSocketEvents() // Configuramos eventos después de conectarnos
 
@@ -169,7 +173,7 @@ export function useWebSocket() {
   // ? ################## SOCKET EVENTS ################## ? //
 
   const setupSocketEvents = () => {
-    if (!socket.value) return
+    if (!socket.value || !socketGlobal.value) return
 
     socket.value.onopen = () => {
       socket.value!.send(
@@ -198,6 +202,28 @@ export function useWebSocket() {
           content: {}
         })
       )
+    }
+
+    socketGlobal.value.onmessage = function (event) {
+      const data = JSON.parse(event.data)
+      if (data.type === 'status') {
+        const user_id = getIdByToken(access_token).user_id
+
+        if (data.content.id == user_id) return
+        const chat_id =
+          user_id < data.content.id
+            ? `${user_id}_${data.content.id}`
+            : `${data.content.id}_${user_id}`
+        const contactIndex = contacts.value.findIndex((contact) => contact.id === chat_id)
+        const chatIndex = chats.value.findIndex((chat) => chat.id === chat_id)
+
+        if (contactIndex !== -1) {
+          contacts.value[contactIndex].user.isOnline = data.content.status
+        }
+        if (chatIndex !== -1) {
+          chats.value[chatIndex].user.isOnline = data.content.status
+        }
+      }
     }
 
     socket.value.onmessage = function (event) {
