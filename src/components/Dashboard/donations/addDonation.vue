@@ -17,11 +17,6 @@
             </div>
         </div>
     </div>
-    <!--? ######################### ALERTA DE ERROR ######################### -->
-
-    <Alert variant="outline-danger" v-if="setDonationError" :message="setDonationError" :dismissible="true"
-        class="flex items-center px-4 py-3 my-7" />
-
     <!--? ######################### INPUTS ######################### -->
 
     <div class="flex-col block pt-5 mt-5 xl:items-center sm:flex xl:flex-row first:mt-0 first:pt-0">
@@ -41,7 +36,7 @@
         </label>
         <div class="flex-1 w-full mt-3 xl:mt-0">
             <FormInput type="text" placeholder="Escriba aquí el concepto..." v-model="concept" @keydown.enter.prevent="() => {
-                if (valid && !setDonationLoading) handleRegister()
+                if (valid) handleDonation()
             }" class="dark:text-slate-200 dark:placeholder:!text-slate-400" />
             <div class="mt-1 text-xs text-red-500 h-4">
                 {{ status.concept.message }}
@@ -68,7 +63,7 @@
             <InputGroup>
                 <InputGroup.Text> $ </InputGroup.Text>
                 <FormInput type="text" placeholder="Escriba aquí su monto..." v-model="amount" @keydown.enter.prevent="() => {
-                    if (valid && !setDonationLoading) handleRegister()
+                    if (valid) handleDonation()
                 }" class="dark:text-slate-200 dark:placeholder:!text-slate-400" @input="validateInputAmount" />
             </InputGroup>
 
@@ -82,13 +77,9 @@
 
     <div class="flex py-5 border-t md:justify-end px-7 border-slate-200/80 dark:border-slate-600">
         <Button variant="outline-success"
-            :class="`w-full px-10 md:w-auto font-bold ${setDonationLoading || !valid ? 'border-gray-500 text-gray-500' : 'border-green text-green dark:text-slate-200'}`"
-            @click="handleRegister" :disabled="!valid || setDonationLoading">
-            <LoadingIcon v-if="setDonationLoading" icon="tail-spin" class="stroke-[1.3] w-4 h-4 mr-2 -ml-2"
-                color="black" />
-
-            <Lucide v-if="!setDonationLoading" icon="Check" class="stroke-[1.3] w-4 h-4 mr-2" />
-            {{ setDonationLoading ? 'Registrando...' : 'Registrar' }}
+            :class="`w-full px-10 md:w-auto font-bold ${!valid ? 'border-gray-500 text-gray-500' : 'border-green text-green dark:text-slate-200'}`"
+            @click="handleDonation" :disabled="!valid">
+            Registrar
         </Button>
     </div>
 </template>
@@ -99,25 +90,17 @@ import Button from '@/components/base/Button'
 import Alert from '@/components/base/Alert'
 import LoadingIcon from '@/components/base/LoadingIcon'
 import { FormInput, InputGroup } from '@/components/base/Form'
-import { useStatus, useValidations, useRefs } from '@/hooks/donations/addDonation'
-import { useSetDonation } from '@/hooks/donations/addDonation/useSetDonation'
 import { useRouter } from 'vue-router'
 import { inject } from 'vue'
 
-const { btnConfirm } = inject('buttonsDonations')
-const { concept, amount } = useRefs()
-const { status } = useStatus()
-const { valid, validateInputAmount } = useValidations({ status, concept, amount })
-const { setDonationLoading, setDonationError, addDonation } = useSetDonation()
+const { btnMethod } = inject('buttonsDonations')
+const { concept, amount, status, valid, validateInputAmount } = inject('refsDonations')
 const router = useRouter()
 
-const handleRegister = () => {
+const handleDonation = () => {
     if (valid.value) {
-        const donation = {
-            concept: concept.value,
-            amount: amount.value
-        }
-        addDonation({ donation, btnConfirm })
+        btnMethod()
     }
 }
+
 </script>

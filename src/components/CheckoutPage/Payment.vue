@@ -12,7 +12,7 @@
                     class="border border-gray-500 rounded-md inline-block dark:bg-slate-800 dark:border-slate-800 dark:text-slate-200 dark:placeholder:text-slate-400 py-2 px-3 w-full text-gray-600 tracking-wider" />
             </div>
             <div class="mb-6">
-                <label class="block mb-3 text-gray-600 dark:text-slate-200" for="">Numero de la tarjeta</label>
+                <label class="block mb-3 text-gray-600 dark:text-slate-200" for="">Número de la tarjeta</label>
                 <input type="tel" :id="fields.cardNumber" @input="changeNumber" @focus="focusCardNumber"
                     @blur="blurCardNumber" v-model="formData.cardNumber" :maxlength="cardNumberMaxLength"
                     data-card-field autocomplete="off"
@@ -48,11 +48,11 @@
             <div>
                 <Button variant="outline-success" @click="finishPayment"
                     class="w-full text-center px-4 py-3 dark:text-slate-200">
-                    <LoadingIcon v-if="loadingValidation" icon="tail-spin" class="stroke-[1.3] w-4 h-4 mr-2 -ml-2"
+                    <LoadingIcon v-if="setDonationLoading" icon="tail-spin" class="stroke-[1.3] w-4 h-4 mr-2 -ml-2"
                         color="black" />
 
-                    <Lucide v-if="!loadingValidation" icon="Check" class="stroke-[1.3] w-4 h-4 mr-2" />
-                    {{ loadingValidation ? 'Validando datos...' : 'Validar' }}
+                    <Lucide v-if="!setDonationLoading" icon="Check" class="stroke-[1.3] w-4 h-4 mr-2" />
+                    {{ setDonationLoading ? 'Validando datos...' : 'Completar donación' }}
                 </Button>
             </div>
         </div>
@@ -68,7 +68,7 @@ import Card from "./Card.vue";
 import '@/assets/css/scss/card-component.css';
 
 const showToast = inject('showToast');
-const { btnForm } = inject('buttonsDonations')
+const { setDonationLoading, handleRegister } = inject('refsDonations');
 
 // Props
 const props = defineProps({
@@ -105,7 +105,6 @@ const minCardYear = ref(new Date().getFullYear());
 const isCardNumberMasked = ref(true);
 const mainCardNumber = ref(props.formData.cardNumber);
 const cardNumberMaxLength = ref(19);
-const loadingValidation = ref(false);
 
 // Computed
 const minCardMonth = computed(() => props.formData.cardYear === minCardYear.value ? new Date().getMonth() + 1 : 1);
@@ -132,22 +131,35 @@ const changeName = (e) => {
     emit("input-card-name", props.formData.cardName);
 };
 const changeNumber = (e) => {
+    // Quitamos caracteres no numéricos
     props.formData.cardNumber = e.target.value.replace(/\D/g, "");
     let value = props.formData.cardNumber;
-
+    // American Express (#### ###### #####)
     if (/^3[47]\d{0,13}$/.test(value)) {
         props.formData.cardNumber = value.replace(/(\d{4})/, "$1 ").replace(/(\d{4}) (\d{6})/, "$1 $2 ");
         cardNumberMaxLength.value = 17;
+        e.target.value = props.formData.cardNumber;
+        console.log(props.formData.cardNumber);
+
+        // Diners Club (#### ###### ####)
     } else if (/^3(?:0[0-5]|[68]\d)\d{0,11}$/.test(value)) {
         props.formData.cardNumber = value.replace(/(\d{4})/, "$1 ").replace(/(\d{4}) (\d{6})/, "$1 $2 ");
         cardNumberMaxLength.value = 16;
+        e.target.value = props.formData.cardNumber;
+        console.log(props.formData.cardNumber);
+
+        // Visa/MasterCard/Default (#### #### #### ####)
     } else if (/^\d{0,16}$/.test(value)) {
         props.formData.cardNumber = value.replace(/(\d{4})/, "$1 ").replace(/(\d{4}) (\d{4})/, "$1 $2 ").replace(/(\d{4}) (\d{4}) (\d{4})/, "$1 $2 $3 ");
         cardNumberMaxLength.value = 19;
+        e.target.value = props.formData.cardNumber;
+        console.log(value.replace(/(\d{4})/, "$1 ").replace(/(\d{4}) (\d{4})/, "$1 $2 ").replace(/(\d{4}) (\d{4}) (\d{4})/, "$1 $2 $3 "));
     }
 
+    // Eliminar el último espacio si se borra un dígito
     if (e.inputType === "deleteContentBackward" && props.formData.cardNumber.endsWith(" ")) {
         props.formData.cardNumber = props.formData.cardNumber.slice(0, -1);
+        e.target.value = props.formData.cardNumber;
     }
 
     emit("input-card-number", props.formData.cardNumber);
@@ -182,7 +194,6 @@ const finishPayment = () => {
         return;
     }
 
-    loadingValidation.value = true;
 
     // Desenmascaramos temporalmente el número de tarjeta para validarlo
     unMaskCardNumber();
@@ -215,7 +226,6 @@ const finishPayment = () => {
             message: 'Tarjeta no válida',
             tipo: 'error'
         });
-        loadingValidation.value = false;
         return;
     }
 
@@ -225,7 +235,6 @@ const finishPayment = () => {
             message: 'La fecha de expiración no es válida',
             tipo: 'error'
         });
-        loadingValidation.value = false;
         return;
     }
 
@@ -235,18 +244,10 @@ const finishPayment = () => {
             message: 'El código de seguridad no es válido',
             tipo: 'error'
         });
-        loadingValidation.value = false;
         return;
     }
 
-    setTimeout(() => {
-        loadingValidation.value = false;
-        showToast({
-            message: 'Datos validados',
-            tipo: 'success'
-        });
-        btnForm();
-    }, 2000);
+    handleRegister()
 };
 
 </script>

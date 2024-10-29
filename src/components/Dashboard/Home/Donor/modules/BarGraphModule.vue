@@ -2,9 +2,7 @@
 import { ref, watch } from 'vue';
 import Lucide from '@/components/base/Lucide';
 import ReportBarChart5 from "@/components/ReportBarChart5";
-import { FormSelect } from '@/components/base/Form';
-import { driver } from "driver.js";
-import "driver.js/dist/driver.css";
+import { FormSelect } from '@/components/base/Form'
 
 const generalReportFilter = ref("");
 const isChartLoaded = ref(false); // Estado para controlar si la gráfica ha cargado
@@ -24,14 +22,10 @@ const handleFilterChange = (event) => {
     <div class="flex flex-col lg:items-center lg:flex-row gap-y-5">
       <div class="flex flex-col sm:items-center sm:flex-row gap-x-3 gap-y-2">
         <div class="relative">
-          <Lucide
-            icon="CalendarCheck2"
-            class="absolute inset-y-0 left-0 z-10 w-4 h-4 my-auto ml-3 stroke-[1.3] dark:text-slate-200"
-          />
-          <FormSelect
-            class="sm:w-55 pl-9 dark:text-slate-200 dark:placeholder:text-slate-400"
-            @change="handleFilterChange"
-          >
+          <Lucide icon="CalendarCheck2"
+            class="absolute inset-y-0 left-0 z-10 w-4 h-4 my-auto ml-3 stroke-[1.3] dark:text-slate-200" />
+          <FormSelect class="sm:w-55 pl-9 dark:text-slate-200 dark:placeholder:text-slate-400"
+            @change="handleFilterChange">
             <option value="daily" id="primero">Días</option>
             <option value="weekly">Semanal</option>
             <option value="monthly">Mensual</option>

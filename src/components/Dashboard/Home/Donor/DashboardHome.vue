@@ -1,12 +1,5 @@
 <script setup>
 import { BarGraphModule, PieChartModule, HistoryModule, WelcomeModule } from './modules'
-
-// Driver.js
-import { driver } from "driver.js";
-import "driver.js/dist/driver.css";
-
-let driverObj;
-
 </script>
 
 <template>
