@@ -1,18 +1,13 @@
 <script setup>
-import {
-  useFilter,
-  usePagination,
-  usePrograms,
-  useDialogDelete,
-  useStatusProgram,
-  useExportExcel,
-  useExportPDF
-} from '@/hooks/programs/'
+import { useFilter, usePagination, usePrograms, useStatusProgram, useExportExcel, useExportPDF } from '@/hooks/programs/'
+import { useUsers, useAreas, useGrades } from '@/hooks/programs/addProgram/'
+import { DeleteProgramModal, EditProgramModal } from '@/components/Dashboard/programs/'
+import { useDialogDeleteProgram, useDialogEditProgram } from '@/hooks/programs/dialog'
 import formatDate from '@/logic/formatDate'
 import { FormInput, FormSelect } from '@/components/base/Form'
 import { Menu, Popover, Dialog } from '@/components/base/Headless'
 import { useRouter } from 'vue-router'
-import { onMounted } from 'vue'
+import { onMounted, provide, watch } from 'vue'
 import LoadingIcon from '@/components/base/LoadingIcon'
 import Pagination from '@/components/base/Pagination'
 import Button from '@/components/base/Button'
@@ -21,50 +16,40 @@ import Table from '@/components/base/Table'
 
 const { programs, loading, error, loadPrograms } = usePrograms()
 const { searchQuery, selectedStatus, filteredItems, activeFilters } = useFilter(programs)
-const { currentPage, pageSize, totalPages, paginatedItems, changePage, changePageSize } =
-  usePagination(filteredItems)
-const { dialogStatusDelete, openDeleteModal, confirmDeleteProgram, closeDeleteProgram } =
-  useDialogDelete({ programs })
+const { currentPage, pageSize, totalPages, paginatedItems, changePage, changePageSize } = usePagination(filteredItems)
 const { updateStatus } = useStatusProgram()
 const { loadExportExcel, loadingExportExcel } = useExportExcel()
 const { loadExportPDF, loadingExportPDF } = useExportPDF()
+const { ModalDeleteProgram, setModalDeleteProgram, programInfoProvideDelete } = useDialogDeleteProgram()
+const { ModalEditProgram, setModalEditProgram, programInfoProvideEdit } = useDialogEditProgram()
 const router = useRouter()
 
+// ? Providers para los Modals de Editar y Eliminar
+
+const { users, loadingResponsable, errorResponsable, loadUsers } = useUsers()
+const { areas, loadingAreas, errorAreas, loadAreas } = useAreas()
+const { grades, loadingGrades, errorGrades, loadGrades } = useGrades()
+
+provide('programs', { programs })
+provide('usersPrograms', { users, loadingResponsable, errorResponsable })
+provide('areasPrograms', { areas, loadingAreas, errorAreas })
+provide('gradesPrograms', { grades, loadingGrades, errorGrades })
+
 onMounted(() => {
+  loadUsers()
+  loadAreas()
+  loadGrades()
   loadPrograms()
 })
 </script>
 
 <template>
-  <!--? ######################## DIALOG DELETE PROGRAM ######################## -->
 
-  <!-- BEGIN: Modal Content -->
-  <Dialog :open="dialogStatusDelete" @close="() => {
-    dialogStatusDelete.value = false
-  }">
-    <Dialog.Panel>
-      <div class="p-5 text-center">
-        <Lucide icon="XCircle" class="w-16 h-16 mx-auto mt-3 text-danger dark:text-red-500" />
-        <div class="mt-5 text-3xl text-slate-900 dark:text-slate-200">¿Está seguro?</div>
-        <div class="mt-2 text-slate-500 dark:text-slate-400">
-          ¿Realmente desea eliminar este registro?
-          <br />
-          Este proceso eliminara las actividades asociadas a este programa.
-        </div>
-      </div>
-      <div class="px-5 pb-8 text-center space-x-8">
-        <Button type="button" variant="outline-secondary" @click="closeDeleteProgram"
-          class="w-24 mr-1 text-slate-900 dark:text-slate-200">
-          Cancelar
-        </Button>
-        <Button type="button" variant="danger" class="w-24 text-slate-900 dark:text-slate-200"
-          @click="confirmDeleteProgram" ref="deleteButtonRef">
-          Eliminar
-        </Button>
-      </div>
-    </Dialog.Panel>
-  </Dialog>
-  <!-- END: Modal Content -->
+  <DeleteProgramModal :ModalDeleteProgram="ModalDeleteProgram" :setModalDeleteProgram="setModalDeleteProgram"
+    :infoProgram="programInfoProvideDelete" />
+
+  <EditProgramModal :ModalEditProgram="ModalEditProgram" :setModalEditProgram="setModalEditProgram"
+    :infoProgram="programInfoProvideEdit" />
 
   <div class="grid grid-cols-12 gap-y-10 gap-x-6">
     <div class="col-span-12">
@@ -178,7 +163,7 @@ onMounted(() => {
               <Table.Thead>
                 <Table.Tr>
                   <Table.Td
-                    class="w-5 py-4 font-medium border-t bg-slate-50 dark:bg-transparent border-slate-200/60 text-slate-500 dark:text-slate-200">
+                    class="max-w-[300px] w-[300px] text-wrap py-4 font-medium border-t bg-slate-50 dark:bg-transparent border-slate-200/60 text-slate-500 dark:text-slate-200">
                     Nombre
                   </Table.Td>
                   <Table.Td
@@ -188,6 +173,10 @@ onMounted(() => {
                   <Table.Td
                     class="w-5 py-4 font-medium border-t bg-slate-50 dark:bg-transparent border-slate-200/60 text-slate-500 dark:text-slate-200">
                     Escolaridad
+                  </Table.Td>
+                  <Table.Td
+                    class="w-5 py-4 font-medium border-t bg-slate-50 dark:bg-transparent border-slate-200/60 text-slate-500 dark:text-slate-200">
+                    Área
                   </Table.Td>
                   <Table.Td
                     class="w-5 py-4 font-medium border-t bg-slate-50 dark:bg-transparent border-slate-200/60 text-slate-500 dark:text-slate-200">
@@ -206,7 +195,7 @@ onMounted(() => {
               <!--? Mostrar 'Cargando información...' cuando loading es true -->
               <Table.Tbody v-if="loading">
                 <Table.Tr>
-                  <Table.Td colspan="4" class="py-8 text-center text-xl font-bold text-green-500">
+                  <Table.Td colspan="6" class="py-8 text-center text-xl font-bold text-green-500">
                     <div class="flex flex-col w-full justify-center items-center text-nowrap">
                       <LoadingIcon icon="tail-spin" class="h-8" color="black" />
                       <div class="mt-2">Cargando información...</div>
@@ -218,7 +207,7 @@ onMounted(() => {
               <!--? Mostrar mensaje de error cuando hay error -->
               <Table.Tbody v-if="error">
                 <Table.Tr>
-                  <Table.Td colspan="4" class="py-8 text-center text-xl font-bold text-red-500">
+                  <Table.Td colspan="6" class="py-8 text-center text-xl font-bold text-red-500">
                     Error al cargar la información, Inténtelo más tarde
                   </Table.Td>
                 </Table.Tr>
@@ -227,7 +216,7 @@ onMounted(() => {
               <!--? Mostrar mensaje de error cuando no se encuentran programas -->
               <Table.Tbody v-if="!loading && totalPages <= 0 && !error">
                 <Table.Tr>
-                  <Table.Td colspan="4" class="py-8 text-center text-xl font-bold text-amber-500">
+                  <Table.Td colspan="6" class="py-8 text-center text-xl font-bold text-amber-500">
                     No se encontraron programas
                   </Table.Td>
                 </Table.Tr>
@@ -237,23 +226,29 @@ onMounted(() => {
               <Table.Tbody v-if="!loading">
                 <template v-for="program in paginatedItems" :key="program.id">
                   <Table.Tr class="[&_td]:last:border-b-0">
-                    <Table.Td class="py-4 border-dashed dark:bg-darkmode-600 dark:text-slate-200 text-center">
-                      <div href="" class="font-medium whitespace-nowrap">
+                    <Table.Td
+                      class="max-w-[300px] w-[300px] py-4 border-dashed dark:bg-darkmode-600 dark:text-slate-200 text-center">
+                      <div class="font-medium whitespace-nowrap text-wrap break-words">
                         {{ program.name }}
                       </div>
                     </Table.Td>
                     <Table.Td class="py-4 border-dashed dark:bg-darkmode-600 dark:text-slate-200 text-center">
-                      <div href="" class="font-medium whitespace-nowrap">
+                      <div class="font-medium whitespace-nowrap">
                         {{ program.user.name }}
                       </div>
                     </Table.Td>
                     <Table.Td class="py-4 border-dashed dark:bg-darkmode-600 dark:text-slate-200 text-center">
-                      <div href="" class="font-medium whitespace-nowrap">
+                      <div class="font-medium whitespace-nowrap">
                         {{ program.grade.description }}
                       </div>
                     </Table.Td>
                     <Table.Td class="py-4 border-dashed dark:bg-darkmode-600 dark:text-slate-200 text-center">
-                      <div href="" class="font-medium text-center whitespace-nowrap">
+                      <div class="font-medium whitespace-nowrap">
+                        {{ program.area.name }}
+                      </div>
+                    </Table.Td>
+                    <Table.Td class="py-4 border-dashed dark:bg-darkmode-600 dark:text-slate-200 text-center">
+                      <div class="font-medium text-center whitespace-nowrap">
                         {{ formatDate(program.start) }} <span class="font-bold">-</span>
                         {{ formatDate(program.end) }}
                       </div>
@@ -287,7 +282,10 @@ onMounted(() => {
                               class="w-5 h-5 stroke-black dark:stroke-slate-200 fill-black dark:fill-slate-200" />
                           </Menu.Button>
                           <Menu.Items class="w-40 dark:bg-darkmode-600">
-                            <Menu.Item class="text-warning dark:text-yellow-500">
+                            <Menu.Item class="text-warning dark:text-yellow-500" @click="() => {
+                              setModalEditProgram({ open: true, programInfo: program })
+                            }
+                              ">
                               <Lucide icon="CheckSquare" class="w-4 h-4 mr-2 stroke-warning dark:stroke-yellow-400" />
                               Editar
                             </Menu.Item>
@@ -308,7 +306,7 @@ onMounted(() => {
                               {{ program.status !== 1 ? 'Activar' : 'Desactivar' }}
                             </Menu.Item>
                             <Menu.Item class="text-danger dark:text-red-400" @click="() => {
-                              openDeleteModal(program.id)
+                              setModalDeleteProgram({ open: true, programInfo: program })
                             }
                               ">
                               <Lucide icon="CheckSquare" class="w-4 h-4 mr-2 stroke-danger dark:stroke-red-400" />

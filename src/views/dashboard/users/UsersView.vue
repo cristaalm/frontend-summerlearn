@@ -15,28 +15,20 @@ import { calculateAge } from '@/logic/'
 import { useRouter } from 'vue-router'
 import { Baseurl } from '@/utils/global'
 import { formatPhone } from '@/logic/formatNumber'
+import { useDialogEditRol } from '@/hooks/users/dialog/useDialogEditRol'
 
 const { users, loading, error, loadUsers } = useUsers()
 const { roles, loadingRoles, errorRoles, loadRoles } = useRoles()
 const { searchQuery, selectedStatus, selectedRole, filteredUsers, filtersCount } = useSearch(users)
 const { currentPage, pageSize, totalPages, paginatedUsers, changePage, changePageSize } = usePagination(filteredUsers)
+const { setModalEditUser, ModalEditUser, userInfoProvide } = useDialogEditRol()
 const { updateStatus } = useStatusUser()
 const router = useRouter()
 
 provide('roles', { roles, loadingRoles, errorRoles })
 const { user: currentUser } = inject('user')
 
-const ModalEditUser = ref(false);
-const userInfoProvide = ref(null);
-const setModalEditUser = ({ open, userInfo = null }) => {
-  if (open) {
-    if (!userInfoProvide) return
-    ModalEditUser.value = open;
-    userInfoProvide.value = userInfo;
-  } else {
-    ModalEditUser.value = open;
-  }
-};
+
 
 // Cargar las áreas al iniciar el componente
 onMounted(() => {
@@ -266,7 +258,7 @@ onMounted(() => {
 
                           <Menu.Items class="w-40 dark:bg-darkmode-600">
                             <Menu.Item class="text-warning dark:text-yellow-500" v-if="user.id !== currentUser.id"
-                              @click="(event: MouseEvent) => {
+                              @click="(event) => {
                                 event.preventDefault();
                                 setModalEditUser({ open: true, userInfo: user });
                               }">

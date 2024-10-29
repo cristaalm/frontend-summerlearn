@@ -85,7 +85,7 @@ const alertVariant = computed(() => {
                   showPassword = !showPassword
                 }
                   " class="cursor-pointer flex flex-col justify-center items-center">
-                  <button class="">
+                  <button>
                     <Lucide icon="Eye" class="w-4 h-4 stroke-[1.3] text-green-500" v-if="showPassword" />
                     <Lucide icon="EyeOff" class="w-4 h-4 stroke-[1.3] text-red-500" v-else />
                   </button>

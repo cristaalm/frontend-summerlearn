@@ -85,10 +85,13 @@ const copiedEmail = () => {
     <div class="flex flex-col w-full lg:w-2/3 lg:p-5 lg:pt-0 gap-y-7">
       <div class="flex flex-col p-5 box box--stacked">
         <div class="flex items-center gap-3.5 border-b border-dashed border-black dark:border-slate-400 pb-5">
-          <div>
+          <div class="relative">
             <div
               class="w-12 h-12 overflow-hidden rounded-full image-fit border-[3px] border-slate-200/70 dark:border-slate-500/70">
               <img alt="Tailwise - Admin Dashboard Template" :src="`${Baseurl}${selectChatInfo.user.userPhoto}`" />
+            </div>
+            <div v-if="selectChatInfo.user.isOnline"
+              class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-white rounded-full dark:bg-green-400 dark:border-slate-200">
             </div>
           </div>
           <div>
@@ -158,14 +161,17 @@ const copiedEmail = () => {
           </div>
         </div>
         <div class="relative">
-          <FormTextarea @keydown.enter.prevent="sendMessageToRecipient" @keydown="handleTyping"
-            :disabled="loadingMessages || loadingSendMessage"
+          <FormTextarea @keydown.enter.prevent="() => {
+            if (newMessage.trim() === '') return
+            sendMessageToRecipient()
+          }" @keydown="handleTyping" :disabled="loadingMessages || loadingSendMessage"
             class="-mb-1.5 pr-16 rounded-xl resize dark:placeholder:text-slate-400 dark:text-slate-200 scrollbar-custom"
             v-model="newMessage" placeholder="Escriba un mensaje..." maxlength="500" />
           <div class="absolute inset-y-0 right-0 flex items-center justify-center w-[3.8rem]">
             <button
               :class="`flex items-center justify-center border-transparent rounded-full w-9 h-9 box ${loadingMessages || loadingSendMessage ? ' cursor-not-allowed' : 'cursor-pointer'}`"
-              @click="sendMessageToRecipient" :disabled="loadingMessages || loadingSendMessage">
+              @click="sendMessageToRecipient"
+              :disabled="loadingMessages || loadingSendMessage || newMessage.trim() === ''">
               <Lucide v-if="!loadingMessages && !loadingSendMessage" icon="Send"
                 class="stroke-[1.3] w-4 h-4 -ml-0.5 text-slate-500 dark:text-blue-400" />
               <LoadingIcon v-else icon="tail-spin" class="h-5" color="black" />

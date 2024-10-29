@@ -36,7 +36,7 @@ onMounted(() => {
 
 const colorSchame = ref('theme-19')
 const changeColor = () => {
-  
+
   if (colorSchame.value === 'theme-19') {
     colorSchame.value = 'theme-20';
   } else if (colorSchame.value === 'theme-20') {
@@ -74,7 +74,7 @@ const changeColor = () => {
                 showPassword = !showPassword
               }
                 " class="cursor-pointer flex flex-col justify-center items-center">
-                <button class="">
+                <button>
                   <Lucide icon="Eye" class="w-4 h-4 stroke-[1.3] text-green-500" v-if="showPassword" />
                   <Lucide icon="EyeOff" class="w-4 h-4 stroke-[1.3] text-red-500" v-else />
                 </button>
@@ -113,7 +113,7 @@ const changeColor = () => {
                 showPasswordConfirm = !showPasswordConfirm
               }
                 " class="cursor-pointer flex flex-col justify-center items-center">
-                <button class="">
+                <button>
                   <Lucide icon="Eye" class="w-4 h-4 stroke-[1.3] text-green-500" v-if="showPasswordConfirm" />
                   <Lucide icon="EyeOff" class="w-4 h-4 stroke-[1.3] text-red-500" v-else />
                 </button>

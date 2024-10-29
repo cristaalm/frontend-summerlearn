@@ -5,7 +5,6 @@ import { useDarkModeStore } from '@/stores/dark-mode' // Importar el store del m
 import '@/assets/css/themes/echo.css'
 import { useRoute, useRouter } from 'vue-router'
 import { Menu, Slideover } from '@/components/base/Headless'
-import Tippy from '@/components/base/Tippy'
 import Lucide from '@/components/base/Lucide'
 import { useMenuStore } from '@/stores/menu'
 import { useCompactMenuStore } from '@/stores/compact-menu'
@@ -19,11 +18,14 @@ import {
   enter,
   leave
 } from './side-menu'
-import { watch, reactive, ref, computed, onMounted, provide, onUnmounted } from 'vue'
+import { watch, reactive, ref, computed, onMounted, provide, onUnmounted, inject } from 'vue'
 import SimpleBar from 'simplebar'
 //@ts-ignore
 import { logoutColorScheme } from '@/utils/switchColorScheme'
 import { useColorSchemeStore } from '@/stores/color-scheme'
+
+// @ts-ignore
+const showToast = inject('showToast')
 
 // ? ############################ USER INFO ############################
 
@@ -59,6 +61,21 @@ onUnmounted(() => {
 });
 
 const notification = computed(() => chats.value.findIndex((chat) => chat.seenChat === false) !== -1);
+
+watch(notification, (value) => {
+  if (value) {
+    // si tiene notificaciones, contamos cuantos chats tiene nuevos mensajes
+    document.title = `🔴SummerLearn`;
+    // @ts-ignore
+    showToast({
+      message: `Tienes mensajes sin leer`,
+      tipo: "info"
+    });
+  } else {
+    document.title = "SummerLearn";
+  }
+});
+
 // ? ############################ SOCKET ############################
 
 
@@ -154,6 +171,7 @@ watch(
 )
 
 const clearLocalStorage = () => {
+  document.title = "SummerLearn"
   if (typeof window !== 'undefined' && window.localStorage) {
     localStorage.removeItem('access_token')
     localStorage.removeItem('refresh_token')
@@ -430,7 +448,7 @@ const driverObj = driver({
                 <!-- BEGIN: Second Child -->
                 <Transition @enter="enter" @leave="leave">
                   <ul v-if="menu.subMenu && menu.activeDropdown" class="bg-slate-800">
-                    <li v-for="(subMenu, subMenuKey) in menu.subMenu" :key="subMenuKey" class="">
+                    <li v-for="(subMenu, subMenuKey) in menu.subMenu" :key="subMenuKey">
                       <a href="" :class="[
                         'side-menu__link ',
                         { 'side-menu__link--active': subMenu.active },
@@ -525,15 +543,14 @@ const driverObj = driver({
 
             <div class="flex justify-end px-4 space-x-5">
               <!-- Close Button Menu -->
-              <Menu class="overflow-hidden w-9 h-9 border-3 relative group">
+              <!-- <Menu class="overflow-hidden w-9 h-9 border-3 relative group">
                 <Menu.Button @click="openSlideOver">
-                  <!-- Llamada a la función para abrir el SlideOver -->
                   <Tippy as="a" class="flex items-center justify-center ml-auto w-9 h-9" content="Contáctanos">
                     <img alt="Tailwise - Admin Dashboard Template" :src="`/directorio-telefonico.png`" />
                     <Lucide icon="MessagesSquare" class="w-9 h-9 text-white mx-auto" />
                   </Tippy>
                 </Menu.Button>
-              </Menu>
+              </Menu> -->
 
               <!-- User Profile Menu -->
               <Menu>

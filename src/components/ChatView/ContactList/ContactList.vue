@@ -12,22 +12,30 @@ const { btnSectionChat } = inject('btnSectionChat');
 const showToast = inject('showToast')
 
 const changeContactToChat = ({ contact }) => {
-    // pasamos el contacto a la lista del chat
-    chats.value.unshift(contact); // Agregamos el contacto a la lista de chats
-    contacts.value = contacts.value.filter((c) => c.id !== contact.id); // Eliminamos el contacto de la lista de contactos
+    // verificamos si el contacto ya esta en la lista de chats
+    const chat = chats.value.find((c) => c.id === contact.id);
+    if (!chat) {
+        // si no esta, lo agregamos de forma visual
+        chats.value.unshift(contact); // Agregamos el contacto a la lista de chats
+    }
+    // cambiamos de seccion y seleccionamos el chat correspondiente
     btnSectionChat();
-    selectChat(contact.id); // Seleccionamos el chat
+    selectChat(contact.id);
 }
 
-const copiedEmail = (email) => {
-    navigator.clipboard.writeText(email)
-        .then(() => {
-            showToast({ message: "Correo copiado al portapapeles", tipo: "info" });
-        })
-        .catch(() => {
-            showToast({ message: "Error al copiar el correo al portapapeles", tipo: "error" });
-        });
+const sendEmail = (email) => {
+    window.location.href = `mailto:${email}`;
 };
+
+// const copiedEmail = (email) => {
+//     navigator.clipboard.writeText(email)
+//         .then(() => {
+//             showToast({ message: "Correo copiado al portapapeles", tipo: "info" });
+//         })
+//         .catch(() => {
+//             showToast({ message: "Error al copiar el correo al portapapeles", tipo: "error" });
+//         });
+// };
 
 </script>
 
@@ -57,14 +65,14 @@ const copiedEmail = (email) => {
                         </div>
                     </div>
                     <div class="relative flex flex-row gap-2">
-                        <Tippy as="button" @click="() => { copiedEmail(contact.user.email) }"
+                        <Tippy as="button" @click="() => sendEmail(contact.user.email)"
                             class="flex items-center justify-center border rounded-full w-9 h-9 border-primary/30 dark:border-slate-200/30 bg-primary/5 dark:bg-slate-200/5 dark:hover:bg-slate-900 dark:hover:text-slate-200 transition-all duration-300"
                             :content="contact.user.email">
                             <Lucide icon="Mail" class="w-4 h-4 text-primary dark:text-slate-200 fill-primary/10" />
                         </Tippy>
                         <Tippy as="button" @click="() => { changeContactToChat({ contact }) }"
                             class="flex items-center justify-center border rounded-full w-9 h-9 border-primary/30 dark:border-slate-200/30 bg-primary/5 dark:bg-slate-200/5 dark:hover:bg-slate-900 dark:hover:text-slate-200 transition-all duration-300"
-                            content="comenzar chat">
+                            content="Comenzar chat">
                             <Lucide icon="Send"
                                 class="w-4 h-4 text-primary dark:text-slate-200 fill-primary/10 -ml-[2px] -mb-[2px]" />
                         </Tippy>

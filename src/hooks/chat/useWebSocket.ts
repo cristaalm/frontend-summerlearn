@@ -30,6 +30,7 @@ interface Chat {
     email: string
     rol: string
     userPhoto: string
+    isOnline: boolean
   }
   lastMessage: {
     content: string
@@ -49,28 +50,29 @@ interface Contact {
     email: string
     rol: string
     userPhoto: string
+    isOnline: boolean
   }
   lastMessage: null
 }
 
 export function useWebSocket() {
-  const showToast = inject<(params: ToastParams) => void>('showToast') // Inyectamos el Toast
-  const socket = ref<WebSocket | null>(null) // Variable reactiva para almacenar el socket
-  const messages = ref<Message[]>([]) // Variable reactiva para almacenar los mensajes
-  const chats = ref<Chat[]>([]) // Variable reactiva para almacenar los chats
-  const contacts = ref<Contact[]>([]) // Variable reactiva para almacenar los contactos
-  const newMessage = ref('') // Variable reactiva para almacenar el nuevo mensaje
-  const loadingChats = ref(false) // Variable reactiva para mostrar el estado de carga de los chats
-  const loadingMessages = ref(false) // Variable reactiva para mostrar el estado de carga de los mensajes
-  const loadingContacts = ref(false) // Variable reactiva para mostrar el estado de carga de los contactos
-  const loadingSendMessage = ref(false) // Variable reactiva para mostrar el estado de carga al enviar un mensaje
-  let pingInterval: NodeJS.Timeout | null = null // Variable para almacenar el intervalo de pings
-  let access_token = localStorage.getItem('access_token') // Obtenemos el token de acceso
-  const refresh_token = localStorage.getItem('refresh_token') // Obtenemos el token de refresco
+  const showToast = inject<(params: ToastParams) => void>('showToast')
+  const socket = ref<WebSocket | null>(null)
+  const socketGlobal = ref<WebSocket | null>(null)
+  const messages = ref<Message[]>([])
+  const chats = ref<Chat[]>([])
+  const contacts = ref<Contact[]>([])
+  const newMessage = ref('')
+  const loadingChats = ref(false)
+  const loadingMessages = ref(false)
+  const loadingContacts = ref(false)
+  const loadingSendMessage = ref(false)
+  let pingInterval: NodeJS.Timeout | null = null
+  let access_token = localStorage.getItem('access_token')
+  const refresh_token = localStorage.getItem('refresh_token')
 
   const manualClose = ref(false)
-
-  // ? ################## EVENTOS INDIVIDUALES ################## ? //
+  const manualCloseGlobal = ref(false)
 
   const { sendMessage, isTyping, changeSeen } = useEvents(
     socket,
@@ -81,11 +83,7 @@ export function useWebSocket() {
     chats
   )
 
-  // ? ################## UTILIDADES ################## ? //
-
   const { sortChats, playNotificationSound, sortContacts } = useUtilsSocket(chats, contacts)
-
-  // ? ################## ACCIONES DE RESPUESTA ################## ? //
 
   const {
     init_chats,
@@ -110,139 +108,154 @@ export function useWebSocket() {
     access_token,
     showToast
   })
-  // ? ################## SOCKET FUNCTIONS ################## ? //
 
-  const connectWebSocket = () => {
-    // Función para conectar el WebSocket
-    if (socket && socket.value) {
+  const connectUserSocket = () => {
+    if (socket.value) {
       socket.value.close()
       socket.value = null
     }
 
-    loadingChats.value = true
-    loadingContacts.value = true
-    loadingMessages.value = true
-
     if (!access_token) {
-      showToast?.({ message: 'Credenciales invalidas', tipo: 'error' })
+      showToast?.({ message: 'Credenciales inválidas', tipo: 'error' })
       return
     }
 
     const idUser = getIdByToken(access_token).user_id
-
     if (!idUser) {
-      showToast?.({ message: 'Credenciales invalidas', tipo: 'error' })
+      showToast?.({ message: 'Credenciales inválidas', tipo: 'error' })
       return
     }
 
     socket.value = new WebSocket(`${Baseurl2}ws/chat/${idUser}/`)
-    setupSocketEvents() // Configuramos eventos después de conectarnos
+    setupUserSocketEvents()
+  }
 
-    // Iniciar el envío de pings cada 30 segundos
-    pingInterval = setInterval(() => {
-      if (socket.value && socket.value.readyState === WebSocket.OPEN) {
-        socket.value.send(
-          JSON.stringify({
-            type: 'ping',
-            token: access_token,
-            refresh_token: refresh_token
-          })
-        ) // Enviar un mensaje de ping
-      }
-    }, 30000) // 30 segundos
+  const connectGlobalSocket = () => {
+    if (socketGlobal.value) {
+      socketGlobal.value.close()
+      socketGlobal.value = null
+    }
+
+    socketGlobal.value = new WebSocket(`${Baseurl2}ws/chat/general/`)
+    setupGlobalSocketEvents()
   }
 
   const mountedSocket = () => {
-    connectWebSocket()
+    connectUserSocket()
+    connectGlobalSocket()
+    startPing()
   }
 
   const unmountedSocket = () => {
     if (socket.value) {
       manualClose.value = true
-      socket.value.close() // Cerramos la conexión cuando se desmonta
+      socket.value.close()
     }
-    if (pingInterval !== null) {
-      clearInterval(pingInterval) // Detenemos el intervalo de pings al cerrar el socket
+    if (socketGlobal.value) {
+      manualCloseGlobal.value = true
+      socketGlobal.value.close()
+    }
+    stopPing()
+  }
+
+  const startPing = () => {
+    pingInterval = setInterval(() => {
+      if (socket.value && socket.value.readyState === WebSocket.OPEN) {
+        socket.value.send(
+          JSON.stringify({ type: 'ping', token: access_token, refresh_token: refresh_token })
+        )
+      }
+    }, 30000)
+  }
+
+  const stopPing = () => {
+    if (pingInterval) {
+      clearInterval(pingInterval)
     }
   }
 
-  // ? ################## SOCKET EVENTS ################## ? //
-
-  const setupSocketEvents = () => {
+  const setupUserSocketEvents = () => {
     if (!socket.value) return
 
     socket.value.onopen = () => {
       socket.value!.send(
-        JSON.stringify({
-          type: 'start_chats',
-          token: access_token,
-          refresh_token: refresh_token,
-          content: {}
-        })
+        JSON.stringify({ type: 'start_chats', token: access_token, refresh_token: refresh_token })
       )
-
       socket.value!.send(
         JSON.stringify({
           type: 'start_messages',
           token: access_token,
-          refresh_token: refresh_token,
-          content: {}
+          refresh_token: refresh_token
         })
       )
-
       socket.value!.send(
         JSON.stringify({
           type: 'start_contacts',
           token: access_token,
-          refresh_token: refresh_token,
-          content: {}
+          refresh_token: refresh_token
         })
       )
     }
 
-    socket.value.onmessage = function (event) {
+    socket.value.onmessage = (event) => {
       const data = JSON.parse(event.data)
-      if (data.type === 'init_chats') {
-        init_chats(data)
-      }
-      if (data.type === 'init_messages') {
-        init_messages(data)
-      }
-      if (data.type == 'init_contacts') {
-        init_contacts(data)
-      }
-      if (data.type === 'message_received') {
-        message_received(data)
-      }
-      if (data.type === 'message_sent') {
-        message_sent(data)
-      }
-      if (data.type === 'typing') {
-        typing(data)
-      }
-      if (data.type === 'token_refreshed') {
-        token_refreshed(data)
-      }
-      if (data.type === 'critical_error') {
-        critical_error(data)
-      }
+      handleUserSocketMessage(data)
     }
 
-    socket.value.onerror = function (error) {
-      console.error('WebSocket error:', error)
+    socket.value.onerror = (error) => {
+      console.error('WebSocket error (usuario):', error)
     }
 
-    // Reconexión automática en caso de desconexión
-    socket.value.onclose = function (event) {
-      console.log('WebSocket cerrado, intentando reconectar...')
-      if (pingInterval !== null) {
-        clearInterval(pingInterval) // Detenemos el intervalo de pings al cerrar el socket
-      }
-      if (!manualClose.value) {
-        setTimeout(() => connectWebSocket(), 1000) // Intenta reconectar después de 1 segundo
-      }
+    socket.value.onclose = () => {
+      stopPing()
+      if (!manualClose.value) setTimeout(connectUserSocket, 1000)
       manualClose.value = false
     }
+  }
+
+  const handleUserSocketMessage = (data: any) => {
+    if (data.type === 'init_chats') init_chats(data)
+    else if (data.type === 'init_messages') init_messages(data)
+    else if (data.type == 'init_contacts') init_contacts(data)
+    else if (data.type === 'message_received') message_received(data)
+    else if (data.type === 'message_sent') message_sent(data)
+    else if (data.type === 'typing') typing(data)
+    else if (data.type === 'token_refreshed') token_refreshed(data)
+    else if (data.type === 'critical_error') critical_error(data)
+  }
+
+  const setupGlobalSocketEvents = () => {
+    if (!socketGlobal.value) return
+
+    socketGlobal.value.onmessage = (event) => {
+      const data = JSON.parse(event.data)
+      if (data.type === 'status') {
+        const user_id = getIdByToken(access_token).user_id
+        if (data.content.id !== user_id) {
+          const chat_id =
+            user_id < data.content.id
+              ? `${user_id}_${data.content.id}`
+              : `${data.content.id}_${user_id}`
+          updateOnlineStatus(chat_id, data.content.status)
+        }
+      }
+    }
+
+    socketGlobal.value.onerror = (error) => {
+      console.error('WebSocket error (global):', error)
+    }
+
+    socketGlobal.value.onclose = () => {
+      if (!manualCloseGlobal.value) setTimeout(connectGlobalSocket, 1000)
+      manualCloseGlobal.value = false
+    }
+  }
+
+  const updateOnlineStatus = (chat_id: string, status: boolean) => {
+    const contactIndex = contacts.value.findIndex((contact) => contact.id === chat_id)
+    const chatIndex = chats.value.findIndex((chat) => chat.id === chat_id)
+    if (contactIndex !== -1) contacts.value[contactIndex].user.isOnline = status
+    if (chatIndex !== -1) chats.value[chatIndex].user.isOnline = status
   }
 
   return {

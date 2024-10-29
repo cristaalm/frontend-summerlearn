@@ -13,7 +13,6 @@ export function useRolUser() {
     //? ############# Fetching Data #############
 
     try {
-      console.log(user)
       const response = await fetch(Baseurl + 'users/' + user.id + '/', {
         method: 'PATCH',
         headers: {
