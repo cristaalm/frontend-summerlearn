@@ -13,7 +13,7 @@ export function useSetDonation() {
   // ! Obtiene el id del usuario desde el token almacenado en localStorage
   const userId = getIdByToken(access_token).user_id
 
-  const addDonation = async ({ donation }) => {
+  const addDonation = async ({ donation, btnConfirm }) => {
     setDonationLoading.value = true
     setDonationError.value = ''
     try {
@@ -33,7 +33,10 @@ export function useSetDonation() {
       const data = await response.json()
       if (response.ok) {
         showToast({ message: 'Donación agregada con éxito', tipo: 'success', persistente: true })
-        router.push({ name: 'donations' }) // Redirige a la página de donaciones
+        btnConfirm()
+        setTimeout(() => {
+          router.push({ name: 'donations' }) // Redirige a la página de donaciones
+        }, 3000)
       } else {
         setDonationError.value = data.detail || 'Error al agregar la donación'
       }

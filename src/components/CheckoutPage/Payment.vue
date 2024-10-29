@@ -1,72 +1,77 @@
 <template>
-    <div class="col-span-1 lg:col-span-6">
-        <h4 class="text-3xl text-gray-700 mb-5">Payment information</h4>
-        <div class="p-10 rounded-md shadow-md bg-white">
+    <div class="">
+        <div class="p-10 bg-white dark:bg-[#28334e]">
             <div v-if="cardComponent" class="mb-6">
                 <Card :fields="fields" :labels="formData" :isCardNumberMasked="isCardNumberMasked"
                     :randomBackgrounds="randomBackgrounds" :backgroundImage="backgroundImage" />
             </div>
             <div class="mb-6">
-                <label class="block mb-3 text-gray-600" for="">Name on card</label>
+                <label class="block mb-3 text-gray-600 dark:text-slate-200" for="">Titular de la tarjeta</label>
                 <input type="text" :id="fields.cardName" v-letter-only @input="changeName" v-model="formData.cardName"
                     data-card-field autocomplete="off"
-                    class="border border-gray-500 rounded-md inline-block py-2 px-3 w-full text-gray-600 tracking-wider" />
+                    class="border border-gray-500 rounded-md inline-block dark:bg-slate-800 dark:border-slate-800 dark:text-slate-200 dark:placeholder:text-slate-400 py-2 px-3 w-full text-gray-600 tracking-wider" />
             </div>
             <div class="mb-6">
-                <label class="block mb-3 text-gray-600" for="">Card number</label>
+                <label class="block mb-3 text-gray-600 dark:text-slate-200" for="">Numero de la tarjeta</label>
                 <input type="tel" :id="fields.cardNumber" @input="changeNumber" @focus="focusCardNumber"
                     @blur="blurCardNumber" v-model="formData.cardNumber" :maxlength="cardNumberMaxLength"
                     data-card-field autocomplete="off"
-                    class="border border-gray-500 rounded-md inline-block py-2 px-3 w-full text-gray-600 tracking-widest" />
+                    class="border border-gray-500 rounded-md inline-block dark:bg-slate-800 dark:border-slate-800 dark:text-slate-200 dark:placeholder:text-slate-400 py-2 px-3 w-full text-gray-600 tracking-widest" />
             </div>
             <div class="mb-6 flex flex-wrap -mx-3w-full">
                 <div class="w-2/3 px-3">
-                    <label class="block mb-3 text-gray-600" for="">Expiration date</label>
+                    <label class="block mb-3 text-gray-600 dark:text-slate-200" for="">Fecha de expiración</label>
                     <div class="flex">
                         <select
-                            class="border border-gray-500 rounded-md inline-block py-2 px-3 w-full text-gray-600 tracking-widest mr-6"
+                            class="border border-gray-500 rounded-md inline-block dark:bg-slate-800 dark:border-slate-800 dark:text-slate-200 dark:placeholder:text-slate-400 py-2 px-3 w-full text-gray-600 tracking-widest mr-6"
                             :id="fields.cardMonth" v-model="formData.cardMonth" @change="changeMonth" data-card-field>
-                            <option value disabled selected>Month</option>
+                            <option value disabled selected>Mes</option>
                             <option v-bind:value="n < 10 ? '0' + n : n" v-for="n in 12"
                                 v-bind:disabled="n < minCardMonth" v-bind:key="n">{{ generateMonthValue(n) }}</option>
                         </select>
                         <select
-                            class="border border-gray-500 rounded-md inline-block py-2 px-3 w-full text-gray-600 tracking-widest"
+                            class="border border-gray-500 rounded-md inline-block dark:bg-slate-800 dark:border-slate-800 dark:text-slate-200 dark:placeholder:text-slate-400 py-2 px-3 w-full text-gray-600 tracking-widest"
                             :id="fields.cardYear" v-model="formData.cardYear" @change="changeYear" data-card-field>
-                            <option value disabled selected>Year</option>
+                            <option value disabled selected>Año</option>
                             <option v-bind:value="$index + minCardYear" v-for="(n, $index) in 12" v-bind:key="n">{{
                                 $index + minCardYear }}</option>
                         </select>
                     </div>
                 </div>
                 <div class="w-1/3 px-3">
-                    <label class="block mb-3 text-gray-600" for="">CVC</label>
+                    <label class="block mb-3 text-gray-600 dark:text-slate-200" for="">CVC</label>
                     <input type="tel" v-number-only :id="fields.cardCvv" maxlength="4" v-model="formData.cardCvv"
                         @input="changeCvv" data-card-field autocomplete="off"
-                        class="border border-gray-500 rounded-md inline-block py-2 px-3 w-full text-gray-600 tracking-widest" />
+                        class="border border-gray-500 rounded-md inline-block dark:bg-slate-800 dark:border-slate-800 dark:text-slate-200 dark:placeholder:text-slate-400 py-2 px-3 w-full text-gray-600 tracking-widest" />
                 </div>
             </div>
-            <div class="mb-6 text-right">
-                <span class="text-right font-bold">{{ total }} USD</span>
-            </div>
             <div>
-                <button @click="finishPayment"
-                    class="w-full text-center px-4 py-3 bg-blue-500 rounded-md shadow-md text-white font-semibold">
-                    Confirm payment
-                </button>
+                <Button variant="outline-success" @click="finishPayment"
+                    class="w-full text-center px-4 py-3 dark:text-slate-200">
+                    <LoadingIcon v-if="loadingValidation" icon="tail-spin" class="stroke-[1.3] w-4 h-4 mr-2 -ml-2"
+                        color="black" />
+
+                    <Lucide v-if="!loadingValidation" icon="Check" class="stroke-[1.3] w-4 h-4 mr-2" />
+                    {{ loadingValidation ? 'Validando datos...' : 'Validar' }}
+                </Button>
             </div>
         </div>
     </div>
 </template>
 
 <script setup>
-import { ref, computed, watch, onMounted } from "vue";
+import { ref, computed, watch, onMounted, inject } from "vue";
+import Lucide from '@/components/base/Lucide'
+import Button from '@/components/base/Button'
+import LoadingIcon from '@/components/base/LoadingIcon'
 import Card from "./Card.vue";
 import '@/assets/css/scss/card-component.css';
 
+const showToast = inject('showToast');
+const { btnForm } = inject('buttonsDonations')
+
 // Props
 const props = defineProps({
-    total: Number,
     formData: {
         type: Object,
         default: () => ({
@@ -100,6 +105,7 @@ const minCardYear = ref(new Date().getFullYear());
 const isCardNumberMasked = ref(true);
 const mainCardNumber = ref(props.formData.cardNumber);
 const cardNumberMaxLength = ref(19);
+const loadingValidation = ref(false);
 
 // Computed
 const minCardMonth = computed(() => props.formData.cardYear === minCardYear.value ? new Date().getMonth() + 1 : 1);
@@ -165,5 +171,82 @@ const toggleMask = () => {
     isCardNumberMasked.value = !isCardNumberMasked.value;
     isCardNumberMasked.value ? maskCardNumber() : unMaskCardNumber();
 };
-const finishPayment = () => emit("change-parent");
+
+const finishPayment = () => {
+    // Validamos que los datos estén completos
+    if (!props.formData.cardName || !props.formData.cardNumber || !props.formData.cardMonth || !props.formData.cardYear || !props.formData.cardCvv) {
+        showToast({
+            message: 'Por favor complete todos los campos',
+            tipo: 'error'
+        });
+        return;
+    }
+
+    loadingValidation.value = true;
+
+    // Desenmascaramos temporalmente el número de tarjeta para validarlo
+    unMaskCardNumber();
+    const cardNumber = props.formData.cardNumber.replace(/\s+/g, ''); // Eliminamos espacios
+
+    // Validación de formato de número de tarjeta
+    const amexPattern = /^\d{15}$/;      // Amex: 15 dígitos (#### ###### #####)
+    const dinersPattern = /^\d{14}$/;    // Diners: 14 dígitos (#### ###### ####)
+    const defaultPattern = /^\d{16}$/;   // Default: 16 dígitos (#### #### #### ####)
+
+    let valid = false;
+
+    if (amexPattern.test(cardNumber) || dinersPattern.test(cardNumber) || defaultPattern.test(cardNumber)) {
+        // Validación de BIN (primera serie de números)
+        if (/^4/.test(cardNumber)) valid = true;          // Visa
+        if (/^(34|37)/.test(cardNumber)) valid = true;    // Amex
+        if (/^5[1-5]/.test(cardNumber)) valid = true;     // MasterCard
+        if (/^6011/.test(cardNumber)) valid = true;       // Discover
+        if (/^62/.test(cardNumber)) valid = true;         // UnionPay
+        if (/^9792/.test(cardNumber)) valid = true;       // TROY
+        if (/^3(?:0([0-5]|9)|[689]\d?)\d{0,11}/.test(cardNumber)) valid = true; // Diners Club
+        if (/^35(2[89]|[3-8])/.test(cardNumber)) valid = true; // JCB
+    }
+
+    // Restauramos la máscara después de la validación si estaba enmascarado
+    maskCardNumber();
+
+    if (!valid) {
+        showToast({
+            message: 'Tarjeta no válida',
+            tipo: 'error'
+        });
+        loadingValidation.value = false;
+        return;
+    }
+
+    // Validación de fecha de expiración
+    if (props.formData.cardYear < minCardYear.value || (props.formData.cardYear == minCardYear.value && props.formData.cardMonth < minCardMonth.value)) {
+        showToast({
+            message: 'La fecha de expiración no es válida',
+            tipo: 'error'
+        });
+        loadingValidation.value = false;
+        return;
+    }
+
+    // Validación del CVV
+    if (!/^\d{3,4}$/.test(props.formData.cardCvv)) {
+        showToast({
+            message: 'El código de seguridad no es válido',
+            tipo: 'error'
+        });
+        loadingValidation.value = false;
+        return;
+    }
+
+    setTimeout(() => {
+        loadingValidation.value = false;
+        showToast({
+            message: 'Datos validados',
+            tipo: 'success'
+        });
+        btnForm();
+    }, 2000);
+};
+
 </script>

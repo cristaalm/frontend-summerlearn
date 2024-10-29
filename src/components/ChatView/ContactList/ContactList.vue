@@ -27,16 +27,6 @@ const sendEmail = (email) => {
     window.location.href = `mailto:${email}`;
 };
 
-// const copiedEmail = (email) => {
-//     navigator.clipboard.writeText(email)
-//         .then(() => {
-//             showToast({ message: "Correo copiado al portapapeles", tipo: "info" });
-//         })
-//         .catch(() => {
-//             showToast({ message: "Error al copiar el correo al portapapeles", tipo: "error" });
-//         });
-// };
-
 </script>
 
 <template>

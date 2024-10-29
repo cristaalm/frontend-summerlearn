@@ -32,16 +32,16 @@
                 </label>
                 <div class="card-item__content">
                     <label :for="fields.cardName" class="card-item__info" :ref="fields.cardName">
-                        <div class="card-item__holder">Card Holder</div>
+                        <div class="card-item__holder">Titular</div>
                         <div class="card-item__name" v-if="labels.cardName.length" key="1">
                             <span class="card-item__nameItem"
                                 v-for="(n, $index) in labels.cardName.replace(/\s\s+/g, ' ')" :key="$index + 1">{{ n
                                 }}</span>
                         </div>
-                        <div class="card-item__name" v-else key="2">Full Name</div>
+                        <div class="card-item__name" v-else key="2">NOMBRE</div>
                     </label>
                     <div class="card-item__date" ref="cardDate">
-                        <label :for="fields.cardMonth" class="card-item__dateTitle">Expires</label>
+                        <label :for="fields.cardMonth" class="card-item__dateTitle">Expiración</label>
                         <label :for="fields.cardMonth" class="card-item__dateItem">
                             <span v-if="labels.cardMonth" :key="labels.cardMonth">{{ labels.cardMonth }}</span>
                             <span v-else key="2">MM</span>
@@ -175,7 +175,6 @@ export default {
             return "";
         },
         updateCardType(number) {
-            console.log(number);
             const cardType = this.detectCardType(number);
             this.cardTypeImage = cardType
                 ? `https://raw.githubusercontent.com/muhammederdem/credit-card-form/master/src/assets/images/${cardType}.png`
