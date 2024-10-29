@@ -179,8 +179,7 @@ const changeColor = () => {
         'Este es solo un paso más para continuar haciendo una diferencia en la educación de los más necesitados.',
         'Cambia tu contraseña y sigue ayudando a construir un futuro más brillante para las escuelas rurales.'
       ]" :changeColor="changeColor" />
-      <br>
-      <div class="hidden lg:block absolute bottom-40 ml-4 md:ml-20 lg:ml-[70px] xl:ml-[110px] text-white">
+      <br><div class="hidden xl:ml-[115px] 2xl:ml-[140px] lg:block absolute lg:ml-[70px] bottom-40 text-white">
         <h2 class="text-4xl font-bold">SummerLearn</h2>
         <p class="mt-2 text-lg">Transformando la educación, un paso a la vez.</p>
       </div>

@@ -10,6 +10,7 @@ const smoothScroll = (event) => {
     })
   }
 }
+
 </script>
 
 

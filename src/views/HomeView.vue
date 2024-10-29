@@ -8,6 +8,8 @@ import Footer from '@/components/OnePage/OnePageFooter.vue'
 import { changeLoginColorScheme } from '@/utils/switchColorScheme'
 import { onMounted } from 'vue'
 
+
+
 onMounted(() => {
   changeLoginColorScheme()
 })
@@ -23,6 +25,7 @@ onMounted(() => {
 
     <Hero />
 
+    
     <Mission />
 
     <Impact />
