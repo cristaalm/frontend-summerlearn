@@ -216,7 +216,6 @@ const closeSlideOver = () => {
   openSlide.value = false
 }
 
-
 </script>
 
 <template>
@@ -225,7 +224,7 @@ const closeSlideOver = () => {
   <!-- BEGIN: Slide Over Content -->
   <Slideover v-model:open="openSlide" @close="closeSlideOver">
     <!-- v-model vinculado a openSlide -->
-    <Slideover.Panel class="text-black dark:text-slate-200">
+    <Slideover.Panel class="text-black dark:text-slate-200" className="contact-tour">
       <Slideover.Title class="p-5">
         <h2 class="mr-auto text-base font-medium">Contáctanos</h2>
       </Slideover.Title>
@@ -233,7 +232,7 @@ const closeSlideOver = () => {
         <!-- Primera tabla -->
         <table class="min-w-full table-auto mb-4">
           <tbody>
-            <tr class="border-b">
+            <tr class="border-b Coordinador" className="Coordinador">
               <td class="px-4 py-1 text-left font-semibold">Nombre</td>
               <td class="px-4 py-2">Brisa Medina</td>
               <td class="px-4 py-2 text-center">
