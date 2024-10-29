@@ -18,8 +18,6 @@ import LoadingIcon from '@/components/base/LoadingIcon'
 import Pagination from '@/components/base/Pagination'
 import { FormInput, FormSelect } from '@/components/base/Form'
 import Table from '@/components/base/Table'
-import getIdByToken from '@/logic/getIdByToken'
-
 
 const router = useRouter()
 const { barDonations, donations, loading, loadDonations, errorDonations } = useDonations()
@@ -41,9 +39,6 @@ onMounted(() => {
   loadDonations()
   loadDonationsWeek()
 })
-
-const {  rol: role } = getIdByToken(localStorage.getItem('access_token'))
-console.log(role)
 </script>
 
 <template>
@@ -66,7 +61,7 @@ console.log(role)
         <div class="grid grid-cols-12 gap-5 mt-3.5">
           <!--? Card -->
 
-          <div class="col-span-12 p-1 md:col-span-6 2xl:col-span-3 box box--stacked">
+          <div class="col-span-12 p-1 md:col-span-6 2xl:col-span-6 box box--stacked">
             <div
               class="-mx-1 overflow-hidden h-[244px] [&_.tns-outer_.tns-nav]:bottom-auto [&_.tns-outer_.tns-nav]:w-auto [&_.tns-outer_.tns-nav]:ml-5 [&_.tns-outer_.tns-nav]:mt-5 [&_.tns-outer_.tns-nav_button]:w-2 [&_.tns-outer_.tns-nav_button]:h-2 [&_.tns-outer_.tns-nav_button.tns-nav-active]:w-5 [&_.tns-outer_.tns-nav_button]:mx-0.5 [&_.tns-outer_.tns-nav_button]:bg-black/40 [&_.tns-outer_.tns-nav_button.tns-nav-active]:bg-black/70">
               <TinySlider :options="{ mode: 'gallery', nav: true }">
@@ -97,7 +92,7 @@ console.log(role)
 
           <!--? Card -->
 
-          <div class="flex flex-col col-span-12 p-5 md:col-span-6 2xl:col-span-3 box box--stacked">
+          <div class="flex flex-col col-span-12 p-5 md:col-span-6 2xl:col-span-6 box box--stacked">
             <div class="pb-5 mb-5 border-b border-dashed border-slate-300/70">
               <div class="text-base text-slate-500  dark:text-slate-200" v-if="!loading">Donación semanal</div>
               <div class="flex items-center mt-1">
@@ -111,10 +106,43 @@ console.log(role)
 
             <span class="flex items-center mt-6 font-medium text-primary dark:text-slate-200">Donaciones diarias</span>
           </div>
+
+          <!--? Card -->
+
+          <!-- <div class="flex flex-col col-span-12 p-5 md:col-span-6 2xl:col-span-3 box box--stacked">
+                        <Menu class="absolute top-0 right-0 mt-5 mr-5">
+                            <Menu.Button class="w-5 h-5 text-slate-500">
+                                <Lucide icon="MoreVertical" class="w-6 h-6 stroke-slate-400/70 fill-slate-400/70" />
+                            </Menu.Button>
+                        </Menu>
+                        <div class="flex items-center">
+                            <div
+                                class="flex items-center justify-center w-12 h-12 border rounded-full border-primary/10 bg-primary/10">
+                                <Lucide icon="Zap" class="w-6 h-6 text-primary fill-primary/10" />
+                            </div>
+                            <div class="ml-4">
+                                <div class="text-base font-medium">Rendimiento</div>
+                                <div class="text-slate-500 mt-0.5">En 9 Dias</div>
+                            </div>
+                        </div>
+                        <div class="relative mt-5 mb-6">
+                            <ReportDonutChart3 class="relative z-10" :height="100" />
+                        </div>
+                        <div class="flex flex-wrap items-center justify-center gap-y-3 gap-x-5">
+                            <div class="flex items-center">
+                                <div class="w-2 h-2 rounded-full bg-primary/70"></div>
+                                <div class="ml-2.5">Order Volume</div>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="w-2 h-2 rounded-full bg-danger/70"></div>
+                                <div class="ml-2.5">Coverage Area</div>
+                            </div>
+                        </div>
+                    </div> -->
         </div>
 
         <!--? contenedor de las estadisticas de usuarios -->
-      <div v-if="role == 1">
+
         <div v-if="!errorDonations" class="flex flex-col p-5 box box--stacked">
           <div class="grid grid-cols-4 gap-5">
             <div
@@ -180,17 +208,12 @@ console.log(role)
           </div>
         </div>
 
-
-
         <div v-if="errorDonations" class="flex flex-col p-5 box box--stacked">
           <div class="flex flex-row w-full">
             <div class="text-center text-3xl w-full text-red-500">A ocurrido un error...</div>
           </div>
         </div>
       </div>
-    </div>
-
-    <div></div>  
 
       <div class="grid grid-cols-12 gap-y-10 gap-x-6">
         <div class="col-span-12">

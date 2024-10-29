@@ -1,16 +1,22 @@
 <script setup>
+import { ref, watch } from 'vue';
 import Lucide from '@/components/base/Lucide';
 import ReportBarChart5 from "@/components/ReportBarChart5";
-import Litepicker from "@/components/base/Litepicker";
 import { FormSelect } from '@/components/base/Form';
-import { ref } from 'vue';
+import { driver } from "driver.js";
+import "driver.js/dist/driver.css";
 
 const generalReportFilter = ref("");
+const isChartLoaded = ref(false); // Estado para controlar si la gráfica ha cargado
 
 // Función para manejar el cambio en el select
 const handleFilterChange = (event) => {
   generalReportFilter.value = event.target.value;
+  console.log('Filtro seleccionado:', generalReportFilter.value); // Para verificar el valor seleccionado
 };
+
+// Observador para verificar cuando el filtro cambia y simular la carga de la gráfica
+
 </script>
 
 <template>
@@ -26,8 +32,7 @@ const handleFilterChange = (event) => {
             class="sm:w-55 pl-9 dark:text-slate-200 dark:placeholder:text-slate-400"
             @change="handleFilterChange"
           >
-            <option value="custom-date">Seleccionar tiempo</option>
-            <option value="daily">Días</option>
+            <option value="daily" id="primero">Días</option>
             <option value="weekly">Semanal</option>
             <option value="monthly">Mensual</option>
           </FormSelect>
@@ -37,10 +42,11 @@ const handleFilterChange = (event) => {
 
     <!-- Pasar el valor seleccionado al componente ReportBarChart5 -->
     <div class="mb-1 mt-7">
-      <ReportBarChart5 :height="220" :filter="generalReportFilter" />
+      <ReportBarChart5 :height="220" :filter="generalReportFilter" @chart-loaded="isChartLoaded = true" />
     </div>
 
-    <div class="flex flex-wrap items-center justify-center mt-5 gap-y-3 gap-x-5">
+    <!-- Mostrar la parte de donaciones y gastos solo si la gráfica ha cargado -->
+    <div v-if="isChartLoaded" class="flex flex-wrap items-center justify-center mt-5 gap-y-3 gap-x-5">
       <div class="flex items-center text-slate-500 dark:text-slate-200">
         <div class="w-2 h-2 mr-2 border rounded-full border-primary/60 bg-primary/60 dark:bg-blue-500"></div>
         Total de ingresos

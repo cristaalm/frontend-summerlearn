@@ -6,6 +6,7 @@ import { useDarkModeStore } from "@/stores/dark-mode";
 import Chart from "@/components/base/Chart";
 import { getColor } from "@/utils/colors";
 import { useDonations } from '@/hooks/donations/';
+import LoadingIcon from '@/components/base/LoadingIcon'
 
 const { donations, loadDonations } = useDonations();
 
@@ -105,10 +106,9 @@ const options = computed<ChartOptions>(() => {
     <Table.Tbody v-if="loading">
       <Table.Tr class="[&_td]:last:border-b-0">
         <Table.Td colspan="4" class="py-8 text-center text-xl font-bold text-green-500">
-          <div class="flex flex-col w-full justify-center items-center text-nowrap">
-            <LoadingIcon icon="tail-spin" class="h-8" color="black" />
-            <div class="mt-2">Cargando información...</div>
-          </div>
+          <div class="w-full h-4 mt-6">
+              <LoadingIcon icon="three-dots" color="gray" />
+            </div>
         </Table.Td>
       </Table.Tr>
     </Table.Tbody>
@@ -118,10 +118,12 @@ const options = computed<ChartOptions>(() => {
         <Table.Td colspan="4" class="py-8 text-center text-xs font-bold"> <!-- Cambiado a text-xs -->
           <div class="absolute inset-0 flex items-center justify-center">
               <div class="text-center">
-                  <div class="mt-8 text-[28px] font-medium text-slate-600/90 dark:text-slate-200"> <!-- Cambiado a text-sm -->
+                  <div class="mt-1 text-[28px] font-medium text-slate-600/90 dark:text-slate-200"> <!-- Cambiado a text-sm -->
                       ${{difference}}
                   </div>
-                  <div class="text-[16px] mt-6 text-slate-500 dark:text-slate-200">Donación disponible
+                  <div class="text-[16px] mt-4 text-slate-500 dark:text-slate-200">Donación
+                  </div>
+                  <div class="text-[16px]  text-slate-500 dark:text-slate-200">disponible
                   </div>
               </div>
           </div>

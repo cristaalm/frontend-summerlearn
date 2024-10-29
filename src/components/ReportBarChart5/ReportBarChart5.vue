@@ -5,13 +5,13 @@ import { useColorSchemeStore } from "@/stores/color-scheme";
 import { useDarkModeStore } from "@/stores/dark-mode";
 import Chart from "@/components/base/Chart";
 import { getColor } from "@/utils/colors";
-import _ from "lodash";
 import { useDonations } from '@/hooks/donations/';
+import LoadingIcon from '@/components/base/LoadingIcon';
 
 const props = defineProps<{
   width?: number;
   height?: number;
-  filter: string;
+  filter?: string; // Hacer que filter sea opcional
 }>();
 
 const colorScheme = computed(() => useColorSchemeStore().colorScheme);
@@ -24,9 +24,14 @@ const chartData = ref<ChartData>({
   datasets: [],
 });
 
-// Cargar donaciones al montar el componente
-onMounted(() => {
-  loadDonations();
+// Estado de carga
+const loading = ref(true); // Añadido para manejar el estado de carga
+
+// Cargar donaciones al montar el componente y generar datos del gráfico
+onMounted(async () => {
+  await loadDonations(); // Asegurarse de que las donaciones se carguen
+  generateChartData(props.filter || "daily"); // Generar los datos del gráfico con el filtro actual o usar "daily" como default
+  loading.value = false; // Cambiar el estado de carga a falso después de cargar los datos
 });
 
 // Función para generar los datos dinámicamente según el filtro
@@ -51,7 +56,7 @@ const generateChartData = (filter: string) => {
         data: dataSpent,
         borderWidth: 1,
         borderColor: darkMode.value ? getColor('success', 0.8) : getColor("success", 0.7),
-        backgroundColor: darkMode.value ? getColor('success', 0.8) : getColor("success", 0.35),
+        backgroundColor: darkMode.value ? getColor('success', 0.8) : getColor('success', 0.35),
       },
     ],
   };
@@ -64,30 +69,25 @@ const groupDonationsByTime = (filter: string) => {
   const monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
 
   if (filter === "daily") {
-    // Generar los días del mes actual (solo número de día)
     const daysInMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate();
     for (let day = 1; day <= daysInMonth; day++) {
       const dayLabel = `${day}`;
       grouped[dayLabel] = { quanty: 0, spent: 0 };
     }
   } else if (filter === "weekly") {
-    // Generar las cuatro semanas del mes actual (etiqueta como "Semana X")
     for (let week = 1; week <= 4; week++) {
       const weekLabel = `Semana ${week}`;
       grouped[weekLabel] = { quanty: 0, spent: 0 };
     }
   } else if (filter === "monthly") {
-    // Generar los 12 meses del año actual (solo nombre del mes)
     for (let month = 0; month < 12; month++) {
       const monthLabel = monthNames[month];
       grouped[monthLabel] = { quanty: 0, spent: 0 };
     }
   }
 
-  // Sumar las donaciones a los grupos generados
   donations.value.forEach((donation) => {
     const date = new Date(donation.date);
-    // Aseguramos que la fecha esté correctamente interpretada sin desfase
     const adjustedDate = new Date(date.getTime() + date.getTimezoneOffset() * 60000);
     let key;
 
@@ -100,7 +100,6 @@ const groupDonationsByTime = (filter: string) => {
       key = monthNames[adjustedDate.getMonth()];
     }
 
-    // Verificar que el grupo existe en el objeto `grouped`
     if (grouped[key]) {
       grouped[key].quanty += Number(donation.quanty) || 0;
       grouped[key].spent += Number(donation.spent) || 0;
@@ -110,12 +109,11 @@ const groupDonationsByTime = (filter: string) => {
   return grouped;
 };
 
-// Verificar y actualizar los datos del gráfico cuando cambie el filtro
 watch(
   () => props.filter,
   (newFilter) => {
     console.log("Opción seleccionada:", newFilter);
-    generateChartData(newFilter); // Generar nuevos datos según el filtro
+    generateChartData(newFilter || "daily"); // Usar "daily" como default si no hay filtro
   },
   { immediate: true }
 );
@@ -159,5 +157,15 @@ const options = computed<ChartOptions>(() => {
 </script>
 
 <template>
-  <Chart type="bar" :width="props.width" :height="props.height" :data="chartData" :options="options" />
+  <div>
+    <div v-if="loading" class="w-full h-4 mt-4">
+      <LoadingIcon icon="three-dots" color="gray" />
+    </div>
+    
+    <p v-else class="text-gray-600 dark:text-gray-300 mt-2">
+      Nota: La gráfica se cargará una vez que se hayan recuperado las donaciones.
+    </p>
+
+    <Chart v-else type="bar" class="cursor-pointer" :width="props.width" :height="props.height" :data="chartData" :options="options" />
+  </div>
 </template>

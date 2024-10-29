@@ -1,4 +1,4 @@
-<script setup>
+    <script setup>
 import Lucide from '@/components/base/Lucide'
 import ReportDonutChart5 from "@/components/ReportDonutChart5";
 import Button from "@/components/base/Button";
