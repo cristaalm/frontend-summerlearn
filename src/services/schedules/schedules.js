@@ -1,7 +1,6 @@
 import { Baseurl } from '@/utils/global'
 
 export const getSchedules = async (actividadId, diaId) => {
-  console.log(actividadId, diaId)
   try {
     const token = localStorage.getItem('access_token')
     if (!token) {
@@ -25,7 +24,6 @@ export const getSchedules = async (actividadId, diaId) => {
 
     const json = await response.json()
     const schedules = json || []
-    console.log(schedules)
 
     // schedules.sort((a, b) => a.schedules_id - b.schedules_id)
 

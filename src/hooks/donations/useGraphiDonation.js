@@ -1,9 +1,3 @@
 export function useGraphicDonations(donations) {
-    
-    const today = new Date();
-
-    
-
-    console.log(today);
+  const today = new Date()
 }
-

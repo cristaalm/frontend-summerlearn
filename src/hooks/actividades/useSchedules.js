@@ -11,7 +11,6 @@ export function useSchedules() {
     try {
       const scheduleList = await getSchedules()
       schedules.value = scheduleList
-      console.log(schedules.value)
     } catch (e) {
       errorSchedules.value = e
     } finally {
