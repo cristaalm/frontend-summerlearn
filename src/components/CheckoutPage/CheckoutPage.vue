@@ -1,10 +1,12 @@
 <template>
     <div class="flex flex-row justify-between w-full">
-        <div class="text-base font-medium group-[.mode--light]:text-white">Método de pago</div>
+        <div
+            class="text-base font-medium group-[.mode--light]:text-slate-800 dark:group-[.mode--light]:text-slate-200 dark:text-slate-200">
+            Método de pago</div>
         <div class="flex flex-col md:h-10 gap-y-3 md:items-center md:flex-row">
             <div class="flex flex-col sm:flex-row gap-x-3 gap-y-2 md:ml-auto">
                 <Button variant="primary"
-                    class="group-[.mode--light]:!bg-white/[0.12] group-[.mode--light]:!text-slate-200 group-[.mode--light]:!border-transparent"
+                    class="group-[.mode--light]:!bg-white/[0.12] group-[.mode--light]:!text-slate-800 dark:group-[.mode--light]:!text-slate-200 group-[.mode--light]:!border-transparent"
                     @click="() => {
                         btnForm()
                     }

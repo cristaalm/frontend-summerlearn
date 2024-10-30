@@ -74,6 +74,7 @@ provide('refsDonations', { concept, amount, status, valid, validateInputAmount, 
 </script>
 
 <template>
+
   <div class="grid grid-cols-12 gap-y-10 gap-x-6">
     <div class="col-span-12 sm:col-span-10 sm:col-start-2">
 

@@ -1,4 +1,9 @@
 <template>
+    <!-- ? #################### MODAL DE CONFIRMACIÖN DE DONACIÓN #################### ? -->
+
+    <ConfirmAddDonationModal :ModalConfirmAddDonation="ModalConfirmAddDonation"
+        :setModalConfirmAddDonation="setModalConfirmAddDonation" />
+
     <div class="">
         <div class="p-10 bg-white dark:bg-[#28334e]">
             <div v-if="cardComponent" class="mb-6">
@@ -60,15 +65,18 @@
 </template>
 
 <script setup>
-import { ref, computed, watch, onMounted, inject } from "vue";
+import { useDialogConfirmAddDonation } from '@/hooks/donations/Dialogs/useDialogConfirmAddDonation'
+import ConfirmAddDonationModal from '@/components/Dashboard/donations/ConfirmAddDonationModal.vue'
+import { ref, computed, watch, onMounted, inject, provide } from "vue";
+import LoadingIcon from '@/components/base/LoadingIcon'
+import '@/assets/css/scss/card-component.css';
 import Lucide from '@/components/base/Lucide'
 import Button from '@/components/base/Button'
-import LoadingIcon from '@/components/base/LoadingIcon'
 import Card from "./Card.vue";
-import '@/assets/css/scss/card-component.css';
 
 const showToast = inject('showToast');
 const { setDonationLoading, handleRegister } = inject('refsDonations');
+const { ModalConfirmAddDonation, setModalConfirmAddDonation } = useDialogConfirmAddDonation()
 
 // Props
 const props = defineProps({
@@ -91,6 +99,11 @@ const props = defineProps({
 
 // Emitted events
 const emit = defineEmits(["handle-card", "input-card-name", "input-card-number", "input-card-month", "input-card-year", "input-card-cvv", "change-parent"]);
+
+// Proporcionar el numero de tarjeta enmascarado
+provide('cardNumber', computed(() => {
+    return props.formData.cardNumber;
+}));
 
 // Reactive data
 const cardComponent = ref(true);
@@ -247,7 +260,7 @@ const finishPayment = () => {
         return;
     }
 
-    handleRegister()
+    setModalConfirmAddDonation({ open: true })
 };
 
 </script>
