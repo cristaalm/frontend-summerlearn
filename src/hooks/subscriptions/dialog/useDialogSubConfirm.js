@@ -25,18 +25,17 @@ export function useDialogSubConfirm({ actividades }) {
         const result = await confirmSubVolunteer(userId, idActivity.value)
         if (result) {
           setTimeout(() => {
-            showToast({ message: '¡Te suscribiste a una actividad!.', tipo: 'success' }) // Use showToast for success message
+            showToast({ message: '¡Te suscribiste a una actividad!.', type: 'success' }) // Use showToast for success message
           }, 1000)
         } else {
           setTimeout(() => {
-            showToast({ message: 'Error al eliminar la actividad.', tipo: 'error' }) // Use showToast for error message
+            showToast({ message: 'Error al eliminar la actividad.', type: 'error' }) // Use showToast for error message
           }, 1000)
         }
       } else {
         showToast({
-          message:
-            'No tienes los permisos necesarios para eliminar esta suscripción.',
-          tipo: 'error'
+          message: 'No tienes los permisos necesarios para eliminar esta suscripción.',
+          type: 'error'
         }) // Use showToast for error message
       }
 
@@ -44,7 +43,7 @@ export function useDialogSubConfirm({ actividades }) {
       idActivity.value = null
     } catch (error) {
       console.error('Error deleting activity:', error)
-      showToast({ message: 'Error al eliminar la actividad.', tipo: 'error' }) // Use showToast for error message
+      showToast({ message: 'Error al eliminar la actividad.', type: 'error' }) // Use showToast for error message
     }
   }
 

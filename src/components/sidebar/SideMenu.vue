@@ -69,7 +69,7 @@ watch(notification, (value) => {
     // @ts-ignore
     showToast({
       message: `Tienes mensajes sin leer`,
-      tipo: "info"
+      type: "info"
     });
   } else {
     document.title = "SummerLearn";

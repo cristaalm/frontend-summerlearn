@@ -202,7 +202,7 @@ const finishPayment = () => {
     if (!props.formData.cardName || !props.formData.cardNumber || !props.formData.cardMonth || !props.formData.cardYear || !props.formData.cardCvv) {
         showToast({
             message: 'Por favor complete todos los campos',
-            tipo: 'error'
+            type: 'error'
         });
         return;
     }
@@ -237,7 +237,7 @@ const finishPayment = () => {
     if (!valid) {
         showToast({
             message: 'Tarjeta no válida',
-            tipo: 'error'
+            type: 'error'
         });
         return;
     }
@@ -246,7 +246,7 @@ const finishPayment = () => {
     if (props.formData.cardYear < minCardYear.value || (props.formData.cardYear == minCardYear.value && props.formData.cardMonth < minCardMonth.value)) {
         showToast({
             message: 'La fecha de expiración no es válida',
-            tipo: 'error'
+            type: 'error'
         });
         return;
     }
@@ -255,7 +255,7 @@ const finishPayment = () => {
     if (!/^\d{3,4}$/.test(props.formData.cardCvv)) {
         showToast({
             message: 'El código de seguridad no es válido',
-            tipo: 'error'
+            type: 'error'
         });
         return;
     }

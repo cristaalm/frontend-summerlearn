@@ -13,7 +13,7 @@ export function usePerformance() {
       performance.value = await getPerformance()
     } catch (e) {
       console.error(e)
-      showToast({ message: 'A ocurrido un error, intentelo mas tarde', tipo: 'error' })
+      showToast({ message: 'A ocurrido un error, intentelo mas tarde', type: 'error' })
     } finally {
       loading.value = false
     }

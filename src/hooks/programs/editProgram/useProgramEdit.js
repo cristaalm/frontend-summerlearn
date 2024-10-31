@@ -44,7 +44,7 @@ export function useProgramEdit() {
       if (!response.ok) {
         errorEditProgram.value = true
         successEditProgram.value = false
-        showToast({ message: 'Error al actualizar el programa.', tipo: 'error' })
+        showToast({ message: 'Error al actualizar el programa.', type: 'error' })
         return
       }
 
@@ -57,12 +57,12 @@ export function useProgramEdit() {
       program.start = data.programs_start
       program.end = data.programs_end
       setModalEditProgram({ open: false })
-      showToast({ message: 'Programa actualizada exitosamente.', tipo: 'success' })
+      showToast({ message: 'Programa actualizada exitosamente.', type: 'success' })
     } catch (e) {
       console.error('Error:', e)
       errorEditProgram.value = true
       successEditProgram.value = false
-      showToast({ message: 'Error al actualizar el programa.', tipo: 'error' })
+      showToast({ message: 'Error al actualizar el programa.', type: 'error' })
     } finally {
       loadingEditProgram.value = false
     }

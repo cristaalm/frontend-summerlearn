@@ -17,7 +17,7 @@ export function useValidationImage({ imageUser, inputFile }) {
       // Verificar tipo de archivo
       const validTypes = ['image/jpeg', 'image/png', 'image/jpg']
       if (!validTypes.includes(file.type)) {
-        showToast({ message: 'El archivo debe ser una imagen (JPEG o PNG)', tipo: 'error' })
+        showToast({ message: 'El archivo debe ser una imagen (JPEG o PNG)', type: 'error' })
         inputFile.value.value = null
         return
       }
@@ -26,7 +26,7 @@ export function useValidationImage({ imageUser, inputFile }) {
       if (file.size > maxFileSize) {
         showToast({
           message: `El archivo no debe exceder los ${maxFileSize / (1024 * 1024)} MB`,
-          tipo: 'error'
+          type: 'error'
         })
         inputFile.value.value = null
         return
@@ -38,9 +38,9 @@ export function useValidationImage({ imageUser, inputFile }) {
         if (res !== false) {
           // si se subio correctamente
           profileImage.value = res // Actualizar la imagen en el componente
-          showToast({ message: 'Imagen actualizada correctamente', tipo: 'success' })
+          showToast({ message: 'Imagen actualizada correctamente', type: 'success' })
         } else {
-          showToast({ message: 'Error al actualizar la imagen', tipo: 'error' })
+          showToast({ message: 'Error al actualizar la imagen', type: 'error' })
           inputFile.value.value = null
         }
       })

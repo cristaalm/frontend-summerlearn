@@ -18,7 +18,7 @@ export function useUserPhoto() {
         errorUserPhoto.value = 'No se ha podido cargar la foto'
         showToast({
           message: 'No se ha podido cargar la foto',
-          tipo: 'error'
+          type: 'error'
         })
       }
       loadingUserPhoto.value = false

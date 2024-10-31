@@ -26,14 +26,14 @@ export function useStatusProgram({ showToast }) {
       })
       if (!response.ok) {
         programRef.status = programRef.status === 2 ? 1 : 2
-        showToast({ message: 'Error al actualizar el estado del programa.', tipo: 'error' })
+        showToast({ message: 'Error al actualizar el estado del programa.', type: 'error' })
       } else {
-        showToast({ message: 'Estado del programa actualizado exitosamente.', tipo: 'success' })
+        showToast({ message: 'Estado del programa actualizado exitosamente.', type: 'success' })
       }
     } catch (e) {
       console.error('Error:', e)
       programRef.status = programRef.status === 2 ? 1 : 2
-      showToast({ message: 'Error al actualizar el estado del programa.', tipo: 'error' })
+      showToast({ message: 'Error al actualizar el estado del programa.', type: 'error' })
     }
 
     return programRef

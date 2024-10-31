@@ -85,7 +85,7 @@ export function useSetBill() {
           setBillError.value = errorData.message || 'Error al actualizar la donación'
           return { success: false }
         }
-        showToast({ message: 'Gasto registrado con éxito', tipo: 'success', persistente: true })
+        showToast({ message: 'Gasto registrado con éxito', type: 'success', persistente: true })
         return { success: true }
       })
 

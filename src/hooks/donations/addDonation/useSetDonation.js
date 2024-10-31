@@ -30,7 +30,7 @@ export function useSetDonation() {
       })
       const data = await response.json()
       if (response.ok) {
-        showToast({ message: 'Donación realizada con éxito', tipo: 'success' })
+        showToast({ message: 'Donación realizada con éxito', type: 'success' })
         btnConfirm()
         setTimeout(() => {
           router.push({ name: 'donations' }) // Redirige a la página de donaciones
@@ -38,12 +38,12 @@ export function useSetDonation() {
       } else {
         showToast({
           message: 'Ocurrió un error al intentar completar la transacción',
-          tipo: 'error'
+          type: 'error'
         })
         btnForm()
       }
     } catch (error) {
-      showToast({ message: 'Ocurrió un error al intentar completar la transacción', tipo: 'error' })
+      showToast({ message: 'Ocurrió un error al intentar completar la transacción', type: 'error' })
       btnForm()
     } finally {
       setDonationLoading.value = false

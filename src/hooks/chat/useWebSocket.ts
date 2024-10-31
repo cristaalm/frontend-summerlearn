@@ -116,13 +116,13 @@ export function useWebSocket() {
     }
 
     if (!access_token) {
-      showToast?.({ message: 'Credenciales inválidas', tipo: 'error' })
+      showToast?.({ message: 'Credenciales inválidas', type: 'error' })
       return
     }
 
     const idUser = getIdByToken(access_token).user_id
     if (!idUser) {
-      showToast?.({ message: 'Credenciales inválidas', tipo: 'error' })
+      showToast?.({ message: 'Credenciales inválidas', type: 'error' })
       return
     }
 

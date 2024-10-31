@@ -26,18 +26,18 @@ export function useRolUser() {
       if (!response.ok) {
         errorEditRol.value = true
         successEditRol.value = false
-        showToast({ message: 'Error al actualizar el rol del usuario.', tipo: 'error' })
+        showToast({ message: 'Error al actualizar el rol del usuario.', type: 'error' })
       } else {
         successEditRol.value = true
         user.rol = newRol.value
         setModalEditUser({ open: false })
-        showToast({ message: 'Rol del usuario actualizado exitosamente.', tipo: 'success' })
+        showToast({ message: 'Rol del usuario actualizado exitosamente.', type: 'success' })
       }
     } catch (e) {
       console.error('Error:', e)
       errorEditRol.value = true
       successEditRol.value = false
-      showToast({ message: 'Error al actualizar el rol del usuario.', tipo: 'error' })
+      showToast({ message: 'Error al actualizar el rol del usuario.', type: 'error' })
     } finally {
       loadingEditRol.value = false
     }

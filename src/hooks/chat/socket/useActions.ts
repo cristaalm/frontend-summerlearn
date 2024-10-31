@@ -129,7 +129,7 @@ export function useActions({
   }
 
   const critical_error = (data: any) => {
-    showToast?.({ message: data.content.error, tipo: 'error' })
+    showToast?.({ message: data.content.error, type: 'error' })
   }
 
   const init_contacts = (data: any) => {

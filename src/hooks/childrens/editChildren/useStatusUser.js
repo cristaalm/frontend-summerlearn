@@ -28,14 +28,14 @@ export function useStatusUser() {
       })
       if (!response.ok) {
         userRef.status = userRef.status === 2 ? 1 : 2
-        showToast({ message: 'Error al actualizar el estado del usuario.', tipo: 'error' })
+        showToast({ message: 'Error al actualizar el estado del usuario.', type: 'error' })
       } else {
-        showToast({ message: 'Estado del usuario actualizado exitosamente.', tipo: 'success' })
+        showToast({ message: 'Estado del usuario actualizado exitosamente.', type: 'success' })
       }
     } catch (e) {
       console.error('Error:', e)
       userRef.status = userRef.status === 2 ? 1 : 2
-      showToast({ message: 'Error al actualizar el estado del usuario.', tipo: 'error' })
+      showToast({ message: 'Error al actualizar el estado del usuario.', type: 'error' })
     }
 
     return userRef

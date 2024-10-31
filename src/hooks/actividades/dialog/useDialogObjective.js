@@ -27,18 +27,18 @@ export function useDialogObjective({ actividades }) {
           (actividad) => actividad.id !== objectiveToAdd.value
         )
         setTimeout(() => {
-          showToast({ message: 'Objetivo agregado exitosamente.', tipo: 'success' }) // Use showToast for success message
+          showToast({ message: 'Objetivo agregado exitosamente.', type: 'success' }) // Use showToast for success message
         }, 1000)
       } else {
         setTimeout(() => {
-          showToast({ message: 'Error al agregar objectivo a la actividad.', tipo: 'error' }) // Use showToast for error message
+          showToast({ message: 'Error al agregar objectivo a la actividad.', type: 'error' }) // Use showToast for error message
         }, 1000)
       }
       dialogStatusObjective.value = false
       objectiveToAdd.value = null
     } catch (error) {
       console.error('Error deleting activity:', error)
-      showToast({ message: 'Error al eliminar la actividad.', tipo: 'error' }) // Use showToast for error message
+      showToast({ message: 'Error al eliminar la actividad.', type: 'error' }) // Use showToast for error message
     }
   }
 

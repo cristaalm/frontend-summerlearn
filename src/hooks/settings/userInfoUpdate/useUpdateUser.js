@@ -21,7 +21,7 @@ export function useUpdateUser({
     loadingUserEdit.value = true
     validate() // Validar antes de ejecutar la llamada
     if (!valid.value) {
-      showToast({ message: 'Por favor, completa los campos correctamente', tipo: 'error' })
+      showToast({ message: 'Por favor, completa los campos correctamente', type: 'error' })
       loadingUserEdit.value = false
       return
     }
@@ -50,15 +50,15 @@ export function useUpdateUser({
       const data = await response.json()
 
       if (response.ok) {
-        showToast({ message: 'Datos actualizados correctamente', tipo: 'success' })
+        showToast({ message: 'Datos actualizados correctamente', type: 'success' })
         loadUser()
       } else {
         console.error('Registration failed', data)
-        showToast({ message: 'Hubo un problema en el registro', tipo: 'error' })
+        showToast({ message: 'Hubo un problema en el registro', type: 'error' })
       }
     } catch (err) {
       console.error('Error en la solicitud:', err)
-      showToast({ message: 'Hubo un problema en la solicitud', tipo: 'error' })
+      showToast({ message: 'Hubo un problema en la solicitud', type: 'error' })
     } finally {
       loadingUserEdit.value = false
     }

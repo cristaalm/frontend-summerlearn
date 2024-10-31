@@ -72,10 +72,10 @@ onMounted(() => {
 const copiedEmail = () => {
   navigator.clipboard.writeText(selectChatInfo.value.user.email)
     .then(() => {
-      showToast({ message: "Correo copiado al portapapeles", tipo: "info" });
+      showToast({ message: "Correo copiado al portapapeles", type: "info" });
     })
     .catch(() => {
-      showToast({ message: "Error al copiar el correo al portapapeles", tipo: "error" });
+      showToast({ message: "Error al copiar el correo al portapapeles", type: "error" });
     });
 };
 </script>
