@@ -30,7 +30,6 @@ const { users, loadingResponsable, errorResponsable, loadUsers } = useUsers()
 const { areas, loadingAreas, errorAreas, loadAreas } = useAreas()
 const { grades, loadingGrades, errorGrades, loadGrades } = useGrades()
 
-provide('programs', { programs })
 provide('usersPrograms', { users, loadingResponsable, errorResponsable })
 provide('areasPrograms', { areas, loadingAreas, errorAreas })
 provide('gradesPrograms', { grades, loadingGrades, errorGrades })

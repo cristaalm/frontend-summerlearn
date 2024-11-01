@@ -8,6 +8,7 @@ import { useRoles } from '@/hooks/roles/useRoles'
 import { useUserRequest } from '@/hooks/users/'
 import { useUsers } from '@/hooks/users/'
 import { usePrograms } from '@/hooks/programs/'
+import { useAreas } from '@/hooks/areas/'
 
 
 import getIdByToken from '@/logic/getIdByToken'
@@ -72,6 +73,14 @@ if (role === 1) {
     provide('usersRequest', { usersRequest, loadingUsersRequest, errorUsersRequest, loadUsersRequest })
     onMounted(() => {
         loadUsersRequest()
+    })
+
+    // ? ############################ VIEW AreasView ############################
+
+    const { areas, loadingAreas, errorAreas, loadAreas } = useAreas()
+    provide('areas', { areas, loadingAreas, errorAreas, loadAreas })
+    onMounted(() => {
+        loadAreas()
     })
 
 }
