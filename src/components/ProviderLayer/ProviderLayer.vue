@@ -5,6 +5,7 @@ import { useLastPrograms } from "@/hooks/home/admin/useLastPrograms";
 import { useLastDonations } from '@/hooks/home/admin/useLastDonations';
 import { useLastBills } from '@/hooks/home/admin/useLastBills';
 import { useRoles } from '@/hooks/roles/useRoles'
+import { useUserRequest } from '@/hooks/users/'
 import { useUsers } from '@/hooks/users/'
 
 
@@ -50,7 +51,7 @@ if (role === 1) {
         loadLastBills();
     });
 
-    // ? ############################ VIEW usersView ############################
+    // ? ############################ VIEW UsersView ############################
 
     const { users, loadingUsers, errorUsers, loadUsers } = useUsers()
     provide('users', { users, loadingUsers, errorUsers, loadUsers })
@@ -63,6 +64,15 @@ if (role === 1) {
     onMounted(() => {
         loadRoles()
     })
+
+    // ? ############################ VIEW UsersRequestsView ############################
+
+    const { usersRequest, loadingUsersRequest, errorUsersRequest, loadUsersRequest } = useUserRequest()
+    provide('usersRequest', { usersRequest, loadingUsersRequest, errorUsersRequest, loadUsersRequest })
+    onMounted(() => {
+        loadUsersRequest()
+    })
+
 }
 
 
