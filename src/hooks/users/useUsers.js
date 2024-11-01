@@ -1,21 +1,28 @@
-import { ref } from 'vue'
+import { ref, inject } from 'vue'
 import { getUsers } from '@/services/users/users'
 
 export function useUsers() {
   const users = ref([])
-  const loading = ref(false)
-  const error = ref(null)
+  const loadingUsers = ref(false)
+  const firstLoad = ref(true)
+  const errorUsers = ref(null)
+  const showToast = inject('showToast')
 
   const loadUsers = async () => {
-    loading.value = true
+    if (loadingUsers.value) return
+    if (firstLoad.value) {
+      firstLoad.value = false
+      loadingUsers.value = true
+    }
     try {
       users.value = await getUsers()
     } catch (e) {
-      error.value = e
+      errorUsers.value = e
+      showToast({ message: 'Ocurrió un error cargando los usuarios', type: 'error' })
     } finally {
-      loading.value = false
+      loadingUsers.value = false
     }
   }
 
-  return { users, loading, error, loadUsers }
+  return { users, loadingUsers, errorUsers, loadUsers }
 }

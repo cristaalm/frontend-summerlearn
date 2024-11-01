@@ -2,7 +2,7 @@
 import { FormInput, FormSelect } from '@/components/base/Form'
 import Pagination from '@/components/base/Pagination'
 import { Menu, Popover } from '@/components/base/Headless'
-import { useUsers, useSearch, usePagination, useStatusUser } from '@/hooks/users/'
+import { useSearch, usePagination, useStatusUser } from '@/hooks/users/'
 import { onMounted, provide, ref, inject } from 'vue'
 import Lucide from '@/components/base/Lucide'
 import Button from '@/components/base/Button'
@@ -10,15 +10,14 @@ import Table from '@/components/base/Table'
 import Tippy from '@/components/base/Tippy'
 import LoadingIcon from '@/components/base/LoadingIcon'
 import EditUserModal from '@/components/Dashboard/Users/EditUser/EditUserModal.vue'
-import { useRoles } from '@/hooks/roles/useRoles'
 import { calculateAge } from '@/logic/'
 import { useRouter } from 'vue-router'
 import { Baseurl } from '@/utils/global'
 import { formatPhone } from '@/logic/formatNumber'
 import { useDialogEditRol } from '@/hooks/users/dialog/useDialogEditRol'
 
-const { users, loading, error, loadUsers } = useUsers()
-const { roles, loadingRoles, errorRoles, loadRoles } = useRoles()
+const { users, loadingUsers, errorUsers, loadUsers } = inject('users')
+const { roles, loadingRoles, errorRoles, loadRoles } = inject('roles')
 const { searchQuery, selectedStatus, selectedRole, filteredUsers, filtersCount } = useSearch(users)
 const { currentPage, pageSize, totalPages, paginatedUsers, changePage, changePageSize } = usePagination(filteredUsers)
 const { setModalEditUser, ModalEditUser, userInfoProvide } = useDialogEditRol()
@@ -159,7 +158,7 @@ onMounted(() => {
               </Table.Thead>
 
               <!--? Mostrar 'Cargando información...' cuando loading es true -->
-              <Table.Tbody v-if="loading">
+              <Table.Tbody v-if="loadingUsers">
                 <Table.Tr>
                   <Table.Td colspan="7" class="py-8 text-center text-xl font-bold text-green-500">
                     <div class="flex flex-col w-full justify-center items-center text-nowrap">
@@ -171,7 +170,7 @@ onMounted(() => {
               </Table.Tbody>
 
               <!--? Mostrar mensaje de error cuando hay error -->
-              <Table.Tbody v-if="error">
+              <Table.Tbody v-if="errorUsers">
                 <Table.Tr>
                   <Table.Td colspan="7" class="py-8 text-center text-xl font-bold text-red-500">
                     Error al cargar la información, Inténtelo más tarde
@@ -180,7 +179,7 @@ onMounted(() => {
               </Table.Tbody>
 
               <!--? Mostrar mensaje de error cuando no se encuentran usuarios -->
-              <Table.Tbody v-if="!loading && totalPages <= 0 && !error">
+              <Table.Tbody v-if="!loadingUsers && totalPages <= 0 && !errorUsers">
                 <Table.Tr>
                   <Table.Td colspan="7" class="py-8 text-center text-xl font-bold text-amber-500">
                     Ningun usuario encontrado
@@ -189,7 +188,7 @@ onMounted(() => {
               </Table.Tbody>
 
               <!--? Mostrar la tabla de áreas cuando no está cargando y no existe ningun error -->
-              <Table.Tbody v-if="!loading && totalPages > 0">
+              <Table.Tbody v-if="!loadingUsers && totalPages > 0">
                 <template v-for="user in paginatedUsers" :key="user.id">
                   <Table.Tr class="[&_td]:last:border-b-0">
                     <Table.Td class="py-4 border-dashed dark:bg-darkmode-600 dark:text-slate-200">

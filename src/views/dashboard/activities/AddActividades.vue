@@ -11,7 +11,6 @@ import { useSetActividades } from '@/hooks/actividades/addActividades'
 import { useUsers } from '@/services/actividades/useUsers'
 import { usePrograms } from '@/services/actividades/usePrograms'
 
-// import { useUsers } from '@/hooks/users/useUsers'
 const { users, loadingResponsable, errorResponsable, loadUsers } = useUsers()
 const { programs, loadingPrograms, errorPrograms, loadPrograms } = usePrograms()
 const { setActividadesLoading, setActividadesError, addActividades } = useSetActividades()

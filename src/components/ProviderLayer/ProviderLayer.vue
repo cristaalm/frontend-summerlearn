@@ -4,6 +4,8 @@ import { useCountUsers } from "@/hooks/home/admin/useCountUsers";
 import { useLastPrograms } from "@/hooks/home/admin/useLastPrograms";
 import { useLastDonations } from '@/hooks/home/admin/useLastDonations';
 import { useLastBills } from '@/hooks/home/admin/useLastBills';
+import { useRoles } from '@/hooks/roles/useRoles'
+import { useUsers } from '@/hooks/users/'
 
 
 import getIdByToken from '@/logic/getIdByToken'
@@ -47,7 +49,22 @@ if (role === 1) {
     onMounted(() => {
         loadLastBills();
     });
+
+    // ? ############################ VIEW usersView ############################
+
+    const { users, loadingUsers, errorUsers, loadUsers } = useUsers()
+    provide('users', { users, loadingUsers, errorUsers, loadUsers })
+    onMounted(() => {
+        loadUsers()
+    })
+
+    const { roles, loadingRoles, errorRoles, loadRoles } = useRoles()
+    provide('roles', { roles, loadingRoles, errorRoles, loadRoles })
+    onMounted(() => {
+        loadRoles()
+    })
 }
+
 
 // ? ############################ USER INFO ############################
 
