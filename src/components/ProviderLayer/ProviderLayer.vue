@@ -7,6 +7,7 @@ import { useLastBills } from '@/hooks/home/admin/useLastBills';
 import { useRoles } from '@/hooks/roles/useRoles'
 import { useUserRequest } from '@/hooks/users/'
 import { useUsers } from '@/hooks/users/'
+import { usePrograms } from '@/hooks/programs/'
 
 
 import getIdByToken from '@/logic/getIdByToken'
@@ -73,6 +74,16 @@ if (role === 1) {
         loadUsersRequest()
     })
 
+}
+
+if (role === 1 || role === 2) {
+    // ? ############################ VIEW ProgramsView ############################
+
+    const { programs, loadingPrograms, errorPrograms, loadPrograms } = usePrograms()
+    provide('programs', { programs, loadingPrograms, errorPrograms, loadPrograms })
+    onMounted(() => {
+        loadPrograms()
+    })
 }
 
 

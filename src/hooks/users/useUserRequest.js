@@ -6,7 +6,7 @@ export function useUserRequest() {
   const loadingUsersRequest = ref(false)
   const fisrtLoad = ref(true)
   const errorUsersRequest = ref(null)
-  const showToasts = inject('showToasts')
+  const showToast = inject('showToast')
 
   const loadUsersRequest = async () => {
     if (loadingUsersRequest.value) return
@@ -18,7 +18,7 @@ export function useUserRequest() {
       usersRequest.value = await getUsers()
     } catch (e) {
       errorUsersRequest.value = e
-      showToasts({ message: 'Error al cargar los usuarios', type: 'error' })
+      showToast({ message: 'Error al cargar los usuarios', type: 'error' })
     } finally {
       loadingUsersRequest.value = false
     }
