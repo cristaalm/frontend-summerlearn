@@ -5,12 +5,16 @@ export function useLastBills() {
   const lastBills = ref([])
   const loadingLastBills = ref(false)
   const errorLastBills = ref(false)
+  const firstLoad = ref(true)
   const showToast = inject('showToast')
   // Inicializa graphicDonations con valores predeterminados
 
   const loadLastBills = async () => {
-    errorLastBills.value = false
-    loadingLastBills.value = true
+    if (loadLastBills.value) return
+    if (firstLoad.value) {
+      firstLoad.value = false
+      loadingLastBills.value = true
+    }
     try {
       lastBills.value = await getLastBills()
     } catch (e) {

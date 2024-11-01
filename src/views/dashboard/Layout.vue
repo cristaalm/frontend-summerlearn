@@ -1,6 +1,8 @@
 <script setup lang="ts">
 // @ts-ignore
 import ToastNotification from '@/components/ToastNotification/'
+// @ts-ignore
+import ProviderLayer from '@/components/ProviderLayer/ProviderLayer.vue'
 import { loginColorSheme } from '@/utils/switchColorScheme'
 import { useThemeStore, getTheme, themes, type Themes } from '@/stores/theme'
 import ThemeSwitcher from '@/components/ThemeSwitcher'
@@ -27,7 +29,9 @@ onMounted(() => {
 <template>
   <ToastNotification>
     <div>
-      <Component />
+      <ProviderLayer>
+        <Component />
+      </ProviderLayer>
     </div>
   </ToastNotification>
   <ThemeSwitcher :slide="true" />

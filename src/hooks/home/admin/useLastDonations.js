@@ -4,13 +4,17 @@ import { getLastDonations } from '@/services/home/admin/getLastDonations'
 export function useLastDonations() {
   const lastDonations = ref([])
   const loadingLastDonations = ref(false)
+  const firstLoad = ref(true)
   const errorLastDonations = ref(false)
   const showToast = inject('showToast')
   // Inicializa graphicDonations con valores predeterminados
 
   const loadLastDonations = async () => {
-    errorLastDonations.value = false
-    loadingLastDonations.value = true
+    if (loadLastDonations.value) return
+    if (firstLoad.value) {
+      firstLoad.value = false
+      loadingLastDonations.value = true
+    }
     try {
       lastDonations.value = await getLastDonations()
     } catch (e) {

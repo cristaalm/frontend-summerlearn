@@ -23,43 +23,17 @@ import SimpleBar from 'simplebar'
 //@ts-ignore
 import { logoutColorScheme } from '@/utils/switchColorScheme'
 import { useColorSchemeStore } from '@/stores/color-scheme'
-
-// @ts-ignore
-const showToast = inject('showToast')
-
-// ? ############################ USER INFO ############################
-
-// @ts-ignore
-import { useUserPhoto, useUser } from '@/hooks/settings/'
 // @ts-ignore
 import { Baseurl } from '@/utils/global'
 
-const { photoUser, loadingUserPhoto, errorUserPhoto, loadUserPhoto } = useUserPhoto()
-const { user, loadingUser, errorUser, loadUser } = useUser()
 
-provide('userPhoto', { photoUser, loadingUserPhoto, errorUserPhoto, loadUserPhoto })
-provide('user', { user, loadingUser, errorUser, loadUser })
-
-
-// ? ############################ SIDE MENU ############################
-
-// ? ############################ SOCKET ############################
-
-
-import { useWebSocket } from "@/hooks/chat";
-
-const { mountedSocket, unmountedSocket, chats, messages, loadingChats, loadingMessages, newMessage, sendMessage, isTyping, loadingSendMessage, changeSeen, contacts, loadingContacts, } = useWebSocket();
-
-provide('socket', { chats, messages, loadingChats, loadingMessages, newMessage, sendMessage, isTyping, loadingSendMessage, changeSeen, contacts, loadingContacts });
-
-onMounted(() => {
-  mountedSocket();
-});
-
-onUnmounted(() => {
-  unmountedSocket();
-});
-
+// @ts-ignore
+const { photoUser, loadingUserPhoto } = inject('userPhoto');
+// @ts-ignore
+const { user } = inject('user');
+// @ts-ignore
+const { chats } = inject('socket');
+// @ts-ignore
 const notification = computed(() => chats.value.findIndex((chat) => chat.seenChat === false) !== -1);
 
 watch(notification, (value) => {
@@ -76,7 +50,6 @@ watch(notification, (value) => {
   }
 });
 
-// ? ############################ SOCKET ############################
 
 
 // ? ############################ DARK MODE ############################
@@ -179,8 +152,6 @@ const clearLocalStorage = () => {
 }
 
 onMounted(() => {
-  loadUserPhoto()
-  loadUser()
 
   if (scrollableRef.value) {
     new SimpleBar(scrollableRef.value)

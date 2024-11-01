@@ -3,11 +3,10 @@ import Lucide from "@/components/base/Lucide";
 import Button from "@/components/base/Button";
 import LoadingIcon from "@/components/base/LoadingIcon";
 import { useRouter } from "vue-router";
-import { useCountUsers } from "@/hooks/home/admin/useCountUsers";
 import { onMounted, watch, inject } from "vue";
 
 const router = useRouter();
-const { countUsers, loadingCountUsers, loadCountUsers } = useCountUsers();
+const { countUsers, loadingCountUsers, loadCountUsers } = inject("countUsers");
 const showToast = inject("showToast");
 
 watch(loadingCountUsers, () => {

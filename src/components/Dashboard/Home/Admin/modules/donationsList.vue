@@ -2,12 +2,10 @@
 import Lucide from "@/components/base/Lucide";
 import LoadingIcon from "@/components/base/LoadingIcon";
 import Button from "@/components/base/Button";
-import { useLastDonations } from '@/hooks/home/admin/useLastDonations';
-import { onMounted } from "vue";
+import { onMounted, inject } from "vue";
 import { useRouter } from "vue-router";
 
-// Usar el hook para obtener las donaciones
-const { lastDonations, loadingLastDonations, loadLastDonations, errorLastDonations } = useLastDonations();
+const { lastDonations, loadingLastDonations, loadLastDonations, errorLastDonations } = inject('lastDonations')
 const router = useRouter()
 
 // Formateador de moneda
@@ -18,7 +16,6 @@ function formatCurrency(value) {
 onMounted(() => {
     loadLastDonations();
 })
-
 </script>
 
 <template>

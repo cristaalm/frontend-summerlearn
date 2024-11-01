@@ -2,12 +2,11 @@
 import Lucide from "@/components/base/Lucide";
 import LoadingIcon from "@/components/base/LoadingIcon";
 import Button from "@/components/base/Button";
-import { useLastBills } from '@/hooks/home/admin/useLastBills';
-import { onMounted } from "vue";
+import { onMounted, inject } from "vue";
 import { useRouter } from "vue-router";
 
 // Usar el hook para obtener las donaciones
-const { lastBills, loadingLastBills, loadLastBills, errorLastBills } = useLastBills();
+const { lastBills, loadingLastBills, loadLastBills, errorLastBills } = inject('lastBills')
 const router = useRouter()
 
 // Formateador de moneda

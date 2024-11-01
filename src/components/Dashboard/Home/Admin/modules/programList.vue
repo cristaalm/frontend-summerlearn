@@ -3,14 +3,15 @@ import Lucide from "@/components/base/Lucide";
 import Button from "@/components/base/Button"
 import LoadingIcon from "@/components/base/LoadingIcon";
 import { useRouter } from "vue-router";
-import { useLastPrograms } from "@/hooks/home/admin/useLastPrograms";
-
+import { inject, onMounted } from 'vue';
 const router = useRouter();
 
-const { lastPrograms, loadingLastPrograms, loadLastPrograms, errorLastPrograms } = useLastPrograms();
+const { lastPrograms, loadingLastPrograms, loadLastPrograms, errorLastPrograms } = inject('lastPrograms');
 
-// Cargar los últimos programas cuando el componente se monte
-loadLastPrograms();
+onMounted(() => {
+    loadLastPrograms();
+});
+
 </script>
 
 <template>
