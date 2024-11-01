@@ -1,21 +1,26 @@
 import { ref } from 'vue'
-import { getActividades } from '../../services/actividades/actividades'
+import { getActividades } from '@/services/actividades/actividades'
 
 export function useActividades() {
   const actividades = ref([])
-  const loading = ref(false)
-  const error = ref(null)
+  const loadingActivities = ref(false)
+  const errorActivities = ref(null)
+  const firstLoad = ref(true)
 
-  const loadActividades = async () => {
-    loading.value = true
+  const loadActivities = async () => {
+    if (loadingActivities.value) return
+    if (firstLoad.value) {
+      firstLoad.value = false
+      loadingActivities.value = true
+    }
     try {
       actividades.value = await getActividades()
     } catch (e) {
-      error.value = e
+      errorActivities.value = e
     } finally {
-      loading.value = false
+      loadingActivities.value = false
     }
   }
 
-  return { actividades, loading, error, loadActividades }
+  return { actividades, loadingActivities, errorActivities, loadActivities }
 }

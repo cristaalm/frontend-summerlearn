@@ -9,6 +9,7 @@ import { useUserRequest } from '@/hooks/users/'
 import { useUsers } from '@/hooks/users/'
 import { usePrograms } from '@/hooks/programs/'
 import { useAreas } from '@/hooks/areas/'
+import { useActividades } from '@/hooks/actividades/'
 
 
 import getIdByToken from '@/logic/getIdByToken'
@@ -92,6 +93,14 @@ if (role === 1 || role === 2) {
     provide('programs', { programs, loadingPrograms, errorPrograms, loadPrograms })
     onMounted(() => {
         loadPrograms()
+    })
+
+    // ? ############################ VIEW ActivitiesView ############################
+
+    const { actividades, loadingActivities, errorActivities, loadActivities } = useActividades()
+    provide('actividades', { actividades, loadingActivities, errorActivities, loadActivities })
+    onMounted(() => {
+        loadActivities()
     })
 }
 
