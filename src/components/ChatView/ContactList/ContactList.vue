@@ -74,7 +74,7 @@ const sendEmail = (email) => {
     <template v-if="!loadingContacts && contacts.length === 0">
         <div class="flex items-center justify-center h-[530px]">
             <div class="text-slate dark:text-slate-400">
-                No tienes mas contactos con los cuales crear un chat
+                No tienes más contactos con los cuales crear un chat
             </div>
         </div>
     </template>

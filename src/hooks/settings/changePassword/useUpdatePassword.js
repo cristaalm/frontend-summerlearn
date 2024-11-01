@@ -56,13 +56,13 @@ export function useUpdatePassword({
           return
         }
         showToast({
-          message: 'Hubo un problema en el registro, intentelo mas tarde',
+          message: 'Hubo un problema en el registro, intentelo más tarde',
           type: 'error'
         })
       }
     } catch (err) {
       console.error('Error en la solicitud:', err)
-      showToast({ message: 'Hubo un problema en el registro, intentelo mas tarde', type: 'error' })
+      showToast({ message: 'Hubo un problema en el registro, intentelo más tarde', type: 'error' })
     } finally {
       loadingUpdatePassword.value = false
     }
