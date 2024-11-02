@@ -14,7 +14,10 @@ function formatCurrency(value) {
 }
 
 onMounted(() => {
-    loadLastDonations();
+    setTimeout(() => {
+        if (loadingLastDonations.value) return
+        loadLastDonations();
+    }, 100)
 })
 </script>
 

@@ -9,7 +9,10 @@ const router = useRouter();
 const { lastPrograms, loadingLastPrograms, loadLastPrograms, errorLastPrograms } = inject('lastPrograms');
 
 onMounted(() => {
-    loadLastPrograms();
+    setTimeout(() => {
+        if (loadingLastPrograms.value) return
+        loadLastPrograms();
+    }, 100)
 });
 
 </script>

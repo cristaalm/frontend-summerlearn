@@ -3,21 +3,27 @@ import { getPerformance } from '@/services/performance/performance'
 
 export function usePerformance() {
   const performance = ref([])
-  const loading = ref(false)
-  const error = ref(null)
+  const loadingPerformance = ref(false)
+  const errorPerformance = ref(null)
+  const firstLoad = ref(true)
   const showToast = inject('showToast')
 
   const loadPerformance = async () => {
-    loading.value = true
+    if (loadingPerformance.value) return
+    if (firstLoad.value) {
+      loadingPerformance.value = true
+      firstLoad.value = false
+    }
     try {
       performance.value = await getPerformance()
     } catch (e) {
       console.error(e)
+      errorPerformance.value = e
       showToast({ message: 'A ocurrido un error, intentelo más tarde', type: 'error' })
     } finally {
-      loading.value = false
+      loadingPerformance.value = false
     }
   }
 
-  return { performance, loading, error, loadPerformance }
+  return { performance, loadingPerformance, errorPerformance, loadPerformance }
 }

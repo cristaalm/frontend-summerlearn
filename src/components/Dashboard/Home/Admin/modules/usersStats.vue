@@ -18,7 +18,10 @@ watch(loadingCountUsers, () => {
 });
 
 onMounted(() => {
-    loadCountUsers();
+    setTimeout(() => {
+        if (loadingCountUsers.value) return;
+        loadCountUsers();
+    }, 100);
 });
 </script>
 <template>

@@ -15,7 +15,10 @@ function formatCurrency(value) {
 }
 
 onMounted(() => {
-    loadLastBills();
+    setTimeout(() => {
+        if (loadingLastBills.value) return
+        loadLastBills();
+    }, 100)
 })
 
 </script>

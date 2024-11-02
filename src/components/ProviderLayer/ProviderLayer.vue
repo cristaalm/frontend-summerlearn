@@ -12,6 +12,7 @@ import { useAreas } from '@/hooks/areas/'
 import { useActividades } from '@/hooks/actividades/'
 import { useDonations } from '@/hooks/donations/'
 import { useBills } from '@/hooks/bills'
+import { usePerformance } from '@/hooks/performance/'
 
 
 import getIdByToken from '@/logic/getIdByToken'
@@ -124,6 +125,16 @@ if (role === 3 || role === 1) {
         loadDonations()
     })
 
+}
+
+if (role === 1 || role === 2 || role === 4) {
+    // ? ############################ VIEW PerformanceView ############################
+
+    const { performance, loadingPerformance, errorPerformance, loadPerformance } = usePerformance()
+    provide('performance', { performance, loadingPerformance, errorPerformance, loadPerformance })
+    onMounted(() => {
+        loadPerformance()
+    })
 }
 
 // ? ############################ USER INFO ############################

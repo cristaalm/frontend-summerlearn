@@ -12,8 +12,8 @@ export function useBills() {
   const loadBills = async () => {
     if (loadingBills.value) return
     if (firstLoad.value) {
-      loadingBills.value = true
       firstLoad.value = false
+      loadingBills.value = true
     }
     try {
       bills.value = await getBills()

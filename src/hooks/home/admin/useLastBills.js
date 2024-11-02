@@ -10,11 +10,12 @@ export function useLastBills() {
   // Inicializa graphicDonations con valores predeterminados
 
   const loadLastBills = async () => {
-    if (loadLastBills.value) return
+    if (loadLastBills.value == true) return
     if (firstLoad.value) {
-      firstLoad.value = false
       loadingLastBills.value = true
+      firstLoad.value = false
     }
+    console.log('loadLastBills')
     try {
       lastBills.value = await getLastBills()
     } catch (e) {
