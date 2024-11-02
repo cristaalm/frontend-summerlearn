@@ -1,41 +1,40 @@
-<script setup lang="ts">
-import { ref, computed, watch, onMounted } from "vue";
-import { type ChartData, type ChartOptions } from "chart.js/auto";
+<script setup>
+import { ref, computed, watch, onMounted, inject } from "vue";
+import Chart from "@/components/base/Chart";
 import { useColorSchemeStore } from "@/stores/color-scheme";
 import { useDarkModeStore } from "@/stores/dark-mode";
-import Chart from "@/components/base/Chart";
 import { getColor } from "@/utils/colors";
-import { useDonations } from '@/hooks/donations/';
 import LoadingIcon from '@/components/base/LoadingIcon';
 
-const props = defineProps<{
-  width?: number;
-  height?: number;
-  filter?: string; // Hacer que filter sea opcional
-}>();
+const props = defineProps({
+  width: Number,
+  height: Number,
+  filter: String, // Hacer que filter sea opcional
+});
 
 const colorScheme = computed(() => useColorSchemeStore().colorScheme);
 const darkMode = computed(() => useDarkModeStore().darkMode);
 
 // Estado para las donaciones
-const { donations, loadDonations } = useDonations();
-const chartData = ref<ChartData>({
+const { donations, loadDonations, loadingDonations } = inject("donations");
+const chartData = ref({
   labels: [],
   datasets: [],
 });
 
-// Estado de carga
-const loading = ref(true); // Añadido para manejar el estado de carga
-
 // Cargar donaciones al montar el componente y generar datos del gráfico
-onMounted(async () => {
-  await loadDonations(); // Asegurarse de que las donaciones se carguen
-  generateChartData(props.filter || "daily"); // Generar los datos del gráfico con el filtro actual o usar "daily" como default
-  loading.value = false; // Cambiar el estado de carga a falso después de cargar los datos
+onMounted(() => {
+  loadDonations(); // Asegurarse de que las donaciones se carguen
+});
+
+watch(loadingDonations, (value) => {
+  if (!value) {
+    generateChartData(props.filter || "daily"); // Usar "daily" como default si no hay filtro
+  }
 });
 
 // Función para generar los datos dinámicamente según el filtro
-const generateChartData = (filter: string) => {
+const generateChartData = (filter) => {
   const groupedData = groupDonationsByTime(filter);
   const labels = Object.keys(groupedData);
   const dataQuanty = labels.map((label) => groupedData[label].quanty);
@@ -63,8 +62,8 @@ const generateChartData = (filter: string) => {
 };
 
 // Agrupar donaciones por día, semana o mes
-const groupDonationsByTime = (filter: string) => {
-  const grouped: Record<string, { quanty: number; spent: number }> = {};
+const groupDonationsByTime = (filter) => {
+  const grouped = {};
   const currentDate = new Date();
   const monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
 
@@ -118,7 +117,7 @@ watch(
   { immediate: true }
 );
 
-const options = computed<ChartOptions>(() => {
+const options = computed(() => {
   return {
     maintainAspectRatio: false,
     plugins: {
@@ -158,14 +157,17 @@ const options = computed<ChartOptions>(() => {
 
 <template>
   <div>
-    <div v-if="loading" class="w-full h-4 mt-4">
-      <LoadingIcon icon="three-dots" color="gray" />
+    <div v-if="loadingDonations" class="w-full h-[220px] flex flex-row justify-center items-center">
+      <div class="w-32">
+        <LoadingIcon icon="three-dots" color="gray" />
+      </div>
     </div>
-    
+
     <p v-else class="text-gray-600 dark:text-gray-300 mt-2">
       Nota: La gráfica se cargará una vez que se hayan recuperado las donaciones.
     </p>
 
-    <Chart v-else type="bar" class="cursor-pointer" :width="props.width" :height="props.height" :data="chartData" :options="options" />
+    <Chart v-else type="bar" class="cursor-pointer" :width="props.width" :height="props.height" :data="chartData"
+      :options="options" />
   </div>
 </template>

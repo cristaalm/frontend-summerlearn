@@ -1,9 +1,8 @@
 <script setup>
-import { ref, onMounted, computed } from 'vue';
-import { useDonations } from '@/hooks/donations/';
+import { onMounted, computed, inject } from 'vue';
 import LoadingIcon from '@/components/base/LoadingIcon';
 
-const { donations, loadDonations, loadingDonations } = useDonations();
+const { donations, loadDonations, loadingDonations } = inject('donations');
 
 onMounted(() => {
   loadDonations();
@@ -49,7 +48,7 @@ function formatLocalDate(date) {
     <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
       <template v-if="lastSixDonations.length">
         <div v-for="(donation, index) in lastSixDonations" :key="index"
-          class="border border-dashed rounded-lg border-slate-300/80 dark:border-slate-500 flex flex-col justify-between p-4 hover:bg-slate-50 dark:bg-slate-700 dark:border-slate-600 cursor-pointer">
+          class="border border-dashed rounded-lg border-slate-300/80 flex flex-col justify-between p-4 hover:bg-slate-50 dark:bg-slate-700 dark:border-slate-600 cursor-pointer">
           <div>
             <div class="max-w-[12rem] font-medium truncate text-primary dark:text-slate-200">
               {{ donation.concept }}
