@@ -104,39 +104,6 @@ onMounted(() => {
 
             <span class="flex items-center mt-6 font-medium text-primary dark:text-slate-200">Donaciones diarias</span>
           </div>
-
-          <!--? Card -->
-
-          <!-- <div class="flex flex-col col-span-12 p-5 md:col-span-6 2xl:col-span-3 box box--stacked">
-                        <Menu class="absolute top-0 right-0 mt-5 mr-5">
-                            <Menu.Button class="w-5 h-5 text-slate-500">
-                                <Lucide icon="MoreVertical" class="w-6 h-6 stroke-slate-400/70 fill-slate-400/70" />
-                            </Menu.Button>
-                        </Menu>
-                        <div class="flex items-center">
-                            <div
-                                class="flex items-center justify-center w-12 h-12 border rounded-full border-primary/10 bg-primary/10">
-                                <Lucide icon="Zap" class="w-6 h-6 text-primary fill-primary/10" />
-                            </div>
-                            <div class="ml-4">
-                                <div class="text-base font-medium">Rendimiento</div>
-                                <div class="text-slate-500 mt-0.5">En 9 Dias</div>
-                            </div>
-                        </div>
-                        <div class="relative mt-5 mb-6">
-                            <ReportDonutChart3 class="relative z-10" :height="100" />
-                        </div>
-                        <div class="flex flex-wrap items-center justify-center gap-y-3 gap-x-5">
-                            <div class="flex items-center">
-                                <div class="w-2 h-2 rounded-full bg-primary/70"></div>
-                                <div class="ml-2.5">Order Volume</div>
-                            </div>
-                            <div class="flex items-center">
-                                <div class="w-2 h-2 rounded-full bg-danger/70"></div>
-                                <div class="ml-2.5">Coverage Area</div>
-                            </div>
-                        </div>
-                    </div> -->
         </div>
 
         <!--? contenedor de las estadisticas de usuarios -->
@@ -201,8 +168,8 @@ onMounted(() => {
                 <div v-if="loadingDonations" class="w-full h-4 mt-4">
                   <LoadingIcon icon="three-dots" color="gray" />
                 </div>
-                <div v-if="!loadingDonations && barDonations.lastDonationDate">
-                  {{ formatDateToDDMMYYYY(barDonations.lastDonationDate) }}
+                <div v-if="!loadingDonations">
+                  {{ barDonations.lastDonationDate ? formatDateToDDMMYYYY(barDonations.lastDonationDate) : 'N/A' }}
                 </div>
               </div>
               <div class="absolute inset-y-0 right-0 flex flex-col justify-center mr-5"></div>
