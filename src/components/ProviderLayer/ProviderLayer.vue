@@ -70,12 +70,11 @@ if (role === 1 || role === 2) {
 
 if (role === 3 || role === 1) {
     const { graphicDonations, barDonations, donations, loadingDonations, errorDonations, loadDonations, deleteDonation } = useDonations()
-    loadings.push(loadingDonations);
-    provide('donations', { graphicDonations, barDonations, donations, loadingDonations, errorDonations, loadDonations, deleteDonation })
     if (role === 3) {
         loadings.push(loadingDonations);
         onMounted(() => loadDonations());
     }
+    provide('donations', { graphicDonations, barDonations, donations, loadingDonations, errorDonations, loadDonations, deleteDonation })
 }
 
 if (role === 1 || role === 2 || role === 4) {
