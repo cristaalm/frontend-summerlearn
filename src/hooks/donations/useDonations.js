@@ -1,4 +1,4 @@
-import { ref } from 'vue'
+import { ref, inject } from 'vue'
 import { getDonations } from '@/services/donations/donations'
 import { useBarDonations } from './useBarDonations'
 import { Baseurl } from '@/utils/global'
@@ -11,6 +11,7 @@ export function useDonations() {
   let barDonations = ref({})
   let graphicDonations = ref({})
   const firstLoad = ref(true)
+  const showToast = inject('showToast')
   // Inicializa graphicDonations con valores predeterminados
 
   const loadDonations = async () => {
@@ -25,6 +26,7 @@ export function useDonations() {
       graphicDonations.value = useGraphicDonations(donations.value)
     } catch (e) {
       errorDonations.value = e
+      showToast({ message: 'A ocurrido un error al cargar las donaciones.', type: 'error' })
     } finally {
       loadingDonations.value = false
     }

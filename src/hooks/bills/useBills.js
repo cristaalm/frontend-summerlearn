@@ -1,4 +1,4 @@
-import { ref } from 'vue'
+import { ref, inject } from 'vue'
 import { getBills } from '@/services/bills/bills'
 import { Baseurl } from '@/utils/global'
 
@@ -7,6 +7,7 @@ export function useBills() {
   const loadingBills = ref(false)
   const errorBills = ref(null)
   const firstLoad = ref(true)
+  const showToast = inject('showToast')
 
   const loadBills = async () => {
     if (loadingBills.value) return
@@ -18,6 +19,7 @@ export function useBills() {
       bills.value = await getBills()
     } catch (e) {
       errorBills.value = e
+      showToast({ message: 'A ocurrido un error al cargar los gastos', type: 'error' })
     } finally {
       loadingBills.value = false
     }
