@@ -24,6 +24,8 @@ const isLoading = ref(true);
 let loadings = [];
 
 if (role === 1) {
+    const showToast = inject("showToast");
+
     const { countUsers, loadingCountUsers, loadCountUsers } = useCountUsers();
     loadings.push(loadingCountUsers);
     provide('countUsers', { countUsers, loadingCountUsers, loadCountUsers });
@@ -58,6 +60,17 @@ if (role === 1) {
 
     const { bills, loadingBills, loadBills } = useBills();
     provide('bills', { bills, loadingBills, loadBills });
+
+    // Observa cuando se cargue la cantidad de usuarios pendientes
+
+    watch(loadingCountUsers, () => {
+        if (!loadingCountUsers.value) {
+            if (countUsers.value.pendientes) {
+                showToast({ message: 'Tienes nuevas solicitudes de registro', type: 'info', persistente: true });
+            }
+        }
+    });
+
 }
 
 if (role === 1 || role === 2) {
@@ -120,7 +133,7 @@ watch(loadings, () => {
     <div v-if="isLoading"
         class="min-w-[100vw] min-h-[100vh] flex justify-center items-center bg-gray-100 dark:bg-[#28334e]">
         <div class="flex flex-col items-center gap-10">
-            <h1 class="text-4xl font-bold text-gray-800 dark:text-white">Bienvenido a tu dashboard</h1>
+            <h1 class="text-4xl font-bold text-gray-800 dark:text-white">Bienvenido a tu panel de control</h1>
             <p class="text-lg text-gray-600 dark:text-gray-300">Estamos preparando todo para ti</p>
             <LoadingIcon icon="tail-spin" color="gray" class="font-bold w-20" />
         </div>

@@ -7,15 +7,6 @@ import { onMounted, watch, inject } from "vue";
 
 const router = useRouter();
 const { countUsers, loadingCountUsers, loadCountUsers } = inject("countUsers");
-const showToast = inject("showToast");
-
-watch(loadingCountUsers, () => {
-    if (!loadingCountUsers.value) {
-        if (countUsers.value.pendientes) {
-            showToast({ message: 'Tienes nuevas solicitudes de registro', type: 'info', persistente: true });
-        }
-    }
-});
 
 onMounted(() => {
     setTimeout(() => {
