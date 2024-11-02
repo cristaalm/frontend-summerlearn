@@ -13,6 +13,7 @@ import { useActividades } from '@/hooks/actividades/';
 import { useDonations } from '@/hooks/donations/';
 import { useBills } from '@/hooks/bills';
 import { usePerformance } from '@/hooks/performance/';
+import { useGrades } from '@/hooks/programs/addProgram/'
 import LoadingIcon from '@/components/base/LoadingIcon';
 
 import getIdByToken from '@/logic/getIdByToken';
@@ -82,6 +83,10 @@ if (role === 1 || role === 2) {
     const { programs, loadingPrograms, loadPrograms } = usePrograms();
     provide('programs', { programs, loadingPrograms, loadPrograms });
     onMounted(() => loadPrograms());
+
+    const { grades, loadingGrades, errorGrades, loadGrades } = useGrades();
+    provide('grades', { grades, loadingGrades, errorGrades, loadGrades });
+    onMounted(() => loadGrades());
 
     const { actividades, loadingActivities, loadActivities } = useActividades();
     provide('actividades', { actividades, loadingActivities, loadActivities });
