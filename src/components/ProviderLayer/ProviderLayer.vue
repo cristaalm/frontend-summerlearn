@@ -19,7 +19,6 @@ import getIdByToken from '@/logic/getIdByToken';
 
 const { rol: role } = getIdByToken(localStorage.getItem('access_token'));
 const isLoading = ref(true);
-const animateOut = ref(false);
 
 // Declaración de los estados de carga
 let loadings = [];
@@ -70,12 +69,13 @@ if (role === 1 || role === 2) {
 }
 
 if (role === 3 || role === 1) {
-    const { donations, loadingDonations, loadDonations } = useDonations();
+    const { graphicDonations, barDonations, donations, loadingDonations, errorDonations, loadDonations, deleteDonation } = useDonations()
+    loadings.push(loadingDonations);
+    provide('donations', { graphicDonations, barDonations, donations, loadingDonations, errorDonations, loadDonations, deleteDonation })
     if (role === 3) {
         loadings.push(loadingDonations);
         onMounted(() => loadDonations());
     }
-    provide('donations', { donations, loadingDonations, loadDonations });
 }
 
 if (role === 1 || role === 2 || role === 4) {
@@ -109,7 +109,6 @@ onMounted(() => {
 onUnmounted(() => {
     unmountedSocket();
 });
-
 
 // Observa cuando todos los estados de carga sean `false`
 watch(loadings, () => {
