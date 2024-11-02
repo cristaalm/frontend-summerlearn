@@ -11,6 +11,7 @@ import { usePrograms } from '@/hooks/programs/'
 import { useAreas } from '@/hooks/areas/'
 import { useActividades } from '@/hooks/actividades/'
 import { useDonations } from '@/hooks/donations/'
+import { useBills } from '@/hooks/bills'
 
 
 import getIdByToken from '@/logic/getIdByToken'
@@ -83,6 +84,14 @@ if (role === 1) {
     provide('areas', { areas, loadingAreas, errorAreas, loadAreas })
     onMounted(() => {
         loadAreas()
+    })
+
+    // ? ############################ VIEW ExpensesView ############################
+
+    const { bills, loadingBills, loadBills, deleteBill, errorBills } = useBills()
+    provide('bills', { bills, loadingBills, loadBills, deleteBill, errorBills })
+    onMounted(() => {
+        loadBills()
     })
 
 }

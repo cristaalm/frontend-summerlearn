@@ -4,17 +4,22 @@ import { Baseurl } from '@/utils/global'
 
 export function useBills() {
   const bills = ref([])
-  const loading = ref(false)
+  const loadingBills = ref(false)
   const errorBills = ref(null)
+  const firstLoad = ref(true)
 
   const loadBills = async () => {
-    loading.value = true
+    if (loadingBills.value) return
+    if (firstLoad.value) {
+      loadingBills.value = true
+      firstLoad.value = false
+    }
     try {
       bills.value = await getBills()
     } catch (e) {
       errorBills.value = e
     } finally {
-      loading.value = false
+      loadingBills.value = false
     }
   }
 
@@ -39,5 +44,5 @@ export function useBills() {
     }
   }
 
-  return { bills, loading, loadBills, deleteBill, errorBills }
+  return { bills, loadingBills, loadBills, deleteBill, errorBills }
 }
