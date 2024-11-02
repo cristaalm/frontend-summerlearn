@@ -70,7 +70,7 @@ if (role === 1) {
 
     // Observa cuando se cargue la cantidad de usuarios pendientes
 
-    watch(loadingCountUsers, () => {
+    watch(isLoading, () => {
         if (!loadingCountUsers.value) {
             if (countUsers.value.pendientes) {
                 showToast({ message: 'Tienes nuevas solicitudes de registro', type: 'info', persistente: true });
