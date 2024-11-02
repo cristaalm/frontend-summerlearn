@@ -48,18 +48,23 @@ if (role === 1) {
 
     const { users, loadingUsers, loadUsers } = useUsers();
     provide('users', { users, loadingUsers, loadUsers });
+    onMounted(() => loadUsers());
 
     const { roles, loadingRoles, loadRoles } = useRoles();
     provide('roles', { roles, loadingRoles, loadRoles });
+    onMounted(() => loadRoles());
 
     const { usersRequest, loadingUsersRequest, loadUsersRequest } = useUserRequest();
     provide('usersRequest', { usersRequest, loadingUsersRequest, loadUsersRequest });
+    onMounted(() => loadUsersRequest());
 
     const { areas, loadingAreas, loadAreas } = useAreas();
     provide('areas', { areas, loadingAreas, loadAreas });
+    onMounted(() => loadAreas());
 
     const { bills, loadingBills, loadBills } = useBills();
     provide('bills', { bills, loadingBills, loadBills });
+    onMounted(() => loadBills());
 
     // Observa cuando se cargue la cantidad de usuarios pendientes
 
@@ -76,23 +81,26 @@ if (role === 1) {
 if (role === 1 || role === 2) {
     const { programs, loadingPrograms, loadPrograms } = usePrograms();
     provide('programs', { programs, loadingPrograms, loadPrograms });
+    onMounted(() => loadPrograms());
 
     const { actividades, loadingActivities, loadActivities } = useActividades();
     provide('actividades', { actividades, loadingActivities, loadActivities });
+    onMounted(() => loadActivities());
 }
 
 if (role === 3 || role === 1) {
     const { graphicDonations, barDonations, donations, loadingDonations, errorDonations, loadDonations, deleteDonation } = useDonations()
     if (role === 3) {
         loadings.push(loadingDonations);
-        onMounted(() => loadDonations());
     }
     provide('donations', { graphicDonations, barDonations, donations, loadingDonations, errorDonations, loadDonations, deleteDonation })
+    onMounted(() => loadDonations());
 }
 
 if (role === 1 || role === 2 || role === 4) {
     const { performance, loadingPerformance, loadPerformance } = usePerformance();
     provide('performance', { performance, loadingPerformance, loadPerformance });
+    onMounted(() => loadPerformance());
 }
 
 import { useUserPhoto, useUser } from '@/hooks/settings/';
