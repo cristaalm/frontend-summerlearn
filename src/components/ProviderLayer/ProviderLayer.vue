@@ -1,156 +1,100 @@
 <script setup>
-import { provide, onMounted, watch, inject, onUnmounted } from 'vue'
+import { ref, provide, onMounted, watch, inject, onUnmounted } from 'vue';
 import { useCountUsers } from "@/hooks/home/admin/useCountUsers";
 import { useLastPrograms } from "@/hooks/home/admin/useLastPrograms";
 import { useLastDonations } from '@/hooks/home/admin/useLastDonations';
 import { useLastBills } from '@/hooks/home/admin/useLastBills';
-import { useRoles } from '@/hooks/roles/useRoles'
-import { useUserRequest } from '@/hooks/users/'
-import { useUsers } from '@/hooks/users/'
-import { usePrograms } from '@/hooks/programs/'
-import { useAreas } from '@/hooks/areas/'
-import { useActividades } from '@/hooks/actividades/'
-import { useDonations } from '@/hooks/donations/'
-import { useBills } from '@/hooks/bills'
-import { usePerformance } from '@/hooks/performance/'
+import { useRoles } from '@/hooks/roles/useRoles';
+import { useUserRequest } from '@/hooks/users/';
+import { useUsers } from '@/hooks/users/';
+import { usePrograms } from '@/hooks/programs/';
+import { useAreas } from '@/hooks/areas/';
+import { useActividades } from '@/hooks/actividades/';
+import { useDonations } from '@/hooks/donations/';
+import { useBills } from '@/hooks/bills';
+import { usePerformance } from '@/hooks/performance/';
+import LoadingIcon from '@/components/base/LoadingIcon';
 
+import getIdByToken from '@/logic/getIdByToken';
 
-import getIdByToken from '@/logic/getIdByToken'
+const { rol: role } = getIdByToken(localStorage.getItem('access_token'));
+const isLoading = ref(true);
+const animateOut = ref(false);
 
-// Obtener el rol del usuario a partir del token
-const { rol: role } = getIdByToken(localStorage.getItem('access_token'))
-const showToast = inject('showToast')
-
-
+// Declaración de los estados de carga
+let loadings = [];
 
 if (role === 1) {
-    // ? ############################ COUNT USERS ############################
-
     const { countUsers, loadingCountUsers, loadCountUsers } = useCountUsers();
+    loadings.push(loadingCountUsers);
     provide('countUsers', { countUsers, loadingCountUsers, loadCountUsers });
-    onMounted(() => {
-        loadCountUsers();
-    });
+    onMounted(() => loadCountUsers());
 
-    // ? ############################ LAST PROGRAMS ############################
+    const { lastPrograms, loadingLastPrograms, loadLastPrograms } = useLastPrograms();
+    loadings.push(loadingLastPrograms);
+    provide('lastPrograms', { lastPrograms, loadingLastPrograms, loadLastPrograms });
+    onMounted(() => loadLastPrograms());
 
+    const { lastDonations, loadingLastDonations, loadLastDonations } = useLastDonations();
+    loadings.push(loadingLastDonations);
+    provide('lastDonations', { lastDonations, loadingLastDonations, loadLastDonations });
+    onMounted(() => loadLastDonations());
 
-    const { lastPrograms, loadingLastPrograms, loadLastPrograms, errorLastPrograms } = useLastPrograms();
-    provide('lastPrograms', { lastPrograms, loadingLastPrograms, loadLastPrograms, errorLastPrograms });
-    onMounted(() => {
-        loadLastPrograms();
-    });
+    const { lastBills, loadingLastBills, loadLastBills } = useLastBills();
+    loadings.push(loadingLastBills);
+    provide('lastBills', { lastBills, loadingLastBills, loadLastBills });
+    onMounted(() => loadLastBills());
 
-    // ? ############################ LAST DONATIONS ############################
+    const { users, loadingUsers, loadUsers } = useUsers();
+    provide('users', { users, loadingUsers, loadUsers });
 
-    const { lastDonations, loadingLastDonations, loadLastDonations, errorLastDonations } = useLastDonations();
-    provide('lastDonations', { lastDonations, loadingLastDonations, loadLastDonations, errorLastDonations });
-    onMounted(() => {
-        loadLastDonations();
-    });
+    const { roles, loadingRoles, loadRoles } = useRoles();
+    provide('roles', { roles, loadingRoles, loadRoles });
 
-    // ? ############################ LAST BILLS ############################
+    const { usersRequest, loadingUsersRequest, loadUsersRequest } = useUserRequest();
+    provide('usersRequest', { usersRequest, loadingUsersRequest, loadUsersRequest });
 
-    const { lastBills, loadingLastBills, loadLastBills, errorLastBills } = useLastBills();
-    provide('lastBills', { lastBills, loadingLastBills, loadLastBills, errorLastBills });
-    onMounted(() => {
-        loadLastBills();
-    });
+    const { areas, loadingAreas, loadAreas } = useAreas();
+    provide('areas', { areas, loadingAreas, loadAreas });
 
-    // ? ############################ VIEW UsersView ############################
-
-    const { users, loadingUsers, errorUsers, loadUsers } = useUsers()
-    provide('users', { users, loadingUsers, errorUsers, loadUsers })
-    onMounted(() => {
-        loadUsers()
-    })
-
-    const { roles, loadingRoles, errorRoles, loadRoles } = useRoles()
-    provide('roles', { roles, loadingRoles, errorRoles, loadRoles })
-    onMounted(() => {
-        loadRoles()
-    })
-
-    // ? ############################ VIEW UsersRequestsView ############################
-
-    const { usersRequest, loadingUsersRequest, errorUsersRequest, loadUsersRequest } = useUserRequest()
-    provide('usersRequest', { usersRequest, loadingUsersRequest, errorUsersRequest, loadUsersRequest })
-    onMounted(() => {
-        loadUsersRequest()
-    })
-
-    // ? ############################ VIEW AreasView ############################
-
-    const { areas, loadingAreas, errorAreas, loadAreas } = useAreas()
-    provide('areas', { areas, loadingAreas, errorAreas, loadAreas })
-    onMounted(() => {
-        loadAreas()
-    })
-
-    // ? ############################ VIEW ExpensesView ############################
-
-    const { bills, loadingBills, loadBills, deleteBill, errorBills } = useBills()
-    provide('bills', { bills, loadingBills, loadBills, deleteBill, errorBills })
-    onMounted(() => {
-        loadBills()
-    })
-
+    const { bills, loadingBills, loadBills } = useBills();
+    provide('bills', { bills, loadingBills, loadBills });
 }
 
 if (role === 1 || role === 2) {
-    // ? ############################ VIEW ProgramsView ############################
+    const { programs, loadingPrograms, loadPrograms } = usePrograms();
+    provide('programs', { programs, loadingPrograms, loadPrograms });
 
-    const { programs, loadingPrograms, errorPrograms, loadPrograms } = usePrograms()
-    provide('programs', { programs, loadingPrograms, errorPrograms, loadPrograms })
-    onMounted(() => {
-        loadPrograms()
-    })
-
-    // ? ############################ VIEW ActivitiesView ############################
-
-    const { actividades, loadingActivities, errorActivities, loadActivities } = useActividades()
-    provide('actividades', { actividades, loadingActivities, errorActivities, loadActivities })
-    onMounted(() => {
-        loadActivities()
-    })
+    const { actividades, loadingActivities, loadActivities } = useActividades();
+    provide('actividades', { actividades, loadingActivities, loadActivities });
 }
 
 if (role === 3 || role === 1) {
-
-    // ? ############################ VIEW DonationsView ############################
-
-    const { graphicDonations, barDonations, donations, loadingDonations, errorDonations, loadDonations, deleteDonation } = useDonations()
-    provide('donations', { graphicDonations, barDonations, donations, loadingDonations, errorDonations, loadDonations, deleteDonation })
-    onMounted(() => {
-        loadDonations()
-    })
-
+    const { donations, loadingDonations, loadDonations } = useDonations();
+    if (role === 3) {
+        loadings.push(loadingDonations);
+        onMounted(() => loadDonations());
+    }
+    provide('donations', { donations, loadingDonations, loadDonations });
 }
 
 if (role === 1 || role === 2 || role === 4) {
-    // ? ############################ VIEW PerformanceView ############################
-
-    const { performance, loadingPerformance, errorPerformance, loadPerformance } = usePerformance()
-    provide('performance', { performance, loadingPerformance, errorPerformance, loadPerformance })
-    onMounted(() => {
-        loadPerformance()
-    })
+    const { performance, loadingPerformance, loadPerformance } = usePerformance();
+    provide('performance', { performance, loadingPerformance, loadPerformance });
 }
 
-// ? ############################ USER INFO ############################
-
-import { useUserPhoto, useUser } from '@/hooks/settings/'
+import { useUserPhoto, useUser } from '@/hooks/settings/';
 const { photoUser, loadingUserPhoto, errorUserPhoto, loadUserPhoto } = useUserPhoto()
 const { user, loadingUser, errorUser, loadUser } = useUser()
-
+loadings.push(loadingUserPhoto, loadingUser);
 provide('userPhoto', { photoUser, loadingUserPhoto, errorUserPhoto, loadUserPhoto })
 provide('user', { user, loadingUser, errorUser, loadUser })
 
 
 onMounted(() => {
-    loadUserPhoto()
-    loadUser()
-})
+    loadUserPhoto();
+    loadUser();
+});
 
 
 // ? ############################ SOCKET ############################
@@ -159,19 +103,29 @@ import { useWebSocket } from "@/hooks/chat";
 const { mountedSocket, unmountedSocket, chats, messages, loadingChats, loadingMessages, newMessage, sendMessage, isTyping, loadingSendMessage, changeSeen, contacts, loadingContacts, } = useWebSocket();
 
 provide('socket', { chats, messages, loadingChats, loadingMessages, newMessage, sendMessage, isTyping, loadingSendMessage, changeSeen, contacts, loadingContacts });
-
 onMounted(() => {
     mountedSocket();
 });
-
 onUnmounted(() => {
     unmountedSocket();
 });
 
 
+// Observa cuando todos los estados de carga sean `false`
+watch(loadings, () => {
+    isLoading.value = loadings.some(loading => loading.value);
+}, { immediate: true });
 
 </script>
 
 <template>
-    <slot></slot>
+    <div v-if="isLoading"
+        class="min-w-[100vw] min-h-[100vh] flex justify-center items-center bg-gray-100 dark:bg-[#28334e]">
+        <div class="flex flex-col items-center gap-10">
+            <h1 class="text-4xl font-bold text-gray-800 dark:text-white">Bienvenido a tu dashboard</h1>
+            <p class="text-lg text-gray-600 dark:text-gray-300">Estamos preparando todo para ti</p>
+            <LoadingIcon icon="tail-spin" color="gray" class="font-bold w-20" />
+        </div>
+    </div>
+    <slot v-else></slot>
 </template>
