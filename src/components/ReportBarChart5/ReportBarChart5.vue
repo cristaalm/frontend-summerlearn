@@ -24,7 +24,11 @@ const chartData = ref({
 
 // Cargar donaciones al montar el componente y generar datos del gráfico
 onMounted(() => {
-  loadDonations(); // Asegurarse de que las donaciones se carguen
+  setTimeout(() => {
+    if (loadingDonations.value) {
+      loadDonations();
+    }
+  }, 100);
 });
 
 watch(loadingDonations, (value) => {
@@ -111,7 +115,6 @@ const groupDonationsByTime = (filter) => {
 watch(
   () => props.filter,
   (newFilter) => {
-    console.log("Opción seleccionada:", newFilter);
     generateChartData(newFilter || "daily"); // Usar "daily" como default si no hay filtro
   },
   { immediate: true }

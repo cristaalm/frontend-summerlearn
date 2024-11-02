@@ -1,32 +1,30 @@
-<script setup lang="ts">
-import { computed, onMounted, ref, watch } from "vue";
-import { type ChartData, type ChartOptions } from "chart.js/auto";
+<script setup>
+import { computed, onMounted, ref, watch, inject } from "vue";
 import { useColorSchemeStore } from "@/stores/color-scheme";
 import { useDarkModeStore } from "@/stores/dark-mode";
 import Chart from "@/components/base/Chart";
 import Table from "../base/Table";
 import { getColor } from "@/utils/colors";
 // @ts-ignore
-import { useDonations } from '@/hooks/donations/';
 import LoadingIcon from '@/components/base/LoadingIcon'
 
-const { donations, loadDonations } = useDonations();
+const { donations, loadDonations, loadingDonations } = inject("donations");
 
-const props = defineProps<{
-  width?: number;
-  height?: number;
-}>();
-
-// Estado de carga
-const loading = ref(true);
+const props = defineProps({
+  width: Number,
+  height: Number,
+});
 
 // Variables para almacenar la suma total de 'quanty' y 'spent'
 const totalDonations = ref(0);
 const totalSpent = ref(0);
 
 onMounted(async () => {
-  await loadDonations();
-  loading.value = false; // Cambia a false una vez que se cargan las donaciones
+  setTimeout(() => {
+    if (loadingDonations.value) {
+      loadDonations();
+    }
+  }, 100);
 });
 
 // Observa los cambios en `donations`
@@ -58,7 +56,7 @@ const chartData = computed(() => {
 const colorScheme = computed(() => useColorSchemeStore().colorScheme);
 const darkMode = computed(() => useDarkModeStore().darkMode);
 
-const data = computed<ChartData>(() => {
+const data = computed(() => {
   return {
     labels: ["Donaciones", "Gastos"],
     datasets: [
@@ -85,7 +83,7 @@ const data = computed<ChartData>(() => {
   };
 });
 
-const options = computed<ChartOptions>(() => {
+const options = computed(() => {
   return {
     maintainAspectRatio: false,
     plugins: {
@@ -100,20 +98,16 @@ const options = computed<ChartOptions>(() => {
 
 <template>
   <div>
-    <Chart v-if="!loading" type="doughnut" :width="props.width" :height="props.height" :data="data"
+    <Chart v-if="!loadingDonations" type="doughnut" :width="props.width" :height="props.height" :data="data"
       :options="options" />
 
-    <Table.Tbody v-if="loading">
-      <Table.Tr class="[&_td]:last:border-b-0">
-        <Table.Td colspan="4" class="py-8 text-center text-xl font-bold text-green-500">
-          <div class="w-full h-4 mt-6">
-            <LoadingIcon icon="three-dots" color="gray" />
-          </div>
-        </Table.Td>
-      </Table.Tr>
-    </Table.Tbody>
+    <div class="flex flex-row justify-center items-center w-full h-[200px]" v-if="loadingDonations">
+      <div class="w-32">
+        <LoadingIcon icon="three-dots" color="gray" />
+      </div>
+    </div>
 
-    <Table.Tbody v-if="!loading">
+    <Table.Tbody v-if="!loadingDonations">
       <Table.Tr class="[&_td]:last:border-b-0">
         <Table.Td colspan="4" class="py-8 text-center text-xs font-bold"> <!-- Cambiado a text-xs -->
           <div class="absolute inset-0 flex items-center justify-center">

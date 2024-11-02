@@ -1,8 +1,6 @@
     <script setup>
-import Lucide from '@/components/base/Lucide'
-import ReportDonutChart5 from "@/components/ReportDonutChart5";
-import Button from "@/components/base/Button";
-import { Tab } from "@/components/base/Headless";
+    import ReportDonutChart5 from "@/components/ReportDonutChart5";
+    import { Tab } from "@/components/base/Headless";
 </script>
 
 <template>
@@ -17,7 +15,7 @@ import { Tab } from "@/components/base/Headless";
                         Diarios
                     </Tab.Button>
                 </Tab>
-                
+
             </Tab.List>
 
             <!-- ! Grafica Diaria ! -->
@@ -26,7 +24,7 @@ import { Tab } from "@/components/base/Headless";
                 <Tab.Panel>
                     <div class="[&>div]:!h-[200px] [&>div]:sm:!h-[160px] [&>div]:2xl:!h-[200px] relative w-4/5 mx-auto">
                         <ReportDonutChart5 class="relative z-10" :height="200" />
-                        
+
                     </div>
                     <br><br>
                     <div class="flex flex-wrap items-center justify-center mt-7 gap-y-3 gap-x-5">
@@ -40,12 +38,12 @@ import { Tab } from "@/components/base/Headless";
                             </div>
                             Gastos
                         </div>
-                        
+
                     </div>
                 </Tab.Panel>
             </Tab.Panels>
 
-           
+
         </Tab.Group>
     </div>
 </template>

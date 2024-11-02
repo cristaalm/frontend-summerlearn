@@ -5,7 +5,11 @@ import LoadingIcon from '@/components/base/LoadingIcon';
 const { donations, loadDonations, loadingDonations } = inject('donations');
 
 onMounted(() => {
-  loadDonations();
+  setTimeout(() => {
+    if (loadingDonations.value) {
+      loadDonations();
+    }
+  }, 100);
 });
 
 // Computada para obtener las últimas seis donaciones ordenadas por fecha
