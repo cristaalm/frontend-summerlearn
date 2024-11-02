@@ -43,7 +43,7 @@ watch(donations, (newValue) => {
       }, 0);
     }
   }
-});
+}, { immediate: true });
 
 // Calcula la diferencia entre spent y quanty
 const difference = computed(() => totalDonations.value - totalSpent.value);
