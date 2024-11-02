@@ -4,7 +4,9 @@ import { type ChartData, type ChartOptions } from "chart.js/auto";
 import { useColorSchemeStore } from "@/stores/color-scheme";
 import { useDarkModeStore } from "@/stores/dark-mode";
 import Chart from "@/components/base/Chart";
+import Table from "../base/Table";
 import { getColor } from "@/utils/colors";
+// @ts-ignore
 import { useDonations } from '@/hooks/donations/';
 import LoadingIcon from '@/components/base/LoadingIcon'
 
