@@ -20,6 +20,7 @@ import getIdByToken from '@/logic/getIdByToken';
 
 const { rol: role } = getIdByToken(localStorage.getItem('access_token'));
 const isLoading = ref(true);
+const animate = ref(false);
 
 // Declaración de los estados de carga
 let loadings = [];
@@ -140,16 +141,25 @@ watch(loadings, () => {
     isLoading.value = loadings.some(loading => loading.value);
 }, { immediate: true });
 
+watch(isLoading, () => {
+    if (!isLoading.value) {
+        animate.value = true;
+        setTimeout(() => {
+            animate.value = false;
+        }, 3000000);
+    }
+});
+
 </script>
 
 <template>
-    <div v-if="isLoading"
-        class="min-w-[100vw] min-h-[100vh] flex justify-center items-center bg-gray-100 dark:bg-[#28334e]">
+    <div v-if="isLoading || animate"
+        :class="`min-w-[100vw] min-h-[100vh] fixed z-[999999999] flex justify-center items-center bg-gray-100 dark:bg-[#28334e] ${animate ? 'animate-provider-out' : ''}`">
         <div class="flex flex-col items-center gap-10">
             <h1 class="text-4xl font-bold text-gray-800 dark:text-white">Bienvenido a tu panel de control</h1>
             <p class="text-lg text-gray-600 dark:text-gray-300">Estamos preparando todo para ti</p>
             <LoadingIcon icon="tail-spin" color="gray" class="font-bold w-20" />
         </div>
     </div>
-    <slot v-else></slot>
+    <slot v-if="!isLoading"></slot>
 </template>
