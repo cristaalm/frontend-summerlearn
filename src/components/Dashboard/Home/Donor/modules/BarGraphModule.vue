@@ -10,7 +10,6 @@ const isChartLoaded = ref(false); // Estado para controlar si la gráfica ha car
 // Función para manejar el cambio en el select
 const handleFilterChange = (event) => {
   generalReportFilter.value = event.target.value;
-  console.log('Filtro seleccionado:', generalReportFilter.value); // Para verificar el valor seleccionado
 };
 
 // Observador para verificar cuando el filtro cambia y simular la carga de la gráfica

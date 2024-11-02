@@ -15,7 +15,6 @@ export function useLastBills() {
       loadingLastBills.value = true
       firstLoad.value = false
     }
-    console.log('loadLastBills')
     try {
       lastBills.value = await getLastBills()
     } catch (e) {

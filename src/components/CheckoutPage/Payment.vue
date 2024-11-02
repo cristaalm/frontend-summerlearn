@@ -152,7 +152,6 @@ const changeNumber = (e) => {
         props.formData.cardNumber = value.replace(/(\d{4})/, "$1 ").replace(/(\d{4}) (\d{6})/, "$1 $2 ");
         cardNumberMaxLength.value = 17;
         e.target.value = props.formData.cardNumber;
-        console.log(props.formData.cardNumber);
 
         // Diners Club (#### ###### ####)
     } else if (/^3(?:0[0-5]|[68]\d)\d{0,11}$/.test(value)) {
@@ -166,7 +165,6 @@ const changeNumber = (e) => {
         props.formData.cardNumber = value.replace(/(\d{4})/, "$1 ").replace(/(\d{4}) (\d{4})/, "$1 $2 ").replace(/(\d{4}) (\d{4}) (\d{4})/, "$1 $2 $3 ");
         cardNumberMaxLength.value = 19;
         e.target.value = props.formData.cardNumber;
-        console.log(value.replace(/(\d{4})/, "$1 ").replace(/(\d{4}) (\d{4})/, "$1 $2 ").replace(/(\d{4}) (\d{4}) (\d{4})/, "$1 $2 $3 "));
     }
 
     // Eliminar el último espacio si se borra un dígito
