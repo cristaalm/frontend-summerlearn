@@ -4,7 +4,7 @@ import TinySlider from '@/components/base/TinySlider'
 import ReportBarChart3 from '@/components/ReportBarChart3'
 import Button from '@/components/base/Button'
 import { Menu } from '@/components/base/Headless'
-import { onMounted } from 'vue'
+import { onMounted, inject } from 'vue'
 import { useRouter } from 'vue-router'
 import {
   useDonations,
@@ -20,12 +20,10 @@ import { FormInput, FormSelect } from '@/components/base/Form'
 import Table from '@/components/base/Table'
 
 const router = useRouter()
-const { barDonations, donations, loading, loadDonations, errorDonations } = useDonations()
+const { graphicDonations, barDonations, donations, loadingDonations, errorDonations, loadDonations, deleteDonation } = inject('donations')
 const { searchQuery, filteredItems } = useDonationSearch(donations)
-const { currentPage, pageSize, totalPages, paginatedItems, changePage, changePageSize } =
-  usePagination(filteredItems)
-const { donationsWeek, loadingWeek, loadDonationsWeek, errorWeek, totalDonationsWeek } =
-  useWeeklyDonations()
+const { currentPage, pageSize, totalPages, paginatedItems, changePage, changePageSize } = usePagination(filteredItems)
+const { loadDonationsWeek, totalDonationsWeek } = useWeeklyDonations()
 const { loadExportExcel, loadingExportExcel } = useExportExcel()
 const { loadExportPDF, loadingExportPDF } = useExportPDF()
 
@@ -94,7 +92,7 @@ onMounted(() => {
 
           <div class="flex flex-col col-span-12 p-5 md:col-span-6 2xl:col-span-6 box box--stacked">
             <div class="pb-5 mb-5 border-b border-dashed border-slate-300/70">
-              <div class="text-base text-slate-500  dark:text-slate-200" v-if="!loading">Donación semanal</div>
+              <div class="text-base text-slate-500  dark:text-slate-200" v-if="!loadingDonations">Donación semanal</div>
               <div class="flex items-center mt-1">
                 <div class="flex items-center text-xl font-medium dark:text-slate-400">
                   <span class="mr-px">$</span>{{ totalDonationsWeek }}
@@ -147,24 +145,26 @@ onMounted(() => {
           <div class="grid grid-cols-4 gap-5">
             <div
               class="col-span-4 md:col-span-2 xl:col-span-1 p-5 border border-dashed rounded-[0.6rem] border-slate-300/80 box shadow-sm">
-              <div class="text-base text-slate-500  dark:text-slate-200" v-if="!loading">Cantidad de donaciones:</div>
+              <div class="text-base text-slate-500  dark:text-slate-200" v-if="!loadingDonations">Cantidad de
+                donaciones:</div>
               <div class="mt-1.5 text-2xl font-medium dark:text-slate-200">
-                <div v-if="loading" class="w-full h-4 mt-4">
+                <div v-if="loadingDonations" class="w-full h-4 mt-4">
                   <LoadingIcon icon="three-dots" color="gray" />
                 </div>
-                {{ !loading ? `${barDonations.totalDonated}` : '' }}
+                {{ !loadingDonations ? `${barDonations.totalDonated}` : '' }}
               </div>
               <div class="absolute inset-y-0 right-0 flex flex-col justify-center mr-5"></div>
             </div>
             <div
               class="col-span-4 md:col-span-2 xl:col-span-1 p-5 border border-dashed rounded-[0.6rem] border-slate-300/80 box shadow-sm">
-              <div class="text-base text-slate-500  dark:text-slate-200" v-if="!loading">Dinero total donado:</div>
+              <div class="text-base text-slate-500  dark:text-slate-200" v-if="!loadingDonations">Dinero total donado:
+              </div>
               <div class="mt-1.5 text-2xl font-medium dark:text-slate-200">
-                <div v-if="loading" class="w-full h-4 mt-4">
+                <div v-if="loadingDonations" class="w-full h-4 mt-4">
                   <LoadingIcon icon="three-dots" color="gray" />
                 </div>
                 {{
-                  !loading
+                  !loadingDonations
                     ? `${new Intl.NumberFormat('es-MX', {
                       style: 'currency',
                       currency: 'MXN'
@@ -176,13 +176,14 @@ onMounted(() => {
             </div>
             <div
               class="col-span-4 md:col-span-2 xl:col-span-1 p-5 border border-dashed rounded-[0.6rem] border-slate-300/80 box shadow-sm">
-              <div class="text-base text-slate-500  dark:text-slate-200" v-if="!loading">Última cantidad donada:</div>
+              <div class="text-base text-slate-500  dark:text-slate-200" v-if="!loadingDonations">Última cantidad
+                donada:</div>
               <div class="mt-1.5 text-2xl font-medium dark:text-slate-200">
-                <div v-if="loading" class="w-full h-4 mt-4">
+                <div v-if="loadingDonations" class="w-full h-4 mt-4">
                   <LoadingIcon icon="three-dots" color="gray" />
                 </div>
                 {{
-                  !loading
+                  !loadingDonations
                     ? `${new Intl.NumberFormat('es-MX', {
                       style: 'currency',
                       currency: 'MXN'
@@ -194,12 +195,13 @@ onMounted(() => {
             </div>
             <div
               class="col-span-4 md:col-span-2 xl:col-span-1 p-5 border border-dashed rounded-[0.6rem] border-slate-300/80 box shadow-sm">
-              <div class="text-base text-slate-500  dark:text-slate-200" v-if="!loading">Última fecha de donación:</div>
+              <div class="text-base text-slate-500  dark:text-slate-200" v-if="!loadingDonations">Última fecha de
+                donación:</div>
               <div class="mt-1.5 text-2xl font-medium dark:text-slate-200">
-                <div v-if="loading" class="w-full h-4 mt-4">
+                <div v-if="loadingDonations" class="w-full h-4 mt-4">
                   <LoadingIcon icon="three-dots" color="gray" />
                 </div>
-                <div v-if="!loading && barDonations.lastDonationDate">
+                <div v-if="!loadingDonations && barDonations.lastDonationDate">
                   {{ formatDateToDDMMYYYY(barDonations.lastDonationDate) }}
                 </div>
               </div>
@@ -291,8 +293,8 @@ onMounted(() => {
                     </Table.Tr>
                   </Table.Thead>
 
-                  <!--? Mostrar 'Cargando información...' cuando loading es true -->
-                  <Table.Tbody v-if="loading">
+                  <!--? Mostrar 'Cargando información...' cuando loadingDonations es true -->
+                  <Table.Tbody v-if="loadingDonations">
                     <Table.Tr>
                       <Table.Td colspan="4" class="py-8 text-center text-xl font-bold text-green-500">
                         <div class="flex flex-col w-full justify-center items-center text-nowrap">
@@ -313,7 +315,7 @@ onMounted(() => {
                   </Table.Tbody>
 
                   <!--? Mostrar mensaje de error cuando no se encuentran usuarios -->
-                  <Table.Tbody v-if="!loading && totalPages <= 0 && !errorDonations">
+                  <Table.Tbody v-if="!loadingDonations && totalPages <= 0 && !errorDonations">
                     <Table.Tr>
                       <Table.Td colspan="4" class="py-8 text-center text-xl font-bold text-amber-500">
                         No se encontraron donaciones
@@ -321,7 +323,7 @@ onMounted(() => {
                     </Table.Tr>
                   </Table.Tbody>
 
-                  <Table.Tbody v-if="!loading && !errorDonations">
+                  <Table.Tbody v-if="!loadingDonations && !errorDonations">
                     <Table.Tr class="[&_td]:last:border-b-0" v-for="(donations, key) in paginatedItems" :key="key">
                       <Table.Td class="py-4 border-dashed dark:bg-darkmode-600 dark:text-slate-200">
                         {{ donations.user.name }}

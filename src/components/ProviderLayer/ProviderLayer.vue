@@ -10,6 +10,7 @@ import { useUsers } from '@/hooks/users/'
 import { usePrograms } from '@/hooks/programs/'
 import { useAreas } from '@/hooks/areas/'
 import { useActividades } from '@/hooks/actividades/'
+import { useDonations } from '@/hooks/donations/'
 
 
 import getIdByToken from '@/logic/getIdByToken'
@@ -104,6 +105,17 @@ if (role === 1 || role === 2) {
     })
 }
 
+if (role === 3 || role === 1) {
+
+    // ? ############################ VIEW DonationsView ############################
+
+    const { graphicDonations, barDonations, donations, loadingDonations, errorDonations, loadDonations, deleteDonation } = useDonations()
+    provide('donations', { graphicDonations, barDonations, donations, loadingDonations, errorDonations, loadDonations, deleteDonation })
+    onMounted(() => {
+        loadDonations()
+    })
+
+}
 
 // ? ############################ USER INFO ############################
 
