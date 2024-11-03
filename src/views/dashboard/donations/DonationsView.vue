@@ -37,6 +37,13 @@ onMounted(() => {
   loadDonations()
   loadDonationsWeek()
 })
+
+
+
+
+
+
+
 </script>
 
 <template>
@@ -45,7 +52,7 @@ onMounted(() => {
       <div class="flex flex-col md:h-10 gap-y-3 md:items-center md:flex-row">
         <div class="text-base font-medium group-[.mode--light]:text-white">Donaciones</div>
 
-        <div class="flex flex-col sm:flex-row gap-x-3 gap-y-2 md:ml-auto">
+        <div class="flex flex-col sm:flex-row gap-x-3 gap-y-2 md:ml-auto" id="quince">
           <Button variant="primary" @click="() => router.push({ name: 'addDonation' })"
             class="group-[.mode--light]:!bg-white/[0.12] group-[.mode--light]:!text-slate-200 group-[.mode--light]:!border-transparent">
             <Lucide icon="PenLine" class="stroke-[1.3] w-4 h-4 mr-2" />
@@ -56,7 +63,7 @@ onMounted(() => {
       <div class="flex flex-col gap-8 mt-3.5">
         <!--? contenedor de cards -->
 
-        <div class="grid grid-cols-12 gap-5 mt-3.5">
+        <div class="grid grid-cols-12 gap-5 mt-3.5" id="ocho">
           <!--? Card -->
 
           <div class="col-span-12 p-1 md:col-span-6 2xl:col-span-6 box box--stacked">
@@ -90,7 +97,7 @@ onMounted(() => {
 
           <!--? Card -->
 
-          <div class="flex flex-col col-span-12 p-5 md:col-span-6 2xl:col-span-6 box box--stacked">
+          <div class="flex flex-col col-span-12 p-5 md:col-span-6 2xl:col-span-6 box box--stacked" id="nueve">
             <div class="pb-5 mb-5 border-b border-dashed border-slate-300/70">
               <div class="text-base text-slate-500  dark:text-slate-200" v-if="!loadingDonations">Donación semanal</div>
               <div class="flex items-center mt-1">
@@ -141,7 +148,7 @@ onMounted(() => {
 
         <!--? contenedor de las estadisticas de usuarios -->
 
-        <div v-if="!errorDonations" class="flex flex-col p-5 box box--stacked">
+        <div v-if="!errorDonations" class="flex flex-col p-5 box box--stacked" id="diez">
           <div class="grid grid-cols-4 gap-5">
             <div
               class="col-span-4 md:col-span-2 xl:col-span-1 p-5 border border-dashed rounded-[0.6rem] border-slate-300/80 box shadow-sm">
@@ -223,14 +230,14 @@ onMounted(() => {
             <div class="flex flex-col box box--stacked">
               <div class="flex flex-col p-5 sm:items-center sm:flex-row gap-y-2">
                 <div>
-                  <div class="relative">
+                  <div class="relative" id="doce">
                     <Lucide icon="Search"
                       class="absolute inset-y-0 left-0 z-10 w-4 h-4 my-auto ml-3 stroke-[1.3] text-slate-500" />
                     <FormInput v-model="searchQuery" type="text" placeholder="Buscar nombre de donante..."
                       class="pl-9 sm:w-64 rounded-[0.5rem] dark:text-slate-200 dark:placeholder:text-slate-400" />
                   </div>
                 </div>
-                <div class="flex flex-col sm:flex-row gap-x-3 gap-y-2 sm:ml-auto">
+                <div class="flex flex-col sm:flex-row gap-x-3 gap-y-2 sm:ml-auto" id="trece">
                   <Menu>
                     <Menu.Button :as="Button" variant="outline-secondary"
                       :class="`w-full sm:w-auto ${loadingExportExcel || loadingExportPDF ? 'text-amber-500 dark:text-yellow-500' : ' text-black dark:text-slate-200'}`"
@@ -270,7 +277,7 @@ onMounted(() => {
                 </div>
               </div>
 
-              <div class="overflow-auto xl:overflow-visible">
+              <div class="overflow-auto xl:overflow-visible" id="once">
                 <Table class="border-b border-slate-200/60 dark:border-slate-700">
                   <Table.Thead>
                     <Table.Tr>
@@ -324,7 +331,7 @@ onMounted(() => {
                   </Table.Tbody>
 
                   <Table.Tbody v-if="!loadingDonations && !errorDonations">
-                    <Table.Tr class="[&_td]:last:border-b-0" v-for="(donations, key) in paginatedItems" :key="key">
+                    <Table.Tr id="catorce" class="[&_td]:last:border-b-0" v-for="(donations, key) in paginatedItems" :key="key">
                       <Table.Td class="py-4 border-dashed dark:bg-darkmode-600 dark:text-slate-200">
                         {{ donations.user.name }}
                       </Table.Td>

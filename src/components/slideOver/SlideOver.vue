@@ -10,7 +10,7 @@ const setBasicSlideoverPreview = (value) => {
 <template>
   <!-- BEGIN: Slide Over Content -->
   <Slideover v-model:open="openSlide" @close="setBasicSlideoverPreview(false)">
-    <Slideover.Panel>
+    <Slideover.Panel id="dieciseis">
       <Slideover.Title class="p-5">
         <h2 class="mr-auto text-base font-medium">Blank Slide Over</h2>
       </Slideover.Title>

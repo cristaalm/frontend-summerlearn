@@ -1,5 +1,7 @@
 <script setup>
-import { ref, provide, onMounted, watch, inject, onUnmounted } from 'vue';
+import { ref, provide, onMounted, watch, inject, onUnmounted, nextTick } from 'vue';
+import { driver } from "driver.js";
+import "driver.js/dist/driver.css";
 import { useCountUsers } from "@/hooks/home/admin/useCountUsers";
 import { useLastPrograms } from "@/hooks/home/admin/useLastPrograms";
 import { useLastDonations } from '@/hooks/home/admin/useLastDonations';
@@ -14,12 +16,13 @@ import { useDonations } from '@/hooks/donations/';
 import { useBills } from '@/hooks/bills';
 import { usePerformance } from '@/hooks/performance/';
 import LoadingIcon from '@/components/base/LoadingIcon';
-
 import getIdByToken from '@/logic/getIdByToken';
+import { useRouter } from 'vue-router';
+import { startTour } from '@/utils/tourDriver'; // Importa el archivo creado
 
 const { rol: role } = getIdByToken(localStorage.getItem('access_token'));
 const isLoading = ref(true);
-
+const router = useRouter();
 // Declaración de los estados de carga
 let loadings = [];
 
@@ -69,12 +72,12 @@ if (role === 1 || role === 2) {
 }
 
 if (role === 3 || role === 1) {
-    const { graphicDonations, barDonations, donations, loadingDonations, errorDonations, loadDonations, deleteDonation } = useDonations()
+    const { graphicDonations, barDonations, donations, loadingDonations, errorDonations, loadDonations, deleteDonation } = useDonations();
     if (role === 3) {
         loadings.push(loadingDonations);
         onMounted(() => loadDonations());
     }
-    provide('donations', { graphicDonations, barDonations, donations, loadingDonations, errorDonations, loadDonations, deleteDonation })
+    provide('donations', { graphicDonations, barDonations, donations, loadingDonations, errorDonations, loadDonations, deleteDonation });
 }
 
 if (role === 1 || role === 2 || role === 4) {
@@ -83,23 +86,22 @@ if (role === 1 || role === 2 || role === 4) {
 }
 
 import { useUserPhoto, useUser } from '@/hooks/settings/';
-const { photoUser, loadingUserPhoto, errorUserPhoto, loadUserPhoto } = useUserPhoto()
-const { user, loadingUser, errorUser, loadUser } = useUser()
+const { photoUser, loadingUserPhoto, errorUserPhoto, loadUserPhoto } = useUserPhoto();
+const { user, loadingUser, errorUser, loadUser } = useUser();
 loadings.push(loadingUserPhoto, loadingUser);
-provide('userPhoto', { photoUser, loadingUserPhoto, errorUserPhoto, loadUserPhoto })
-provide('user', { user, loadingUser, errorUser, loadUser })
-
+provide('userPhoto', { photoUser, loadingUserPhoto, errorUserPhoto, loadUserPhoto });
+provide('user', { user, loadingUser, errorUser, loadUser });
 
 onMounted(() => {
     loadUserPhoto();
     loadUser();
 });
 
-
 // ? ############################ SOCKET ############################
 
 import { useWebSocket } from "@/hooks/chat";
-const { mountedSocket, unmountedSocket, chats, messages, loadingChats, loadingMessages, newMessage, sendMessage, isTyping, loadingSendMessage, changeSeen, contacts, loadingContacts, } = useWebSocket();
+import { h } from 'vue';
+const { mountedSocket, unmountedSocket, chats, messages, loadingChats, loadingMessages, newMessage, sendMessage, isTyping, loadingSendMessage, changeSeen, contacts, loadingContacts } = useWebSocket();
 
 provide('socket', { chats, messages, loadingChats, loadingMessages, newMessage, sendMessage, isTyping, loadingSendMessage, changeSeen, contacts, loadingContacts });
 onMounted(() => {
@@ -109,10 +111,20 @@ onUnmounted(() => {
     unmountedSocket();
 });
 
-// Observa cuando todos los estados de carga sean `false`
+// Observa cuando todos los estados de carga sean false
 watch(loadings, () => {
     isLoading.value = loadings.some(loading => loading.value);
 }, { immediate: true });
+
+
+
+// ? ############################ Tour ############################
+watch(isLoading, async (newValue) => {
+    if (!newValue) {
+        await startTour(router);
+    }
+});
+
 
 </script>
 

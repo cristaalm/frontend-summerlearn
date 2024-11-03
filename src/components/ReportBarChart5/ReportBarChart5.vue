@@ -22,6 +22,10 @@ const chartData = ref({
   datasets: [],
 });
 
+// Estado para el mes y año actuales
+const currentMonth = ref(new Date().getMonth());
+const currentYear = ref(new Date().getFullYear());
+
 // Cargar donaciones al montar el componente y generar datos del gráfico
 onMounted(() => {
   setTimeout(() => {
@@ -65,14 +69,14 @@ const generateChartData = (filter) => {
   };
 };
 
-// Agrupar donaciones por día, semana o mes
+// Agrupar donaciones por día, semana o mes considerando mes y año actuales
+// Agrupar donaciones por día, semana o mes considerando mes y año actuales
 const groupDonationsByTime = (filter) => {
   const grouped = {};
-  const currentDate = new Date();
   const monthNames = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
 
   if (filter === "daily") {
-    const daysInMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate();
+    const daysInMonth = new Date(currentYear.value, currentMonth.value + 1, 0).getDate();
     for (let day = 1; day <= daysInMonth; day++) {
       const dayLabel = `${day}`;
       grouped[dayLabel] = { quanty: 0, spent: 0 };
@@ -83,42 +87,60 @@ const groupDonationsByTime = (filter) => {
       grouped[weekLabel] = { quanty: 0, spent: 0 };
     }
   } else if (filter === "monthly") {
-    for (let month = 0; month < 12; month++) {
-      const monthLabel = monthNames[month];
-      grouped[monthLabel] = { quanty: 0, spent: 0 };
-    }
+    monthNames.forEach(monthName => {
+      grouped[monthName] = { quanty: 0, spent: 0 };
+    });
   }
 
   donations.value.forEach((donation) => {
     const date = new Date(donation.date);
-    const adjustedDate = new Date(date.getTime() + date.getTimezoneOffset() * 60000);
-    let key;
+    
+    // Agrupar solo si coincide el año actual
+    if (date.getFullYear() === currentYear.value) {
+      let key;
 
-    if (filter === "daily") {
-      key = `${adjustedDate.getDate()}`;
-    } else if (filter === "weekly") {
-      const weekNumber = Math.ceil((adjustedDate.getDate() + 1) / 7);
-      key = `Semana ${weekNumber}`;
-    } else if (filter === "monthly") {
-      key = monthNames[adjustedDate.getMonth()];
-    }
+      if (filter === "daily") {
+        key = `${date.getDate()}`; // Agrupar por día
+      } else if (filter === "weekly") {
+        const weekNumber = Math.ceil((date.getDate() + 1) / 7);
+        key = `Semana ${weekNumber}`; // Agrupar por semana
+      } else if (filter === "monthly") {
+        key = monthNames[date.getMonth()]; // Agrupar por mes
+      }
 
-    if (grouped[key]) {
-      grouped[key].quanty += Number(donation.quanty) || 0;
-      grouped[key].spent += Number(donation.spent) || 0;
+      // Solo agregar si el filtro es "daily" o "weekly" para el mes actual
+      if ((filter === "daily" || filter === "weekly") && date.getMonth() === currentMonth.value) {
+        if (grouped[key]) {
+          grouped[key].quanty += Number(donation.quanty) || 0;
+          grouped[key].spent += Number(donation.spent) || 0;
+        }
+      }
+
+      // Agregar donaciones a todos los meses si el filtro es "monthly"
+      if (filter === "monthly") {
+        if (grouped[key]) {
+          grouped[key].quanty += Number(donation.quanty) || 0;
+          grouped[key].spent += Number(donation.spent) || 0;
+        }
+      }
     }
   });
 
   return grouped;
 };
 
+// Observar cambios en el filtro, mes y año
 watch(
   () => props.filter,
   (newFilter) => {
-    generateChartData(newFilter || "daily"); // Usar "daily" como default si no hay filtro
+    generateChartData(newFilter || "daily");
   },
   { immediate: true }
 );
+
+watch([currentMonth, currentYear], () => {
+  generateChartData(props.filter || "daily");
+});
 
 const options = computed(() => {
   return {
