@@ -4,19 +4,21 @@ import Button from '@/components/base/Button'
 import Alert from '@/components/base/Alert'
 import Litepicker from '@/components/base/Litepicker'
 import LoadingIcon from '@/components/base/LoadingIcon'
-import { useRefs, useValidations, useStatus, useAreas, useUsers, useSetProgram, useGrades } from '@/hooks/programs/addProgram/'
+import { useRefs, useValidations, useStatus, useSetProgram } from '@/hooks/programs/addProgram/'
 import { FormInput, FormSelect } from '@/components/base/Form'
-import { onMounted } from 'vue'
+import { onMounted, inject, computed } from 'vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
 const { name, duration, responsible, area, grade } = useRefs()
 const { status } = useStatus()
 const { valid } = useValidations({ status, name, duration, responsible, area })
-const { areas, loadingAreas, errorAreas, loadAreas } = useAreas()
-const { grades, loadingGrades, errorGrades, loadGrades } = useGrades()
-const { users, loadingResponsable, errorResponsable, loadUsers } = useUsers()
+const { areas, loadingAreas, errorAreas, loadAreas } = inject('areas')
+const { grades, loadingGrades, errorGrades, loadGrades } = inject('grades')
+const { users, loadingResponsable, errorResponsable, loadUsers } = inject('users')
 const { setProgramLoading, setProgramError, addProgram } = useSetProgram()
+
+const filterUsers = computed(() => users.value.filter(user => user.rol === 2))
 
 onMounted(() => {
   loadAreas()
@@ -205,7 +207,7 @@ const handleRegister = () => {
 
                   <template v-else>
                     <option value="" disabled selected>Seleccione un responsable...</option>
-                    <template v-for="user in users" :key="user.id">
+                    <template v-for="user in filterUsers" :key="user.id">
                       <option :value="user.id">
                         {{ user.name }}
                       </option>

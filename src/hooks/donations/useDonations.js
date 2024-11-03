@@ -7,7 +7,7 @@ import { useGraphicDonations } from './useGraphiDonation'
 export function useDonations() {
   const donations = ref([])
   const loadingDonations = ref(false)
-  const errorDonations = ref(null)
+  const errorDonations = ref(false)
   let barDonations = ref({})
   let graphicDonations = ref({})
   const firstLoad = ref(true)
@@ -26,6 +26,7 @@ export function useDonations() {
       graphicDonations.value = useGraphicDonations(donations.value)
     } catch (e) {
       errorDonations.value = e
+      console.error(e)
       showToast({ message: 'A ocurrido un error al cargar las donaciones.', type: 'error' })
     } finally {
       loadingDonations.value = false

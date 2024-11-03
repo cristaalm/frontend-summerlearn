@@ -15,6 +15,7 @@ import { useActividades } from '@/hooks/actividades/';
 import { useDonations } from '@/hooks/donations/';
 import { useBills } from '@/hooks/bills';
 import { usePerformance } from '@/hooks/performance/';
+import { useGrades } from '@/hooks/programs/addProgram/'
 import LoadingIcon from '@/components/base/LoadingIcon';
 import getIdByToken from '@/logic/getIdByToken';
 import { useRouter } from 'vue-router';
@@ -22,11 +23,18 @@ import { startTour } from '@/utils/tourDriver'; // Importa el archivo creado
 
 const { rol: role } = getIdByToken(localStorage.getItem('access_token'));
 const isLoading = ref(true);
+<<<<<<< HEAD
 const router = useRouter();
+=======
+const animate = ref(false);
+
+>>>>>>> 5f4c33ef977fdb126f2cbf90b79269619c703f6b
 // Declaración de los estados de carga
 let loadings = [];
 
 if (role === 1) {
+    const showToast = inject("showToast");
+
     const { countUsers, loadingCountUsers, loadCountUsers } = useCountUsers();
     loadings.push(loadingCountUsers);
     provide('countUsers', { countUsers, loadingCountUsers, loadCountUsers });
@@ -49,40 +57,63 @@ if (role === 1) {
 
     const { users, loadingUsers, loadUsers } = useUsers();
     provide('users', { users, loadingUsers, loadUsers });
+    onMounted(() => loadUsers());
 
     const { roles, loadingRoles, loadRoles } = useRoles();
     provide('roles', { roles, loadingRoles, loadRoles });
+    onMounted(() => loadRoles());
 
     const { usersRequest, loadingUsersRequest, loadUsersRequest } = useUserRequest();
     provide('usersRequest', { usersRequest, loadingUsersRequest, loadUsersRequest });
+    onMounted(() => loadUsersRequest());
 
     const { areas, loadingAreas, loadAreas } = useAreas();
     provide('areas', { areas, loadingAreas, loadAreas });
+    onMounted(() => loadAreas());
 
     const { bills, loadingBills, loadBills } = useBills();
     provide('bills', { bills, loadingBills, loadBills });
+    onMounted(() => loadBills());
+
+    // Observa cuando se cargue la cantidad de usuarios pendientes
+
+    watch(isLoading, () => {
+        if (!loadingCountUsers.value) {
+            if (countUsers.value.pendientes) {
+                showToast({ message: 'Tienes nuevas solicitudes de registro', type: 'info', persistente: true });
+            }
+        }
+    });
+
 }
 
 if (role === 1 || role === 2) {
     const { programs, loadingPrograms, loadPrograms } = usePrograms();
     provide('programs', { programs, loadingPrograms, loadPrograms });
+    onMounted(() => loadPrograms());
+
+    const { grades, loadingGrades, errorGrades, loadGrades } = useGrades();
+    provide('grades', { grades, loadingGrades, errorGrades, loadGrades });
+    onMounted(() => loadGrades());
 
     const { actividades, loadingActivities, loadActivities } = useActividades();
     provide('actividades', { actividades, loadingActivities, loadActivities });
+    onMounted(() => loadActivities());
 }
 
 if (role === 3 || role === 1) {
     const { graphicDonations, barDonations, donations, loadingDonations, errorDonations, loadDonations, deleteDonation } = useDonations();
     if (role === 3) {
         loadings.push(loadingDonations);
-        onMounted(() => loadDonations());
     }
-    provide('donations', { graphicDonations, barDonations, donations, loadingDonations, errorDonations, loadDonations, deleteDonation });
+    provide('donations', { graphicDonations, barDonations, donations, loadingDonations, errorDonations, loadDonations, deleteDonation })
+    onMounted(() => loadDonations());
 }
 
 if (role === 1 || role === 2 || role === 4) {
     const { performance, loadingPerformance, loadPerformance } = usePerformance();
     provide('performance', { performance, loadingPerformance, loadPerformance });
+    onMounted(() => loadPerformance());
 }
 
 import { useUserPhoto, useUser } from '@/hooks/settings/';
@@ -116,6 +147,7 @@ watch(loadings, () => {
     isLoading.value = loadings.some(loading => loading.value);
 }, { immediate: true });
 
+<<<<<<< HEAD
 
 
 // ? ############################ Tour ############################
@@ -126,16 +158,27 @@ watch(isLoading, async (newValue) => {
 });
 
 
+=======
+watch(isLoading, () => {
+    if (!isLoading.value) {
+        animate.value = true;
+        setTimeout(() => {
+            animate.value = false;
+        }, 3000000);
+    }
+});
+
+>>>>>>> 5f4c33ef977fdb126f2cbf90b79269619c703f6b
 </script>
 
 <template>
-    <div v-if="isLoading"
-        class="min-w-[100vw] min-h-[100vh] flex justify-center items-center bg-gray-100 dark:bg-[#28334e]">
+    <div v-if="isLoading || animate"
+        :class="`min-w-[100vw] min-h-[100vh] fixed z-[999999999] flex justify-center items-center bg-gray-100 dark:bg-[#28334e] ${animate ? 'animate-provider-out' : ''}`">
         <div class="flex flex-col items-center gap-10">
-            <h1 class="text-4xl font-bold text-gray-800 dark:text-white">Bienvenido a tu dashboard</h1>
+            <h1 class="text-4xl font-bold text-gray-800 dark:text-white">Bienvenido a tu panel de control</h1>
             <p class="text-lg text-gray-600 dark:text-gray-300">Estamos preparando todo para ti</p>
             <LoadingIcon icon="tail-spin" color="gray" class="font-bold w-20" />
         </div>
     </div>
-    <slot v-else></slot>
+    <slot v-if="!isLoading"></slot>
 </template>

@@ -48,7 +48,7 @@ watch(notification, (value) => {
   } else {
     document.title = "SummerLearn";
   }
-});
+}, { immediate: true });
 
 
 
