@@ -19,6 +19,7 @@ import LoadingIcon from '@/components/base/LoadingIcon';
 import getIdByToken from '@/logic/getIdByToken';
 import { useRouter } from 'vue-router';
 import { useActividadesSubscribed } from '@/hooks/subscriptions/'
+import { useChildrens } from '@/hooks/childrens/'
 import { startTour } from '@/utils/tourDriver'; // Importa el archivo creado
 
 const { rol: role } = getIdByToken(localStorage.getItem('access_token'));
@@ -87,6 +88,13 @@ if (role === 4) {
     loadings.push(loadingActividadesSubscribed);
     provide('actividadesSubscribed', { actividadesSubscribed, loadingActividadesSubscribed, errorActividadesSubscribed, loadActividadesSubscribed });
     onMounted(() => loadActividadesSubscribed());
+}
+
+if (role === 5) {
+    const { childrens, loadingChildrens, errorChildrens, loadChildrens } = useChildrens();
+    loadings.push(loadingChildrens);
+    provide('childrens', { childrens, loadingChildrens, errorChildrens, loadChildrens });
+    onMounted(() => loadChildrens());
 }
 
 if (role === 1 || role === 2) {

@@ -2,8 +2,8 @@
 import { FormInput, FormSelect } from '@/components/base/Form'
 import Pagination from '@/components/base/Pagination'
 import { Menu } from '@/components/base/Headless'
-import { usePagination, useSearch, useChildrens }  from '@/hooks/childrens/'
-import { onMounted } from 'vue'
+import { usePagination, useSearch, useChildrens } from '@/hooks/childrens/'
+import { onMounted, inject } from 'vue'
 import Lucide from '@/components/base/Lucide'
 import Button from '@/components/base/Button'
 import Table from '@/components/base/Table'
@@ -13,8 +13,8 @@ import { calculateAge } from '@/logic/'
 import { useRouter } from 'vue-router'
 import { Baseurl } from '@/utils/global'
 
-const { childrens, loading, error, loadChildrens } = useChildrens()
-const { searchQuery,  filteredChildrens} = useSearch(childrens)
+const { childrens, loadingChildrens, errorChildrens, loadChildrens } = inject('childrens')
+const { searchQuery, filteredChildrens } = useSearch(childrens)
 const { currentPage, pageSize, totalPages, paginatedChildrens, changePage, changePageSize } =
   usePagination(filteredChildrens)
 const router = useRouter()
@@ -86,8 +86,8 @@ onMounted(() => {
                 </Table.Tr>
               </Table.Thead>
 
-              <!--? Mostrar 'Cargando información...' cuando loading es true -->
-              <Table.Tbody v-if="loading">
+              <!--? Mostrar 'Cargando información...' cuando loadingChildrens es true -->
+              <Table.Tbody v-if="loadingChildrens">
                 <Table.Tr>
                   <Table.Td colspan="7" class="py-8 text-center text-xl font-bold text-green-500">
                     <div class="flex flex-col w-full justify-center items-center text-nowrap">
@@ -98,8 +98,8 @@ onMounted(() => {
                 </Table.Tr>
               </Table.Tbody>
 
-              <!--? Mostrar mensaje de error cuando hay error -->
-              <Table.Tbody v-if="error">
+              <!--? Mostrar mensaje de errorChildrens cuando hay errorChildrens -->
+              <Table.Tbody v-if="errorChildrens">
                 <Table.Tr>
                   <Table.Td colspan="7" class="py-8 text-center text-xl font-bold text-red-500">
                     Error al cargar la información, Inténtelo más tarde
@@ -107,8 +107,8 @@ onMounted(() => {
                 </Table.Tr>
               </Table.Tbody>
 
-              <!--? Mostrar mensaje de error cuando no se encuentran usuarios -->
-              <Table.Tbody v-if="!loading && totalPages <= 0 && !error">
+              <!--? Mostrar mensaje de errorChildrens cuando no se encuentran usuarios -->
+              <Table.Tbody v-if="!loadingChildrens && totalPages <= 0 && !errorChildrens">
                 <Table.Tr>
                   <Table.Td colspan="7" class="py-8 text-center text-xl font-bold text-amber-500">
                     Ningún niño encontrado
@@ -116,8 +116,8 @@ onMounted(() => {
                 </Table.Tr>
               </Table.Tbody>
 
-              <!--? Mostrar la tabla de áreas cuando no está cargando y no existe ningun error -->
-              <Table.Tbody v-if="!loading && totalPages > 0">
+              <!--? Mostrar la tabla de áreas cuando no está cargando y no existe ningun errorChildrens -->
+              <Table.Tbody v-if="!loadingChildrens && totalPages > 0">
                 <template v-for="children in paginatedChildrens" :key="children.id">
                   <Table.Tr class="[&_td]:last:border-b-0">
                     <Table.Td class="py-4 border-dashed dark:bg-darkmode-600 dark:text-slate-200">
@@ -136,7 +136,7 @@ onMounted(() => {
                     </Table.Td>
                     <Table.Td class="py-4 border-dashed dark:bg-darkmode-600 dark:text-slate-200">
                       <div class="font-medium whitespace-nowrap">
-                        {{ calculateAge(children.birthdate) }} 
+                        {{ calculateAge(children.birthdate) }}
                       </div>
                     </Table.Td>
                     <Table.Td class="py-4 border-dashed dark:bg-darkmode-600 dark:text-slate-200">
@@ -149,7 +149,7 @@ onMounted(() => {
                         {{ children.user }}
                       </div>
                     </Table.Td>
-                    
+
                     <Table.Td class="relative py-4 border-dashed dark:bg-darkmode-600 dark:text-slate-200">
                       <div class="flex items-center justify-center">
                         <Menu class="h-5">
