@@ -152,11 +152,19 @@ onUnmounted(() => {
     unmountedSocket();
 });
 
-// Observa cuando todos los estados de carga sean false
+// Observa cuando todos los estados de carga sean `false`
 watch(loadings, () => {
     isLoading.value = loadings.some(loading => loading.value);
 }, { immediate: true });
 
+watch(isLoading, () => {
+    if (!isLoading.value) {
+        animate.value = true;
+        setTimeout(() => {
+            animate.value = false;
+        }, 3000000);
+    }
+});
 
 
 // ? ############################ Tour ############################
