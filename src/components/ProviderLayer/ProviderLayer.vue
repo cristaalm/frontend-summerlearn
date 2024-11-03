@@ -23,12 +23,8 @@ import { startTour } from '@/utils/tourDriver'; // Importa el archivo creado
 
 const { rol: role } = getIdByToken(localStorage.getItem('access_token'));
 const isLoading = ref(true);
-<<<<<<< HEAD
-const router = useRouter();
-=======
 const animate = ref(false);
-
->>>>>>> 5f4c33ef977fdb126f2cbf90b79269619c703f6b
+const router = useRouter();
 // Declaración de los estados de carga
 let loadings = [];
 
@@ -147,7 +143,6 @@ watch(loadings, () => {
     isLoading.value = loadings.some(loading => loading.value);
 }, { immediate: true });
 
-<<<<<<< HEAD
 
 
 // ? ############################ Tour ############################
@@ -158,17 +153,6 @@ watch(isLoading, async (newValue) => {
 });
 
 
-=======
-watch(isLoading, () => {
-    if (!isLoading.value) {
-        animate.value = true;
-        setTimeout(() => {
-            animate.value = false;
-        }, 3000000);
-    }
-});
-
->>>>>>> 5f4c33ef977fdb126f2cbf90b79269619c703f6b
 </script>
 
 <template>
