@@ -7,10 +7,9 @@ import { useLastPrograms } from "@/hooks/home/admin/useLastPrograms";
 import { useLastDonations } from '@/hooks/home/admin/useLastDonations';
 import { useLastBills } from '@/hooks/home/admin/useLastBills';
 import { useRoles } from '@/hooks/roles/useRoles';
-import { useUserRequest } from '@/hooks/users/';
-import { useUsers } from '@/hooks/users/';
+import { useUserRequest, useUsers } from '@/hooks/users/';
 import { usePrograms } from '@/hooks/programs/';
-import { useAreas } from '@/hooks/areas/';
+import { useAreas, useAreasInSubs } from '@/hooks/areas/';
 import { useActividades } from '@/hooks/actividades/';
 import { useDonations } from '@/hooks/donations/';
 import { useBills } from '@/hooks/bills';
@@ -19,6 +18,7 @@ import { useGrades } from '@/hooks/programs/addProgram/'
 import LoadingIcon from '@/components/base/LoadingIcon';
 import getIdByToken from '@/logic/getIdByToken';
 import { useRouter } from 'vue-router';
+import { useActividadesSubscribed } from '@/hooks/subscriptions/'
 import { startTour } from '@/utils/tourDriver'; // Importa el archivo creado
 
 const { rol: role } = getIdByToken(localStorage.getItem('access_token'));
@@ -51,9 +51,6 @@ if (role === 1) {
     provide('lastBills', { lastBills, loadingLastBills, loadLastBills });
     onMounted(() => loadLastBills());
 
-    const { users, loadingUsers, loadUsers } = useUsers();
-    provide('users', { users, loadingUsers, loadUsers });
-    onMounted(() => loadUsers());
 
     const { roles, loadingRoles, loadRoles } = useRoles();
     provide('roles', { roles, loadingRoles, loadRoles });
@@ -62,10 +59,6 @@ if (role === 1) {
     const { usersRequest, loadingUsersRequest, loadUsersRequest } = useUserRequest();
     provide('usersRequest', { usersRequest, loadingUsersRequest, loadUsersRequest });
     onMounted(() => loadUsersRequest());
-
-    const { areas, loadingAreas, loadAreas } = useAreas();
-    provide('areas', { areas, loadingAreas, loadAreas });
-    onMounted(() => loadAreas());
 
     const { bills, loadingBills, loadBills } = useBills();
     provide('bills', { bills, loadingBills, loadBills });
@@ -83,10 +76,31 @@ if (role === 1) {
 
 }
 
+if (role === 4) {
+
+    const { areasSub, loadingSub, errorSub, loadAreasSub } = useAreasInSubs();
+    loadings.push(loadingSub);
+    provide('areasInSubs', { areasSub, loadingSub, errorSub, loadAreasSub });
+    onMounted(() => loadAreasSub());
+
+    const { actividadesSubscribed, loadingActividadesSubscribed, errorActividadesSubscribed, loadActividadesSubscribed } = useActividadesSubscribed();
+    loadings.push(loadingActividadesSubscribed);
+    provide('actividadesSubscribed', { actividadesSubscribed, loadingActividadesSubscribed, errorActividadesSubscribed, loadActividadesSubscribed });
+    onMounted(() => loadActividadesSubscribed());
+}
+
 if (role === 1 || role === 2) {
+    const { users, loadingUsers, loadUsers } = useUsers();
+    provide('users', { users, loadingUsers, loadUsers });
+    onMounted(() => loadUsers());
+
     const { programs, loadingPrograms, loadPrograms } = usePrograms();
     provide('programs', { programs, loadingPrograms, loadPrograms });
     onMounted(() => loadPrograms());
+
+    const { areas, loadingAreas, loadAreas } = useAreas();
+    provide('areas', { areas, loadingAreas, loadAreas });
+    onMounted(() => loadAreas());
 
     const { grades, loadingGrades, errorGrades, loadGrades } = useGrades();
     provide('grades', { grades, loadingGrades, errorGrades, loadGrades });
@@ -146,12 +160,12 @@ watch(loadings, () => {
 
 
 // ? ############################ Tour ############################
-if(role === 3) {
+if (role === 3) {
     watch(isLoading, async (newValue) => {
-    if (!newValue) {
-        await startTour(router);
-    }
-});
+        if (!newValue) {
+            await startTour(router);
+        }
+    });
 }
 
 
