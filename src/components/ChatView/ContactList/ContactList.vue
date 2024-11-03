@@ -34,27 +34,32 @@ const sendEmail = (email) => {
         <div class="h-[530px] gap-1 flex flex-col">
             <template v-for="contact in contacts" :key="contact.id">
                 <div :class="'hover:bg-slate-200 dark:hover:bg-slate-600'"
-                    class="flex items-center gap-4 px-2 py-2.5 -mx-2 rounded-lg cursor-pointer transition-all duration-300">
-                    <div class="relative">
+                    class="flex flex-row items-center gap-4 px-2 py-2.5 -mx-2 rounded-lg cursor-pointer transition-all duration-300">
+
+                    <!-- Avatar del usuario (10%) -->
+                    <div class="relative flex-[0.1]">
                         <div class="w-12 h-12 overflow-hidden border-2 rounded-full image-fit border-slate-200/70">
-                            <img alt="Tailwise - Admin Dashboard Template"
-                                :src="`${Baseurl}${contact.user.userPhoto}`" />
+                            <img alt="User Avatar" :src="`${Baseurl}${contact.user.userPhoto}`" />
                         </div>
                     </div>
-                    <div class="w-full">
+
+                    <!-- Información del usuario (80%) -->
+                    <div class="!flex-[0.8] min-w-0">
                         <div class="flex items-center w-full">
                             <div
-                                class="font-medium max-w-[10rem] md:max-w-[12rem] truncate text-black dark:text-slate-200">
+                                class="font-medium truncate text-black dark:text-slate-200 sm:max-w-full md:max-w-[8rem]">
                                 {{ contact.user.name }}
                             </div>
                         </div>
                         <div class="flex items-center mt-1.5">
-                            <div class="text-slate-500/90 max-w-[9rem] md:max-w-[12rem] truncate dark:text-slate-400">
+                            <div class="text-slate-500/90 truncate dark:text-slate-400 max-w-full md:max-w-[12rem]">
                                 {{ contact.user.rol }}
                             </div>
                         </div>
                     </div>
-                    <div class="relative flex flex-row gap-2">
+
+                    <!-- Botones de acción (10%) -->
+                    <div class="relative flex gap-2 flex-[0.1]">
                         <Tippy as="button" @click="() => sendEmail(contact.user.email)"
                             class="flex items-center justify-center border rounded-full w-9 h-9 border-primary/30 dark:border-slate-200/30 bg-primary/5 dark:bg-slate-200/5 dark:hover:bg-slate-900 dark:hover:text-slate-200 transition-all duration-300"
                             :content="contact.user.email">
@@ -68,6 +73,7 @@ const sendEmail = (email) => {
                         </Tippy>
                     </div>
                 </div>
+
             </template>
         </div>
     </template>

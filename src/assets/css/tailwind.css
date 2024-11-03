@@ -5816,6 +5816,18 @@ input {
   max-width: 100%;
 }
 
+.max-w-\[calc\(100\%-126px\)\] {
+  max-width: calc(100% - 126px);
+}
+
+.max-w-\[calc\(100\%-78px\)\] {
+  max-width: calc(100% - 78px);
+}
+
+.max-w-\[calc\(100\%\)\] {
+  max-width: calc(100%);
+}
+
 .flex-1 {
   flex: 1 1 0%;
 }
@@ -5834,6 +5846,10 @@ input {
 
 .flex-none {
   flex: none;
+}
+
+.\!flex-\[0\.8\] {
+  flex: 0.8 !important;
 }
 
 .flex-grow {
@@ -6703,10 +6719,6 @@ input {
   background-color: rgb(var(--color-danger) / 0.1);
 }
 
-.bg-danger\/70 {
-  background-color: rgb(var(--color-danger) / 0.7);
-}
-
 .bg-dark {
   --tw-bg-opacity: 1;
   background-color: rgb(var(--color-dark) / var(--tw-bg-opacity));
@@ -6798,10 +6810,6 @@ input {
 
 .bg-primary\/60 {
   background-color: rgb(var(--color-primary) / 0.6);
-}
-
-.bg-primary\/70 {
-  background-color: rgb(var(--color-primary) / 0.7);
 }
 
 .bg-red-100 {
@@ -10487,6 +10495,10 @@ input {
     max-width: 300px;
   }
 
+  .sm\:max-w-full {
+    max-width: 100%;
+  }
+
   .sm\:max-w-none {
     max-width: none;
   }
@@ -10614,6 +10626,10 @@ input {
 
   .md\:max-w-\[400px\] {
     max-width: 400px;
+  }
+
+  .md\:max-w-\[8rem\] {
+    max-width: 8rem;
   }
 
   .md\:max-w-none {
@@ -11184,10 +11200,6 @@ input {
 }
 
 @media (min-width: 1536px) {
-  .\32xl\:col-span-3 {
-    grid-column: span 3 / span 3;
-  }
-
   .\32xl\:col-span-4 {
     grid-column: span 4 / span 4;
   }
