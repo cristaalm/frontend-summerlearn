@@ -146,11 +146,14 @@ watch(loadings, () => {
 
 
 // ? ############################ Tour ############################
-watch(isLoading, async (newValue) => {
+if(role === 3) {
+    watch(isLoading, async (newValue) => {
     if (!newValue) {
         await startTour(router);
     }
 });
+}
+
 
 
 </script>
