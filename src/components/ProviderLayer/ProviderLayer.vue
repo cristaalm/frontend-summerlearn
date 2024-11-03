@@ -6,6 +6,9 @@ import { useCountUsers } from "@/hooks/home/admin/useCountUsers";
 import { useLastPrograms } from "@/hooks/home/admin/useLastPrograms";
 import { useLastDonations } from '@/hooks/home/admin/useLastDonations';
 import { useLastBills } from '@/hooks/home/admin/useLastBills';
+import { useLastActivities } from '@/hooks/home/coord/useLastActivities';
+import { useLastProgramsAsigned } from '@/hooks/home/coord/useLastProgramsAsigned';
+import { useLastProgramsUnasigned } from '@/hooks/home/coord/useLastProgramsUnasigned';
 import { useRoles } from '@/hooks/roles/useRoles';
 import { useUserRequest, useUsers } from '@/hooks/users/';
 import { usePrograms } from '@/hooks/programs/';
@@ -37,11 +40,6 @@ if (role === 1) {
     provide('countUsers', { countUsers, loadingCountUsers, loadCountUsers });
     onMounted(() => loadCountUsers());
 
-    const { lastPrograms, loadingLastPrograms, loadLastPrograms } = useLastPrograms();
-    loadings.push(loadingLastPrograms);
-    provide('lastPrograms', { lastPrograms, loadingLastPrograms, loadLastPrograms });
-    onMounted(() => loadLastPrograms());
-
     const { lastDonations, loadingLastDonations, loadLastDonations } = useLastDonations();
     loadings.push(loadingLastDonations);
     provide('lastDonations', { lastDonations, loadingLastDonations, loadLastDonations });
@@ -52,6 +50,10 @@ if (role === 1) {
     provide('lastBills', { lastBills, loadingLastBills, loadLastBills });
     onMounted(() => loadLastBills());
 
+    const { lastPrograms, loadingLastPrograms, loadLastPrograms } = useLastPrograms();
+    loadings.push(loadingLastPrograms);
+    provide('lastPrograms', { lastPrograms, loadingLastPrograms, loadLastPrograms });
+    onMounted(() => loadLastPrograms());
 
     const { roles, loadingRoles, loadRoles } = useRoles();
     provide('roles', { roles, loadingRoles, loadRoles });
@@ -74,7 +76,23 @@ if (role === 1) {
             }
         }
     });
+}
 
+if (role === 2) {
+    const { lastActivities, loadingLastActivities, loadLastActivities, errorLastActivities } = useLastActivities();
+    loadings.push(loadingLastActivities);
+    provide('lastActivities', { lastActivities, loadingLastActivities, loadLastActivities, errorLastActivities });
+    onMounted(() => loadLastActivities());
+
+    const { lastProgramsAsigned, loadingLastProgramsAsigned, loadLastProgramsAsigned, errorLastProgramsAsigned } = useLastProgramsAsigned();
+    loadings.push(loadingLastProgramsAsigned);
+    provide('lastProgramsAsigned', { lastProgramsAsigned, loadingLastProgramsAsigned, loadLastProgramsAsigned, errorLastProgramsAsigned });
+    onMounted(() => loadLastProgramsAsigned());
+
+    const { lastProgramsUnasigned, loadingLastProgramsUnasigned, loadLastProgramsUnasigned, errorLastProgramsUnasigned } = useLastProgramsUnasigned();
+    loadings.push(loadingLastProgramsUnasigned);
+    provide('lastProgramsUnasigned', { lastProgramsUnasigned, loadingLastProgramsUnasigned, loadLastProgramsUnasigned, errorLastProgramsUnasigned });
+    onMounted(() => loadLastProgramsUnasigned());
 }
 
 if (role === 4) {
@@ -89,7 +107,6 @@ if (role === 4) {
     provide('actividadesSubscribed', { actividadesSubscribed, loadingActividadesSubscribed, errorActividadesSubscribed, loadActividadesSubscribed });
     onMounted(() => loadActividadesSubscribed());
 }
-
 if (role === 5) {
     const { childrens, loadingChildrens, errorChildrens, loadChildrens } = useChildrens();
     loadings.push(loadingChildrens);

@@ -5816,16 +5816,8 @@ input {
   max-width: 100%;
 }
 
-.max-w-\[calc\(100\%-126px\)\] {
-  max-width: calc(100% - 126px);
-}
-
-.max-w-\[calc\(100\%-78px\)\] {
-  max-width: calc(100% - 78px);
-}
-
-.max-w-\[calc\(100\%\)\] {
-  max-width: calc(100%);
+.\!flex-\[0\.8\] {
+  flex: 0.8 !important;
 }
 
 .flex-1 {
@@ -5846,10 +5838,6 @@ input {
 
 .flex-none {
   flex: none;
-}
-
-.\!flex-\[0\.8\] {
-  flex: 0.8 !important;
 }
 
 .flex-grow {
@@ -6134,6 +6122,11 @@ input {
        column-gap: 0.375rem;
 }
 
+.gap-x-2 {
+  -moz-column-gap: 0.5rem;
+       column-gap: 0.5rem;
+}
+
 .gap-x-3 {
   -moz-column-gap: 0.75rem;
        column-gap: 0.75rem;
@@ -6276,6 +6269,10 @@ input {
 
 .text-wrap {
   text-wrap: wrap;
+}
+
+.\!text-wrap {
+  text-wrap: wrap !important;
 }
 
 .text-nowrap {
@@ -6438,6 +6435,16 @@ input {
   border-color: rgb(0 0 0 / var(--tw-border-opacity));
 }
 
+.border-blue-400 {
+  --tw-border-opacity: 1;
+  border-color: rgb(96 165 250 / var(--tw-border-opacity));
+}
+
+.border-blue-500 {
+  --tw-border-opacity: 1;
+  border-color: rgb(59 130 246 / var(--tw-border-opacity));
+}
+
 .border-blue-700 {
   --tw-border-opacity: 1;
   border-color: rgb(29 78 216 / var(--tw-border-opacity));
@@ -6474,6 +6481,11 @@ input {
 .border-green {
   --tw-border-opacity: 1;
   border-color: rgb(var(--color-green) / var(--tw-border-opacity));
+}
+
+.border-green-400 {
+  --tw-border-opacity: 1;
+  border-color: rgb(74 222 128 / var(--tw-border-opacity));
 }
 
 .border-green-500 {
@@ -6864,6 +6876,10 @@ input {
 
 .bg-slate-50\/80 {
   background-color: rgb(248 250 252 / 0.8);
+}
+
+.bg-slate-50\/90 {
+  background-color: rgb(248 250 252 / 0.9);
 }
 
 .bg-slate-500\/60 {
@@ -7862,6 +7878,10 @@ input {
   color: rgb(148 163 184 / var(--tw-text-opacity));
 }
 
+.text-slate-400\/80 {
+  color: rgb(148 163 184 / 0.8);
+}
+
 .text-slate-400\/90 {
   color: rgb(148 163 184 / 0.9);
 }
@@ -7956,6 +7976,11 @@ input {
 .text-yellow-800 {
   --tw-text-opacity: 1;
   color: rgb(133 77 14 / var(--tw-text-opacity));
+}
+
+.text-blue-400 {
+  --tw-text-opacity: 1;
+  color: rgb(96 165 250 / var(--tw-text-opacity));
 }
 
 .underline {
@@ -9546,6 +9571,11 @@ input {
   border-color: rgb(59 130 246 / var(--tw-border-opacity));
 }
 
+.dark\:border-blue-600:is(.dark *) {
+  --tw-border-opacity: 1;
+  border-color: rgb(37 99 235 / var(--tw-border-opacity));
+}
+
 .dark\:border-danger:is(.dark *) {
   --tw-border-opacity: 1;
   border-color: rgb(var(--color-danger) / var(--tw-border-opacity));
@@ -9590,6 +9620,11 @@ input {
 .dark\:border-gray-700:is(.dark *) {
   --tw-border-opacity: 1;
   border-color: rgb(55 65 81 / var(--tw-border-opacity));
+}
+
+.dark\:border-green-600:is(.dark *) {
+  --tw-border-opacity: 1;
+  border-color: rgb(22 163 74 / var(--tw-border-opacity));
 }
 
 .dark\:border-pending:is(.dark *) {
@@ -9659,6 +9694,10 @@ input {
 .dark\:border-slate-800:is(.dark *) {
   --tw-border-opacity: 1;
   border-color: rgb(30 41 59 / var(--tw-border-opacity));
+}
+
+.dark\:border-slate-800\/50:is(.dark *) {
+  border-color: rgb(30 41 59 / 0.5);
 }
 
 .dark\:border-success:is(.dark *) {
@@ -9816,9 +9855,17 @@ input {
   background-color: rgb(51 65 85 / var(--tw-bg-opacity));
 }
 
+.dark\:bg-slate-700\/60:is(.dark *) {
+  background-color: rgb(51 65 85 / 0.6);
+}
+
 .dark\:bg-slate-800:is(.dark *) {
   --tw-bg-opacity: 1;
   background-color: rgb(30 41 59 / var(--tw-bg-opacity));
+}
+
+.dark\:bg-slate-800\/50:is(.dark *) {
+  background-color: rgb(30 41 59 / 0.5);
 }
 
 .dark\:bg-slate-800\/80:is(.dark *) {
@@ -10117,6 +10164,16 @@ input {
   --tw-shadow: 0px 0px 0px 2px #3f4865, 1px 1px 5px rgba(0,0,0,0.32);
   --tw-shadow-colored: 0px 0px 0px 2px var(--tw-shadow-color), 1px 1px 5px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+}
+
+.dark\:shadow-slate-600\/40:is(.dark *) {
+  --tw-shadow-color: rgb(71 85 105 / 0.4);
+  --tw-shadow: var(--tw-shadow-colored);
+}
+
+.dark\:shadow-slate-700\/40:is(.dark *) {
+  --tw-shadow-color: rgb(51 65 85 / 0.4);
+  --tw-shadow: var(--tw-shadow-colored);
 }
 
 .dark\:placeholder\:\!text-slate-400:is(.dark *)::-moz-placeholder {
@@ -10565,6 +10622,10 @@ input {
 @media (min-width: 768px) {
   .md\:col-span-2 {
     grid-column: span 2 / span 2;
+  }
+
+  .md\:col-span-4 {
+    grid-column: span 4 / span 4;
   }
 
   .md\:col-span-6 {

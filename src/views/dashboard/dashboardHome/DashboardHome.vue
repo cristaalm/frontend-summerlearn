@@ -1,6 +1,7 @@
 <script setup>
 import DashboardHomeDonor from '@/components/Dashboard/Home/Donor/DashboardHome.vue'
 import DashBoardHomeAdmin from '@/components/Dashboard/Home/Admin/DashboardHome.vue'
+import DashboardHomeCoord from '@/components/Dashboard/Home/Coord/DashboardHome.vue'
 import getIdByToken from '@/logic/getIdByToken'
 
 // Obtener el rol del usuario a partir del token
@@ -12,6 +13,8 @@ const { rol: role } = getIdByToken(localStorage.getItem('access_token'))
 <template>
 
   <DashBoardHomeAdmin v-if="role === 1" />
+
+  <DashboardHomeCoord v-else-if="role === 2" />
 
   <DashboardHomeDonor v-else-if="role === 3" />
 
