@@ -16,28 +16,28 @@ const smoothScroll = (event) => {
 
 <template>
   <section id="home"
-    className="relative min-h-screen h-fit w-full pt-6 md:pt-8 lg:pt-10 pb-0 flex flex-col justify-center items-center bg-esmerald-100/50 bg-transparent">
+    className="relative min-h-screen h-fit w-full py-12 md:py-20 lg:py-20 flex flex-col justify-center items-center bg-esmerald-100/50 bg-transparent">
 
-    <div className="container px-4 md:px-6">
+    <div className="container px-4 md:px-6 lg:px-8">
       <div class="grid gap-6 lg:grid-cols-[1fr_400px] lg:gap-12 xl:grid-cols-[1fr_600px]">
         <div
-          class="flex flex-col justify-center space-y-12"
+          class="flex flex-col justify-center space-y-6 md:space-y-8 lg:space-y-12"
           data-aos="fade-right"
           data-aos-delay="100"
         >
-          <div class="space-y-6">
-            <h1 class="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none text-hblue1">
+          <div class="space-y-6 md:mx-auto">
+            <h1 class="text-3xl md:mx-autofont-bold tracking-tighter sm:text-5xl xl:text-6xl/none text-hblue1">
               {{ $t('hero.title') }}
             </h1>
-            <p class="max-w-[600px] text-muted-foreground md:text-xl text-justify text-black">
+            <p class="max-w-[600px] text-muted-foreground md:mx-auto md:text-xl text-justify text-black">
               {{ $t('hero.description') }}
             </p>
           </div>
-          <div class="flex gap-2 flex-row justify-center md:justify-start">
+          <div class="flex gap-2 flex-row justify-center md:justify-start ">
             <a
               href="#joinOurTeam"
               @click="smoothScroll"
-              class="inline-flex h-10 w-3/4 md:w-fit items-center justify-center cursor-pointer select-none rounded-md bg-emerald-500 px-8 py-6 text-xl font-medium text-white shadow transition-colors hover:bg-emerald-500/80 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 duration-300"
+              class="inline-flex h-10 w-3/4 md:mx-auto md:w-fit items-center justify-center cursor-pointer select-none rounded-md bg-emerald-500 px-8 py-6 text-xl font-medium text-white shadow transition-colors hover:bg-emerald-500/80 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 duration-300"
             >
               {{ $t('hero.button') }}
             </a>

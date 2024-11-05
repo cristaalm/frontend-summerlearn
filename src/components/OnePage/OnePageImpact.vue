@@ -12,7 +12,7 @@
               {{ $t('impact.title') }}
             </h2>
             <p
-              className="max-w-[600px] pt-6 text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed text-justify text-white/90">
+              className="max-w-[600px] pt-6 text-muted-foreground md:text-xl/relaxed md:mx-auto lg:text-base/relaxed xl:text-xl/relaxed text-justify text-white/90">
               {{ $t('impact.description') }}
             </p>
           </div>
@@ -21,17 +21,15 @@
     </div>
     <!-- Zigzag separator -->
     <div className="absolute bottom-0 left-0 right-0 w-full overflow-hidden leading-[0]">
-      <svg className="relative block w-full h-[100px]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-        <defs>
-          <linearGradient id="redGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <svg class="w-full h-[100px]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" preserveAspectRatio="none">
+        <linearGradient id="redGradient" x1="0%" y1="0%" x2="100%" y2="0%">
             <stop offset="0%" style="stop-color:#ffa094;stop-opacity:1" />
             <stop offset="100%" style="stop-color:#db3e29;stop-opacity:1" />
           </linearGradient>
-        </defs>
-        <path fill="url(#redGradient)" fill-opacity="1"
-          d="M0,160L80,186.7C160,213,320,267,480,277.3C640,288,800,256,960,218.7C1120,181,1280,139,1360,117.3L1440,96V320H0Z">
-        </path>
-      </svg>
+      <path fill="url(#redGradient)" fill-opacity="1"
+        d="M0,96L60,85.3C120,75,240,53,360,90.7C480,128,600,224,720,240C840,256,960,192,1080,138.7C1200,85,1320,43,1380,21.3L1440,0V320H0Z">
+      </path>
+    </svg>
     </div>
 
   </section>
