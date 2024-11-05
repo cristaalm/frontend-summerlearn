@@ -2,9 +2,53 @@
 import { driver } from "driver.js";
 import "driver.js/dist/driver.css";
 import { nextTick } from 'vue';
+import { Baseurl } from '@/utils/global'
 
-export const startTour = async (router) => {
+export const getTour = async (id) => {
+    const response = await fetch(`${Baseurl}users/${id}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('access_token')}`
+      }
+    });
+  
+    // Comprobamos si la respuesta fue exitosa
+    if (!response.ok) {
+      throw new Error('Error al obtener el tour');
+    }
+  
+    const json = await response.json();
+    
+    return json;
+};
+  
+
+
+export const activateTour = async (id) => {
+    const response = await fetch(`${Baseurl}users/${id}/`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('access_token')}`
+      },
+      body: JSON.stringify({ users_tour: false })
+    });
+  
+    // Comprobamos si la respuesta fue exitosa
+    if (!response.ok) {
+      throw new Error('Error al obtener el tour');
+    }
+  
+    const json = await response.json();
+    
+    return json;
+};
+
+
+export const startTour = async (router, id) => {
     const driverObj = driver({
+        
         showProgress: true,
         steps: [
             {
@@ -30,6 +74,7 @@ export const startTour = async (router) => {
                     title: 'Target Element',
                     description: 'Este es el elemento al que apuntamos.',
                 },
+                
             },
             {
                 element: '#dos',
@@ -234,8 +279,47 @@ export const startTour = async (router) => {
                     },
                 },
             },
-        ]
+            {
+                element: '#veinte',
+                popover: {
+                    title: 'Finalizando el paso siete',
+                    description: 'Serás redirigido a otra vista.',
+                    onNextClick: () => {
+
+                        driverObj.moveNext();
+
+                    },
+                },
+            },
+        ],
+
+        onDestroyStarted: async () => {
+            if (driverObj.hasNextStep()) {
+                driverObj.destroy();
+                
+
+                try {
+                    const response = await fetch(`${Baseurl}users/${id}/`, {
+                        method: 'PATCH',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            Authorization: `Bearer ${localStorage.getItem('access_token')}`
+                        },
+                        body: JSON.stringify({ users_tour: true })
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('Error al actualizar el tour');
+                    }
+                } catch (error) {
+                    console.error('Error en la solicitud PATCH:', error);
+                }
+            }
+        },
+
     });
     await nextTick();
     driverObj.drive();
+  
 };
+

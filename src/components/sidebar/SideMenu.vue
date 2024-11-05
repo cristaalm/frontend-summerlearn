@@ -26,6 +26,16 @@ import { useColorSchemeStore } from '@/stores/color-scheme'
 // @ts-ignore
 import { Baseurl } from '@/utils/global'
 
+import { startTour, activateTour} from '@/utils/tourDriver'; // Importa el archivo creado
+import getIdByToken from '@/logic/getIdByToken';
+
+const { user_id: id} = getIdByToken(localStorage.getItem('access_token'));
+
+async function againTour(){
+  
+    await startTour(router, id);
+
+}
 
 // @ts-ignore
 const { photoUser, loadingUserPhoto } = inject('userPhoto');
@@ -527,6 +537,11 @@ const closeSlideOver = () => {
                       <FormSwitch.Input id="darkmode" type="checkbox" v-model="darkMode"
                         class="shadow-current pointer-events-none" />
                     </div>
+                  </Menu.Item>
+                  <Menu.Item @click="againTour(router, id)"
+                    class="text-primary flex items-center px-4 py-2 hover:bg-gray-100 dark:text-slate-200 dark:hover:text-sky-500 dark:hover:bg-slate-600">
+                    <Lucide icon="Users" class="w-4 h-4 mr-2  " />
+                    Tour
                   </Menu.Item>
                   <Menu.Item @click="() => router.push({ name: 'settings' })"
                     class="text-primary flex items-center px-4 py-2 hover:bg-gray-100 dark:text-slate-200 dark:hover:text-sky-500 dark:hover:bg-slate-600">
