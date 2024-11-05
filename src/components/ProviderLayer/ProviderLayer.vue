@@ -29,6 +29,7 @@ const { rol: role, user_id: id} = getIdByToken(localStorage.getItem('access_toke
 const isLoading = ref(true);
 const animate = ref(false);
 const router = useRouter();
+const endLoad = ref(false);
 // Declaración de los estados de carga
 let loadings = [];
 
@@ -179,12 +180,14 @@ onUnmounted(() => {
 
 // Observa cuando todos los estados de carga sean `false`
 watch(loadings, () => {
+    if (endLoad.value) return
     isLoading.value = loadings.some(loading => loading.value);
 }, { immediate: true });
 
 watch(isLoading, () => {
     if (!isLoading.value) {
         animate.value = true;
+        endLoad.value = true;
         setTimeout(() => {
             animate.value = false;
         }, 3000000);

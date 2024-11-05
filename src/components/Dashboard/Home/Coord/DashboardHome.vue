@@ -6,8 +6,8 @@ import ProgramsAsignedList from './modules/ProgramsAsignedList.vue';
 
 <template>
     <div class="grid grid-cols-12 gap-y-10 gap-x-2">
-        <ActivitiesList />
-        <ProgramsList />
         <ProgramsAsignedList />
+        <ProgramsList />
+        <ActivitiesList />
     </div>
 </template>
