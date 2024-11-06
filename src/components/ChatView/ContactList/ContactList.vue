@@ -9,7 +9,7 @@ import Tippy from "@/components/base/Tippy";
 const { contacts, loadingContacts, chats } = inject("socket");
 const { selectChat } = inject("selectChat");
 const { btnSectionChat } = inject('btnSectionChat');
-const showToast = inject('showToast')
+const { filteredContacts } = inject('filteredContacts')
 
 const changeContactToChat = ({ contact }) => {
     // verificamos si el contacto ya esta en la lista de chats
@@ -32,9 +32,9 @@ const sendEmail = (email) => {
 <template>
     <template v-if="!loadingContacts && contacts.length > 0">
         <div class="h-[530px] gap-1 flex flex-col">
-            <template v-for="contact in contacts" :key="contact.id">
+            <template v-if="filteredContacts.length > 0" v-for="contact in filteredContacts" :key="contact.id">
                 <div :class="'hover:bg-slate-200 dark:hover:bg-slate-600'"
-                    class="flex flex-row items-center gap-4 px-2 py-2.5 -mx-2 rounded-lg cursor-pointer transition-all duration-300">
+                    class="flex items-center gap-4 px-2 py-2.5 -mx-2 rounded-lg cursor-pointer transition-all duration-300">
 
                     <!-- Avatar del usuario (10%) -->
                     <div class="relative flex-[0.1]">
@@ -44,15 +44,14 @@ const sendEmail = (email) => {
                     </div>
 
                     <!-- Información del usuario (80%) -->
-                    <div class="!flex-[0.8] min-w-0">
+                    <div class="flex-[0.8] min-w-0">
                         <div class="flex items-center w-full">
-                            <div
-                                class="font-medium truncate text-black dark:text-slate-200 sm:max-w-full md:max-w-[8rem]">
+                            <div class="font-medium text-black dark:text-slate-200 truncate">
                                 {{ contact.user.name }}
                             </div>
                         </div>
                         <div class="flex items-center mt-1.5">
-                            <div class="text-slate-500/90 truncate dark:text-slate-400 max-w-full md:max-w-[12rem]">
+                            <div class="text-slate-500/90 dark:text-slate-400 truncate max-w-full md:max-w-[12rem]">
                                 {{ contact.user.rol }}
                             </div>
                         </div>
@@ -74,6 +73,15 @@ const sendEmail = (email) => {
                     </div>
                 </div>
 
+
+            </template>
+            <!-- en caso de que filtrado no tenga nada -->
+            <template v-else>
+                <div class="flex items-center justify-center h-[530px]">
+                    <div class="text-slate dark:text-slate-400">
+                        No se encontraron resultados
+                    </div>
+                </div>
             </template>
         </div>
     </template>

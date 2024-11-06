@@ -181,6 +181,7 @@ export function useWebSocket() {
       socket.value!.send(
         JSON.stringify({ type: 'start_chats', token: access_token, refresh_token: refresh_token })
       )
+      loadingChats.value = true
       socket.value!.send(
         JSON.stringify({
           type: 'start_messages',
@@ -188,6 +189,7 @@ export function useWebSocket() {
           refresh_token: refresh_token
         })
       )
+      loadingMessages.value = true
       socket.value!.send(
         JSON.stringify({
           type: 'start_contacts',
@@ -195,6 +197,7 @@ export function useWebSocket() {
           refresh_token: refresh_token
         })
       )
+      loadingContacts.value = true
     }
 
     socket.value.onmessage = (event) => {
