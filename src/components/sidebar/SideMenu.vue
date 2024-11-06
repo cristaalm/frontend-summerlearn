@@ -26,11 +26,14 @@ import { useColorSchemeStore } from '@/stores/color-scheme'
 // @ts-ignore
 import { Baseurl } from '@/utils/global'
 // @ts-ignore
-import { startTour, activateTour} from '@/utils/tourDriver'; // Importa el archivo creado
+import { startTour, activateTour } from '@/utils/tourDriver'; // Importa el archivo creado
 // @ts-ignore
 import getIdByToken from '@/logic/getIdByToken';
 
-const { user_id: id, rol: role} = getIdByToken(localStorage.getItem('access_token'));
+const { user_id: id, rol: role } = getIdByToken(localStorage.getItem('access_token'));
+
+// @ts-ignore
+const showToast = inject('showToast');
 
 // @ts-ignore
 const { photoUser, loadingUserPhoto } = inject('userPhoto');
@@ -192,8 +195,8 @@ const closeSlideOver = () => {
   openSlide.value = false
 }
 
-async function againTour(){
-    await startTour(router, id);
+async function againTour() {
+  await startTour(router, id);
 }
 
 
@@ -370,7 +373,7 @@ async function againTour(){
               SummerLearn
             </div>
           </a>
-          <a  href="" @click="toggleCompactMenu"
+          <a href="" @click="toggleCompactMenu"
             class="hidden group-[.side-menu--collapsed.side-menu--on-hover]:xl:opacity-100 group-[.side-menu--collapsed]:xl:rotate-180 group-[.side-menu--collapsed]:xl:opacity-0 transition-[opacity,transform] 3xl:flex items-center justify-center w-[20px] h-[20px] ml-auto border rounded-full border-slate-600/40 hover:bg-slate-600/5">
             <Lucide icon="ArrowLeft" class="w-3.5 h-3.5 stroke-[1.3] dark:text-slate-200" />
           </a>
@@ -381,14 +384,14 @@ async function againTour(){
         ]">
           <ul id="cuatro" class="scrollable">
             <!-- BEGIN: First Child -->
-            <template v-for="(menu, menuKey) in formattedMenu" >
-              <li  v-if="typeof menu === 'string'" class="side-menu__divider" :key="'divider-' + menuKey">
+            <template v-for="(menu, menuKey) in formattedMenu">
+              <li v-if="typeof menu === 'string'" class="side-menu__divider" :key="'divider-' + menuKey">
                 {{ menu }}
               </li>
               <li v-else :key="menuKey" :id="`sideBar-${menu.pageName}`">
                 <a href="" :class="[
                   'side-menu__link',
-                  { 'side-menu__link--active': menu.active  },
+                  { 'side-menu__link--active': menu.active },
                   {
                     'side-menu__link--active-dropdown': menu.activeDropdown
                   }
@@ -400,16 +403,16 @@ async function againTour(){
                   setFormattedMenu([...formattedMenu])
                 }">
                   <Lucide :icon="menu.icon" class="side-menu__link__icon" />
-                  <span  v-if="notification && menu.pageName == 'chat'" class="relative">
+                  <span v-if="notification && menu.pageName == 'chat'" class="relative">
                     <span class="absolute bottom-1 -left-6 w-2 h-2 bg-theme-1 rounded-full dark:bg-blue-500"></span>
                   </span>
                   <!-- titulos de los apartados -->
-                  <div class="side-menu__link__title" >{{ menu.title }}</div>
+                  <div class="side-menu__link__title">{{ menu.title }}</div>
                   <div v-if="menu.badge" class="side-menu__link__badge">
                     {{ menu.badge }}
                   </div>
                   <!-- icono de flecha para abajo -->
-                  <Lucide v-if="menu.subMenu" icon="ChevronDown" 
+                  <Lucide v-if="menu.subMenu" icon="ChevronDown"
                     @click.stop.prevent="menu.activeDropdown = !menu.activeDropdown"
                     class="side-menu__link__chevron dark:!text-slate-200" />
                 </a>
