@@ -336,7 +336,7 @@ async function againTour(){
           <Lucide icon="X" class="w-8 h-8 text-white dark:!text-slate-200" />
         </a>
       </div>
-      <div :class="[
+      <div id="uno" :class="[
         'h-full box bg-white/[0.95] darl:bg-slate-700 rounded-none xl:rounded-xl z-20 relative w-[275px] duration-300 transition-[width] group-[.side-menu--collapsed]:xl:w-[91px] group-[.side-menu--collapsed.side-menu--on-hover]:xl:shadow-[6px_0_12px_-4px_#0000000f] group-[.side-menu--collapsed.side-menu--on-hover]:xl:w-[275px] overflow-hidden flex flex-col'
       ]" @mouseover="(event) => {
         event.preventDefault()
@@ -347,7 +347,7 @@ async function againTour(){
           compactMenuOnHover = false
         }
           ">
-        <div :class="[
+        <div id="dos" :class="[
           'flex items-center z-10 px-5 h-[65px] w-[275px] overflow-hidden relative duration-300 xl:group-[.side-menu--collapsed]:w-[91px] group-[.side-menu--collapsed.side-menu--on-hover]:w-[275px]'
         ]">
           <a href=""
@@ -370,25 +370,25 @@ async function againTour(){
               SummerLearn
             </div>
           </a>
-          <a href="" @click="toggleCompactMenu"
+          <a  href="" @click="toggleCompactMenu"
             class="hidden group-[.side-menu--collapsed.side-menu--on-hover]:xl:opacity-100 group-[.side-menu--collapsed]:xl:rotate-180 group-[.side-menu--collapsed]:xl:opacity-0 transition-[opacity,transform] 3xl:flex items-center justify-center w-[20px] h-[20px] ml-auto border rounded-full border-slate-600/40 hover:bg-slate-600/5">
             <Lucide icon="ArrowLeft" class="w-3.5 h-3.5 stroke-[1.3] dark:text-slate-200" />
           </a>
         </div>
-        <div ref="scrollableRef" :class="[
+        <div id="tres" ref="scrollableRef" :class="[
           'w-full h-full z-20 px-5 overflow-y-auto overflow-x-hidden pb-3 [-webkit-mask-image:-webkit-linear-gradient(top,rgba(0,0,0,0),black_30px)] [&:-webkit-scrollbar]:w-0 [&:-webkit-scrollbar]:bg-transparent',
           '[&_.simplebar-content]:p-0 [&_.simplebar-track.simplebar-vertical]:w-[10px] [&_.simplebar-track.simplebar-vertical]:mr-0.5 [&_.simplebar-track.simplebar-vertical_.simplebar-scrollbar]:before:bg-slate-400/30'
         ]">
-          <ul class="scrollable">
+          <ul id="cuatro" class="scrollable">
             <!-- BEGIN: First Child -->
-            <template v-for="(menu, menuKey) in formattedMenu">
-              <li v-if="typeof menu === 'string'" class="side-menu__divider" :key="'divider-' + menuKey">
+            <template v-for="(menu, menuKey) in formattedMenu" >
+              <li  v-if="typeof menu === 'string'" class="side-menu__divider" :key="'divider-' + menuKey">
                 {{ menu }}
               </li>
               <li v-else :key="menuKey" :id="`sideBar-${menu.pageName}`">
                 <a href="" :class="[
                   'side-menu__link',
-                  { 'side-menu__link--active': menu.active },
+                  { 'side-menu__link--active': menu.active  },
                   {
                     'side-menu__link--active-dropdown': menu.activeDropdown
                   }
@@ -400,14 +400,16 @@ async function againTour(){
                   setFormattedMenu([...formattedMenu])
                 }">
                   <Lucide :icon="menu.icon" class="side-menu__link__icon" />
-                  <span v-if="notification && menu.pageName == 'chat'" class="relative">
+                  <span  v-if="notification && menu.pageName == 'chat'" class="relative">
                     <span class="absolute bottom-1 -left-6 w-2 h-2 bg-theme-1 rounded-full dark:bg-blue-500"></span>
                   </span>
-                  <div class="side-menu__link__title">{{ menu.title }}</div>
+                  <!-- titulos de los apartados -->
+                  <div class="side-menu__link__title" >{{ menu.title }}</div>
                   <div v-if="menu.badge" class="side-menu__link__badge">
                     {{ menu.badge }}
                   </div>
-                  <Lucide v-if="menu.subMenu" icon="ChevronDown"
+                  <!-- icono de flecha para abajo -->
+                  <Lucide v-if="menu.subMenu" icon="ChevronDown" 
                     @click.stop.prevent="menu.activeDropdown = !menu.activeDropdown"
                     class="side-menu__link__chevron dark:!text-slate-200" />
                 </a>
