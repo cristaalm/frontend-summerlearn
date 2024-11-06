@@ -29,7 +29,7 @@ import { Baseurl } from '@/utils/global'
 import { startTour, activateTour} from '@/utils/tourDriver'; // Importa el archivo creado
 import getIdByToken from '@/logic/getIdByToken';
 
-const { user_id: id} = getIdByToken(localStorage.getItem('access_token'));
+const { user_id: id, rol: role} = getIdByToken(localStorage.getItem('access_token'));
 
 async function againTour(){
   
@@ -538,7 +538,7 @@ const closeSlideOver = () => {
                         class="shadow-current pointer-events-none" />
                     </div>
                   </Menu.Item>
-                  <Menu.Item @click="againTour(router, id)"
+                  <Menu.Item v-if="role == 3" @click="againTour(router, id)"
                     class="text-primary flex items-center px-4 py-2 hover:bg-gray-100 dark:text-slate-200 dark:hover:text-sky-500 dark:hover:bg-slate-600">
                     <Lucide icon="Users" class="w-4 h-4 mr-2  " />
                     Tour
