@@ -54,7 +54,7 @@ export const startTour = async (router, id) => {
             {
                 popover: {
                     title: 'Bienvenidos al perfil de donador',
-                    description: 'This is the first step. Next element will be loaded dynamically.',
+                    
                     onNextClick: () => {
 
                         router.push('/dashboard').then(() => {
@@ -71,51 +71,51 @@ export const startTour = async (router, id) => {
             {
                 element: '#uno',
                 popover: {
-                    title: 'Target Element',
-                    description: 'Este es el elemento al que apuntamos.',
+                    title: 'Grafica de barras',
+                    description: 'En esta grafica podras ver tus donaciones de manera mas general.',
                 },
                 
             },
             {
                 element: '#dos',
                 popover: {
-                    title: 'Target Element',
-                    description: 'Este es el elemento al que apuntamos.',
+                    title: 'Filtrar por fecha',
+                    description: 'Puedes seleccionar para filtrar por dias, semanas y meses.',
                 },
             },
             {
                 element: '#tres',
                 popover: {
-                    title: 'Target Element',
-                    description: 'Este es el elemento al que apuntamos.',
+                    title: 'Barras de donaciones',
+                    description: 'Aqui se mostrara las donacion dependiendo a la opcion seleccionada.',
                 },
             },
             {
                 element: '#cuatro',
                 popover: {
-                    title: 'Target Element',
-                    description: 'Este es el elemento al que apuntamos.',
+                    title: 'Grafica de dona',
+                    description: 'En esta seccion mostrara la relacion entre tus donaciones y los gastos hechos con ellas mismas.',
                 },
             },
             {
                 element: '#cinco',
                 popover: {
-                    title: 'Target Element',
-                    description: 'Este es el elemento al que apuntamos.',
+                    title: 'Relacion de donaciones',
+                    description: 'Se mostrara en azul tus donaciones y en verde los gastos hecho con ellas y aparte cuanto de tus donaciones estan disponible.',
                 },
             },
             {
                 element: '#seis',
                 popover: {
-                    title: 'Target Element',
-                    description: 'Este es el elemento al que apuntamos.',
+                    title: 'Ultimas donaciones',
+                    description: 'Aqui se muestran las ultimas 6 donaciones.',
                 },
             },
             {
                 element: '#siete',
                 popover: {
-                    title: 'Finalizando el paso siete',
-                    description: 'Serás redirigido a otra vista.',
+                    title: 'Formato de donacione',
+                    description: 'Se te mostrara la ultima donacion con su concepto, el monto y la fecha de realizacion.',
                     onNextClick: () => {
                         // Asegúrate de manejar el avance al siguiente paso
                         router.push('/dashboard/donations').then(() => {
@@ -132,8 +132,8 @@ export const startTour = async (router, id) => {
             {
                 element: '#ocho',
                 popover: {
-                    title: 'Finalizando el paso siete',
-                    description: 'Serás redirigido a otra vista.',
+                    title: 'Donaciones semanales',
+                    description: 'Se mostrara estadisticas de las donaciones de la semana.',
                     onNextClick: () => {
 
                         driverObj.moveNext();
@@ -144,8 +144,8 @@ export const startTour = async (router, id) => {
             {
                 element: '#nueve',
                 popover: {
-                    title: 'Finalizando el paso siete',
-                    description: 'Serás redirigido a otra vista.',
+                    title: 'Estadisticas de donaciones',
+                    description: 'Se muestra las donaciones de Lunes a Viernes.',
                     onNextClick: () => {
 
                         driverObj.moveNext();
@@ -156,8 +156,8 @@ export const startTour = async (router, id) => {
             {
                 element: '#diez',
                 popover: {
-                    title: 'Finalizando el paso siete',
-                    description: 'Serás redirigido a otra vista.',
+                    title: 'Barras de donaciones',
+                    description: 'Aqui se mostrara inforamacion relevante, como cantidad de donaciones, monto total, ultima donacion y la ultima fecha.',
                     onNextClick: () => {
 
                         driverObj.moveNext();
@@ -168,8 +168,8 @@ export const startTour = async (router, id) => {
             {
                 element: '#once',
                 popover: {
-                    title: 'Finalizando el paso siete',
-                    description: 'Serás redirigido a otra vista.',
+                    title: 'Historial de donaciones',
+                    description: 'Se muestran el historia de todas tus donaciones.',
                     onNextClick: () => {
 
                         driverObj.moveNext();
@@ -180,8 +180,8 @@ export const startTour = async (router, id) => {
             {
                 element: '#doce',
                 popover: {
-                    title: 'Finalizando el paso siete',
-                    description: 'Serás redirigido a otra vista.',
+                    title: 'Buscar donaciones',
+                    description: 'Aqui podras buscar la donacion por su concepto.',
                     onNextClick: () => {
 
                         driverObj.moveNext();
@@ -192,8 +192,8 @@ export const startTour = async (router, id) => {
             {
                 element: '#trece',
                 popover: {
-                    title: 'Finalizando el paso siete',
-                    description: 'Serás redirigido a otra vista.',
+                    title: 'Exportar donaciones',
+                    description: 'Aqui podras exportar en PDF o Excel tu historia de donaciones.',
                     onNextClick: () => {
 
                         driverObj.moveNext();
@@ -204,8 +204,8 @@ export const startTour = async (router, id) => {
             {
                 element: '#catorce',
                 popover: {
-                    title: 'Finalizando el paso siete',
-                    description: 'Serás redirigido a otra vista.',
+                    title: 'Donacion',
+                    description: 'Aqui se mostrar todas tu donaciones.',
                     onNextClick: () => {
 
                         driverObj.moveNext();
@@ -216,8 +216,8 @@ export const startTour = async (router, id) => {
             {
                 element: '#quince',
                 popover: {
-                    title: 'Finalizando el paso siete',
-                    description: 'Serás redirigido a otra vista.',
+                    title: 'Agregar donacion',
+                    description: 'En este boton podras hacer una nueva donacion.',
                     onNextClick: () => {
 
                         router.push('/dashboard/chat').then(() => {
@@ -234,8 +234,8 @@ export const startTour = async (router, id) => {
             {
                 element: '#dieciseis',
                 popover: {
-                    title: 'Finalizando el paso siete',
-                    description: 'Serás redirigido a otra vista.',
+                    title: 'Panel de chat',
+                    description: 'Aqu podras alternar entre chats y los contectos.',
                     onNextClick: () => {
 
                         driverObj.moveNext();
@@ -246,8 +246,8 @@ export const startTour = async (router, id) => {
             {
                 element: '#diecisiete',
                 popover: {
-                    title: 'Finalizando el paso siete',
-                    description: 'Serás redirigido a otra vista.',
+                    title: 'Chat',
+                    description: 'Aqui sera la seccion donde se mostrara tus chat y llevaras tus conversaciones.',
                     onNextClick: () => {
 
                         driverObj.moveNext();
@@ -258,8 +258,8 @@ export const startTour = async (router, id) => {
             {
                 element: '#dieciocho',
                 popover: {
-                    title: 'Finalizando el paso siete',
-                    description: 'Serás redirigido a otra vista.',
+                    title: 'Buscar chat',
+                    description: 'Aqui puedes buscar el nombre del chat que ocupes.',
                     onNextClick: () => {
 
                         driverObj.moveNext();
@@ -270,8 +270,8 @@ export const startTour = async (router, id) => {
             {
                 element: '#diecinueve',
                 popover: {
-                    title: 'Finalizando el paso siete',
-                    description: 'Serás redirigido a otra vista.',
+                    title: 'Lista de contactos',
+                    description: 'Se mostrara los contacto con los que has chateado.',
                     onNextClick: () => {
 
                         driverObj.moveNext();
@@ -282,8 +282,8 @@ export const startTour = async (router, id) => {
             {
                 element: '#veinte',
                 popover: {
-                    title: 'Finalizando el paso siete',
-                    description: 'Serás redirigido a otra vista.',
+                    title: 'Finalizar tour',
+                    description: 'Espero que te haya gustado y tengas una lindas experiencia con nosotros.',
                     onNextClick: () => {
 
                         driverObj.moveNext();
