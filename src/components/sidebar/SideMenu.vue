@@ -25,17 +25,12 @@ import { logoutColorScheme } from '@/utils/switchColorScheme'
 import { useColorSchemeStore } from '@/stores/color-scheme'
 // @ts-ignore
 import { Baseurl } from '@/utils/global'
-
+// @ts-ignore
 import { startTour, activateTour} from '@/utils/tourDriver'; // Importa el archivo creado
+// @ts-ignore
 import getIdByToken from '@/logic/getIdByToken';
 
 const { user_id: id, rol: role} = getIdByToken(localStorage.getItem('access_token'));
-
-async function againTour(){
-  
-    await startTour(router, id);
-
-}
 
 // @ts-ignore
 const { photoUser, loadingUserPhoto } = inject('userPhoto');
@@ -196,6 +191,11 @@ const openSlideOver = () => {
 const closeSlideOver = () => {
   openSlide.value = false
 }
+
+async function againTour(){
+    await startTour(router, id);
+}
+
 
 </script>
 
@@ -385,7 +385,7 @@ const closeSlideOver = () => {
               <li v-if="typeof menu === 'string'" class="side-menu__divider" :key="'divider-' + menuKey">
                 {{ menu }}
               </li>
-              <li v-else :key="menuKey">
+              <li v-else :key="menuKey" :id="`sideBar-${menu.pageName}`">
                 <a href="" :class="[
                   'side-menu__link',
                   { 'side-menu__link--active': menu.active },
@@ -526,7 +526,7 @@ const closeSlideOver = () => {
                   <img alt="User Photo" v-if="!loadingUserPhoto" :src="`${Baseurl}${photoUser}`"
                     class="bg-white dark:bg-slate-600" />
                   <!-- Mostrar un placeholder o ícono en caso de que loadingUserPhoto sea falso pero photoUser sea null -->
-                  <Lucide icon="user" class="dark:!text-slate-200" v-else />
+                  <Lucide icon="User" class="dark:!text-slate-200" v-else />
                 </Menu.Button>
                 <Menu.Items class="w-56 mt-1 bg-white shadow-lg rounded-md">
                   <Menu.Item
@@ -538,7 +538,7 @@ const closeSlideOver = () => {
                         class="shadow-current pointer-events-none" />
                     </div>
                   </Menu.Item>
-                  <Menu.Item v-if="role == 3" @click="againTour(router, id)"
+                  <Menu.Item v-if="role == 3" @click="againTour"
                     class="text-primary flex items-center px-4 py-2 hover:bg-gray-100 dark:text-slate-200 dark:hover:text-sky-500 dark:hover:bg-slate-600">
                     <Lucide icon="Users" class="w-4 h-4 mr-2  " />
                     Tour

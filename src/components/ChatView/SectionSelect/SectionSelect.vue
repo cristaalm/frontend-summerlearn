@@ -9,6 +9,7 @@ import { inject, ref, provide, onMounted, watch, nextTick } from "vue";
 const SelectSection = ref(null);
 
 const btnSectionChat = () => {
+    // @ts-ignore
     const button = SelectSection.value.querySelector('button');
     button.click();
 }
@@ -17,11 +18,8 @@ const btnSectionChat = () => {
 provide('btnSectionChat', { btnSectionChat });
 
 // Simulación de selectChat para el ejemplo
+// @ts-ignore
 const { selectChat } = inject("selectChat")
-
-
-
-
 </script>
 
 <template>
@@ -79,7 +77,7 @@ const { selectChat } = inject("selectChat")
                                 <FormInput type="text" rounded placeholder="Buscar contacto"
                                     class="pl-10 py-2.5 text-slate-500/90 dark:text-slate-200 dark:placeholder:text-slate-400" />
                             </div>
-                            <div id="diecinueve"
+                            <div
                                 class="flex flex-col gap-1 mt-4 max-h-[530px] overflow-y-auto overflow-x-hidden scrollbar-custom p-2">
                                 <ContactList />
                             </div>
