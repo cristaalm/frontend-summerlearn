@@ -4,24 +4,18 @@ import Button from '@/components/base/Button'
 import Alert from '@/components/base/Alert'
 import Litepicker from '@/components/base/Litepicker'
 import LoadingIcon from '@/components/base/LoadingIcon'
-import { FormInput, FormSelect } from '@/components/base/Form'
+import { FormInput } from '@/components/base/Form'
 import { useRouter } from 'vue-router'
+import { useValidationImage } from '@/hooks/childrens/addChildren/useValidationImage'
 import { useValidationAddChildren } from '@/hooks/childrens/addChildren/useValidationAddChildren'
 import { useSetChildren } from '@/hooks/childrens/addChildren/useSetChildren'
-import { useUsers } from '@/hooks/users/useUserBeneficiaries'
-import { onMounted } from 'vue'
 
-const { users, loading, error, loadUsers } = useUsers()
-const { validate, valid, status, name, birthdate, curp, validateInputCurp } = useValidationAddChildren()
-const { setChildrenLoading, setChildrenError, addChildren } = useSetChildren()
+const { validate, valid, status, name, birthdate, curp, validateInputCurp, resetFields, validateAll } = useValidationAddChildren()
+const { profileImage, errorMessagePhoto, validateImage, triggerFileSelect, removeImage, imageFile } = useValidationImage({ status, validateAll })
+const { setChildrenError, setChildrenLoading, addChildren  } = useSetChildren({ name, birthdate, curp, imageFile, valid, validateAll, resetFields })
 
 const router = useRouter()
 const minYear = new Date().getFullYear() - 6
-
-
-onMounted(() => {
-  loadUsers()
-})
 
 const handleRegister = () => {
   if (valid.value) {
@@ -29,6 +23,7 @@ const handleRegister = () => {
       name: name.value,
       birthdate: birthdate.value,
       curp: curp.value,
+      profileImage: imageFile.value
     }
     addChildren({ children })
   }
@@ -63,6 +58,50 @@ const handleRegister = () => {
               class="flex items-center px-4 py-3 my-7" />
 
             <!--? ######################### INPUTS ######################### -->
+
+            <div class="flex-col block pt-5 mt-5 xl:items-center sm:flex xl:flex-row first:mt-0 first:pt-0">
+              <label class="inline-block mb-2 sm:mb-0 sm:mr-5 sm:text-right xl:w-60 xl:mr-14">
+                <div class="text-left">
+                  <div class="flex items-center">
+                    <div class="font-medium dark:text-slate-200">Foto de perfil</div>
+                  </div>
+                  <div class="mt-1.5 xl:mt-3 text-xs leading-relaxed text-slate-500/80 dark:text-slate-400">
+                    Por favor, sube una foto de perfil para identificar al niño.
+                  </div>
+                </div>
+              </label>
+              <div class="flex-1 w-full mt-3 xl:mt-0">
+                <div class="flex items-center">
+                  <div
+                    class="relative flex items-center justify-center w-24 h-24 border rounded-full bg-primary/5 dark:bg-slate-500 border-primary/10 dark:border-slate-500">
+                    <!-- Mostrar la imagen seleccionada o un icono por defecto -->
+                    <img v-if="profileImage" :src="profileImage" alt="Foto de perfil"
+                      class="object-cover w-full h-full rounded-full" />
+
+                    <Lucide v-if="!profileImage" icon="User"
+                      class="w-[65%] h-[65%] fill-slate-300/70 dark:fill-slate-200 -mt-1.5 stroke-[0.5] stroke-slate-400/50 dark:stroke-slate-200" />
+
+                    <!-- Botón para seleccionar una imagen -->
+                    <div @click="triggerFileSelect"
+                      class="absolute bottom-0 right-0 flex items-center justify-center rounded-full box w-7 h-7 cursor-pointer dark:bg-slate-600">
+                      <Lucide icon="Pencil" class="w-3.5 h-3.5 stroke-[1.3] text-slate-500 dark:text-slate-200" />
+                    </div>
+
+                    <!-- Input tipo archivo oculto -->
+                    <input id="profileImageInput" name="profileImage" type="file" class="hidden" @change="validateImage" accept="image/*" />
+                  </div>
+
+                  <Button variant="outline-danger" size="sm"
+                    class="pl-3.5 pr-4 mr-2 h-8 ml-8 dark:border-red-400 dark:text-red-400" @click="removeImage">
+                    <Lucide icon="Trash2" class="w-3.5 h-3.5 mr-1.5 stroke-[1.3]" />
+                    Eliminar foto
+                  </Button>
+                </div>
+                <div class="text-red-500 mt-2 dark:text-red-400">{{ errorMessagePhoto }}</div>
+              </div>
+            </div>
+
+            <!--? ######################### INPUTS TEXT ######################### -->
 
             <div class="flex-col block pt-5 mt-5 xl:items-center sm:flex xl:flex-row first:mt-0 first:pt-0">
               <label class="inline-block mb-2 sm:mb-0 sm:mr-5 sm:text-right xl:w-60 xl:mr-14">

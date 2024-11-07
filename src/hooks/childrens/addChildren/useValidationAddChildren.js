@@ -22,6 +22,10 @@ export function useValidationAddChildren() {
       message: '',
       name: 'curp',
       Regex: /^([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)$/
+    },
+    profileImage: {
+      value: false,
+      error: false
     }
   })
 
@@ -31,7 +35,12 @@ export function useValidationAddChildren() {
   const valid = ref(false)
 
   const validateAll = () => {
-    if (status.value.name.success && status.value.birthdate.success && status.value.curp.success) { // Si todos los campos son válidos
+    // debugger de todos los campos
+    console.log("Nombre", status.value.name.success)
+    console.log("Fecha de nacimiento", status.value.birthdate.success)
+    console.log("CURP", status.value.curp.success)
+    console.log("Imagen", status.value.profileImage.value)
+    if (status.value.name.success && status.value.birthdate.success && status.value.curp.success && status.value.profileImage.value) { // Si todos los campos son válidos
       valid.value = true
     } else {
       valid.value = false
@@ -83,6 +92,25 @@ export function useValidationAddChildren() {
     validateAll()
   })
 
+  // Copia profunda manual para preservar las expresiones regulares
+  const deepCopy = (obj) => {
+    return Object.keys(obj).reduce((copy, key) => {
+      const value = obj[key]
+      if (value && typeof value === 'object' && !(value instanceof RegExp)) {
+        copy[key] = deepCopy(value)
+      } else {
+        copy[key] = value
+      }
+      return copy
+    }, {})
+  }
+
+  const initialState = deepCopy(status.value)
+
+  const resetFields = () => {
+    status.value = deepCopy(initialState)
+  }
+
   return {
     status,
     name,
@@ -90,5 +118,8 @@ export function useValidationAddChildren() {
     curp,
     valid,
     validate,
-    validateInputCurp  }
+    validateAll,
+    validateInputCurp,
+    resetFields
+  }
 }
