@@ -36,10 +36,10 @@ export function useSetChildren({
 
     // Crear un FormData para enviar los datos del usuario junto con la imagen
     const formData = new FormData()
-    formData.append('name', name.value)
-    formData.append('birthdate', birthdateFormat)
-    formData.append('curp', curp.value)
-    formData.append('user', idUser)
+    formData.append('children_name', name.value)
+    formData.append('children_birthdate', birthdateFormat)
+    formData.append('children_curp', curp.value)
+    formData.append('children_user', idUser)
 
     // Añadir la imagen si existe, de lo contrario usar un avatar por defecto
     if (imageFile.value) {
@@ -53,7 +53,6 @@ export function useSetChildren({
         method: 'POST', // No necesitas agregar 'Content-Type'
         headers: {
           Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-          'content-type': 'application/json'
         },
         body: formData
       })
@@ -70,11 +69,15 @@ export function useSetChildren({
         showToast({ message: 'Niño/a registrado', tipo: 'success', persistente: true })
         router.push({ name: 'childrens' })
       } else {
+        if (data?.children_curp) {
+          setChildrenError.value = 'La CURP que intentas registrar ya existe'
+          return
+        }
         console.error('Registration failed', data)
         setChildrenError.value = 'Hubo un problema en el registro'
       }
     } catch (err) {
-      console.error('Error en la solicitud:', err)
+      console.error('Registration failed', err)
       setChildrenError.value = 'Hubo un problema en el registro'
     } finally {
       setChildrenLoading.value = false
