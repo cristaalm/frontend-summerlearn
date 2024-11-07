@@ -26,7 +26,7 @@ import { useColorSchemeStore } from '@/stores/color-scheme'
 // @ts-ignore
 import { Baseurl } from '@/utils/global'
 // @ts-ignore
-import { startTour, activateTour } from '@/utils/tourDriver'; // Importa el archivo creado
+import { startTourDonor } from '@/utils/tours/tourDonations'; // Importa el archivo creado
 // @ts-ignore
 import getIdByToken from '@/logic/getIdByToken';
 
@@ -196,7 +196,7 @@ const closeSlideOver = () => {
 }
 
 async function againTour() {
-  await startTour(router, id);
+  await startTourDonor(router, id);
 }
 
 
@@ -204,114 +204,6 @@ async function againTour() {
 
 <template>
   <!-- BEGIN: Menu -->
-
-  <!-- BEGIN: Slide Over Content -->
-  <Slideover v-model:open="openSlide" @close="closeSlideOver">
-    <!-- v-model vinculado a openSlide -->
-    <Slideover.Panel class="text-black dark:text-slate-200" className="contact-tour">
-      <Slideover.Title class="p-5">
-        <h2 class="mr-auto text-base font-medium">Contáctanos</h2>
-      </Slideover.Title>
-      <Slideover.Description>
-        <!-- Primera tabla -->
-        <table class="min-w-full table-auto mb-4">
-          <tbody>
-            <tr class="border-b Coordinador" className="Coordinador">
-              <td class="px-4 py-1 text-left font-semibold">Nombre</td>
-              <td class="px-4 py-2">Brisa Medina</td>
-              <td class="px-4 py-2 text-center">
-                <span class="inline-block px-3 py-1 bg-green-500 text-white text-xs font-medium rounded-full">
-                  Coordinador
-                </span>
-              </td>
-            </tr>
-            <tr class="border-b">
-              <td class="px-4 py-2 text-left font-semibold">Correo</td>
-              <td class="px-4 py-2">bmedina1@ucol.mx</td>
-            </tr>
-          </tbody>
-        </table>
-
-        <!-- Segunda tabla -->
-        <table class="min-w-full table-auto mb-4">
-          <tbody>
-            <tr class="border-b">
-              <td class="px-4 py-1 text-left font-semibold">Nombre</td>
-              <td class="px-4 py-2">Alfredo Elizaldi</td>
-              <td class="px-4 py-2 text-center">
-                <span class="inline-block px-3 py-1 bg-green-500 text-white text-xs font-medium rounded-full">
-                  Coordinador
-                </span>
-              </td>
-            </tr>
-            <tr class="border-b">
-              <td class="px-4 py-2 text-left font-semibold">Correo</td>
-              <td class="px-4 py-2">aelizaldi@ucol.mx</td>
-            </tr>
-          </tbody>
-        </table>
-
-        <!-- Tercer tabla -->
-        <table class="min-w-full table-auto mb-4">
-          <tbody>
-            <tr class="border-b">
-              <td class="px-4 py-1 text-left font-semibold">Nombre</td>
-              <td class="px-4 py-2">Eduardo Árcega</td>
-              <td class="px-4 py-2 text-center">
-                <span class="inline-block px-3 py-1 bg-green-500 text-white text-xs font-medium rounded-full">
-                  Coordinador
-                </span>
-              </td>
-            </tr>
-            <tr class="border-b">
-              <td class="px-4 py-2 text-left font-semibold">Correo</td>
-              <td class="px-4 py-2">earcega@ucol.mx</td>
-            </tr>
-          </tbody>
-        </table>
-
-        <!-- Cuarta tabla -->
-        <table class="min-w-full table-auto mb-4">
-          <tbody>
-            <tr class="border-b">
-              <td class="px-4 py-1 text-left font-semibold">Nombre</td>
-              <td class="px-4 py-2">Gabriel Valencia</td>
-              <td class="px-4 py-2 text-center">
-                <span class="inline-block px-3 py-1 bg-green-500 text-white text-xs font-medium rounded-full">
-                  Coordinador
-                </span>
-              </td>
-            </tr>
-            <tr class="border-b">
-              <td class="px-4 py-2 text-left font-semibold">Correo</td>
-              <td class="px-4 py-2">gvalencia3@ucol.mx</td>
-            </tr>
-          </tbody>
-        </table>
-
-        <!-- Quinta tabla -->
-        <table class="min-w-full table-auto mb-4">
-          <tbody>
-            <tr class="border-b">
-              <td class="px-4 py-1 text-left font-semibold">Nombre</td>
-              <td class="px-4 py-2">Miguel Huitron</td>
-              <td class="px-4 py-2 text-center">
-                <span class="inline-block px-3 py-1 bg-green-500 text-white text-xs font-medium rounded-full">
-                  Coordinador
-                </span>
-              </td>
-            </tr>
-            <tr class="border-b">
-              <td class="px-4 py-2 text-left font-semibold">Correo</td>
-              <td class="px-4 py-2">mhuitron0@ucol.mx</td>
-            </tr>
-          </tbody>
-        </table>
-      </Slideover.Description>
-    </Slideover.Panel>
-  </Slideover>
-  <!-- END: Slide Over Content -->
-
   <div :class="[
     'echo group bg-gradient-to-b from-slate-200/70 to-slate-50 dark:from-theme-1 dark:to-slate-800 background relative min-h-screen',
     'before:content-[\'\'] before:h-[370px] before:w-screen before:bg-gradient-to-t before:from-theme-1/80 before:to-theme-2 [&.background--hidden]:before:opacity-0 before:transition-[opacity,height] before:ease-in-out before:duration-300 before:top-0 before:fixed',
@@ -353,8 +245,7 @@ async function againTour() {
         <div id="dos" :class="[
           'flex items-center z-10 px-5 h-[65px] w-[275px] overflow-hidden relative duration-300 xl:group-[.side-menu--collapsed]:w-[91px] group-[.side-menu--collapsed.side-menu--on-hover]:w-[275px]'
         ]">
-          <a href=""
-            class="flex items-center transition-[margin] duration-300 group-[.side-menu--collapsed]:xl:ml-2 group-[.side-menu--collapsed.side-menu--on-hover]:xl:ml-0"
+          <a class="flex items-center duration-300 group-[.side-menu--collapsed]:xl:ml-2 group-[.side-menu--collapsed.side-menu--on-hover]:xl:ml-0 cursor-pointer hover:scale-105 transition-all"
             @click="(event: MouseEvent) => {
               event.preventDefault()
               router.push({
@@ -373,9 +264,10 @@ async function againTour() {
               SummerLearn
             </div>
           </a>
-          <a href="" @click="toggleCompactMenu"
+          <a @click="toggleCompactMenu"
             class="hidden group-[.side-menu--collapsed.side-menu--on-hover]:xl:opacity-100 group-[.side-menu--collapsed]:xl:rotate-180 group-[.side-menu--collapsed]:xl:opacity-0 transition-[opacity,transform] 3xl:flex items-center justify-center w-[20px] h-[20px] ml-auto border rounded-full border-slate-600/40 hover:bg-slate-600/5">
-            <Lucide icon="ArrowLeft" class="w-3.5 h-3.5 stroke-[1.3] dark:text-slate-200" />
+            <Lucide icon="ArrowLeft"
+              class="w-3.5 h-3.5 stroke-[1.3] dark:text-slate-200 cursor-pointer hover:scale-125 transition-all" />
           </a>
         </div>
         <div id="tres" ref="scrollableRef" :class="[
