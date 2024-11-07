@@ -1,6 +1,6 @@
 import { ref } from 'vue'
 
-export function useValidationImage({ status, validate }) {
+export function useValidationImage({ status, validateAll }) {
   const profileImage = ref(null) // Object URL de la imagen seleccionada
   const imageFile = ref(null) // Archivo seleccionado
   const errorMessagePhoto = ref('')
@@ -38,7 +38,7 @@ export function useValidationImage({ status, validate }) {
       imageFile.value = file
       errorMessagePhoto.value = '' // Limpiar mensaje de error si la validación es exitosa
     }
-    validate()
+    validateAll()
   }
 
   // Función para abrir el input file cuando se hace clic en el icono del lápiz
@@ -63,7 +63,7 @@ export function useValidationImage({ status, validate }) {
     }
 
     errorMessagePhoto.value = 'La foto de perfil es obligatoria'
-    validate()
+    validateAll()
   }
 
   return {

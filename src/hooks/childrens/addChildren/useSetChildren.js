@@ -1,19 +1,20 @@
 import { ref, inject } from 'vue'
 import { useRouter } from 'vue-router'
 import { Baseurl } from '@/utils/global'
+import getIdByToken from '@/logic/getIdByToken'
 
-export function useSetUser({
+export function useSetChildren({
   name,
   imageFile, // archivo de imagen
   birthdate,
   curp,
   valid,
-  validate,
+  validateAll,
   resetFields
 }) {
   const router = useRouter()
-  const error = ref('')
-  const loading = ref(false)
+  const setChildrenError = ref('')
+  const setChildrenLoading = ref(false)
   const showToast = inject('showToast')
 
   const addChildren = async () => {
@@ -21,12 +22,12 @@ export function useSetUser({
     const access_token = localStorage.getItem('access_token')
     const idUser = getIdByToken(access_token).user_id
 
-    error.value = ''
-    loading.value = true
-    validate() // Validar antes de ejecutar la llamada
+    setChildrenError.value = ''
+    setChildrenLoading.value = true
+    validateAll() // Validar antes de ejecutar la llamada
     if (!valid.value) {
-      error.value = 'Por favor, llena todos los campos correctamente'
-      loading.value = false
+      setChildrenError.value = 'Por favor, llena todos los campos correctamente'
+      setChildrenLoading.value = false
       return
     }
 
@@ -50,7 +51,10 @@ export function useSetUser({
     try {
       const response = await fetch(Baseurl + 'childrens/', {
         method: 'POST', // No necesitas agregar 'Content-Type'
-        headers: {},
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+          'content-type': 'application/json'
+        },
         body: formData
       })
 
@@ -67,15 +71,15 @@ export function useSetUser({
         router.push({ name: 'childrens' })
       } else {
         console.error('Registration failed', data)
-        error.value = 'Hubo un problema en el registro'
+        setChildrenError.value = 'Hubo un problema en el registro'
       }
     } catch (err) {
       console.error('Error en la solicitud:', err)
-      error.value = 'Hubo un problema en el registro'
+      setChildrenError.value = 'Hubo un problema en el registro'
     } finally {
-      loading.value = false
+      setChildrenLoading.value = false
     }
   }
 
-  return { error, loading, addChildren }
+  return { setChildrenError, setChildrenLoading, addChildren }
 }

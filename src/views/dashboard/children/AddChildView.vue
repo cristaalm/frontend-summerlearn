@@ -4,22 +4,15 @@ import Button from '@/components/base/Button'
 import Alert from '@/components/base/Alert'
 import Litepicker from '@/components/base/Litepicker'
 import LoadingIcon from '@/components/base/LoadingIcon'
-import { FormInput, FormSelect } from '@/components/base/Form'
+import { FormInput } from '@/components/base/Form'
 import { useRouter } from 'vue-router'
 import { useValidationImage } from '@/hooks/childrens/addChildren/useValidationImage'
 import { useValidationAddChildren } from '@/hooks/childrens/addChildren/useValidationAddChildren'
 import { useSetChildren } from '@/hooks/childrens/addChildren/useSetChildren'
 
-const { validate, valid, status, name, birthdate, curp, validateInputCurp } = useValidationAddChildren()
-const { error, loading, addChildren  } = useSetChildren()
-const {
-  profileImage,
-  errorMessagePhoto,
-  validateImage,
-  triggerFileSelect,
-  removeImage,
-  imageFile
-} = useValidationImage({ status, validate })
+const { validate, valid, status, name, birthdate, curp, validateInputCurp, resetFields, validateAll } = useValidationAddChildren()
+const { profileImage, errorMessagePhoto, validateImage, triggerFileSelect, removeImage, imageFile } = useValidationImage({ status, validateAll })
+const { setChildrenError, setChildrenLoading, addChildren  } = useSetChildren({ name, birthdate, curp, imageFile, valid, validateAll, resetFields })
 
 const router = useRouter()
 const minYear = new Date().getFullYear()-6
@@ -30,6 +23,7 @@ const handleRegister = () => {
       name: name.value,
       birthdate: birthdate.value,
       curp: curp.value,
+      profileImage: imageFile.value
     }
     addChildren({ children })
   }
@@ -94,7 +88,7 @@ const handleRegister = () => {
                     </div>
 
                     <!-- Input tipo archivo oculto -->
-                    <input id="profileImageInput" type="file" class="hidden" @change="validateImage" accept="image/*" />
+                    <input id="profileImageInput" name="profileImage" type="file" class="hidden" @change="validateImage" accept="image/*" />
                   </div>
 
                   <Button variant="outline-danger" size="sm"
@@ -106,6 +100,8 @@ const handleRegister = () => {
                 <div class="text-red-500 mt-2 dark:text-red-400">{{ errorMessagePhoto }}</div>
               </div>
             </div>
+
+            <!--? ######################### INPUTS TEXT ######################### -->
 
             <div class="flex-col block pt-5 mt-5 xl:items-center sm:flex xl:flex-row first:mt-0 first:pt-0">
               <label class="inline-block mb-2 sm:mb-0 sm:mr-5 sm:text-right xl:w-60 xl:mr-14">
@@ -196,13 +192,13 @@ const handleRegister = () => {
 
           <div class="flex py-5 border-t md:justify-end px-7 border-slate-200/80 dark:border-slate-600">
             <Button variant="outline-success"
-              :class="`w-full px-10 md:w-auto font-bold ${loading || !valid ? 'border-gray-500 text-gray-500' : 'border-green text-green dark:text-slate-200'}`"
+              :class="`w-full px-10 md:w-auto font-bold ${setChildrenLoading || !valid ? 'border-gray-500 text-gray-500' : 'border-green text-green dark:text-slate-200'}`"
               @click="handleRegister" :disabled="!valid || setChildrenLoading">
-              <LoadingIcon v-if="loading" icon="tail-spin" class="stroke-[1.3] w-4 h-4 mr-2 -ml-2"
+              <LoadingIcon v-if="setChildrenLoading" icon="tail-spin" class="stroke-[1.3] w-4 h-4 mr-2 -ml-2"
                 color="black" />
 
-              <Lucide v-if="!loading" icon="Check" class="stroke-[1.3] w-4 h-4 mr-2" />
-              {{ loading ? 'Registrando...' : 'Registrar' }}
+              <Lucide v-if="!setChildrenLoading" icon="Check" class="stroke-[1.3] w-4 h-4 mr-2" />
+              {{ setChildrenLoading ? 'Registrando...' : 'Registrar' }}
             </Button>
           </div>
         </div>
