@@ -153,9 +153,15 @@ watch(birthdate, (value) => {
               <div class="flex-1 w-full mt-3 xl:mt-0">
                 <div class="flex flex-col items-center md:flex-row">
                   <FormInput type="text" name="firstName" v-model="firstName" @input="validateText"
+                    @keydown.enter.prevent="() => {
+                      if (valid && !loading) addUser()
+                    }"
                     class="first:rounded-b-none first:md:rounded-bl-md first:md:rounded-r-none [&:not(:first-child):not(:last-child)]:-mt-px [&:not(:first-child):not(:last-child)]:md:mt-0 [&:not(:first-child):not(:last-child)]:md:-ml-px [&:not(:first-child):not(:last-child)]:rounded-none last:rounded-t-none last:md:rounded-l-none last:md:rounded-tr-md last:-mt-px last:md:mt-0 last:md:-ml-px focus:z-10 dark:text-slate-200 dark:placeholder:!text-slate-400"
                     placeholder="Escriba aquí su nombre..." />
                   <FormInput type="text" name="lastName" v-model="lastName" @input="validateText"
+                    @keydown.enter.prevent="() => {
+                      if (valid && !loading) addUser()
+                    }"
                     class="first:rounded-b-none first:md:rounded-bl-md first:md:rounded-r-none [&:not(:first-child):not(:last-child)]:-mt-px [&:not(:first-child):not(:last-child)]:md:mt-0 [&:not(:first-child):not(:last-child)]:md:-ml-px [&:not(:first-child):not(:last-child)]:rounded-none last:rounded-t-none last:md:rounded-l-none last:md:rounded-tr-md last:-mt-px last:md:mt-0 last:md:-ml-px focus:z-10 dark:text-slate-200 dark:placeholder:!text-slate-400"
                     placeholder="Escriba aquí su apellido..." />
                 </div>
@@ -219,8 +225,9 @@ watch(birthdate, (value) => {
                 </div>
               </label>
               <div class="flex-1 w-full mt-3 xl:mt-0">
-                <FormInput type="email" name="email" v-model="email"
-                  class="dark:text-slate-200 dark:placeholder:!text-slate-400"
+                <FormInput type="email" name="email" v-model="email" @keydown.enter.prevent="() => {
+                  if (valid && !loading) addUser()
+                }" class="dark:text-slate-200 dark:placeholder:!text-slate-400"
                   placeholder="Escriba aquí su correo electrónico..." @input="validateText" />
                 <div class="text-red-500 mt-2 dark:text-red-400">{{ status.email.message }}</div>
               </div>
@@ -242,12 +249,13 @@ watch(birthdate, (value) => {
                 </div>
               </label>
               <div class="flex-1 w-full mt-3 xl:mt-0">
-                <FormInput type="text" placeholder="Escriba aquí su teléfono celular..."
-                  class="dark:text-slate-200 dark:placeholder:!text-slate-400" name="phone" v-model="phone" @input="(e) => {
-                    validateInputPhone(e)
-                    validateText(e)
-                  }
-                    " />
+                <FormInput type="text" placeholder="Escriba aquí su teléfono celular..." @keydown.enter.prevent="() => {
+                  if (valid && !loading) addUser()
+                }" class="dark:text-slate-200 dark:placeholder:!text-slate-400" name="phone" v-model="phone" @input="(e) => {
+                  validateInputPhone(e)
+                  validateText(e)
+                }
+                  " />
                 <div class="text-red-500 mt-2 dark:text-red-400">{{ status.phone.message }}</div>
               </div>
             </div>
@@ -268,8 +276,9 @@ watch(birthdate, (value) => {
                 </div>
               </label>
               <div class="flex-1 w-full mt-3 xl:mt-0">
-                <FormSelect name="rol" v-model="rol" @change="validateRol"
-                  class="dark:text-slate-200 dark:placeholder:!text-slate-400">
+                <FormSelect name="rol" v-model="rol" @change="validateRol" @keydown.enter.prevent="() => {
+                  if (valid && !loading) addUser()
+                }" class="dark:text-slate-200 dark:placeholder:!text-slate-400">
                   <template v-if="loadingRoles">
                     <option value="" disabled selected>Cargando...</option>
                   </template>
@@ -309,7 +318,9 @@ watch(birthdate, (value) => {
               <div class="flex-1 w-full mt-3 xl:mt-0">
                 <InputGroup class="mt-2">
                   <FormInput :type="`${showPassword ? 'text' : 'password'}`" placeholder="Escriba aquí su contraseña..."
-                    class="dark:text-slate-200 dark:placeholder:!text-slate-400" name="password" v-model="password"
+                    @keydown.enter.prevent="() => {
+                      if (valid && !loading) addUser()
+                    }" class="dark:text-slate-200 dark:placeholder:!text-slate-400" name="password" v-model="password"
                     @input="(e) => {
                       validatePassword(e)
                       validatePasswordComfirm(e)
@@ -368,8 +379,9 @@ watch(birthdate, (value) => {
               </label>
               <div class="flex-1 w-full mt-3 xl:mt-0">
                 <InputGroup class="mt-2">
-                  <FormInput placeholder="Escriba nuevamente aquí su contraseña..."
-                    :type="`${showPasswordConfirm ? 'text' : 'password'}`" ref="inputPasswordConfirm"
+                  <FormInput placeholder="Escriba nuevamente aquí su contraseña..." @keydown.enter.prevent="() => {
+                    if (valid && !loading) addUser()
+                  }" :type="`${showPasswordConfirm ? 'text' : 'password'}`" ref="inputPasswordConfirm"
                     class="dark:text-slate-200 dark:placeholder:!text-slate-400" name="password_confirm"
                     v-model="password_confirm" @input="validatePasswordComfirm" />
 

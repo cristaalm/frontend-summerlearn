@@ -13,16 +13,16 @@ export function useUpdateUser({
   loadUser
 }) {
   const errorUser = ref('')
-  const loadingUser = ref(false)
+  const loadingUserEdit = ref(false)
   const showToast = inject('showToast')
 
   const updateUser = async () => {
     errorUser.value = ''
-    loadingUser.value = true
+    loadingUserEdit.value = true
     validate() // Validar antes de ejecutar la llamada
     if (!valid.value) {
-      showToast({ message: 'Por favor, completa los campos correctamente', tipo: 'error' })
-      loadingUser.value = false
+      showToast({ message: 'Por favor, completa los campos correctamente', type: 'error' })
+      loadingUserEdit.value = false
       return
     }
 
@@ -50,22 +50,22 @@ export function useUpdateUser({
       const data = await response.json()
 
       if (response.ok) {
-        showToast({ message: 'Datos actualizados correctamente', tipo: 'success' })
+        showToast({ message: 'Datos actualizados correctamente', type: 'success' })
         loadUser()
       } else {
         console.error('Registration failed', data)
-        showToast({ message: 'Hubo un problema en el registro', tipo: 'error' })
+        showToast({ message: 'Hubo un problema en el registro', type: 'error' })
       }
     } catch (err) {
       console.error('Error en la solicitud:', err)
-      showToast({ message: 'Hubo un problema en la solicitud', tipo: 'error' })
+      showToast({ message: 'Hubo un problema en la solicitud', type: 'error' })
     } finally {
-      loadingUser.value = false
+      loadingUserEdit.value = false
     }
   }
 
   return {
-    loadingUser,
+    loadingUserEdit,
     updateUser
   }
 }

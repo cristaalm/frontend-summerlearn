@@ -19,9 +19,9 @@ const { email, password, valid, validateInput } = useFormValidation({ error })
 const router = useRouter()
 const colorSchame = ref('theme-19')
 const changeColor = () => {
-  
+
   if (loginSuccess.value) {
-    return 
+    return
   }
 
   if (colorSchame.value === 'theme-19') {
@@ -70,20 +70,22 @@ const alertVariant = computed(() => {
           <div class="mt-6">
             <FormLabel>Correo electrónico <span class="text-red-600 bold">*</span></FormLabel>
             <FormInput type="text" class="block px-4 py-3.5 rounded-[0.6rem] border-slate-300/80"
-              placeholder="correo@mail.com" v-model="email" @input="validateInput('email')" />
+              placeholder="correo@mail.com" v-model="email" @input="validateInput('email')"
+              @keydown.enter.prevent="() => { if (valid && !loading && loginSuccess == '') loginUser({ email, password }) }" />
 
             <FormLabel class="mt-4">Contraseña <span class="text-red-600 bold">*</span></FormLabel>
 
             <div class="flex-1 w-full mt-3 xl:mt-0">
               <InputGroup class="mt-2">
                 <FormInput placeholder="************" :type="`${showPassword ? 'text' : 'password'}`"
+                  @keydown.enter.prevent="() => { if (valid && !loading && loginSuccess == '') loginUser({ email, password }) }"
                   htmlid="inputPassword" class="block px-4 py-3.5" name="password" v-model="password"
                   @input="validateInput('password')" />
                 <InputGroup.Text @click="() => {
                   showPassword = !showPassword
                 }
                   " class="cursor-pointer flex flex-col justify-center items-center">
-                  <button class="">
+                  <button>
                     <Lucide icon="Eye" class="w-4 h-4 stroke-[1.3] text-green-500" v-if="showPassword" />
                     <Lucide icon="EyeOff" class="w-4 h-4 stroke-[1.3] text-red-500" v-else />
                   </button>
@@ -153,7 +155,7 @@ const alertVariant = computed(() => {
         'Gracias a ti, llevamos materiales y apoyo a quienes más lo necesitan.',
         'Sé parte de SummerLearn, creando oportunidades para las próximas generaciones.'
       ]" :changeColor="changeColor" />
-      <div class="hidden lg:block absolute bottom-40 left-40 text-white">
+      <br><div class="hidden xl:ml-[115px] 2xl:ml-[140px] lg:block absolute lg:ml-[70px] bottom-40 text-white">
         <h2 class="text-4xl font-bold">SummerLearn</h2>
         <p class="mt-2 text-lg">Transformando la educación, un paso a la vez.</p>
       </div>

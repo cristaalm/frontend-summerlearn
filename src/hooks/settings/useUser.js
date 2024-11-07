@@ -4,10 +4,14 @@ import { getUser } from '@/services/settings/getUserInfo'
 export function useUser() {
   const user = ref([])
   const loadingUser = ref(false)
+  const firstLoad = ref(true)
   const errorUser = ref(null)
 
   const loadUser = async () => {
-    loadingUser.value = true
+    if (firstLoad.value) {
+      loadingUser.value = true
+      firstLoad.value = false
+    }
     try {
       user.value = await getUser()
     } catch (e) {

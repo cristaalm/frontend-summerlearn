@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import HeaderHome from '@/components/OnePage/Header/HeaderHome.vue'
 import Hero from '@/components/OnePage/OnePageHero.vue'
 import Impact from '@/components/OnePage/OnePageImpact.vue'
@@ -7,6 +7,8 @@ import Mission from '@/components/OnePage/OnePageMission.vue'
 import Footer from '@/components/OnePage/OnePageFooter.vue'
 import { changeLoginColorScheme } from '@/utils/switchColorScheme'
 import { onMounted } from 'vue'
+
+
 
 onMounted(() => {
   changeLoginColorScheme()
@@ -23,9 +25,12 @@ onMounted(() => {
 
     <Hero />
 
+    
     <Mission />
 
     <Impact />
+
+
 
     <JoinOurTeam />
   </main>

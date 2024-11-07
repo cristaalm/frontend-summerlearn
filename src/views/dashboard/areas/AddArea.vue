@@ -77,7 +77,9 @@ const handleRegister = () => {
               </label>
               <div class="flex-1 w-full mt-3 xl:mt-0">
                 <FormInput type="text" placeholder="Escriba aquí su nombre del área..." v-model="name"
-                  class="dark:text-slate-200 dark:placeholder:!text-slate-400" @input="(e) => validate(e, 'name')" />
+                  @keydown.enter.prevent="() => {
+                    if (valid && !setAreaLoading) handleRegister()
+                  }" class="dark:text-slate-200 dark:placeholder:!text-slate-400" @input="(e) => validate(e, 'name')" />
                 <div class="mt-1 text-xs text-red-500 h-4">
                   {{ status.name.message }}
                 </div>
@@ -101,8 +103,9 @@ const handleRegister = () => {
               </label>
 
               <div class="flex-1 w-full mt-3 xl:mt-0">
-                <FormSelect v-model="responsable" @input="(e) => validate(e, 'responsable')"
-                  class="dark:text-slate-200 dark:placeholder:!text-slate-400">
+                <FormSelect v-model="responsable" @input="(e) => validate(e, 'responsable')" @keydown.enter.prevent="() => {
+                  if (valid && !setAreaLoading) handleRegister()
+                }" class="dark:text-slate-200 dark:placeholder:!text-slate-400">
                   <template v-if="loading">
                     <option value="" disabled selected>Cargando...</option>
                   </template>

@@ -20,18 +20,18 @@ export function useDialogDeleteObjective({ objectives }) {
           (objective) => objective.id !== activityToDelete.value
         )
         setTimeout(() => {
-          showToast({ message: 'Objetivo eliminado exitosamente.', tipo: 'success' }) // Use showToast for success message
+          showToast({ message: 'Objetivo eliminado exitosamente.', type: 'success' }) // Use showToast for success message
         }, 1000)
       } else {
         setTimeout(() => {
-          showToast({ message: 'Error al eliminar la objectivo.', tipo: 'error' }) // Use showToast for error message
+          showToast({ message: 'Error al eliminar la objectivo.', type: 'error' }) // Use showToast for error message
         }, 1000)
       }
       dialogStatusDeleteObjective.value = false
       activityToDelete.value = null
     } catch (error) {
       console.error('Error deleting activity:', error)
-      showToast({ message: 'Error al eliminar la objective.', tipo: 'error' }) // Use showToast for error message
+      showToast({ message: 'Error al eliminar la objective.', type: 'error' }) // Use showToast for error message
     }
   }
 

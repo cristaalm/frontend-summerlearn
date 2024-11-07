@@ -6,12 +6,12 @@ import LoadingIcon from '@/components/base/LoadingIcon'
 import { FormInput, FormSelect } from '@/components/base/Form'
 import Button from '@/components/base/Button'
 import Table from '@/components/base/Table'
-import { onMounted } from 'vue'
+import { onMounted, inject } from 'vue'
 import { useRouter } from 'vue-router'
-import { useBills, usePagination, useBillSearch, useExportExcel, useExportPDF } from '@/hooks/bills'
+import { usePagination, useBillSearch, useExportExcel, useExportPDF } from '@/hooks/bills'
 
 const router = useRouter()
-const { bills, loading, loadBills, errorBills } = useBills()
+const { bills, loadingBills, loadBills, errorBills } = inject('bills')
 const { searchQuery, filteredBills } = useBillSearch(bills)
 const { currentPage, pageSize, totalPages, paginatedItems, changePage, changePageSize } =
   usePagination(filteredBills)
@@ -49,8 +49,8 @@ onMounted(() => {
               <div class="relative">
                 <Lucide icon="Search"
                   class="absolute inset-y-0 left-0 z-10 w-4 h-4 my-auto ml-3 stroke-[1.3] text-slate-500" />
-                <FormInput v-model="searchQuery" type="text" placeholder="Buscar concepto..."
-                  class="pl-9 sm:w-64 rounded-[0.5rem]" />
+                <FormInput v-model="searchQuery" type="text" placeholder="Buscar gasto..."
+                  class="pl-9 sm:w-64 rounded-[0.5rem] dark:text-slate-200 dark:placeholder:text-slate-400" />
               </div>
             </div>
             <div class="flex flex-col sm:flex-row gap-x-3 gap-y-2 sm:ml-auto">
@@ -115,7 +115,7 @@ onMounted(() => {
                 </Table.Tr>
               </Table.Thead>
 
-              <Table.Tbody v-if="loading">
+              <Table.Tbody v-if="loadingBills">
                 <Table.Tr class="[&_td]:last:border-b-0">
                   <Table.Td colspan="4" class="py-8 text-center text-xl font-bold text-green-500">
                     <div class="flex flex-col w-full justify-center items-center text-nowrap">
@@ -136,7 +136,7 @@ onMounted(() => {
               </Table.Tbody>
 
               <!--? Mostrar mensaje de error cuando no se encuentran usuarios -->
-              <Table.Tbody v-if="!loading && totalPages <= 0 && !errorBills">
+              <Table.Tbody v-if="!loadingBills && totalPages <= 0 && !errorBills">
                 <Table.Tr>
                   <Table.Td colspan="4" class="py-8 text-center text-xl font-bold text-amber-500">
                     No se encontraron gasto
@@ -144,14 +144,19 @@ onMounted(() => {
                 </Table.Tr>
               </Table.Tbody>
 
-              <Table.Tbody v-if="!loading">
+              <Table.Tbody v-if="!loadingBills">
                 <template v-for="(bill, key) in paginatedItems" :key="key">
                   <Table.Tr class="[&_td]:last:border-b-0">
                     <Table.Td class="py-4 border-dashed dark:bg-darkmode-600 dark:text-slate-200">
                       {{ bill.donation.name }}
                     </Table.Td>
                     <Table.Td class="py-4 border-dashed dark:bg-darkmode-600 dark:text-slate-200">
-                      $ {{ bill.amount }}
+                      {{
+                        new Intl.NumberFormat('es-MX', {
+                          style: 'currency',
+                          currency: 'MXN'
+                        }).format(bill.amount)
+                      }}
                     </Table.Td>
                     <Table.Td class="py-4 border-dashed dark:bg-darkmode-600 dark:text-slate-200">
                       {{ bill.concept }}

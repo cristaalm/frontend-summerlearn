@@ -12,10 +12,6 @@ export function useSearch(actividades) {
         selectedArea.value === null ||
         actividad.area_name.toLowerCase() === selectedArea.value.toLowerCase()
 
-      // Log for debugging purposes
-      console.log('Actividad nombre seleccionada:', actividad.area_name)
-      console.log('Área seleccionada:', selectedArea.value)
-
       return matchesQuery && matchesArea
     })
   })

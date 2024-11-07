@@ -11,14 +11,14 @@ import formatDate from '@/logic/formatDate'
 import { FormInput, FormSelect } from '@/components/base/Form'
 import { Menu, Popover, Dialog } from '@/components/base/Headless'
 import { useRouter } from 'vue-router'
-import { onMounted } from 'vue'
+import { onMounted, inject } from 'vue'
 import LoadingIcon from '@/components/base/LoadingIcon'
 import Pagination from '@/components/base/Pagination'
 import Button from '@/components/base/Button'
 import Lucide from '@/components/base/Lucide'
 import Table from '@/components/base/Table'
 
-const { performance, loading, error, loadPerformance} = usePerformance()
+const { performance, loadingPerformance, errorPerformance, loadPerformance } = inject('performance')
 const { searchQuery, selectedStatus, filteredItems, activeFilters } = useFilter(performance)
 const { currentPage, pageSize, totalPages, paginatedItems, changePage, changePageSize } =
   usePagination(filteredItems)
@@ -93,7 +93,7 @@ onMounted(() => {
                 <Lucide icon="Search"
                   class="absolute inset-y-0 left-0 z-10 w-4 h-4 my-auto ml-3 stroke-[1.3] text-slate-500" />
                 <FormInput v-model="searchQuery" type="text" placeholder="Buscar nombre..."
-                  class="pl-9 sm:w-72 rounded-[0.5rem]" />
+                  class="pl-9 sm:w-72 rounded-[0.5rem] dark:text-slate-200 dark:placeholder:text-slate-400" />
               </div>
             </div>
             <div class="flex flex-col sm:flex-row gap-x-3 gap-y-2 sm:ml-auto">
@@ -138,7 +138,7 @@ onMounted(() => {
                   <Lucide icon="ArrowDownWideNarrow" class="stroke-[1.3] w-4 h-4 mr-2" />
                   Filtrar
                   <div
-                    class="flex items-center justify-center h-5 px-1.5 ml-2 text-xs font-medium border rounded-full bg-slate-100">
+                    class="flex items-center justify-center h-5 px-1.5 ml-2 text-xs font-medium border rounded-full bg-slate-100 dark:text-slate-900">
                     {{ activeFilters }}
                   </div>
                 </Popover.Button>
@@ -173,24 +173,27 @@ onMounted(() => {
               <Table.Thead>
                 <Table.Tr>
                   <Table.Td
-                    class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500">
+                    class="w-5 py-4 font-medium border-t bg-slate-50 dark:bg-transparent border-slate-200/60 text-slate-500 dark:text-slate-200">
                     Nombre
                   </Table.Td>
                   <Table.Td
-                    class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500">
+                    class="w-5 py-4 font-medium border-t bg-slate-50 dark:bg-transparent border-slate-200/60 text-slate-500 dark:text-slate-200">
                     Actividad
                   </Table.Td>
                   <Table.Td
-                    class="py-4 font-medium border-t text-center bg-slate-50 border-slate-200/60 text-slate-500">
+                    class="w-5 py-4 font-medium border-t bg-slate-50 dark:bg-transparent border-slate-200/60 text-slate-500 dark:text-slate-200">
                     Calificación
+                  </Table.Td>
+                  <Table.Td
+                    class="w-5 py-4 font-medium border-t bg-slate-50 dark:bg-transparent border-slate-200/60 text-slate-500 dark:text-slate-200">
                   </Table.Td>
                 </Table.Tr>
               </Table.Thead>
 
               <!--? Mostrar 'Cargando información...' cuando loading es true -->
-              <Table.Tbody v-if="loading">
+              <Table.Tbody v-if="loadingPerformance">
                 <Table.Tr>
-                  <Table.Td colspan="7" class="py-8 text-center text-xl font-bold text-green-500">
+                  <Table.Td colspan="4" class="py-8 text-center text-xl font-bold text-green-500">
                     <div class="flex flex-col w-full justify-center items-center text-nowrap">
                       <LoadingIcon icon="tail-spin" class="h-8" color="black" />
                       <div class="mt-2">Cargando información...</div>
@@ -200,7 +203,7 @@ onMounted(() => {
               </Table.Tbody>
 
               <!--? Mostrar mensaje de error cuando hay error -->
-              <Table.Tbody v-if="error">
+              <Table.Tbody v-if="errorPerformance">
                 <Table.Tr>
                   <Table.Td colspan="4" class="py-8 text-center text-xl font-bold text-red-500">
                     Error al cargar la información, Inténtelo más tarde
@@ -209,7 +212,7 @@ onMounted(() => {
               </Table.Tbody>
 
               <!--? Mostrar mensaje de error cuando no se encuentran programas -->
-              <Table.Tbody v-if="!loading && totalPages <= 0 && !error">
+              <Table.Tbody v-if="!loadingPerformance && totalPages <= 0 && !errorPerformance">
                 <Table.Tr>
                   <Table.Td colspan="4" class="py-8 text-center text-xl font-bold text-amber-500">
                     No se encontraron desempeños
@@ -218,32 +221,33 @@ onMounted(() => {
               </Table.Tbody>
 
               <!--? Mostrar la tabla de áreas cuando no está cargando y no existe ningun error -->
-              <Table.Tbody v-if="!loading">
+              <Table.Tbody v-if="!loadingPerformance">
                 <template v-for="performance in paginatedItems" :key="performance.id">
                   <Table.Tr class="[&_td]:last:border-b-0">
-                    <Table.Td class="py-4 border-dashed dark:bg-darkmode-600 text-center">
+                    <Table.Td class="py-4 border-dashed dark:bg-darkmode-600 dark:text-slate-200">
                       <div href="" class="font-medium whitespace-nowrap">
                         {{ performance.child }}
                       </div>
                     </Table.Td>
-                    <Table.Td class="py-4 border-dashed dark:bg-darkmode-600 text-center">
+                    <Table.Td class="py-4 border-dashed dark:bg-darkmode-600 dark:text-slate-200">
                       <div href="" class="font-medium whitespace-nowrap">
                         {{ performance.activity }}
                       </div>
                     </Table.Td>
-                    <Table.Td class="py-4 border-dashed dark:bg-darkmode-600 text-center">
+                    <Table.Td class="py-4 border-dashed dark:bg-darkmode-600 dark:text-slate-200">
                       <div href="" class="font-medium whitespace-nowrap">
                         {{ performance.value }}
                       </div>
                     </Table.Td>
-   
+
                     <!--? ######################## ACTIONS TABLE ######################## -->
 
                     <Table.Td class="relative py-4 border-dashed dark:bg-darkmode-600">
                       <div class="flex items-center justify-end">
                         <Menu class="h-5">
                           <Menu.Button class="w-5 h-5 text-black">
-                            <Lucide icon="MoreVertical" class="w-5 h-5 stroke-black fill-black" />
+                            <Lucide icon="MoreVertical"
+                              class="w-5 h-5 stroke-black fill-black dark:stroke-slate-200 dark:fill-slate-200" />
                           </Menu.Button>
                           <Menu.Items class="w-40">
                             <Menu.Item class="text-warning">
@@ -303,7 +307,8 @@ onMounted(() => {
                 <Lucide icon="ChevronsRight" class="w-4 h-4" />
               </Pagination.Link>
             </Pagination>
-            <FormSelect class="sm:w-20 rounded-[0.5rem]" v-model="pageSize" @change="changePageSize">
+            <FormSelect class="sm:w-20 rounded-[0.5rem] dark:text-slate-200 dark:placeholder:text-slate-200"
+              v-model="pageSize" @change="changePageSize">
               <option value="10">10</option>
               <option value="20">20</option>
               <option value="30">30</option>
@@ -316,5 +321,3 @@ onMounted(() => {
     </div>
   </div>
 </template>
-
-

@@ -9,7 +9,11 @@ export function useFilter(items) {
       selectedStatus.value = selectedStatus.value == '1' ? true : false
     }
     return items.value.filter((item) => {
-      const matchesQuery = item.name.toLowerCase().includes(searchQuery.value.toLowerCase())
+      const matchesQuery =
+        item.name.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+        item.date.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+        item.area_name.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+        item.program_name.toLowerCase().includes(searchQuery.value.toLowerCase())
       const matchesStatus = selectedStatus.value === null || item.status === !!selectedStatus.value
 
       return matchesQuery && matchesStatus

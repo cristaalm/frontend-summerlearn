@@ -10,7 +10,7 @@
    | https://tailwindcss.com/docs/theme
    |
    */
-@import "./fonts/_public-sans.css";
+@import './fonts/_public-sans.css';
 
 /*
    |--------------------------------------------------------------------------
@@ -20,12 +20,12 @@
    | Import CSS components.
    |
    */
-@import "./components/_box.css";
-@import "./components/_global.css";
-@import "./components/_image-fit.css";
-@import "./components/_scrollbar-hidden.css";
-@import "./components/_typing-dots.css";
-@import "./components/_zoom-in.css";
+@import './components/_box.css';
+@import './components/_global.css';
+@import './components/_image-fit.css';
+@import './components/_scrollbar-hidden.css';
+@import './components/_typing-dots.css';
+@import './components/_zoom-in.css';
 
 /*
  |--------------------------------------------------------------------------
@@ -41,4 +41,16 @@
  */
 @tailwind base;
 @tailwind components;
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  outline: none;
+}
+
+input {
+  outline: none;
+}
 @tailwind utilities;

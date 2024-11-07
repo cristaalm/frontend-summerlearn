@@ -142,7 +142,7 @@ const changeColor = () => {
         'Restablecer tu acceso te permitirá seguir brindando apoyo educativo a quienes más lo necesitan.',
         'Tu compromiso es invaluable, te ayudamos a volver para que sigas siendo parte de nuestra misión.'
       ]" :changeColor="changeColor" />
-      <div class="hidden lg:block absolute bottom-40 left-40 text-white">
+      <br><div class="hidden xl:ml-[115px] 2xl:ml-[140px] lg:block absolute lg:ml-[70px] bottom-40 text-white">
         <h2 class="text-4xl font-bold">SummerLearn</h2>
         <p class="mt-2 text-lg">Transformando la educación, un paso a la vez.</p>
       </div>

@@ -16,6 +16,10 @@ let isDeleting: boolean = false
 const typingSpeed: number = 50 // Velocidad de escritura en ms
 const delayBetweenPhrases: number = 1000 // Tiempo de espera entre frases
 
+// Referencias para los timeouts
+let typingTimeout: number | null = null
+let deleteTimeout: number | null = null
+
 // Función para barajar las frases
 const shuffleArray = (array: string[]): string[] => {
     const shuffled = array.slice() // Crear una copia del array original
@@ -38,7 +42,7 @@ const typeEffect = (): void => {
 
     // Si terminó de escribir la frase, esperar antes de comenzar a borrar
     if (!isDeleting && letterIndex === currentPhrase.length) {
-        setTimeout(() => (isDeleting = true), delayBetweenPhrases)
+        deleteTimeout = setTimeout(() => (isDeleting = true), delayBetweenPhrases) as unknown as number
         changeColor();
     } else if (isDeleting && letterIndex === 0) {
         changeColor();
@@ -54,7 +58,7 @@ const typeEffect = (): void => {
     }
 
     // Controlar la velocidad de escritura y borrado
-    setTimeout(typeEffect, isDeleting ? typingSpeed / 2 : typingSpeed)
+    typingTimeout = setTimeout(typeEffect, isDeleting ? typingSpeed / 2 : typingSpeed) as unknown as number
 }
 
 // Función para manejar cambios de tamaño de pantalla
@@ -75,13 +79,13 @@ onMounted((): void => {
     window.addEventListener('resize', handleResize) // Escuchar cambios en el tamaño de pantalla
 })
 
-// Limpiar el listener cuando se desmonta el componente
+// Limpiar los timeouts y el listener cuando se desmonta el componente
 onUnmounted((): void => {
     window.removeEventListener('resize', handleResize)
+    if (typingTimeout) clearTimeout(typingTimeout)
+    if (deleteTimeout) clearTimeout(deleteTimeout)
 })
-</script>
-
-
+</script>s
 
 <template>
     <div v-if="isLgScreen"

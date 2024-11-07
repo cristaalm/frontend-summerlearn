@@ -4,55 +4,39 @@ import Lucide from '@/components/base/Lucide'
 import { Menu, Dialog } from '@/components/base/Headless'
 import Pagination from '@/components/base/Pagination'
 import { FormInput, FormSelect } from '@/components/base/Form'
+import { useUsers } from '@/hooks/users/useUserCoordinator'
 import Table from '@/components/base/Table'
 import LoadingIcon from '@/components/base/LoadingIcon'
 import Button from '@/components/base/Button'
-// import { useFilter, usePagination, useAreas } from '@/hooks/areas/' // error areglado ><
-import { onMounted } from 'vue'
-import { useFilter, useAreas, usePagination, useDialogDelete } from '@/hooks/areas/'
+import { EditAreaModal, DeleteAreaModal } from '@/components/Dashboard/areas/'
+import { useDialogDeleteArea, useDialogEditArea } from '@/hooks/areas/Dialogs'
+import { onMounted, provide, ref, inject } from 'vue'
+import { useFilter, usePagination } from '@/hooks/areas/'
 
-const { areas, loading, error, loadAreas } = useAreas()
+const { areas, loadingAreas, errorAreas, loadAreas } = inject('areas')
 const { searchQuery, filteredItems } = useFilter(areas)
-const { currentPage, pageSize, totalPages, paginatedItems, changePage, changePageSize } =
-  usePagination(filteredItems)
+const { currentPage, pageSize, totalPages, paginatedItems, changePage, changePageSize } = usePagination(filteredItems)
+const { setModalEditArea, areaInfoProvideEdit, ModalEditArea } = useDialogEditArea()
+const { setModalDeleteArea, ModalDeleteArea, areaInfoProvideDelete } = useDialogDeleteArea()
 const router = useRouter()
-const { dialogStatusDelete, openDeleteModal, confirmDeleteArea, closeDeleteArea } = useDialogDelete(
-  { areas }
-)
+
+const { users, loading: loadingUsers, error: errorUsers, loadUsers } = useUsers()
+
+provide('cordinator', { users, loadingUsers, errorUsers, loadUsers })
 
 onMounted(() => {
   loadAreas()
+  loadUsers()
 })
 </script>
 
 <template>
-  <!-- BEGIN: Modal Content -->
-  <Dialog :open="dialogStatusDelete" @close="() => {
-    dialogStatusDelete.value = false
-  }">
-    <Dialog.Panel>
-      <div class="p-5 text-center">
-        <Lucide icon="XCircle" class="w-16 h-16 mx-auto mt-3 text-danger dark:text-red-500" />
-        <div class="mt-5 text-3xl dark:text-slate-200">¿Está seguro?</div>
-        <div class="mt-2 text-slate-500 dark:text-slate-400">
-          ¿Realmente desea eliminar este registro?
-          <br />
-          Este proceso no puede deshacerse.
-        </div>
-      </div>
-      <div class="px-5 pb-8 text-center space-x-8">
-        <Button type="button" variant="outline-secondary" @click="closeDeleteArea"
-          class="w-24 mr-1 dark:text-slate-200">
-          Cancelar
-        </Button>
-        <Button type="button" variant="danger" class="w-24 dark:text-slate-200" @click="confirmDeleteArea"
-          ref="deleteButtonRef">
-          Eliminar
-        </Button>
-      </div>
-    </Dialog.Panel>
-  </Dialog>
-  <!-- END: Modal Content -->
+
+  <EditAreaModal :ModalEditArea="ModalEditArea" :setModalEditArea="setModalEditArea" :infoArea="areaInfoProvideEdit" />
+
+  <DeleteAreaModal :ModalDeleteArea="ModalDeleteArea" :setModalDeleteArea="setModalDeleteArea"
+    :infoArea="areaInfoProvideDelete" />
+
   <div class="grid grid-cols-12 gap-y-10 gap-x-6">
     <div class="col-span-12">
       <div class="flex flex-col md:h-10 gap-y-3 md:items-center md:flex-row">
@@ -77,7 +61,7 @@ onMounted(() => {
               <div class="relative">
                 <Lucide icon="Search"
                   class="absolute inset-y-0 left-0 z-10 w-4 h-4 my-auto ml-3 stroke-[1.3] text-slate-500" />
-                <FormInput v-model="searchQuery" type="text" placeholder="Buscar nombre de área..."
+                <FormInput v-model="searchQuery" type="text" placeholder="Buscar área..."
                   class="pl-9 sm:w-72 rounded-[0.5rem] dark:text-slate-200" />
               </div>
             </div>
@@ -101,7 +85,7 @@ onMounted(() => {
               </Table.Thead>
 
               <!--? Mostrar 'Cargando información...' cuando loading es true -->
-              <Table.Tbody v-if="loading">
+              <Table.Tbody v-if="loadingAreas">
                 <Table.Tr>
                   <Table.Td colspan="3" class="py-8 text-center text-xl font-bold text-green-500">
                     <div class="flex flex-col w-full justify-center items-center text-nowrap">
@@ -113,7 +97,7 @@ onMounted(() => {
               </Table.Tbody>
 
               <!--? Mostrar mensaje de error cuando hay error -->
-              <Table.Tbody v-if="error">
+              <Table.Tbody v-if="errorAreas">
                 <Table.Tr>
                   <Table.Td colspan="3" class="py-8 text-center text-xl font-bold text-red-500">
                     Error al cargar la información, inténtelo más tarde
@@ -122,7 +106,7 @@ onMounted(() => {
               </Table.Tbody>
 
               <!--? Mostrar mensaje de error cuando no se encuentran usuarios -->
-              <Table.Tbody v-if="!loading && totalPages <= 0 && !error">
+              <Table.Tbody v-if="!loadingAreas && totalPages <= 0 && !errorAreas">
                 <Table.Tr>
                   <Table.Td colspan="3" class="py-8 text-center text-xl font-bold text-amber-500">
                     No se encontraron áreas
@@ -131,7 +115,7 @@ onMounted(() => {
               </Table.Tbody>
 
               <!--? Mostrar la tabla de áreas cuando no está cargando y no existe ningun error -->
-              <Table.Tbody v-if="!loading">
+              <Table.Tbody v-if="!loadingAreas">
                 <template v-for="area in paginatedItems" :key="area.id">
                   <Table.Tr class="[&_td]:last:border-b-0">
                     <Table.Td class="py-4 border-dashed dark:bg-darkmode-600 dark:text-slate-200 text-center">
@@ -152,14 +136,14 @@ onMounted(() => {
                               class="w-5 h-5 stroke-black dark:stroke-slate-200 fill-black dark:fill-slate-200" />
                           </Menu.Button>
                           <Menu.Items class="w-40">
-                            <Menu.Item class="text-warning dark:text-yellow-400">
+                            <Menu.Item class="text-warning dark:text-yellow-400"
+                              @click="() => { setModalEditArea({ open: true, areaInfo: area }) }">
                               <Lucide icon="CheckSquare" class="w-4 h-4 mr-2 dark:stroke-yellow-400" />
                               Editar
                             </Menu.Item>
                             <Menu.Item class="text-danger dark:text-red-400" @click="() => {
-                              openDeleteModal(area.id)
-                            }
-                              ">
+                              setModalDeleteArea({ open: true, areaInfo: area })
+                            }">
                               <Lucide icon="Trash" class="w-4 h-4 mr-2 dark:stroke-red-400" />
                               Eliminar
                             </Menu.Item>

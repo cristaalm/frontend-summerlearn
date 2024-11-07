@@ -17,7 +17,7 @@ export function useUpdatePassword({
     loadingUpdatePassword.value = true
     validate() // Validar antes de ejecutar la llamada
     if (!valid.value) {
-      showToast({ message: 'Por favor, llena todos los campos correctamente', tipo: 'error' })
+      showToast({ message: 'Por favor, llena todos los campos correctamente', type: 'error' })
       loadingUpdatePassword.value = false
       return
     }
@@ -47,22 +47,22 @@ export function useUpdatePassword({
         newPasswordConfirm.value = ''
         resetFields()
         if (data.spanishSuccess) {
-          showToast({ message: data.spanishSuccess, tipo: 'success', persistente: true })
+          showToast({ message: data.spanishSuccess, type: 'success', persistente: true })
           return
         }
       } else {
         if (data.spanishError) {
-          showToast({ message: data.spanishError, tipo: 'error' })
+          showToast({ message: data.spanishError, type: 'error' })
           return
         }
         showToast({
-          message: 'Hubo un problema en el registro, intentelo mas tarde',
-          tipo: 'error'
+          message: 'Hubo un problema en el registro, intentelo más tarde',
+          type: 'error'
         })
       }
     } catch (err) {
       console.error('Error en la solicitud:', err)
-      showToast({ message: 'Hubo un problema en el registro, intentelo mas tarde', tipo: 'error' })
+      showToast({ message: 'Hubo un problema en el registro, intentelo más tarde', type: 'error' })
     } finally {
       loadingUpdatePassword.value = false
     }

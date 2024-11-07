@@ -37,7 +37,7 @@ export function useAuth({
       body: JSON.stringify({
         email: email.value,
         users_phone: unformatPhone(phone.value),
-        users_photo: 'media/imagesUsers/placeholderUser.jpg', // default photo
+        users_photo: 'media/usersImages/placeholderUser.jpg', // default photo
         password: password.value,
         first_name: firstName.value,
         last_name: lastName.value,

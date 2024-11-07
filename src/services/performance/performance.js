@@ -11,8 +11,6 @@ export const getPerformance = async () => {
   const json = await response.json()
   const performances = json
 
-  console.log(performances)
-
   // Ordenar por id DESC
   performances.sort((a, b) => b.performances_id - a.performances_id)
 
@@ -20,6 +18,6 @@ export const getPerformance = async () => {
     id: performance.performance_beneficiaries_id,
     value: performance.performance_beneficiaries_value,
     child: performance.performance_beneficiaries_subscription.child,
-    activity: performance.performance_beneficiaries_subscription.activity,
+    activity: performance.performance_beneficiaries_subscription.activity
   }))
 }

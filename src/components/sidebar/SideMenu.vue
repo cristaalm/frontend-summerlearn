@@ -5,7 +5,6 @@ import { useDarkModeStore } from '@/stores/dark-mode' // Importar el store del m
 import '@/assets/css/themes/echo.css'
 import { useRoute, useRouter } from 'vue-router'
 import { Menu, Slideover } from '@/components/base/Headless'
-import Tippy from '@/components/base/Tippy'
 import Lucide from '@/components/base/Lucide'
 import { useMenuStore } from '@/stores/menu'
 import { useCompactMenuStore } from '@/stores/compact-menu'
@@ -19,24 +18,47 @@ import {
   enter,
   leave
 } from './side-menu'
-import { watch, reactive, ref, computed, onMounted, provide } from 'vue'
+import { watch, reactive, ref, computed, onMounted, provide, onUnmounted, inject } from 'vue'
 import SimpleBar from 'simplebar'
 //@ts-ignore
 import { logoutColorScheme } from '@/utils/switchColorScheme'
 import { useColorSchemeStore } from '@/stores/color-scheme'
-
-// ? ############################ USER INFO ############################
-
-// @ts-ignore
-import { useUserPhoto } from '@/hooks/settings/'
 // @ts-ignore
 import { Baseurl } from '@/utils/global'
+// @ts-ignore
+import { startTour, activateTour } from '@/utils/tourDriver'; // Importa el archivo creado
+// @ts-ignore
+import getIdByToken from '@/logic/getIdByToken';
 
-const { photoUser, loadingUserPhoto, errorUserPhoto, loadUserPhoto } = useUserPhoto()
+const { user_id: id, rol: role } = getIdByToken(localStorage.getItem('access_token'));
 
-provide('userPhoto', { photoUser, loadingUserPhoto, errorUserPhoto, loadUserPhoto })
+// @ts-ignore
+const showToast = inject('showToast');
 
-// ? ############################ SIDE MENU ############################
+// @ts-ignore
+const { photoUser, loadingUserPhoto } = inject('userPhoto');
+// @ts-ignore
+const { user } = inject('user');
+// @ts-ignore
+const { chats } = inject('socket');
+// @ts-ignore
+const notification = computed(() => chats.value.findIndex((chat) => chat.seenChat === false) !== -1);
+
+watch(notification, (value) => {
+  if (value) {
+    // si tiene notificaciones, contamos cuantos chats tiene nuevos mensajes
+    document.title = `🔴SummerLearn`;
+    // @ts-ignore
+    showToast({
+      message: `Tienes mensajes sin leer`,
+      type: "info"
+    });
+  } else {
+    document.title = "SummerLearn";
+  }
+}, { immediate: true });
+
+
 
 // ? ############################ DARK MODE ############################
 
@@ -130,6 +152,7 @@ watch(
 )
 
 const clearLocalStorage = () => {
+  document.title = "SummerLearn"
   if (typeof window !== 'undefined' && window.localStorage) {
     localStorage.removeItem('access_token')
     localStorage.removeItem('refresh_token')
@@ -137,7 +160,6 @@ const clearLocalStorage = () => {
 }
 
 onMounted(() => {
-  loadUserPhoto()
 
   if (scrollableRef.value) {
     new SimpleBar(scrollableRef.value)
@@ -173,6 +195,10 @@ const closeSlideOver = () => {
   openSlide.value = false
 }
 
+async function againTour() {
+  await startTour(router, id);
+}
+
 
 </script>
 
@@ -182,7 +208,7 @@ const closeSlideOver = () => {
   <!-- BEGIN: Slide Over Content -->
   <Slideover v-model:open="openSlide" @close="closeSlideOver">
     <!-- v-model vinculado a openSlide -->
-    <Slideover.Panel class="text-black dark:text-slate-200">
+    <Slideover.Panel class="text-black dark:text-slate-200" className="contact-tour">
       <Slideover.Title class="p-5">
         <h2 class="mr-auto text-base font-medium">Contáctanos</h2>
       </Slideover.Title>
@@ -190,7 +216,7 @@ const closeSlideOver = () => {
         <!-- Primera tabla -->
         <table class="min-w-full table-auto mb-4">
           <tbody>
-            <tr class="border-b">
+            <tr class="border-b Coordinador" className="Coordinador">
               <td class="px-4 py-1 text-left font-semibold">Nombre</td>
               <td class="px-4 py-2">Brisa Medina</td>
               <td class="px-4 py-2 text-center">
@@ -313,7 +339,7 @@ const closeSlideOver = () => {
           <Lucide icon="X" class="w-8 h-8 text-white dark:!text-slate-200" />
         </a>
       </div>
-      <div :class="[
+      <div id="uno" :class="[
         'h-full box bg-white/[0.95] darl:bg-slate-700 rounded-none xl:rounded-xl z-20 relative w-[275px] duration-300 transition-[width] group-[.side-menu--collapsed]:xl:w-[91px] group-[.side-menu--collapsed.side-menu--on-hover]:xl:shadow-[6px_0_12px_-4px_#0000000f] group-[.side-menu--collapsed.side-menu--on-hover]:xl:w-[275px] overflow-hidden flex flex-col'
       ]" @mouseover="(event) => {
         event.preventDefault()
@@ -324,7 +350,7 @@ const closeSlideOver = () => {
           compactMenuOnHover = false
         }
           ">
-        <div :class="[
+        <div id="dos" :class="[
           'flex items-center z-10 px-5 h-[65px] w-[275px] overflow-hidden relative duration-300 xl:group-[.side-menu--collapsed]:w-[91px] group-[.side-menu--collapsed.side-menu--on-hover]:w-[275px]'
         ]">
           <a href=""
@@ -352,17 +378,17 @@ const closeSlideOver = () => {
             <Lucide icon="ArrowLeft" class="w-3.5 h-3.5 stroke-[1.3] dark:text-slate-200" />
           </a>
         </div>
-        <div ref="scrollableRef" :class="[
+        <div id="tres" ref="scrollableRef" :class="[
           'w-full h-full z-20 px-5 overflow-y-auto overflow-x-hidden pb-3 [-webkit-mask-image:-webkit-linear-gradient(top,rgba(0,0,0,0),black_30px)] [&:-webkit-scrollbar]:w-0 [&:-webkit-scrollbar]:bg-transparent',
           '[&_.simplebar-content]:p-0 [&_.simplebar-track.simplebar-vertical]:w-[10px] [&_.simplebar-track.simplebar-vertical]:mr-0.5 [&_.simplebar-track.simplebar-vertical_.simplebar-scrollbar]:before:bg-slate-400/30'
         ]">
-          <ul class="scrollable">
+          <ul id="cuatro" class="scrollable">
             <!-- BEGIN: First Child -->
             <template v-for="(menu, menuKey) in formattedMenu">
               <li v-if="typeof menu === 'string'" class="side-menu__divider" :key="'divider-' + menuKey">
                 {{ menu }}
               </li>
-              <li v-else :key="menuKey">
+              <li v-else :key="menuKey" :id="`sideBar-${menu.pageName}`">
                 <a href="" :class="[
                   'side-menu__link',
                   { 'side-menu__link--active': menu.active },
@@ -377,10 +403,15 @@ const closeSlideOver = () => {
                   setFormattedMenu([...formattedMenu])
                 }">
                   <Lucide :icon="menu.icon" class="side-menu__link__icon" />
+                  <span v-if="notification && menu.pageName == 'chat'" class="relative">
+                    <span class="absolute bottom-1 -left-6 w-2 h-2 bg-theme-1 rounded-full dark:bg-blue-500"></span>
+                  </span>
+                  <!-- titulos de los apartados -->
                   <div class="side-menu__link__title">{{ menu.title }}</div>
                   <div v-if="menu.badge" class="side-menu__link__badge">
                     {{ menu.badge }}
                   </div>
+                  <!-- icono de flecha para abajo -->
                   <Lucide v-if="menu.subMenu" icon="ChevronDown"
                     @click.stop.prevent="menu.activeDropdown = !menu.activeDropdown"
                     class="side-menu__link__chevron dark:!text-slate-200" />
@@ -389,7 +420,7 @@ const closeSlideOver = () => {
                 <!-- BEGIN: Second Child -->
                 <Transition @enter="enter" @leave="leave">
                   <ul v-if="menu.subMenu && menu.activeDropdown" class="bg-slate-800">
-                    <li v-for="(subMenu, subMenuKey) in menu.subMenu" :key="subMenuKey" class="">
+                    <li v-for="(subMenu, subMenuKey) in menu.subMenu" :key="subMenuKey">
                       <a href="" :class="[
                         'side-menu__link ',
                         { 'side-menu__link--active': subMenu.active },
@@ -461,6 +492,13 @@ const closeSlideOver = () => {
         ]">
           <div
             class="container flex items-center justify-between w-full h-full transition-[padding,background-color,border-color] ease-in-out duration-300 bg-transparent border-transparent shadow-none group-[.top-bar--active]:box group-[.top-bar--active]:px-5 group-[.top-bar--active]:bg-transparent group-[.top-bar--active]:border-transparent group-[.top-bar--active]:bg-gradient-to-r group-[.top-bar--active]:from-theme-1 group-[.top-bar--active]:to-theme-2">
+            <!-- mostramos el nombre y el correo del usuario -->
+            <div class="xl:flex flex-col gap-2 hidden">
+              <div class="text-white dark:text-slate-200 font-semibold text-lg">{{ user ? user.firstName : '' }} {{ user
+                ?
+                user.lastName : '' }}
+              </div>
+            </div>
             <div class="flex items-center gap-1 xl:hidden">
               <a href="" @click="(event) => {
                 event.preventDefault()
@@ -477,15 +515,14 @@ const closeSlideOver = () => {
 
             <div class="flex justify-end px-4 space-x-5">
               <!-- Close Button Menu -->
-              <Menu class="overflow-hidden w-9 h-9 border-3 relative group">
+              <!-- <Menu class="overflow-hidden w-9 h-9 border-3 relative group">
                 <Menu.Button @click="openSlideOver">
-                  <!-- Llamada a la función para abrir el SlideOver -->
                   <Tippy as="a" class="flex items-center justify-center ml-auto w-9 h-9" content="Contáctanos">
                     <img alt="Tailwise - Admin Dashboard Template" :src="`/directorio-telefonico.png`" />
                     <Lucide icon="MessagesSquare" class="w-9 h-9 text-white mx-auto" />
                   </Tippy>
                 </Menu.Button>
-              </Menu>
+              </Menu> -->
 
               <!-- User Profile Menu -->
               <Menu>
@@ -494,12 +531,22 @@ const closeSlideOver = () => {
                   <img alt="User Photo" v-if="!loadingUserPhoto" :src="`${Baseurl}${photoUser}`"
                     class="bg-white dark:bg-slate-600" />
                   <!-- Mostrar un placeholder o ícono en caso de que loadingUserPhoto sea falso pero photoUser sea null -->
-                  <Lucide icon="user" class="dark:!text-slate-200" v-else />
+                  <Lucide icon="User" class="dark:!text-slate-200" v-else />
                 </Menu.Button>
                 <Menu.Items class="w-56 mt-1 bg-white shadow-lg rounded-md">
-                  <Menu.Item class="text-primary flex items-center px-4 py-2 hover:bg-gray-100 dark:text-slate-200 dark:hover:text-sky-500 dark:hover:bg-slate-600 flex flex-row justify-between" @click.prevent="()=>{darkMode = !darkMode}">
-                    Modo oscuro 
-                    <FormSwitch.Input id="darkmode" type="checkbox" v-model="darkMode" class="shadow-current " />
+                  <Menu.Item
+                    class="text-primary flex items-center px-4 py-2 hover:bg-gray-100 dark:text-slate-200 dark:hover:text-sky-500 dark:hover:bg-slate-600 flex-row justify-between cursor-pointer"
+                    @click.prevent="() => { darkMode = !darkMode }">
+                    Modo oscuro
+                    <div class="cursor-pointer">
+                      <FormSwitch.Input id="darkmode" type="checkbox" v-model="darkMode"
+                        class="shadow-current pointer-events-none" />
+                    </div>
+                  </Menu.Item>
+                  <Menu.Item v-if="role == 3" @click="againTour"
+                    class="text-primary flex items-center px-4 py-2 hover:bg-gray-100 dark:text-slate-200 dark:hover:text-sky-500 dark:hover:bg-slate-600">
+                    <Lucide icon="Users" class="w-4 h-4 mr-2  " />
+                    Tour
                   </Menu.Item>
                   <Menu.Item @click="() => router.push({ name: 'settings' })"
                     class="text-primary flex items-center px-4 py-2 hover:bg-gray-100 dark:text-slate-200 dark:hover:text-sky-500 dark:hover:bg-slate-600">

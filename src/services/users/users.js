@@ -22,6 +22,7 @@ export const getUsers = async () => {
     phone: user.users_phone,
     email: user.email,
     rol: user.users_rol,
-    status: user.users_status ?? 0
+    status: user.users_status ?? 0,
+    tour: user.users_tour
   }))
 }

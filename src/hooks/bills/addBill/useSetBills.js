@@ -6,6 +6,7 @@ export function useSetBill() {
   const setBillError = ref(null)
   const loadingSetBill = ref(false)
   const showToast = inject('showToast')
+  const { donations: donationsList } = inject('donations')
 
   const addBill = async (billData) => {
     setBillError.value = null
@@ -85,13 +86,25 @@ export function useSetBill() {
           setBillError.value = errorData.message || 'Error al actualizar la donación'
           return { success: false }
         }
-        showToast({ message: 'Gasto registrado con éxito', tipo: 'success', persistente: true })
+
+        // Actualizar la donación en la lista con lo que nos devolvió el servidor
+        const updatedDonation = await spentUpdateResponse.json()
+        donationsList.value = donationsList.value.map((donationItem) => {
+          if (donationItem.id === updatedDonation.donations_id) {
+            return {
+              ...donationItem,
+              spent: updatedDonation.donations_spent
+            }
+          }
+          return donationItem
+        })
         return { success: true }
       })
 
       // Esperar que todas las actualizaciones se completen
       const updateResults = await Promise.all(updatePromises)
       if (updateResults.some((result) => !result.success)) {
+        showToast({ message: 'Gasto registrado con éxito', type: 'success', persistente: true })
         return { success: false }
       }
 

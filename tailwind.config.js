@@ -22,9 +22,15 @@ module.exports = {
         navActivate: 'navActivate 1s forwards',
         navDeactivate: 'navDeactivate 0.5s forwards',
         'toast-enter': 'toastEnter 0.5s ease-out forwards',
-        'toast-leave': 'toastLeave 0.5s ease-in forwards'
+        'toast-leave': 'toastLeave 0.5s ease-in forwards',
+        'provider-out': 'providerOut 1s forwards'
       },
       keyframes: {
+        providerOut: {
+          '0%': { opacity: '1' },
+          '99%': { opacity: '0' },
+          '100%': { opacity: '0', display: 'none' }
+        },
         navActivate: {
           '0%': { height: '0px' },
           '100%': { height: 'calc(100vh - 100px)', padding: '1rem 0' }
@@ -50,7 +56,15 @@ module.exports = {
         greend: '#a6f6bd',
         yellowd: '#FDFFAA',
         redd: '#FFC3C3',
-        blued: '#86E6FF',
+        blued: '#3D9BB7',
+        hgeen1: '#67de96',
+        hgeen2: '#1aca60',
+        hyellow1: '#f0e035',
+        hyellow2: '#f88e15',
+        hred1: '#ffa094',
+        hred2: '#db3e29',
+        hblue1: '#5bcae6',
+        hblue2: '#1e6b88',
         theme: {
           1: 'rgb(var(--color-theme-1) / <alpha-value>)',
           2: 'rgb(var(--color-theme-2) / <alpha-value>)'

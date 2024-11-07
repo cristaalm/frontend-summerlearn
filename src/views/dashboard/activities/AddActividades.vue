@@ -4,21 +4,18 @@ import Button from '@/components/base/Button'
 import Alert from '@/components/base/Alert'
 import LoadingIcon from '@/components/base/LoadingIcon'
 import { FormInput, FormTextarea, FormSelect } from '@/components/base/Form'
-import { onMounted } from 'vue'
+import { onMounted, inject, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useValidationAddActividades } from '@/hooks/actividades/addActividades/useValidationAddActividades'
 import { useSetActividades } from '@/hooks/actividades/addActividades'
-import { useUsers } from '@/services/actividades/useUsers'
-import { usePrograms } from '@/services/actividades/usePrograms'
-
-// import { useUsers } from '@/hooks/users/useUsers'
-const { users, loadingResponsable, errorResponsable, loadUsers } = useUsers()
-const { programs, loadingPrograms, errorPrograms, loadPrograms } = usePrograms()
-const { setActividadesLoading, setActividadesError, addActividades } = useSetActividades()
-const { status, name, description, responsible, program, valid, validate } =
-  useValidationAddActividades()
 
 const router = useRouter()
+const { users, loadingResponsable, errorResponsable, loadUsers } = inject('users')
+const { programs, loadingPrograms, errorPrograms, loadPrograms } = inject('programs')
+const { setActividadesLoading, setActividadesError, addActividades } = useSetActividades()
+const { status, name, description, responsible, program, valid, validate } = useValidationAddActividades()
+
+const filterUsers = computed(() => users.value.filter(user => user.rol === 4))
 
 const handleRegister = () => {
   if (valid.value) {
@@ -80,7 +77,10 @@ onMounted(async () => {
               </label>
               <div class="flex-1 w-full mt-3 xl:mt-0">
                 <FormInput type="text" placeholder="Escriba aquí su nombre de actividad..." v-model="name"
-                  class="dark:text-slate-200 dark:placeholder:!text-slate-400" @input="(e) => validate(e, 'name')" />
+                  @keydown.enter.prevent="() => {
+                    if (valid && !setActividadesLoading) handleRegister()
+                  }" class="dark:text-slate-200 dark:placeholder:!text-slate-400"
+                  @input="(e) => validate(e, 'name')" />
                 <div class="mt-1 text-xs text-red-500 h-4">{{ status.name.message }}</div>
               </div>
             </div>
@@ -103,7 +103,9 @@ onMounted(async () => {
               </label>
               <div class="flex-1 w-full mt-3 xl:mt-0">
                 <FormTextarea style="resize: none; height: 8.6rem" placeholder="Escriba aquí su descripción..."
-                  class="dark:text-slate-200 dark:placeholder:!text-slate-400" v-model="description"
+                  @keydown.enter.prevent="() => {
+                    if (valid && !setActividadesLoading) handleRegister()
+                  }" class="dark:text-slate-200 dark:placeholder:!text-slate-400" v-model="description"
                   @input="(e) => validate(e, 'description')" />
                 <div class="mt-1 text-xs text-red-500 h-4">{{ status.description.message }}</div>
               </div>
@@ -126,8 +128,9 @@ onMounted(async () => {
                 </div>
               </label>
               <div class="flex-1 w-full mt-3 xl:mt-0">
-                <FormSelect v-model="responsible" @input="(e) => validate(e, 'responsible')"
-                  class="dark:text-slate-200 dark:placeholder:!text-slate-400">
+                <FormSelect v-model="responsible" @input="(e) => validate(e, 'responsible')" @keydown.enter.prevent="() => {
+                  if (valid && !setActividadesLoading) handleRegister()
+                }" class="dark:text-slate-200 dark:placeholder:!text-slate-400">
                   <template v-if="loadingResponsable">
                     <option value="" disabled selected>Cargando...</option>
                   </template>
@@ -138,7 +141,7 @@ onMounted(async () => {
 
                   <template v-else>
                     <option value="" disabled selected>Seleccione aquí un responsable...</option>
-                    <template v-for="user in users" :key="user.id">
+                    <template v-for="user in filterUsers" :key="user.id">
                       <option :value="user.id">{{ user.name }}</option>
                     </template>
                   </template>
@@ -166,8 +169,9 @@ onMounted(async () => {
                 </div>
               </label>
               <div class="flex-1 w-full mt-3 xl:mt-0">
-                <FormSelect v-model="program" @input="(e) => validate(e, 'program')"
-                  class="dark:text-slate-200 dark:placeholder:!text-slate-400">
+                <FormSelect v-model="program" @input="(e) => validate(e, 'program')" @keydown.enter.prevent="() => {
+                  if (valid && !setActividadesLoading) handleRegister()
+                }" class="dark:text-slate-200 dark:placeholder:!text-slate-400">
                   <template v-if="loadingPrograms">
                     <option value="" disabled selected>Cargando...</option>
                   </template>

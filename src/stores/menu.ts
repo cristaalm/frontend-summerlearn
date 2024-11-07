@@ -31,7 +31,7 @@ export const useMenuStore = defineStore('menu', {
     async loadMenu() {
       // Obtén el rol desde el token desencriptado
       const router = useRouter()
-      const role = getIdByTokenm(localStorage.getItem('access_token')).rol 
+      const role = getIdByTokenm(localStorage.getItem('access_token')).rol
 
       if (!role) {
         console.warn('No se pudo cargar el rol.')
@@ -93,13 +93,13 @@ export const useMenuStore = defineStore('menu', {
                   title: 'Gastos'
                 }
               ]
+            },
+            'CONTACTOS',
+            {
+              icon: 'MessagesSquare',
+              pageName: 'chat',
+              title: 'Chat'
             }
-            // 'CONTÁCTANOS',
-            // {
-            //   icon: 'MessagesSquare',
-            //   pageName: 'chat',
-            //   title: 'Contacto'
-            // }
           ]
           break
         case 2:
@@ -109,7 +109,7 @@ export const useMenuStore = defineStore('menu', {
             {
               icon: 'Notebook',
               pageName: 'subscriptions',
-              title: 'Suscripciones',
+              title: 'Suscripciones'
             },
             {
               icon: 'Album',
@@ -127,13 +127,13 @@ export const useMenuStore = defineStore('menu', {
               icon: 'BarChartBig',
               pageName: 'performance',
               title: 'Desempeño'
+            },
+            'CONTACTOS',
+            {
+              icon: 'MessagesSquare',
+              pageName: 'chat',
+              title: 'Chat'
             }
-            // 'CONTÁCTANOS',
-            // {
-            //   icon: 'MessagesSquare',
-            //   pageName: 'chat',
-            //   title: 'Contacto'
-            // }
           ]
           break
         case 3:
@@ -144,20 +144,13 @@ export const useMenuStore = defineStore('menu', {
               icon: 'PiggyBank',
               pageName: 'donations',
               title: 'Donaciones',
-              subMenu: [
-                {
-                  icon: 'ReceiptText',
-                  pageName: 'expenses',
-                  title: 'Gastos'
-                }
-              ]
+            },
+            'CONTACTOS',
+            {
+              icon: 'MessagesSquare',
+              pageName: 'chat',
+              title: 'Chat'
             }
-            // 'CONTÁCTANOS',
-            // {
-            //   icon: 'MessagesSquare',
-            //   pageName: 'chat',
-            //   title: 'Contacto'
-            // }
           ]
           break
         case 4:
@@ -179,13 +172,13 @@ export const useMenuStore = defineStore('menu', {
               icon: 'BarChartBig',
               pageName: 'performance',
               title: 'Desempeño'
+            },
+            'CONTACTOS',
+            {
+              icon: 'MessagesSquare',
+              pageName: 'chat',
+              title: 'Chat'
             }
-            // 'CONTÁCTANOS',
-            // {
-            //   icon: 'MessagesSquare',
-            //   pageName: 'chat',
-            //   title: 'Contacto'
-            // }
           ]
           break
         case 5:
@@ -207,13 +200,12 @@ export const useMenuStore = defineStore('menu', {
               pageName: 'performance_view',
               title: 'Desempeño'
             },
-            
-            // 'CONTÁCTANOS',
-            // {
-            //   icon: 'MessagesSquare',
-            //   pageName: 'chat',
-            //   title: 'Contacto'
-            // }
+            'CONTACTOS',
+            {
+              icon: 'MessagesSquare',
+              pageName: 'chat',
+              title: 'Chat'
+            }
           ]
           break
         default:

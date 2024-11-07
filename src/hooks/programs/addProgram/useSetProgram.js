@@ -56,7 +56,7 @@ export function useSetProgram() {
         })
       })
       if (response.ok) {
-        showToast({ message: 'Programa creado con éxito', tipo: 'success', persistente: true })
+        showToast({ message: 'Programa creado con éxito', type: 'success', persistente: true })
         router.push({ name: 'programs' })
       } else {
         setProgramError.value = 'Hubo un problema con la solicitud'
