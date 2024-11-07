@@ -1,6 +1,5 @@
 <script setup>
 import { ref, provide, onMounted, watch, inject, onUnmounted, nextTick } from 'vue';
-import { driver } from "driver.js";
 import "driver.js/dist/driver.css";
 import { useCountUsers } from "@/hooks/home/admin/useCountUsers";
 import { useLastPrograms } from "@/hooks/home/admin/useLastPrograms";
@@ -23,9 +22,12 @@ import getIdByToken from '@/logic/getIdByToken';
 import { useRouter } from 'vue-router';
 import { useActividadesSubscribed } from '@/hooks/subscriptions/'
 import { useChildrens } from '@/hooks/childrens/'
-import { startTour, getTour} from '@/utils/tours/tourDonations'; // Importa el archivo creado
 
-const { rol: role, user_id: id} = getIdByToken(localStorage.getItem('access_token'));
+// ? tour
+import { getTour } from '@/utils/getTour';
+import { startTourAdmin, startTourDonor } from '@/utils/tours/'
+
+const { rol: role, user_id: id } = getIdByToken(localStorage.getItem('access_token'));
 const isLoading = ref(true);
 const animate = ref(false);
 const router = useRouter();
@@ -202,13 +204,13 @@ if (role === 3) {
 
             const tour = await getTour(id);
 
-            if(tour.users_tour == false){
-                await startTour(router, id)
-            }else if(tour.users_tour == true){
+            if (tour.users_tour == false) {
+                await startTourDonor(router, id)
+            } else if (tour.users_tour == true) {
                 return;
 
             }
-            
+
         }
     });
 }
