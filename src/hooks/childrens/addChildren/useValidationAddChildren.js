@@ -36,10 +36,6 @@ export function useValidationAddChildren() {
 
   const validateAll = () => {
     // debugger de todos los campos
-    console.log("Nombre", status.value.name.success)
-    console.log("Fecha de nacimiento", status.value.birthdate.success)
-    console.log("CURP", status.value.curp.success)
-    console.log("Imagen", status.value.profileImage.value)
     if (status.value.name.success && status.value.birthdate.success && status.value.curp.success && status.value.profileImage.value) { // Si todos los campos son válidos
       valid.value = true
     } else {

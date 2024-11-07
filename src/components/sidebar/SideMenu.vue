@@ -26,7 +26,7 @@ import { useColorSchemeStore } from '@/stores/color-scheme'
 // @ts-ignore
 import { Baseurl } from '@/utils/global'
 // @ts-ignore
-import { startTour, activateTour } from '@/utils/tours/tourDonations'; // Importa el archivo creado
+import { startTourDonor } from '@/utils/tours/tourDonations'; // Importa el archivo creado
 // @ts-ignore
 import getIdByToken from '@/logic/getIdByToken';
 
@@ -196,7 +196,7 @@ const closeSlideOver = () => {
 }
 
 async function againTour() {
-  await startTour(router, id);
+  await startTourDonor(router, id);
 }
 
 

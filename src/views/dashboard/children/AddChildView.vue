@@ -55,7 +55,7 @@ const handleRegister = () => {
             <!--? ######################### ALERTA DE ERROR ######################### -->
 
             <Alert variant="outline-danger" v-if="setChildrenError" :message="setChildrenError" :dismissible="true"
-              class="flex items-center px-4 py-3 my-7" />
+              class="flex items-center px-4 py-3 my-7 dark:border-red-400 dark:text-red-400" />
 
             <!--? ######################### INPUTS ######################### -->
 
