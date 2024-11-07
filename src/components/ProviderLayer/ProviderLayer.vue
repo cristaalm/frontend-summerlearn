@@ -108,9 +108,11 @@ if (role === 4) {
     provide('actividadesSubscribed', { actividadesSubscribed, loadingActividadesSubscribed, errorActividadesSubscribed, loadActividadesSubscribed });
     onMounted(() => loadActividadesSubscribed());
 }
-if (role === 5) {
+if (role === 5 || role == 1) {
     const { childrens, loadingChildrens, errorChildrens, loadChildrens } = useChildrens();
-    loadings.push(loadingChildrens);
+    if (role === 5) {
+        loadings.push(loadingChildrens);
+    }
     provide('childrens', { childrens, loadingChildrens, errorChildrens, loadChildrens });
     onMounted(() => loadChildrens());
 }
