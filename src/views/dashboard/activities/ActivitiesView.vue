@@ -119,8 +119,8 @@ const handleRegisterSchedule = async () => {
     }
     daySh.value = ''
     selectMultiple.value = []
-    await loadDays(id_actividad.value)
-    await getSchedules(id_actividad.value, daySh.value)
+    loadDays(id_actividad.value)
+    getSchedules(id_actividad.value, daySh.value)
   }
 }
 

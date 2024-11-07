@@ -165,8 +165,8 @@ export const useMenuStore = defineStore('menu', {
             'GESTIÓN DE PROGRAMAS',
             {
               icon: 'BookMarked',
-              pageName: 'activities_view',
-              title: 'Actividades Vista'
+              pageName: 'book_volunteer',
+              title: 'Diario'
             },
             {
               icon: 'BarChartBig',
@@ -192,8 +192,8 @@ export const useMenuStore = defineStore('menu', {
             'GESTIÓN DE PROGRAMAS',
             {
               icon: 'BookMarked',
-              pageName: 'activities_view',
-              title: 'Actividades-Vista'
+              pageName: 'book_son',
+              title: 'Diario'
             },
             {
               icon: 'BarChartBig',

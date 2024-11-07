@@ -235,10 +235,18 @@ const router = createRouter({
             )
         },
         {
-          path: '/dashboard/activities/view',
-          name: 'activities_view',
+          path: '/dashboard/activities/book_volunteer',
+          name: 'book_volunteer',
           component: () =>
-            import('@/views/dashboard/activities/ActivitiesOnlyView.vue').catch(
+            import('@/views/dashboard/activities/book/BookVolunteer.vue').catch(
+              () => import('@/views/dashboard/notFoundView/NotFoundView.vue')
+            )
+        },
+        {
+          path: '/dashboard/activities/book_son',
+          name: 'book_son',
+          component: () =>
+            import('@/views/dashboard/activities/book/BookSon.vue').catch(
               () => import('@/views/dashboard/notFoundView/NotFoundView.vue')
             )
         },
@@ -283,7 +291,7 @@ const router = createRouter({
             )
         },
         {
-          path: '/dashboard/subscriptionsgrid',
+          path: '/dashboard/subs',
           name: 'subscriptionsGrid',
           component: () =>
             import('@/views/dashboard/subscriptions/SubscriptionsGridView.vue').catch(
