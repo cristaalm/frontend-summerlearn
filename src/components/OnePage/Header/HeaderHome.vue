@@ -32,7 +32,7 @@ window.addEventListener('scroll', () => {
           class="hover:text-gray-400 transition-all duration-300 hover:scale-105 flex flex-row justify-center items-center"
         >
           <img
-            src="/logo_completo1.png"
+            src="/logo_completo.png"
             alt="Logo"
             class="hidden lg:inline-block min-w-[100px] w-[300px] xl:-my-[20px]"
           />
