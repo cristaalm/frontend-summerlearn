@@ -24,21 +24,21 @@ export function useDeleteArea() {
           }
         }
         setTimeout(() => {
-          showToast({ message: 'Área eliminada exitosamente.', tipo: 'success' })
+          showToast({ message: 'Área eliminada exitosamente.', type: 'success' })
         }, 1000)
         setModalDeleteArea({ open: false })
       } else {
         setTimeout(() => {
           showToast({
             message: 'Hay un programa relacionado, no se puede eliminar área.',
-            tipo: 'warning'
+            type: 'warning'
           })
         }, 1000)
         setModalDeleteArea({ open: false })
       }
     } catch (error) {
       console.error('Error deleting area:', error)
-      showToast({ message: 'Error al eliminar el área.', tipo: 'error' })
+      showToast({ message: 'Error al eliminar el área.', type: 'error' })
     } finally {
       loadingDeleteArea.value = false
     }

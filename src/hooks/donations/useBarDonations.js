@@ -1,5 +1,13 @@
 export function useBarDonations(donations) {
   // Dinero Total donado y total de donaciones
+  if (donations.length === 0) {
+    return {
+      lastDonationDate: false,
+      lastDonationAmount: 0,
+      totalDonations: 0,
+      totalDonated: 0
+    }
+  }
 
   let totalDonations = 0
   let totalDonated = 0

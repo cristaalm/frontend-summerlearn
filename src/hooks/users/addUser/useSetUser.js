@@ -74,7 +74,7 @@ export function useSetUser({
         rol.value = ''
         imageFile.value = null
         resetFields()
-        showToast({ message: 'Usuario registrado', tipo: 'success', persistente: true })
+        showToast({ message: 'Usuario registrado', type: 'success', persistente: true })
         router.push({ name: 'users' })
       } else {
         console.error('Registration failed', data)

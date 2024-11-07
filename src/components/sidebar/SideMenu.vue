@@ -23,43 +23,25 @@ import SimpleBar from 'simplebar'
 //@ts-ignore
 import { logoutColorScheme } from '@/utils/switchColorScheme'
 import { useColorSchemeStore } from '@/stores/color-scheme'
-
-// @ts-ignore
-const showToast = inject('showToast')
-
-// ? ############################ USER INFO ############################
-
-// @ts-ignore
-import { useUserPhoto, useUser } from '@/hooks/settings/'
 // @ts-ignore
 import { Baseurl } from '@/utils/global'
+// @ts-ignore
+import { startTour, activateTour } from '@/utils/tourDriver'; // Importa el archivo creado
+// @ts-ignore
+import getIdByToken from '@/logic/getIdByToken';
 
-const { photoUser, loadingUserPhoto, errorUserPhoto, loadUserPhoto } = useUserPhoto()
-const { user, loadingUser, errorUser, loadUser } = useUser()
+const { user_id: id, rol: role } = getIdByToken(localStorage.getItem('access_token'));
 
-provide('userPhoto', { photoUser, loadingUserPhoto, errorUserPhoto, loadUserPhoto })
-provide('user', { user, loadingUser, errorUser, loadUser })
+// @ts-ignore
+const showToast = inject('showToast');
 
-
-// ? ############################ SIDE MENU ############################
-
-// ? ############################ SOCKET ############################
-
-
-import { useWebSocket } from "@/hooks/chat";
-
-const { mountedSocket, unmountedSocket, chats, messages, loadingChats, loadingMessages, newMessage, sendMessage, isTyping, loadingSendMessage, changeSeen, contacts, loadingContacts, } = useWebSocket();
-
-provide('socket', { chats, messages, loadingChats, loadingMessages, newMessage, sendMessage, isTyping, loadingSendMessage, changeSeen, contacts, loadingContacts });
-
-onMounted(() => {
-  mountedSocket();
-});
-
-onUnmounted(() => {
-  unmountedSocket();
-});
-
+// @ts-ignore
+const { photoUser, loadingUserPhoto } = inject('userPhoto');
+// @ts-ignore
+const { user } = inject('user');
+// @ts-ignore
+const { chats } = inject('socket');
+// @ts-ignore
 const notification = computed(() => chats.value.findIndex((chat) => chat.seenChat === false) !== -1);
 
 watch(notification, (value) => {
@@ -69,14 +51,13 @@ watch(notification, (value) => {
     // @ts-ignore
     showToast({
       message: `Tienes mensajes sin leer`,
-      tipo: "info"
+      type: "info"
     });
   } else {
     document.title = "SummerLearn";
   }
-});
+}, { immediate: true });
 
-// ? ############################ SOCKET ############################
 
 
 // ? ############################ DARK MODE ############################
@@ -179,8 +160,6 @@ const clearLocalStorage = () => {
 }
 
 onMounted(() => {
-  loadUserPhoto()
-  loadUser()
 
   if (scrollableRef.value) {
     new SimpleBar(scrollableRef.value)
@@ -215,6 +194,11 @@ const openSlideOver = () => {
 const closeSlideOver = () => {
   openSlide.value = false
 }
+
+async function againTour() {
+  await startTour(router, id);
+}
+
 
 </script>
 
@@ -355,7 +339,7 @@ const closeSlideOver = () => {
           <Lucide icon="X" class="w-8 h-8 text-white dark:!text-slate-200" />
         </a>
       </div>
-      <div :class="[
+      <div id="uno" :class="[
         'h-full box bg-white/[0.95] darl:bg-slate-700 rounded-none xl:rounded-xl z-20 relative w-[275px] duration-300 transition-[width] group-[.side-menu--collapsed]:xl:w-[91px] group-[.side-menu--collapsed.side-menu--on-hover]:xl:shadow-[6px_0_12px_-4px_#0000000f] group-[.side-menu--collapsed.side-menu--on-hover]:xl:w-[275px] overflow-hidden flex flex-col'
       ]" @mouseover="(event) => {
         event.preventDefault()
@@ -366,7 +350,7 @@ const closeSlideOver = () => {
           compactMenuOnHover = false
         }
           ">
-        <div :class="[
+        <div id="dos" :class="[
           'flex items-center z-10 px-5 h-[65px] w-[275px] overflow-hidden relative duration-300 xl:group-[.side-menu--collapsed]:w-[91px] group-[.side-menu--collapsed.side-menu--on-hover]:w-[275px]'
         ]">
           <a href=""
@@ -394,17 +378,17 @@ const closeSlideOver = () => {
             <Lucide icon="ArrowLeft" class="w-3.5 h-3.5 stroke-[1.3] dark:text-slate-200" />
           </a>
         </div>
-        <div ref="scrollableRef" :class="[
+        <div id="tres" ref="scrollableRef" :class="[
           'w-full h-full z-20 px-5 overflow-y-auto overflow-x-hidden pb-3 [-webkit-mask-image:-webkit-linear-gradient(top,rgba(0,0,0,0),black_30px)] [&:-webkit-scrollbar]:w-0 [&:-webkit-scrollbar]:bg-transparent',
           '[&_.simplebar-content]:p-0 [&_.simplebar-track.simplebar-vertical]:w-[10px] [&_.simplebar-track.simplebar-vertical]:mr-0.5 [&_.simplebar-track.simplebar-vertical_.simplebar-scrollbar]:before:bg-slate-400/30'
         ]">
-          <ul class="scrollable">
+          <ul id="cuatro" class="scrollable">
             <!-- BEGIN: First Child -->
             <template v-for="(menu, menuKey) in formattedMenu">
               <li v-if="typeof menu === 'string'" class="side-menu__divider" :key="'divider-' + menuKey">
                 {{ menu }}
               </li>
-              <li v-else :key="menuKey">
+              <li v-else :key="menuKey" :id="`sideBar-${menu.pageName}`">
                 <a href="" :class="[
                   'side-menu__link',
                   { 'side-menu__link--active': menu.active },
@@ -422,10 +406,12 @@ const closeSlideOver = () => {
                   <span v-if="notification && menu.pageName == 'chat'" class="relative">
                     <span class="absolute bottom-1 -left-6 w-2 h-2 bg-theme-1 rounded-full dark:bg-blue-500"></span>
                   </span>
+                  <!-- titulos de los apartados -->
                   <div class="side-menu__link__title">{{ menu.title }}</div>
                   <div v-if="menu.badge" class="side-menu__link__badge">
                     {{ menu.badge }}
                   </div>
+                  <!-- icono de flecha para abajo -->
                   <Lucide v-if="menu.subMenu" icon="ChevronDown"
                     @click.stop.prevent="menu.activeDropdown = !menu.activeDropdown"
                     class="side-menu__link__chevron dark:!text-slate-200" />
@@ -545,7 +531,7 @@ const closeSlideOver = () => {
                   <img alt="User Photo" v-if="!loadingUserPhoto" :src="`${Baseurl}${photoUser}`"
                     class="bg-white dark:bg-slate-600" />
                   <!-- Mostrar un placeholder o ícono en caso de que loadingUserPhoto sea falso pero photoUser sea null -->
-                  <Lucide icon="user" class="dark:!text-slate-200" v-else />
+                  <Lucide icon="User" class="dark:!text-slate-200" v-else />
                 </Menu.Button>
                 <Menu.Items class="w-56 mt-1 bg-white shadow-lg rounded-md">
                   <Menu.Item
@@ -556,6 +542,11 @@ const closeSlideOver = () => {
                       <FormSwitch.Input id="darkmode" type="checkbox" v-model="darkMode"
                         class="shadow-current pointer-events-none" />
                     </div>
+                  </Menu.Item>
+                  <Menu.Item v-if="role == 3" @click="againTour"
+                    class="text-primary flex items-center px-4 py-2 hover:bg-gray-100 dark:text-slate-200 dark:hover:text-sky-500 dark:hover:bg-slate-600">
+                    <Lucide icon="Users" class="w-4 h-4 mr-2  " />
+                    Tour
                   </Menu.Item>
                   <Menu.Item @click="() => router.push({ name: 'settings' })"
                     class="text-primary flex items-center px-4 py-2 hover:bg-gray-100 dark:text-slate-200 dark:hover:text-sky-500 dark:hover:bg-slate-600">

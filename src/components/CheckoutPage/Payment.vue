@@ -152,7 +152,6 @@ const changeNumber = (e) => {
         props.formData.cardNumber = value.replace(/(\d{4})/, "$1 ").replace(/(\d{4}) (\d{6})/, "$1 $2 ");
         cardNumberMaxLength.value = 17;
         e.target.value = props.formData.cardNumber;
-        console.log(props.formData.cardNumber);
 
         // Diners Club (#### ###### ####)
     } else if (/^3(?:0[0-5]|[68]\d)\d{0,11}$/.test(value)) {
@@ -166,7 +165,6 @@ const changeNumber = (e) => {
         props.formData.cardNumber = value.replace(/(\d{4})/, "$1 ").replace(/(\d{4}) (\d{4})/, "$1 $2 ").replace(/(\d{4}) (\d{4}) (\d{4})/, "$1 $2 $3 ");
         cardNumberMaxLength.value = 19;
         e.target.value = props.formData.cardNumber;
-        console.log(value.replace(/(\d{4})/, "$1 ").replace(/(\d{4}) (\d{4})/, "$1 $2 ").replace(/(\d{4}) (\d{4}) (\d{4})/, "$1 $2 $3 "));
     }
 
     // Eliminar el último espacio si se borra un dígito
@@ -202,7 +200,7 @@ const finishPayment = () => {
     if (!props.formData.cardName || !props.formData.cardNumber || !props.formData.cardMonth || !props.formData.cardYear || !props.formData.cardCvv) {
         showToast({
             message: 'Por favor complete todos los campos',
-            tipo: 'error'
+            type: 'error'
         });
         return;
     }
@@ -237,7 +235,7 @@ const finishPayment = () => {
     if (!valid) {
         showToast({
             message: 'Tarjeta no válida',
-            tipo: 'error'
+            type: 'error'
         });
         return;
     }
@@ -246,7 +244,7 @@ const finishPayment = () => {
     if (props.formData.cardYear < minCardYear.value || (props.formData.cardYear == minCardYear.value && props.formData.cardMonth < minCardMonth.value)) {
         showToast({
             message: 'La fecha de expiración no es válida',
-            tipo: 'error'
+            type: 'error'
         });
         return;
     }
@@ -255,7 +253,7 @@ const finishPayment = () => {
     if (!/^\d{3,4}$/.test(props.formData.cardCvv)) {
         showToast({
             message: 'El código de seguridad no es válido',
-            tipo: 'error'
+            type: 'error'
         });
         return;
     }

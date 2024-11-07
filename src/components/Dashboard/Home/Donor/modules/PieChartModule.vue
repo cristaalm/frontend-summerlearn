@@ -1,12 +1,10 @@
     <script setup>
-import Lucide from '@/components/base/Lucide'
-import ReportDonutChart5 from "@/components/ReportDonutChart5";
-import Button from "@/components/base/Button";
-import { Tab } from "@/components/base/Headless";
+    import ReportDonutChart5 from "@/components/ReportDonutChart5";
+    import { Tab } from "@/components/base/Headless";
 </script>
 
 <template>
-    <div class="flex flex-col col-span-12 p-5 md:col-span-6 lg:col-span-4 box box--stacked">
+    <div class="flex flex-col col-span-12 p-5 md:col-span-6 lg:col-span-4 box box--stacked" id="cuatro">
         <Tab.Group class="mt-1">
             <Tab.List variant="boxed-tabs"
                 class="w-3/4 mx-auto bg-white dark:bg-slate-600 shadow-sm rounded-[0.6rem] border-slate-200">
@@ -17,16 +15,16 @@ import { Tab } from "@/components/base/Headless";
                         Diarios
                     </Tab.Button>
                 </Tab>
-                
+
             </Tab.List>
 
             <!-- ! Grafica Diaria ! -->
 
             <Tab.Panels class="mt-8">
                 <Tab.Panel>
-                    <div class="[&>div]:!h-[200px] [&>div]:sm:!h-[160px] [&>div]:2xl:!h-[200px] relative w-4/5 mx-auto">
+                    <div class="[&>div]:!h-[200px] [&>div]:sm:!h-[160px] [&>div]:2xl:!h-[200px] relative w-4/5 mx-auto" id="cinco">
                         <ReportDonutChart5 class="relative z-10" :height="200" />
-                        
+
                     </div>
                     <br><br>
                     <div class="flex flex-wrap items-center justify-center mt-7 gap-y-3 gap-x-5">
@@ -40,12 +38,12 @@ import { Tab } from "@/components/base/Headless";
                             </div>
                             Gastos
                         </div>
-                        
+
                     </div>
                 </Tab.Panel>
             </Tab.Panels>
 
-           
+
         </Tab.Group>
     </div>
 </template>

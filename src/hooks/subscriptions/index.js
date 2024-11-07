@@ -1,4 +1,4 @@
 import { useDialogSubConfirm } from './dialog/useDialogSubConfirm'
-import { useActividades } from './useActividades'
+import { useActividadesSubscribed } from './useActividadesSubscribed'
 
-export { useDialogSubConfirm, useActividades }
+export { useDialogSubConfirm, useActividadesSubscribed }

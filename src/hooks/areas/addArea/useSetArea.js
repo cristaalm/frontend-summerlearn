@@ -38,7 +38,7 @@ export function useSetArea() {
       })
       const data = await response.json()
       if (response.ok) {
-        showToast({ message: 'Área creada con éxito', tipo: 'success', persistente: true })
+        showToast({ message: 'Área creada con éxito', type: 'success', persistente: true })
         router.push({ name: 'areas' })
       } else {
         setAreaError.value = 'Hubo un problema con la solicitud'

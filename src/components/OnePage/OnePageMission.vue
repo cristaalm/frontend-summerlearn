@@ -49,18 +49,18 @@
     </div>
     <!-- Zigzag separator -->
     <div className="absolute bottom-0 left-0 right-0 w-full overflow-hidden leading-[0]">
-  <svg className="relative block w-full h-[100px]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-    <defs>
-      <linearGradient id="gradient6" x1="0%" y1="0%" x2="100%" y2="0%">
-        <stop offset="0%" style="stop-color:#f0e035;stop-opacity:1" />
-        <stop offset="100%" style="stop-color:#f88e15;stop-opacity:1" />
-      </linearGradient>
-    </defs>
-    <path fill="url(#gradient6)" fill-opacity="1"
-      d="M0,160L120,192C240,224,480,288,720,282.7C960,277,1200,203,1320,165.3L1440,128V320H0Z">
-    </path>
-  </svg>
-</div>
+      <svg class="w-full h-[100px]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="gradient6" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:#f0e035;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#f88e15;stop-opacity:1" />
+          </linearGradient>
+        </defs>
+        <path fill="url(#gradient6)" fill-opacity="1"
+          d="M0,224L48,213.3C96,203,192,181,288,160C384,139,480,117,576,122.7C672,128,768,160,864,176C960,192,1056,192,1152,181.3C1248,171,1344,149,1392,138.7L1440,128V320H0Z">
+        </path>
+      </svg>
+    </div>
   </section>
 </template>
 

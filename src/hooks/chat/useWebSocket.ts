@@ -116,13 +116,13 @@ export function useWebSocket() {
     }
 
     if (!access_token) {
-      showToast?.({ message: 'Credenciales inválidas', tipo: 'error' })
+      showToast?.({ message: 'Credenciales inválidas', type: 'error' })
       return
     }
 
     const idUser = getIdByToken(access_token).user_id
     if (!idUser) {
-      showToast?.({ message: 'Credenciales inválidas', tipo: 'error' })
+      showToast?.({ message: 'Credenciales inválidas', type: 'error' })
       return
     }
 
@@ -181,6 +181,7 @@ export function useWebSocket() {
       socket.value!.send(
         JSON.stringify({ type: 'start_chats', token: access_token, refresh_token: refresh_token })
       )
+      loadingChats.value = true
       socket.value!.send(
         JSON.stringify({
           type: 'start_messages',
@@ -188,6 +189,7 @@ export function useWebSocket() {
           refresh_token: refresh_token
         })
       )
+      loadingMessages.value = true
       socket.value!.send(
         JSON.stringify({
           type: 'start_contacts',
@@ -195,6 +197,7 @@ export function useWebSocket() {
           refresh_token: refresh_token
         })
       )
+      loadingContacts.value = true
     }
 
     socket.value.onmessage = (event) => {

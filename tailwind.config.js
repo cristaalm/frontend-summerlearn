@@ -22,9 +22,15 @@ module.exports = {
         navActivate: 'navActivate 1s forwards',
         navDeactivate: 'navDeactivate 0.5s forwards',
         'toast-enter': 'toastEnter 0.5s ease-out forwards',
-        'toast-leave': 'toastLeave 0.5s ease-in forwards'
+        'toast-leave': 'toastLeave 0.5s ease-in forwards',
+        'provider-out': 'providerOut 1s forwards'
       },
       keyframes: {
+        providerOut: {
+          '0%': { opacity: '1' },
+          '99%': { opacity: '0' },
+          '100%': { opacity: '0', display: 'none' }
+        },
         navActivate: {
           '0%': { height: '0px' },
           '100%': { height: 'calc(100vh - 100px)', padding: '1rem 0' }

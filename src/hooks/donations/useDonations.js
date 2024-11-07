@@ -1,28 +1,35 @@
-import { ref } from 'vue'
+import { ref, inject } from 'vue'
 import { getDonations } from '@/services/donations/donations'
 import { useBarDonations } from './useBarDonations'
 import { Baseurl } from '@/utils/global'
 import { useGraphicDonations } from './useGraphiDonation'
 
 export function useDonations() {
-  const donations = ref([]);
-  const loading = ref(false);
-  const errorDonations = ref(null);
-  let barDonations = ref({});
-  let graphicDonations = ref({});
+  const donations = ref([])
+  const loadingDonations = ref(false)
+  const errorDonations = ref(false)
+  let barDonations = ref({})
+  let graphicDonations = ref({})
+  const firstLoad = ref(true)
+  const showToast = inject('showToast')
   // Inicializa graphicDonations con valores predeterminados
- 
 
   const loadDonations = async () => {
-    loading.value = true;
+    if (loadingDonations.value) return
+    if (firstLoad.value) {
+      firstLoad.value = false
+      loadingDonations.value = true
+    }
     try {
-      donations.value = await getDonations();
-      barDonations.value = useBarDonations(donations.value);
-      graphicDonations.value = useGraphicDonations(donations.value);
+      donations.value = await getDonations()
+      barDonations.value = useBarDonations(donations.value)
+      graphicDonations.value = useGraphicDonations(donations.value)
     } catch (e) {
-      errorDonations.value = e;
+      errorDonations.value = e
+      console.error(e)
+      showToast({ message: 'A ocurrido un error al cargar las donaciones.', type: 'error' })
     } finally {
-      loading.value = false;
+      loadingDonations.value = false
     }
   }
 
@@ -33,18 +40,26 @@ export function useDonations() {
         headers: {
           'Content-Type': 'application/json'
         }
-      });
+      })
 
       if (!response.ok) {
-        throw new Error('Error al eliminar la donación');
+        throw new Error('Error al eliminar la donación')
       }
 
       // Opcionalmente, puedes recargar la lista de donaciones después de eliminar
-      loadDonations(); // O manejarlo según tu lógica
+      loadDonations() // O manejarlo según tu lógica
     } catch (error) {
-      console.error('Error:', error);
+      console.error('Error:', error)
     }
   }
 
-  return { graphicDonations, barDonations, donations, loading, errorDonations, loadDonations, deleteDonation };
+  return {
+    graphicDonations,
+    barDonations,
+    donations,
+    loadingDonations,
+    errorDonations,
+    loadDonations,
+    deleteDonation
+  }
 }

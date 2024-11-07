@@ -43,7 +43,7 @@ export function useSetActividades() {
       })
 
       if (response.ok) {
-        showToast({ message: 'Actividad creada con éxito', tipo: 'success', persistente: true })
+        showToast({ message: 'Actividad creada con éxito', type: 'success', persistente: true })
         router.push({ name: 'activities' })
       } else {
         setActividadesError.value = 'Hubo un problema con la solicitud'

@@ -1,21 +1,32 @@
-import { ref } from 'vue'
+import { ref, inject } from 'vue'
 import { getChildrens } from '@/services/children/childrens'
 
 export function useChildrens() {
   const childrens = ref([])
-  const loading = ref(false)
-  const error = ref(null)
+  const loadingChildrens = ref(false)
+  const errorChildrens = ref(null)
+  const firstLoad = ref(true)
+  const showToast = inject('showToast')
 
   const loadChildrens = async () => {
-    loading.value = true
+    if (loadingChildrens.value) return
+    if (firstLoad.value) {
+      firstLoad.value = false
+      loadingChildrens.value = true
+    }
     try {
       childrens.value = await getChildrens()
     } catch (e) {
-      error.value = e
+      errorChildrens.value = e
+      console.error(e)
+      showToast({
+        message: 'Ocurrió un error al cargar la información de los niños',
+        type: 'error'
+      })
     } finally {
-      loading.value = false
+      loadingChildrens.value = false
     }
   }
-  
-  return { childrens, loading, error, loadChildrens }
+
+  return { childrens, loadingChildrens, errorChildrens, loadChildrens }
 }

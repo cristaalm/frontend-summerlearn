@@ -10,10 +10,10 @@ import LoadingIcon from '@/components/base/LoadingIcon'
 import Button from '@/components/base/Button'
 import { EditAreaModal, DeleteAreaModal } from '@/components/Dashboard/areas/'
 import { useDialogDeleteArea, useDialogEditArea } from '@/hooks/areas/Dialogs'
-import { onMounted, provide, ref } from 'vue'
-import { useFilter, useAreas, usePagination } from '@/hooks/areas/'
+import { onMounted, provide, ref, inject } from 'vue'
+import { useFilter, usePagination } from '@/hooks/areas/'
 
-const { areas, loading, error, loadAreas } = useAreas()
+const { areas, loadingAreas, errorAreas, loadAreas } = inject('areas')
 const { searchQuery, filteredItems } = useFilter(areas)
 const { currentPage, pageSize, totalPages, paginatedItems, changePage, changePageSize } = usePagination(filteredItems)
 const { setModalEditArea, areaInfoProvideEdit, ModalEditArea } = useDialogEditArea()
@@ -23,8 +23,6 @@ const router = useRouter()
 const { users, loading: loadingUsers, error: errorUsers, loadUsers } = useUsers()
 
 provide('cordinator', { users, loadingUsers, errorUsers, loadUsers })
-provide('areas', { areas })
-
 
 onMounted(() => {
   loadAreas()
@@ -87,7 +85,7 @@ onMounted(() => {
               </Table.Thead>
 
               <!--? Mostrar 'Cargando información...' cuando loading es true -->
-              <Table.Tbody v-if="loading">
+              <Table.Tbody v-if="loadingAreas">
                 <Table.Tr>
                   <Table.Td colspan="3" class="py-8 text-center text-xl font-bold text-green-500">
                     <div class="flex flex-col w-full justify-center items-center text-nowrap">
@@ -99,7 +97,7 @@ onMounted(() => {
               </Table.Tbody>
 
               <!--? Mostrar mensaje de error cuando hay error -->
-              <Table.Tbody v-if="error">
+              <Table.Tbody v-if="errorAreas">
                 <Table.Tr>
                   <Table.Td colspan="3" class="py-8 text-center text-xl font-bold text-red-500">
                     Error al cargar la información, inténtelo más tarde
@@ -108,7 +106,7 @@ onMounted(() => {
               </Table.Tbody>
 
               <!--? Mostrar mensaje de error cuando no se encuentran usuarios -->
-              <Table.Tbody v-if="!loading && totalPages <= 0 && !error">
+              <Table.Tbody v-if="!loadingAreas && totalPages <= 0 && !errorAreas">
                 <Table.Tr>
                   <Table.Td colspan="3" class="py-8 text-center text-xl font-bold text-amber-500">
                     No se encontraron áreas
@@ -117,7 +115,7 @@ onMounted(() => {
               </Table.Tbody>
 
               <!--? Mostrar la tabla de áreas cuando no está cargando y no existe ningun error -->
-              <Table.Tbody v-if="!loading">
+              <Table.Tbody v-if="!loadingAreas">
                 <template v-for="area in paginatedItems" :key="area.id">
                   <Table.Tr class="[&_td]:last:border-b-0">
                     <Table.Td class="py-4 border-dashed dark:bg-darkmode-600 dark:text-slate-200 text-center">

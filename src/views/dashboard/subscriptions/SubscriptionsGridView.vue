@@ -6,7 +6,7 @@ import { Menu, Popover, Dialog } from '@/components/base/Headless'
 import Pagination from '@/components/base/Pagination'
 import Table from '@/components/base/Table'
 import LoadingIcon from '@/components/base/LoadingIcon'
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, inject } from 'vue'
 import Button from '@/components/base/Button'
 import {
   useSearch,
@@ -15,26 +15,24 @@ import {
   useDialogObjective,
   useDialogDelete
 } from '@/hooks/actividades/'
-import { useAreasInSubs } from '@/hooks/areas/'
-import { useDialogSubConfirm, useActividades } from '@/hooks/subscriptions/'
+import { useDialogSubConfirm } from '@/hooks/subscriptions/'
 import { useObjectives } from '@/services/actividades/useObjectives'
 
-const { actividades, loading, error, loadActividades } = useActividades()
-const { searchQuery, selectedArea, filteredActividades, filtersCount } = useSearch(actividades)
-const { currentPage, pageSize, totalPages, paginatedItems, changePage, changePageSize } =
-  usePagination(filteredActividades)
+const { actividadesSubscribed, loadingActividadesSubscribed, errorActividadesSubscribed, loadActividadesSubscribed } = inject('actividadesSubscribed')
+const { searchQuery, selectedArea, filteredActividades, filtersCount } = useSearch(actividadesSubscribed)
+const { currentPage, pageSize, totalPages, paginatedItems, changePage, changePageSize } = usePagination(filteredActividades)
 
-const { areasSub, loadingSub, errorSub, loadAreasSub } = useAreasInSubs()
+const { areasSub, loadingSub, errorSub, loadAreasSub } = inject('areasInSubs')
 
 const { objectives, loadingObjectives, errorObjectives, loadObjectives } = useObjectives()
 const { dialogStatusObjective, openObjectiveModal, closeAddObjective } = useDialogObjective({
-  actividades
+  actividades: actividadesSubscribed
 })
 
 const confirmarYRecargar = async () => {
   try {
     await confirmSubscription() // Espera a que se complete la suscripción
-    await loadActividades() // Carga las actividades después de la confirmación
+    await loadActividadesSubscribed() // Carga las actividades después de la confirmación
     closeModalSubConfirm() // Cierra el modal después de recargar las actividades
   } catch (error) {
     console.error('Error al confirmar la suscripción:', error)
@@ -47,7 +45,7 @@ const {
   closeModalSubConfirm,
   confirmSubscription
 } = useDialogSubConfirm({
-  actividades
+  actividades: actividadesSubscribed
 })
 
 const id_actividad = ref(null) // Variable reactiva para guardar el ID
@@ -69,7 +67,7 @@ const guardarNombre = (nombre) => {
 }
 
 onMounted(() => {
-  loadActividades()
+  loadActividadesSubscribed()
   loadAreasSub()
 })
 </script>
@@ -116,8 +114,8 @@ onMounted(() => {
 
   <!-- BEGIN: Modal Content -->
   <Dialog size="lg" :open="dialogStatusModalSubConfirm" @close="() => {
-      dialogStatusModalSubConfirm.value = false
-    }
+    dialogStatusModalSubConfirm.value = false
+  }
     ">
     <Dialog.Panel>
       <div class="p-8 text-center">
@@ -187,8 +185,8 @@ onMounted(() => {
                 </div>
                 <div class="flex items-center mt-4">
                   <Button variant="secondary" @click="() => {
-                      close()
-                    }
+                    close()
+                  }
                     " class="w-32 ml-auto">
                     Cerrar
                   </Button>
@@ -201,23 +199,24 @@ onMounted(() => {
       <div
         class="bg-white dark:bg-[#28334e] w-full min-h-screen rounded-xl flex flex-col items-center dark:text-slate-200">
         <!-- Muestra el ícono de carga si la información aún se está cargando -->
-        <div v-if="loading" class="py-8 text-center text-xl font-bold text-green-500">
+        <div v-if="loadingActividadesSubscribed" class="py-8 text-center text-xl font-bold text-green-500">
           <LoadingIcon icon="tail-spin" class="h-4" color="black" />
           <div class="mt-2">Cargando información...</div>
         </div>
 
         <!-- Muestra un mensaje de error si ocurrió algún problema al cargar los datos -->
-        <div v-if="error" class="py-8 text-center text-xl font-bold text-red-500">
+        <div v-if="errorActividadesSubscribed" class="py-8 text-center text-xl font-bold text-red-500">
           Error al cargar la información, inténtelo más tarde.
         </div>
 
         <!-- Muestra un mensaje si no se encuentran actividades -->
-        <div v-if="!loading && totalPages <= 0 && !error" class="py-8 text-center text-xl font-bold text-amber-500">
+        <div v-if="!loadingActividadesSubscribed && totalPages <= 0 && !errorActividadesSubscribed"
+          class="py-8 text-center text-xl font-bold text-amber-500">
           No se encontraron actividades.
         </div>
 
         <!-- Muestra las actividades si todo carga correctamente -->
-        <div v-if="!loading && totalPages > 0" class="w-full px-4 py-6">
+        <div v-if="!loadingActividadesSubscribed && totalPages > 0" class="w-full px-4 py-6">
           <div class="grid grid-cols-12 gap-y-10 gap-x-6 text-base">
             <template v-for="actividad in paginatedItems" :key="actividad.id">
               <div class="flex flex-col dark:bg-[#1e293b] col-span-12 p-5 md:col-span-6 xl:col-span-4 box box--stacked">
@@ -233,9 +232,9 @@ onMounted(() => {
                   </Menu.Button>
                   <Menu.Items class="w-40">
                     <Menu.Item class="dark:text-blue-300 text-blue" @click="() => {
-                        openObjectiveModal(actividad.id)
-                        guardarId(actividad.id)
-                      }
+                      openObjectiveModal(actividad.id)
+                      guardarId(actividad.id)
+                    }
                       ">
                       <Lucide icon="CheckCircle" class="w-4 h-4 mr-2 stroke-[1.3]" />
                       Ver objetivos
@@ -250,7 +249,7 @@ onMounted(() => {
                         <span class="mt-px dark:text-slate-200 text-sm text-warning text-right">
                           <span
                             class="p-1 tracking-wide rounded leading-6 text-warning bg-yellow-50 dark:bg-yellow-500/20 dark:text-white border-warning/5">{{
-                            actividad.program_name }}</span>
+                              actividad.program_name }}</span>
                         </span>
                       </div>
                     </div>
@@ -261,7 +260,7 @@ onMounted(() => {
                       <div class="flex items-center text-xs rounded-md px-1.5 py-px">
                         <span class="mt-px dark:text-slate-200 text-sm"><span
                             class="text-info p-1 tracking-wide rounded leading-6 border-success/5 bg-blue-50 dark:bg-blue-500/20 dark:text-white">{{
-                            actividad.area_name }}</span></span>
+                              actividad.area_name }}</span></span>
                       </div>
                     </div>
                   </div>
@@ -285,9 +284,9 @@ onMounted(() => {
                       <Button variant="outline-primary"
                         class="px-4 ml-auto border-primary/50 flex items-center dark:border-white dark:text-white"
                         @click="() => {
-                            openModalSubConfirm(actividad.id)
-                            guardarNombre(actividad.name)
-                          }
+                          openModalSubConfirm(actividad.id)
+                          guardarNombre(actividad.name)
+                        }
                           ">
                         <Lucide icon="UserPlus" class="stroke-[1.3] w-4 h-4 mr-2" />
                         Suscribirme

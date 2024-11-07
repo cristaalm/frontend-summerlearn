@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, inject, watch } from 'vue'
 import Lucide from '@/components/base/Lucide'
 import Button from '@/components/base/Button'
 import TomSelect from '@/components/base/TomSelect'
@@ -12,7 +12,6 @@ import {
   useMultiDonations,
   getDonationsFilter
 } from '@/hooks/bills/addBill'
-import { useDonations } from '@/hooks/donations/'
 import { useRouter } from 'vue-router'
 import { useSetBill } from '@/hooks/bills/addBill/useSetBills'
 
@@ -21,7 +20,7 @@ const router = useRouter()
 const { concept, amount, selectMultiple } = useRefs()
 const { status } = useStatus()
 const { valid, validateInputAmount } = useValidations({ status, concept, amount, selectMultiple })
-const { donations, loadDonations } = useDonations()
+const { donations, loadDonations } = inject('donations')
 const { isValid } = useMultiDonations({ status, selectMultiple, amount, donations })
 
 const billData = ref({
@@ -36,15 +35,13 @@ const filteredDonations = ref([]) // Donaciones filtradas
 
 onMounted(async () => {
   loadDonations()
-
-  // Cargar donaciones filtradas al montarse el componente
-  try {
-    const result = await getDonationsFilter()
-    filteredDonations.value = result // Guardar el resultado en la variable reactiva
-  } catch (error) {
-    console.error('Error al obtener donaciones filtradas:', error)
-  }
 })
+
+watch(donations, (newDonations) => {
+  filteredDonations.value = newDonations.filter(
+    (donation) => donation.spent === null || donation.spent < donation.quanty
+  )
+}, { immediate: true })
 
 // Manejo del registro de gastos
 const handleRegister = async () => {
@@ -118,7 +115,7 @@ const handleRegister = async () => {
                   class="w-full " multiple>
                   <template v-for="donation in filteredDonations" :key="donation.id">
                     <option :value="donation.id">
-                      {{ donation.concept }} ($ {{ donation.remaining }})
+                      {{ donation.concept }} ($ {{ donation.quanty - donation.spent }})
                     </option>
                   </template>
                 </TomSelect>

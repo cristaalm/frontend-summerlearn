@@ -26,7 +26,7 @@ export function useArea() {
       if (!response.ok) {
         errorEditArea.value = true
         successEditArea.value = false
-        showToast({ message: 'Error al actualizar el área.', tipo: 'error' })
+        showToast({ message: 'Error al actualizar el área.', type: 'error' })
         return
       }
 
@@ -37,12 +37,12 @@ export function useArea() {
       area.user.id = data.areas_user.id
       area.user.name = data.areas_user.name
       setModalEditArea({ open: false })
-      showToast({ message: 'Área actualizada exitosamente.', tipo: 'success' })
+      showToast({ message: 'Área actualizada exitosamente.', type: 'success' })
     } catch (e) {
       console.error('Error:', e)
       errorEditArea.value = true
       successEditArea.value = false
-      showToast({ message: 'Error al actualizar el área.', tipo: 'error' })
+      showToast({ message: 'Error al actualizar el área.', type: 'error' })
     } finally {
       loadingEditArea.value = false
     }

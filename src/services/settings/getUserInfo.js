@@ -1,6 +1,5 @@
 import { Baseurl } from '@/utils/global'
 import getIdByToken from '@/logic/getIdByToken'
-import { first } from 'lodash'
 
 export const getUser = async () => {
   const token_access = localStorage.getItem('access_token')

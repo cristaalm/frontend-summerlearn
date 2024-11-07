@@ -24,21 +24,21 @@ export function useDeleteProgram() {
           }
         }
         setTimeout(() => {
-          showToast({ message: 'Programa eliminado exitosamente.', tipo: 'success' })
+          showToast({ message: 'Programa eliminado exitosamente.', type: 'success' })
         }, 1000)
         setModalDeleteProgram({ open: false })
       } else {
         setTimeout(() => {
           showToast({
             message: 'Hay actividades relacionadas al programa, no se puede eliminar el programa.',
-            tipo: 'warning'
+            type: 'warning'
           })
         }, 1000)
         setModalDeleteProgram({ open: false })
       }
     } catch (error) {
       console.error('Error deleting program:', error)
-      showToast({ message: 'Error al eliminar el programa', tipo: 'error' })
+      showToast({ message: 'Error al eliminar el programa', type: 'error' })
     } finally {
       loadingDeleteProgram.value = false
     }

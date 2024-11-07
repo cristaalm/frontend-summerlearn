@@ -72,10 +72,10 @@ onMounted(() => {
 const copiedEmail = () => {
   navigator.clipboard.writeText(selectChatInfo.value.user.email)
     .then(() => {
-      showToast({ message: "Correo copiado al portapapeles", tipo: "info" });
+      showToast({ message: "Correo copiado al portapapeles", type: "info" });
     })
     .catch(() => {
-      showToast({ message: "Error al copiar el correo al portapapeles", tipo: "error" });
+      showToast({ message: "Error al copiar el correo al portapapeles", type: "error" });
     });
 };
 </script>
@@ -182,10 +182,10 @@ const copiedEmail = () => {
     </div>
   </template>
 
-  <template v-if="selectedChatIndex === 'chats'">
-    <div class="flex flex-col w-full lg:w-2/3 lg:p-5 lg:pt-0 gap-y-7">
+  <template v-if="selectedChatIndex === 'chats'" >
+    <div class="flex flex-col w-full lg:w-2/3 lg:p-5 lg:pt-0 gap-y-7" >
       <div class="flex flex-col box box--stacked">
-        <div class="flex items-center justify-center h-[728px]">
+        <div class="flex items-center justify-center h-[728px]" id="diecisiete">
           <div class="text-slate-500 dark:text-slate-400 text-2xl">
             Seleccione un chat para empezar a chatear
           </div>

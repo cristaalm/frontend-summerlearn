@@ -10,7 +10,7 @@ export function useExportExcel() {
   const loadExportExcel = async () => {
     loadingExportExcel.value = true
     errorExportExcel.value = ''
-    showToast({ message: 'Generando archivo Excel...', tipo: 'info' })
+    showToast({ message: 'Generando archivo Excel...', type: 'info' })
 
     try {
       const blob = await getExcel()
@@ -28,11 +28,11 @@ export function useExportExcel() {
 
       // Liberar la URL del objeto
       window.URL.revokeObjectURL(url)
-      showToast({ message: 'Archivo Excel generado exitosamente', tipo: 'success' })
+      showToast({ message: 'Archivo Excel generado exitosamente', type: 'success' })
     } catch (error) {
       console.error(error)
       errorExportExcel.value = 'Error al exportar a Excel'
-      showToast({ message: errorExportExcel.value, tipo: 'error' })
+      showToast({ message: errorExportExcel.value, type: 'error' })
     } finally {
       loadingExportExcel.value = false
     }

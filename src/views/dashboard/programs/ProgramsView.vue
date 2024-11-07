@@ -1,5 +1,5 @@
 <script setup>
-import { useFilter, usePagination, usePrograms, useStatusProgram, useExportExcel, useExportPDF } from '@/hooks/programs/'
+import { useFilter, usePagination, useStatusProgram, useExportExcel, useExportPDF } from '@/hooks/programs/'
 import { useUsers, useAreas, useGrades } from '@/hooks/programs/addProgram/'
 import { DeleteProgramModal, EditProgramModal } from '@/components/Dashboard/programs/'
 import { useDialogDeleteProgram, useDialogEditProgram } from '@/hooks/programs/dialog'
@@ -7,14 +7,14 @@ import formatDate from '@/logic/formatDate'
 import { FormInput, FormSelect } from '@/components/base/Form'
 import { Menu, Popover, Dialog } from '@/components/base/Headless'
 import { useRouter } from 'vue-router'
-import { onMounted, provide, watch } from 'vue'
+import { onMounted, provide, watch, inject } from 'vue'
 import LoadingIcon from '@/components/base/LoadingIcon'
 import Pagination from '@/components/base/Pagination'
 import Button from '@/components/base/Button'
 import Lucide from '@/components/base/Lucide'
 import Table from '@/components/base/Table'
 
-const { programs, loading, error, loadPrograms } = usePrograms()
+const { programs, loadingPrograms, errorPrograms, loadPrograms } = inject('programs')
 const { searchQuery, selectedStatus, filteredItems, activeFilters } = useFilter(programs)
 const { currentPage, pageSize, totalPages, paginatedItems, changePage, changePageSize } = usePagination(filteredItems)
 const { updateStatus } = useStatusProgram()
@@ -30,7 +30,6 @@ const { users, loadingResponsable, errorResponsable, loadUsers } = useUsers()
 const { areas, loadingAreas, errorAreas, loadAreas } = useAreas()
 const { grades, loadingGrades, errorGrades, loadGrades } = useGrades()
 
-provide('programs', { programs })
 provide('usersPrograms', { users, loadingResponsable, errorResponsable })
 provide('areasPrograms', { areas, loadingAreas, errorAreas })
 provide('gradesPrograms', { grades, loadingGrades, errorGrades })
@@ -193,7 +192,7 @@ onMounted(() => {
               </Table.Thead>
 
               <!--? Mostrar 'Cargando información...' cuando loading es true -->
-              <Table.Tbody v-if="loading">
+              <Table.Tbody v-if="loadingPrograms">
                 <Table.Tr>
                   <Table.Td colspan="6" class="py-8 text-center text-xl font-bold text-green-500">
                     <div class="flex flex-col w-full justify-center items-center text-nowrap">
@@ -205,7 +204,7 @@ onMounted(() => {
               </Table.Tbody>
 
               <!--? Mostrar mensaje de error cuando hay error -->
-              <Table.Tbody v-if="error">
+              <Table.Tbody v-if="errorPrograms">
                 <Table.Tr>
                   <Table.Td colspan="6" class="py-8 text-center text-xl font-bold text-red-500">
                     Error al cargar la información, Inténtelo más tarde
@@ -214,7 +213,7 @@ onMounted(() => {
               </Table.Tbody>
 
               <!--? Mostrar mensaje de error cuando no se encuentran programas -->
-              <Table.Tbody v-if="!loading && totalPages <= 0 && !error">
+              <Table.Tbody v-if="!loadingPrograms && totalPages <= 0 && !errorPrograms">
                 <Table.Tr>
                   <Table.Td colspan="6" class="py-8 text-center text-xl font-bold text-amber-500">
                     No se encontraron programas
@@ -223,7 +222,7 @@ onMounted(() => {
               </Table.Tbody>
 
               <!--? Mostrar la tabla de áreas cuando no está cargando y no existe ningun error -->
-              <Table.Tbody v-if="!loading">
+              <Table.Tbody v-if="!loadingPrograms">
                 <template v-for="program in paginatedItems" :key="program.id">
                   <Table.Tr class="[&_td]:last:border-b-0">
                     <Table.Td

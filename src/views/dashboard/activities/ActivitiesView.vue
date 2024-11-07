@@ -16,7 +16,7 @@ import { Menu, Popover, Dialog } from '@/components/base/Headless'
 import Pagination from '@/components/base/Pagination'
 import Table from '@/components/base/Table'
 import LoadingIcon from '@/components/base/LoadingIcon'
-import { ref, onMounted, watch } from 'vue'
+import { ref, onMounted, watch, inject } from 'vue'
 import Button from '@/components/base/Button'
 // END default
 
@@ -37,7 +37,7 @@ import {
   useExportPDF,
   getSchedules
 } from '@/hooks/actividades/'
-const { actividades, loading, error, loadActividades } = useActividades()
+const { actividades, loadingActivities, errorActivities, loadActivities } = inject('actividades')
 const { searchQuery, selectedStatus, filteredItems, activeFilters } = useFilter(actividades)
 const { days, loadingDays, errorDays, loadDays } = useDays()
 const {
@@ -155,15 +155,15 @@ const guardarId = (id) => {
 }
 
 onMounted(async () => {
-  loadActividades()
+  loadActivities()
 })
 </script>
 
 <template>
   <!-- BEGIN: Modal Content -->
   <Dialog :open="dialogStatusDelete" @close="() => {
-      dialogStatusDelete.value = false
-    }
+    dialogStatusDelete.value = false
+  }
     ">
     <Dialog.Panel>
       <div class="p-5 text-center">
@@ -189,8 +189,8 @@ onMounted(async () => {
 
   <!-- BEGIN: Modal Content Objective-->
   <Dialog :open="dialogStatusDeleteObjective" @close="() => {
-      dialogStatusDeleteObjective.value = false
-    }
+    dialogStatusDeleteObjective.value = false
+  }
     ">
     <Dialog.Panel>
       <div class="p-5 text-center">
@@ -224,8 +224,8 @@ onMounted(async () => {
             <Button variant="primary"
               class="group-[.mode--light]:!bg-white/[0.12] group-[.mode--light]:!text-slate-200 group-[.mode--light]:!border-transparent"
               @click="() => {
-                  openObjectiveModalAdd(id_actividad)
-                }
+                openObjectiveModalAdd(id_actividad)
+              }
                 ">
               <Lucide icon="PenLine" class="stroke-[1.3] w-4 h-4 mr-2 dark:stroke-slate-200" />
               Agregar objetivo
@@ -467,8 +467,8 @@ onMounted(async () => {
             </label>
             <div class="w-full mt-3 xl:mt-0">
               <FormSelect v-model="daySh" @change="onDayChange" @keydown.enter.prevent="() => {
-                  if (loadingDays) handleRegisterSchedule()
-                }
+                if (loadingDays) handleRegisterSchedule()
+              }
                 " class="dark:text-slate-200 dark:placeholder:!text-slate-400">
                 <template v-if="loadingDays">
                   <option value="" disabled selected>Cargando...</option>
@@ -554,10 +554,10 @@ onMounted(async () => {
           <Button variant="primary"
             class="group-[.mode--light]:!bg-white/[0.12] group-[.mode--light]:!text-slate-200 group-[.mode--light]:!border-transparent"
             @click="() => {
-                router.push({
-                  name: 'addActividades'
-                })
-              }
+              router.push({
+                name: 'addActividades'
+              })
+            }
               ">
             <Lucide icon="PenLine" class="stroke-[1.3] w-4 h-4 mr-2" /> Agregar nueva actividad
           </Button>
@@ -638,8 +638,8 @@ onMounted(async () => {
                     </div>
                     <div class="flex items-center mt-4">
                       <Button variant="secondary" @click="() => {
-                          close()
-                        }
+                        close()
+                      }
                         " class="w-32 ml-auto">
                         Cerrar
                       </Button>
@@ -684,7 +684,7 @@ onMounted(async () => {
               </Table.Thead>
 
               <!--? loading es true -->
-              <Table.Tbody v-if="loading">
+              <Table.Tbody v-if="loadingActivities">
                 <Table.Tr>
                   <Table.Td colspan="7" class="py-8 text-center text-xl font-bold text-green-500">
                     <div class="flex flex-col w-full justify-center items-center text-nowrap">
@@ -696,7 +696,7 @@ onMounted(async () => {
               </Table.Tbody>
 
               <!--? Mostrar mensaje de error cuando hay error -->
-              <Table.Tbody v-if="error">
+              <Table.Tbody v-if="errorActivities">
                 <Table.Tr>
                   <Table.Td colspan="7" class="py-8 text-center text-xl font-bold text-red-500">
                     Error al cargar la información, Inténtelo más tarde
@@ -705,7 +705,7 @@ onMounted(async () => {
               </Table.Tbody>
 
               <!--? Mensaje de error -->
-              <Table.Tbody v-if="!loading && totalPages <= 0 && !error">
+              <Table.Tbody v-if="!loadingActivities && totalPages <= 0 && !errorActivities">
                 <Table.Tr>
                   <Table.Td colspan="7" class="py-8 text-center text-xl font-bold text-amber-500">
                     No se encontraron actividades
@@ -714,7 +714,7 @@ onMounted(async () => {
               </Table.Tbody>
 
               <!--? Mostrar la tabla de áreas cuando no está cargando y no existe ningun error -->
-              <Table.Tbody v-if="!loading">
+              <Table.Tbody v-if="!loadingActivities">
                 <template v-for="actividades in paginatedItems" :key="actividades.id">
                   <Table.Tr class="[&_td]:last:border-b-0">
                     <Table.Td class="py-4 border-dashed dark:bg-darkmode-600 dark:text-slate-200 text-center">
@@ -756,24 +756,24 @@ onMounted(async () => {
                               Editar
                             </Menu.Item>
                             <Menu.Item class="text-green dark:text-green-300" @click="() => {
-                                openSchedulesModalView(actividades.id)
-                                guardarId(actividades.id)
-                              }
+                              openSchedulesModalView(actividades.id)
+                              guardarId(actividades.id)
+                            }
                               ">
                               <Lucide icon="CircleCheckBig" class="w-4 h-4 mr-2 dark:stroke-green-300" />
                               Agregar horario
                             </Menu.Item>
                             <Menu.Item class="text-blue dark:text-blue-300" @click="() => {
-                                openObjectiveModal(actividades.id)
-                                guardarId(actividades.id)
-                              }
+                              openObjectiveModal(actividades.id)
+                              guardarId(actividades.id)
+                            }
                               ">
                               <Lucide icon="CircleCheckBig" class="w-4 h-4 mr-2 dark:stroke-blue-300" />
                               Agregar objetivos
                             </Menu.Item>
                             <Menu.Item class="text-danger dark:text-red-300" @click="() => {
-                                openDeleteModal(actividades.id)
-                              }
+                              openDeleteModal(actividades.id)
+                            }
                               ">
                               <Lucide icon="Trash" class="w-4 h-4 mr-2 dark:stroke-red-300" />
                               Eliminar
