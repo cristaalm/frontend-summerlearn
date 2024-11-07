@@ -23,7 +23,7 @@ import getIdByToken from '@/logic/getIdByToken';
 import { useRouter } from 'vue-router';
 import { useActividadesSubscribed } from '@/hooks/subscriptions/'
 import { useChildrens } from '@/hooks/childrens/'
-import { startTour, getTour} from '@/utils/tourDriver'; // Importa el archivo creado
+import { startTour, getTour} from '@/utils/tours/tourDonations'; // Importa el archivo creado
 
 const { rol: role, user_id: id} = getIdByToken(localStorage.getItem('access_token'));
 const isLoading = ref(true);
