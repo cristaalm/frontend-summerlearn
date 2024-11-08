@@ -19,18 +19,12 @@ import { usePerformance } from '@/hooks/performance/';
 import { useGrades } from '@/hooks/programs/addProgram/'
 import LoadingIcon from '@/components/base/LoadingIcon';
 import getIdByToken from '@/logic/getIdByToken';
-import { useRouter } from 'vue-router';
 import { useActividadesSubscribed } from '@/hooks/subscriptions/'
 import { useChildrens } from '@/hooks/childrens/'
 
-// ? tour
-import { getTour } from '@/utils/getTour';
-import { startTourAdmin, startTourDonor } from '@/utils/tours/'
-
-const { rol: role, user_id: id } = getIdByToken(localStorage.getItem('access_token'));
+const { rol: role } = getIdByToken(localStorage.getItem('access_token'));
 const isLoading = ref(true);
 const animate = ref(false);
-const router = useRouter();
 const endLoad = ref(false);
 // Declaración de los estados de carga
 let loadings = [];
@@ -171,7 +165,6 @@ onMounted(() => {
 // ? ############################ SOCKET ############################
 
 import { useWebSocket } from "@/hooks/chat";
-import { h } from 'vue';
 const { mountedSocket, unmountedSocket, chats, messages, loadingChats, loadingMessages, newMessage, sendMessage, isTyping, loadingSendMessage, changeSeen, contacts, loadingContacts } = useWebSocket();
 
 provide('socket', { chats, messages, loadingChats, loadingMessages, newMessage, sendMessage, isTyping, loadingSendMessage, changeSeen, contacts, loadingContacts });
@@ -198,27 +191,7 @@ watch(isLoading, () => {
     }
 });
 
-
-// ? ############################ Tour ############################
-if (role === 3) {
-    watch(isLoading, async (newValue) => {
-        if (!newValue) {
-
-            const tour = await getTour(id);
-
-            if (tour.users_tour == false) {
-                await startTourDonor(router, id)
-            } else if (tour.users_tour == true) {
-                return;
-
-            }
-
-        }
-    });
-}
-
-
-
+provide('isLoading', { isLoading });
 </script>
 
 <template>

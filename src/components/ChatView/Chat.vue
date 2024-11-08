@@ -83,7 +83,7 @@ const copiedEmail = () => {
 <template>
   <template v-if="selectedChatIndex !== 'chats' && selectedChatIndex !== 'contacts'">
     <div class="flex flex-col w-full lg:w-2/3 lg:p-5 lg:pt-0 gap-y-7">
-      <div class="flex flex-col p-5 box box--stacked">
+      <div class="flex flex-col p-5 box box--stacked" id="chat">
         <div class="flex items-center gap-3.5 border-b border-dashed border-black dark:border-slate-400 pb-5">
           <div class="relative">
             <div
@@ -182,9 +182,9 @@ const copiedEmail = () => {
     </div>
   </template>
 
-  <template v-if="selectedChatIndex === 'chats'" >
-    <div class="flex flex-col w-full lg:w-2/3 lg:p-5 lg:pt-0 gap-y-7" >
-      <div class="flex flex-col box box--stacked">
+  <template v-if="selectedChatIndex === 'chats'">
+    <div class="flex flex-col w-full lg:w-2/3 lg:p-5 lg:pt-0 gap-y-7">
+      <div class="flex flex-col box box--stacked" id="chat">
         <div class="flex items-center justify-center h-[728px]" id="diecisiete">
           <div class="text-slate-500 dark:text-slate-400 text-2xl">
             Seleccione un chat para empezar a chatear
@@ -196,7 +196,7 @@ const copiedEmail = () => {
 
   <template v-if="selectedChatIndex === 'contacts'">
     <div class="flex flex-col w-full lg:w-2/3 lg:p-5 lg:pt-0 gap-y-7">
-      <div class="flex flex-col box box--stacked">
+      <div class="flex flex-col box box--stacked" id="chat">
         <div class="flex items-center justify-center h-[728px]">
           <div class="text-slate-500 dark:text-slate-400 text-2xl">
             Inicia un chat con tus contactos

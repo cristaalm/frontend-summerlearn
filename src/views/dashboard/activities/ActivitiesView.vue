@@ -551,7 +551,7 @@ onMounted(async () => {
       <div class="flex flex-col md:h-10 gap-y-3 md:items-center md:flex-row">
         <div class="text-base font-medium group-[.mode--light]:text-white">Actividades</div>
         <div class="flex flex-col sm:flex-row gap-x-3 gap-y-2 md:ml-auto">
-          <Button variant="primary"
+          <Button variant="primary" id="button-add-activity"
             class="group-[.mode--light]:!bg-white/[0.12] group-[.mode--light]:!text-slate-200 group-[.mode--light]:!border-transparent"
             @click="() => {
               router.push({
@@ -564,15 +564,9 @@ onMounted(async () => {
         </div>
       </div>
       <div class="mt-3.5">
-        <div class="flex flex-col box box--stacked">
+        <div class="flex flex-col box box--stacked" id="table-activities">
           <div class="flex flex-col p-5 sm:items-center sm:flex-row gap-y-2">
             <div>
-              <!-- <select v-model="selectedSchedule" id="schedules">
-                <option disabled value="">Seleccione un horario...</option>
-                <option v-for="schedule in schedulesList" :key="schedule.id" :value="schedule.id">
-                  {{ schedule.start }} - {{ schedule.end }}
-                </option>
-              </select> -->
               <div class="relative">
                 <Lucide icon="Search"
                   class="absolute inset-y-0 left-0 z-10 w-4 h-4 my-auto ml-3 stroke-[1.3] text-slate-500" />

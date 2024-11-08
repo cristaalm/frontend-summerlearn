@@ -37,8 +37,8 @@ const saveStatus = (action) => {
     <Dialog.Panel>
       <div class="p-6 text-center">
         <Lucide :icon="statusId === 'accept' ? 'CheckCircleIcon' : 'XCircle'" class="w-16 h-16 mx-auto mt-3" :class="statusId === 'accept'
-            ? 'text-success dark:text-green-500'
-            : 'text-danger dark:text-red-500'
+          ? 'text-success dark:text-green-500'
+          : 'text-danger dark:text-red-500'
           " />
         <div class="mt-5 text-3xl dark:text-slate-200">
           ¿Está seguro de {{ statusId === 'accept' ? 'aceptar' : 'rechazar' }} este registro?
@@ -70,7 +70,7 @@ const saveStatus = (action) => {
         </div>
       </div>
       <div class="mt-3.5">
-        <div class="flex flex-col box box--stacked">
+        <div class="flex flex-col box box--stacked" id="table-users-request">
           <div class="flex flex-col p-5 sm:items-center sm:flex-row gap-y-2">
             <div>
               <div class="relative">
@@ -102,8 +102,8 @@ const saveStatus = (action) => {
                     </div>
                     <div class="flex items-center mt-4">
                       <Button variant="secondary" @click="() => {
-                          close()
-                        }
+                        close()
+                      }
                         " class="w-32 ml-auto">
                         Cerrar
                       </Button>
@@ -218,21 +218,21 @@ const saveStatus = (action) => {
                     </Table.Td>
                     <Table.Td class="relative py-4 border-dashed dark:bg-darkmode-600 dark:text-slate-200">
                       <div class="flex flex-col sm:flex-row gap-x-3 gap-y-2 md:ml-auto">
-                        <Button
+                        <Button id="button-acept-request-user"
                           class="bg-green-300 dark:hover:bg-green-300 text-gray-950 hover:bg-green-500 dark:border-none dark:bg-green-500 hover:text-white dark:hover:text-black dark:text-white"
                           @click="() => {
-                              openModal(user.id, 'accept')
-                              saveStatus('accept')
-                            }
+                            openModal(user.id, 'accept')
+                            saveStatus('accept')
+                          }
                             ">
                           <Lucide icon="UserCheckIcon" class="stroke-[1.3] w-4 h-4 mr-2" /> Aceptar
                         </Button>
-                        <Button
+                        <Button id="button-reject-request-user"
                           class="bg-red-300 dark:hover:bg-red-300 text-gray-950 hover:bg-red-500 dark:border-none dark:bg-red-500 hover:text-white dark:hover:text-black dark:text-white"
                           @click="() => {
-                              openModal(user.id, 'reject')
-                              saveStatus('reject')
-                            }
+                            openModal(user.id, 'reject')
+                            saveStatus('reject')
+                          }
                             ">
                           <Lucide icon="UserMinusIcon" class="stroke-[1.3] w-4 h-4 mr-2" /> Rechazar
                         </Button>

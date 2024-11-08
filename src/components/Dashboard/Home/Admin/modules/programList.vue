@@ -20,7 +20,7 @@ onMounted(() => {
 <template>
     <div class="w-full col-span-12  lg:col-span-4 xl:col-span-4">
         <div class="flex flex-col gap-y-7">
-            <div class="flex flex-col gap-y-6">
+            <div class="flex flex-col gap-y-6" id="programList">
                 <div class="flex flex-col md:h-10 gap-y-3 md:items-center md:flex-row">
                     <div class="text-base font-medium 2xl:group-[.mode--light]:text-white dark:text-slate-200">
                         Programas

@@ -45,7 +45,7 @@ onMounted(() => {
       <div class="flex flex-col md:h-10 gap-y-3 md:items-center md:flex-row">
         <div class="text-base font-medium group-[.mode--light]:text-white">Usuarios</div>
         <div class="flex flex-col sm:flex-row gap-x-3 gap-y-2 md:ml-auto">
-          <Button variant="primary"
+          <Button variant="primary" id="button-add-user"
             class="group-[.mode--light]:!bg-white/[0.12] group-[.mode--light]:!text-slate-200 group-[.mode--light]:!border-transparent"
             @click="() => {
               router.push({
@@ -58,7 +58,7 @@ onMounted(() => {
         </div>
       </div>
       <div class="mt-3.5">
-        <div class="flex flex-col box box--stacked">
+        <div class="flex flex-col box box--stacked" id="table-users">
           <div class="flex flex-col p-5 sm:items-center sm:flex-row gap-y-2">
             <div>
               <div class="relative">
