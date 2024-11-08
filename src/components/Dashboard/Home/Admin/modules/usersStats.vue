@@ -103,7 +103,7 @@ onMounted(() => {
                             v-if="!loadingCountUsers" />
                         <LoadingIcon v-if="loadingCountUsers" icon="tail-spin" class="stroke-[1.3] w-6 h-6"
                             color="black" />
-                        <div class="absolute -bottom-2 -right-2 flex items-center justify-center w-5 h-5 text-xs font-medium text-secondary dark:text-slate-200 bg-white dark:bg-slate-500 rounded-full"
+                        <div class="absolute -bottom-2 -right-2 flex items-center justify-center w-5 h-5 text-xs font-medium text-slate-400 dark:text-slate-200 bg-white dark:bg-slate-500 rounded-full"
                             v-if="!loadingCountUsers">
                             {{ countUsers.Beneficiario }}
                         </div>
