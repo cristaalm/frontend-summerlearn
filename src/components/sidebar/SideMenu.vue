@@ -446,8 +446,8 @@ async function againTour() {
                   </Menu.Item>
                   <Menu.Item v-if="role == 3 || role == 1 || role == 2" @click="againTour"
                     class="text-primary flex items-center px-4 py-2 hover:bg-gray-100 dark:text-slate-200 dark:hover:text-sky-500 dark:hover:bg-slate-600">
-                    <Lucide icon="Users" class="w-4 h-4 mr-2  " />
-                    Tour
+                    <Lucide icon="HelpCircle" class="w-4 h-4 mr-2  " />
+                    Guía de inicio
                   </Menu.Item>
                   <Menu.Item @click="() => router.push({ name: 'settings' })"
                     class="text-primary flex items-center px-4 py-2 hover:bg-gray-100 dark:text-slate-200 dark:hover:text-sky-500 dark:hover:bg-slate-600">

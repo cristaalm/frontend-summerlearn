@@ -13,12 +13,16 @@ export const startTourAdmin = async (router, id, formattedMenu, activeMobileMenu
           title: 'Bienvenidos a tu perfil de administrador',
           onPopoverRender: () => {
             router.push('/dashboard').then(() => {})
-          }
+          },
+          prevBtnText: 'Anterior',
+          nextBtnText: 'Siguiente'
         }
       },
       {
         element: '#usersStats',
         popover: {
+          prevBtnText: 'Anterior',
+          nextBtnText: 'Siguiente',
           title: 'Estadísticas de usuarios',
           description:
             'Se muestra la cantidad de usuarios registrados en la plataforma por cada rol.'
@@ -27,6 +31,8 @@ export const startTourAdmin = async (router, id, formattedMenu, activeMobileMenu
       {
         element: '#programList',
         popover: {
+          prevBtnText: 'Anterior',
+          nextBtnText: 'Siguiente',
           title: 'Lista de programas',
           description: 'Una lista de los últimos programas creados en la plataforma.'
         }
@@ -34,6 +40,8 @@ export const startTourAdmin = async (router, id, formattedMenu, activeMobileMenu
       {
         element: '#donationsList',
         popover: {
+          prevBtnText: 'Anterior',
+          nextBtnText: 'Siguiente',
           title: 'Lista de donaciónes',
           description: 'Una lista de las últimas donaciónes realizadas en la plataforma.'
         }
@@ -41,6 +49,8 @@ export const startTourAdmin = async (router, id, formattedMenu, activeMobileMenu
       {
         element: '#billsList',
         popover: {
+          prevBtnText: 'Anterior',
+          nextBtnText: 'Siguiente',
           title: 'Lista de gastos',
           description: 'Una lista de los últimos gastos generados en la plataforma.',
           onNextClick: () => {
@@ -54,6 +64,8 @@ export const startTourAdmin = async (router, id, formattedMenu, activeMobileMenu
       {
         element: '#sideBar-users',
         popover: {
+          prevBtnText: 'Anterior',
+          nextBtnText: 'Siguiente',
           title: 'Menú de usuarios',
           description: 'En este menú podrás administrar los usuarios de la plataforma.',
           onNextClick: () => {
@@ -74,6 +86,8 @@ export const startTourAdmin = async (router, id, formattedMenu, activeMobileMenu
       {
         element: '#table-users',
         popover: {
+          prevBtnText: 'Anterior',
+          nextBtnText: 'Siguiente',
           title: 'Tabla de usuarios',
           description: 'En esta tabla podrás ver y gestionar los usuarios de la plataforma.',
           onPrevClick: () => {
@@ -87,6 +101,8 @@ export const startTourAdmin = async (router, id, formattedMenu, activeMobileMenu
       {
         element: '#button-add-user',
         popover: {
+          prevBtnText: 'Anterior',
+          nextBtnText: 'Siguiente',
           title: 'Botón de agregar usuario',
           description: 'Con este botón podrás agregar un nuevo usuario a la plataforma.',
           onNextClick: () => {
@@ -104,6 +120,8 @@ export const startTourAdmin = async (router, id, formattedMenu, activeMobileMenu
       {
         element: '#sideBar-users-request',
         popover: {
+          prevBtnText: 'Anterior',
+          nextBtnText: 'Siguiente',
           title: 'Menú de solicitudes',
           description: 'En este menú podrás gestionar las solicitudes de los usuarios.',
           onNextClick: () => {
@@ -123,6 +141,8 @@ export const startTourAdmin = async (router, id, formattedMenu, activeMobileMenu
       {
         element: '#table-users-request',
         popover: {
+          prevBtnText: 'Anterior',
+          nextBtnText: 'Siguiente',
           title: 'Tabla de solicitudes',
           description: 'En esta tabla podrás ver y gestionar las solicitudes de los usuarios.',
           onPrevClick: () => {
@@ -136,6 +156,8 @@ export const startTourAdmin = async (router, id, formattedMenu, activeMobileMenu
       {
         element: '#button-acept-request-user',
         popover: {
+          prevBtnText: 'Anterior',
+          nextBtnText: 'Siguiente',
           title: 'Botón de aceptar solicitud',
           description: 'Con este botón podrás aceptar la solicitud de un usuario.'
         }
@@ -143,6 +165,8 @@ export const startTourAdmin = async (router, id, formattedMenu, activeMobileMenu
       {
         element: '#button-reject-request-user',
         popover: {
+          prevBtnText: 'Anterior',
+          nextBtnText: 'Siguiente',
           title: 'Botón de rechazar solicitud',
           description:
             'Con este botón podrás rechazar la solicitud de un usuario, Ten en cuenta que el usuario será eliminado de la plataforma.',
@@ -161,6 +185,8 @@ export const startTourAdmin = async (router, id, formattedMenu, activeMobileMenu
       {
         element: '#sideBar-programs',
         popover: {
+          prevBtnText: 'Anterior',
+          nextBtnText: 'Siguiente',
           title: 'Menú de programas',
           description: 'En este menú podrás administrar los programas de la plataforma.',
           onNextClick: () => {
@@ -186,6 +212,8 @@ export const startTourAdmin = async (router, id, formattedMenu, activeMobileMenu
       {
         element: '#table-programs',
         popover: {
+          prevBtnText: 'Anterior',
+          nextBtnText: 'Siguiente',
           title: 'Tabla de programas',
           description: 'En esta tabla podrás ver y gestionar los programas de la plataforma.',
           onPrevClick: () => {
@@ -199,6 +227,8 @@ export const startTourAdmin = async (router, id, formattedMenu, activeMobileMenu
       {
         element: '#button-add-program',
         popover: {
+          prevBtnText: 'Anterior',
+          nextBtnText: 'Siguiente',
           title: 'Botón de agregar programa',
           description: 'Con este botón podrás agregar un nuevo programa a la plataforma.',
           onNextClick: () => {
@@ -216,6 +246,8 @@ export const startTourAdmin = async (router, id, formattedMenu, activeMobileMenu
       {
         element: '#sideBar-areas',
         popover: {
+          prevBtnText: 'Anterior',
+          nextBtnText: 'Siguiente',
           title: 'Menú de áreas',
           description: 'En este menú podrás administrar las áreas de la plataforma.',
           onNextClick: () => {
@@ -241,6 +273,8 @@ export const startTourAdmin = async (router, id, formattedMenu, activeMobileMenu
       {
         element: '#table-areas',
         popover: {
+          prevBtnText: 'Anterior',
+          nextBtnText: 'Siguiente',
           title: 'Tabla de áreas',
           description: 'En esta tabla podrás ver y gestionar las áreas de la plataforma.',
           onPrevClick: () => {
@@ -254,6 +288,8 @@ export const startTourAdmin = async (router, id, formattedMenu, activeMobileMenu
       {
         element: '#button-add-area',
         popover: {
+          prevBtnText: 'Anterior',
+          nextBtnText: 'Siguiente',
           title: 'Botón de agregar área',
           description: 'Con este botón podrás agregar una nueva área a la plataforma.',
           onNextClick: () => {
@@ -267,6 +303,8 @@ export const startTourAdmin = async (router, id, formattedMenu, activeMobileMenu
       {
         element: '#sideBar-activities',
         popover: {
+          prevBtnText: 'Anterior',
+          nextBtnText: 'Siguiente',
           title: 'Menú de actividades',
           description: 'En este menú podrás administrar las actividades de la plataforma.',
           onNextClick: () => {
@@ -286,6 +324,8 @@ export const startTourAdmin = async (router, id, formattedMenu, activeMobileMenu
       {
         element: '#table-activities',
         popover: {
+          prevBtnText: 'Anterior',
+          nextBtnText: 'Siguiente',
           title: 'Tabla de actividades',
           description: 'En esta tabla podrás ver y gestionar las actividades de la plataforma.',
           onPrevClick: () => {
@@ -299,6 +339,8 @@ export const startTourAdmin = async (router, id, formattedMenu, activeMobileMenu
       {
         element: '#button-add-activity',
         popover: {
+          prevBtnText: 'Anterior',
+          nextBtnText: 'Siguiente',
           title: 'Botón de agregar actividad',
           description: 'Con este botón podrás agregar una nueva actividad a la plataforma.',
           onNextClick: () => {
@@ -316,6 +358,8 @@ export const startTourAdmin = async (router, id, formattedMenu, activeMobileMenu
       {
         element: '#sideBar-performance',
         popover: {
+          prevBtnText: 'Anterior',
+          nextBtnText: 'Siguiente',
           title: 'Menú de rendimiento',
           description: 'En este menú podrás ver el rendimiento de la plataforma.',
           onNextClick: () => {
@@ -341,6 +385,8 @@ export const startTourAdmin = async (router, id, formattedMenu, activeMobileMenu
       {
         element: '#table-performance',
         popover: {
+          prevBtnText: 'Anterior',
+          nextBtnText: 'Siguiente',
           title: 'Tabla de rendimiento',
           description: 'En esta tabla podrás ver el rendimiento de la plataforma.',
           onPrevClick: () => {
@@ -354,6 +400,8 @@ export const startTourAdmin = async (router, id, formattedMenu, activeMobileMenu
       {
         element: '#button-add-performance',
         popover: {
+          prevBtnText: 'Anterior',
+          nextBtnText: 'Siguiente',
           title: 'Botón de agregar rendimiento',
           description: 'Con este botón podrás agregar un nuevo rendimiento a la plataforma.',
           onNextClick: () => {
@@ -367,6 +415,8 @@ export const startTourAdmin = async (router, id, formattedMenu, activeMobileMenu
       {
         element: '#sideBar-donations',
         popover: {
+          prevBtnText: 'Anterior',
+          nextBtnText: 'Siguiente',
           title: 'Menú de donaciónes',
           description: 'En este menú podrás administrar las donaciónes de la plataforma.',
           onNextClick: () => {
@@ -386,6 +436,8 @@ export const startTourAdmin = async (router, id, formattedMenu, activeMobileMenu
       {
         element: '#donationsGraph',
         popover: {
+          prevBtnText: 'Anterior',
+          nextBtnText: 'Siguiente',
           title: 'Donaciones semanales',
           description: 'Se mostrará estadísticas de las donaciónes de la semana.',
           onPrevClick: () => {
@@ -399,6 +451,8 @@ export const startTourAdmin = async (router, id, formattedMenu, activeMobileMenu
       {
         element: '#bar-donations',
         popover: {
+          prevBtnText: 'Anterior',
+          nextBtnText: 'Siguiente',
           title: 'Barras de donaciónes',
           description:
             'Aquí se mostrará inforamacion relevante, como cantidad de donaciónes, monto total, última donación y la última fecha.'
@@ -407,6 +461,8 @@ export const startTourAdmin = async (router, id, formattedMenu, activeMobileMenu
       {
         element: '#table-donations',
         popover: {
+          prevBtnText: 'Anterior',
+          nextBtnText: 'Siguiente',
           title: 'Historial de donaciónes',
           description: 'Se muestran el historia de todas tus donaciónes.'
         }
@@ -414,6 +470,8 @@ export const startTourAdmin = async (router, id, formattedMenu, activeMobileMenu
       {
         element: '#button-add-donation',
         popover: {
+          prevBtnText: 'Anterior',
+          nextBtnText: 'Siguiente',
           title: 'Botón de agregar donación',
           description: 'Con este botón podrás agregar una nueva donación a la plataforma.',
           onNextClick: () => {
@@ -431,6 +489,8 @@ export const startTourAdmin = async (router, id, formattedMenu, activeMobileMenu
       {
         element: '#sideBar-expenses',
         popover: {
+          prevBtnText: 'Anterior',
+          nextBtnText: 'Siguiente',
           title: 'Menú de gastos',
           description: 'En este menú podrás administrar los gastos de la plataforma.',
           onNextClick: () => {
@@ -456,6 +516,8 @@ export const startTourAdmin = async (router, id, formattedMenu, activeMobileMenu
       {
         element: '#table-expenses',
         popover: {
+          prevBtnText: 'Anterior',
+          nextBtnText: 'Siguiente',
           title: 'Tabla de gastos',
           description: 'En esta tabla podrás ver y gestionar los gastos de la plataforma.',
           onPrevClick: () => {
@@ -469,6 +531,8 @@ export const startTourAdmin = async (router, id, formattedMenu, activeMobileMenu
       {
         element: '#button-add-expense',
         popover: {
+          prevBtnText: 'Anterior',
+          nextBtnText: 'Siguiente',
           title: 'Botón de agregar gasto',
           description: 'Con este botón podrás agregar un nuevo gasto a la plataforma.',
           onNextClick: () => {
@@ -482,6 +546,8 @@ export const startTourAdmin = async (router, id, formattedMenu, activeMobileMenu
       {
         element: '#sideBar-chat',
         popover: {
+          prevBtnText: 'Anterior',
+          nextBtnText: 'Siguiente',
           title: 'Menú de chat',
           description: 'En este menú podrás comunicarte con los usuarios de la plataforma.',
           onNextClick: () => {
@@ -507,6 +573,8 @@ export const startTourAdmin = async (router, id, formattedMenu, activeMobileMenu
       {
         element: '#sectionSelect',
         popover: {
+          prevBtnText: 'Anterior',
+          nextBtnText: 'Siguiente',
           title: 'Selección de apartado',
           description: 'Aquí puedes seleccionar entre los chats y los contactos.',
           onPrevClick: () => {
@@ -520,6 +588,8 @@ export const startTourAdmin = async (router, id, formattedMenu, activeMobileMenu
       {
         element: '#chatList',
         popover: {
+          prevBtnText: 'Anterior',
+          nextBtnText: 'Siguiente',
           title: 'Lista de chats',
           description:
             'Aquí será la seccion donde se mostrará tus chat y llevaras tus conversaciones.'
@@ -528,6 +598,8 @@ export const startTourAdmin = async (router, id, formattedMenu, activeMobileMenu
       {
         element: '#searchChat',
         popover: {
+          prevBtnText: 'Anterior',
+          nextBtnText: 'Siguiente',
           title: 'Buscador de chat',
           description: 'Podras buscar un chat en especifico.'
         }
@@ -535,6 +607,8 @@ export const startTourAdmin = async (router, id, formattedMenu, activeMobileMenu
       {
         element: '#chat',
         popover: {
+          prevBtnText: 'Anterior',
+          doneBtnText: 'Finalizar',
           title: 'Chat',
           description: 'Aquí podrás ver el chat seleccionado y enviar mensajes.',
           onNextClick: async () => {

@@ -10,6 +10,8 @@ export const startTourCoord = async (router, id, formattedMenu, activeMobileMenu
     steps: [
       {
         popover: {
+          prevBtnText: 'Anterior',
+          nextBtnText: 'Siguiente',
           title: 'Bienvenidos a tu perfil de coordinador',
           onPopoverRender: () => {
             router.push('/dashboard').then(() => {})
@@ -19,6 +21,8 @@ export const startTourCoord = async (router, id, formattedMenu, activeMobileMenu
       {
         element: '#programsAsignedList',
         popover: {
+          prevBtnText: 'Anterior',
+          nextBtnText: 'Siguiente',
           title: 'Lista de programas asignados',
           description: 'Aquí podrás ver los programas que tienes asignados.'
         }
@@ -26,6 +30,8 @@ export const startTourCoord = async (router, id, formattedMenu, activeMobileMenu
       {
         element: '#programList',
         popover: {
+          prevBtnText: 'Anterior',
+          nextBtnText: 'Siguiente',
           title: 'Lista de programas',
           description: 'Una lista de los últimos programas creados en la plataforma.'
         }
@@ -33,6 +39,8 @@ export const startTourCoord = async (router, id, formattedMenu, activeMobileMenu
       {
         element: '#activitiesList',
         popover: {
+          prevBtnText: 'Anterior',
+          nextBtnText: 'Siguiente',
           title: 'Lista de actividades',
           description: 'Una lista de las últimas actividades creadas en la plataforma.',
           onNextClick: () => {
@@ -46,6 +54,8 @@ export const startTourCoord = async (router, id, formattedMenu, activeMobileMenu
       {
         element: '#sideBar-subscriptions',
         popover: {
+          prevBtnText: 'Anterior',
+          nextBtnText: 'Siguiente',
           title: 'Menú de suscripciones',
           description: 'En este menú podrás administrar las suscripciones de la plataforma.',
           onNextClick: () => {
@@ -65,6 +75,8 @@ export const startTourCoord = async (router, id, formattedMenu, activeMobileMenu
       {
         element: '#containerSubscriptions',
         popover: {
+          prevBtnText: 'Anterior',
+          nextBtnText: 'Siguiente',
           title: 'Tabla de suscripciones',
           description: 'En esta tabla podrás ver y gestionar las suscripciones de la plataforma.',
           onPrevClick: () => {
@@ -78,6 +90,8 @@ export const startTourCoord = async (router, id, formattedMenu, activeMobileMenu
       {
         element: '#sideBar-programs',
         popover: {
+          prevBtnText: 'Anterior',
+          nextBtnText: 'Siguiente',
           title: 'Menú de programas',
           description: 'En este menú podrás administrar los programas de la plataforma.',
           onNextClick: () => {
@@ -99,6 +113,8 @@ export const startTourCoord = async (router, id, formattedMenu, activeMobileMenu
       {
         element: '#table-programs',
         popover: {
+          prevBtnText: 'Anterior',
+          nextBtnText: 'Siguiente',
           title: 'Tabla de programas',
           description: 'En esta tabla podrás ver y gestionar los programas de la plataforma.',
           onPrevClick: () => {
@@ -112,6 +128,8 @@ export const startTourCoord = async (router, id, formattedMenu, activeMobileMenu
       {
         element: '#button-add-program',
         popover: {
+          prevBtnText: 'Anterior',
+          nextBtnText: 'Siguiente',
           title: 'Botón de agregar programa',
           description: 'Con este botón podrás agregar un nuevo programa a la plataforma.',
           onNextClick: () => {
@@ -129,6 +147,8 @@ export const startTourCoord = async (router, id, formattedMenu, activeMobileMenu
       {
         element: '#sideBar-activities',
         popover: {
+          prevBtnText: 'Anterior',
+          nextBtnText: 'Siguiente',
           title: 'Menú de actividades',
           description: 'En este menú podrás administrar las actividades de la plataforma.',
           onNextClick: () => {
@@ -148,6 +168,8 @@ export const startTourCoord = async (router, id, formattedMenu, activeMobileMenu
       {
         element: '#table-activities',
         popover: {
+          prevBtnText: 'Anterior',
+          nextBtnText: 'Siguiente',
           title: 'Tabla de actividades',
           description: 'En esta tabla podrás ver y gestionar las actividades de la plataforma.',
           onPrevClick: () => {
@@ -161,6 +183,8 @@ export const startTourCoord = async (router, id, formattedMenu, activeMobileMenu
       {
         element: '#button-add-activity',
         popover: {
+          prevBtnText: 'Anterior',
+          nextBtnText: 'Siguiente',
           title: 'Botón de agregar actividad',
           description: 'Con este botón podrás agregar una nueva actividad a la plataforma.',
           onNextClick: () => {
@@ -178,6 +202,8 @@ export const startTourCoord = async (router, id, formattedMenu, activeMobileMenu
       {
         element: '#sideBar-performance',
         popover: {
+          prevBtnText: 'Anterior',
+          nextBtnText: 'Siguiente',
           title: 'Menú de rendimiento',
           description: 'En este menú podrás ver el rendimiento de la plataforma.',
           onNextClick: () => {
@@ -203,6 +229,8 @@ export const startTourCoord = async (router, id, formattedMenu, activeMobileMenu
       {
         element: '#table-performance',
         popover: {
+          prevBtnText: 'Anterior',
+          nextBtnText: 'Siguiente',
           title: 'Tabla de rendimiento',
           description: 'En esta tabla podrás ver el rendimiento de la plataforma.',
           onPrevClick: () => {
@@ -216,6 +244,8 @@ export const startTourCoord = async (router, id, formattedMenu, activeMobileMenu
       {
         element: '#button-add-performance',
         popover: {
+          prevBtnText: 'Anterior',
+          nextBtnText: 'Siguiente',
           title: 'Botón de agregar rendimiento',
           description: 'Con este botón podrás agregar un nuevo rendimiento a la plataforma.',
           onNextClick: () => {
@@ -229,6 +259,8 @@ export const startTourCoord = async (router, id, formattedMenu, activeMobileMenu
       {
         element: '#sideBar-chat',
         popover: {
+          prevBtnText: 'Anterior',
+          nextBtnText: 'Siguiente',
           title: 'Menú de chat',
           description: 'En este menú podrás comunicarte con los usuarios de la plataforma.',
           onNextClick: () => {
@@ -250,6 +282,8 @@ export const startTourCoord = async (router, id, formattedMenu, activeMobileMenu
       {
         element: '#sectionSelect',
         popover: {
+          prevBtnText: 'Anterior',
+          nextBtnText: 'Siguiente',
           title: 'Selección de apartado',
           description: 'Aquí puedes seleccionar entre los chats y los contactos.',
           onPrevClick: () => {
@@ -263,6 +297,8 @@ export const startTourCoord = async (router, id, formattedMenu, activeMobileMenu
       {
         element: '#chatList',
         popover: {
+          prevBtnText: 'Anterior',
+          nextBtnText: 'Siguiente',
           title: 'Lista de chats',
           description:
             'Aquí será la seccion donde se mostrará tus chat y llevaras tus conversaciones.'
@@ -271,6 +307,8 @@ export const startTourCoord = async (router, id, formattedMenu, activeMobileMenu
       {
         element: '#searchChat',
         popover: {
+          prevBtnText: 'Anterior',
+          nextBtnText: 'Siguiente',
           title: 'Buscador de chat',
           description: 'Podras buscar un chat en especifico.'
         }
@@ -278,6 +316,8 @@ export const startTourCoord = async (router, id, formattedMenu, activeMobileMenu
       {
         element: '#chat',
         popover: {
+          prevBtnText: 'Anterior',
+          doneBtnText: 'Finalizar',
           title: 'Chat',
           description: 'Aquí podrás ver el chat seleccionado y enviar mensajes.',
           onNextClick: async () => {
