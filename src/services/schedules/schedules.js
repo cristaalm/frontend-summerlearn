@@ -8,7 +8,7 @@ export const getSchedules = async (actividadId, diaId) => {
     }
 
     const response = await fetch(
-      `${Baseurl}schedules/get-schedules/?id_activity=${actividadId}&id_day=${diaId}`,
+      `${Baseurl}schedules/get-available-schedules/?id_activity=${actividadId}&id_day=${diaId}`,
       {
         method: 'GET',
         headers: {
@@ -23,11 +23,11 @@ export const getSchedules = async (actividadId, diaId) => {
     }
 
     const json = await response.json()
-    const schedules = json || []
+    const schedules = json.available_schedules || []
 
     // schedules.sort((a, b) => a.schedules_id - b.schedules_id)
 
-    return schedules.available_hours.map((schedule) => ({
+    return schedules.map((schedule) => ({
       id: schedule.schedules_id,
       start: schedule.schedules_start,
       end: schedule.schedules_end
