@@ -22,7 +22,7 @@ onMounted(() => {
                 Usuarios
             </div>
         </div>
-        <div class="mt-3.5 box box--stacked">
+        <div class="mt-3.5 box box--stacked" id="usersStats">
             <div
                 class="grid grid-cols-2 px-5 py-10 border-b dark:border-slate-500 sm:grid-cols-3 md:grid-cols-3 gap-y-5 lg:grid-cols-6">
 

@@ -35,7 +35,7 @@ onMounted(() => {
       <div class="flex flex-col md:h-10 gap-y-3 md:items-center md:flex-row">
         <div class="text-base font-medium group-[.mode--light]:text-white">Gastos</div>
         <div class="flex flex-col sm:flex-row gap-x-3 gap-y-2 md:ml-auto">
-          <Button variant="primary" @click="router.push({ name: 'addExpense' })"
+          <Button variant="primary" @click="router.push({ name: 'addExpense' })" id="button-add-expense"
             class="group-[.mode--light]:!bg-white/[0.12] group-[.mode--light]:!text-slate-200 group-[.mode--light]:!border-transparent">
             <Lucide icon="PenLine" class="stroke-[1.3] w-4 h-4 mr-2" /> Agregar nuevo gasto
           </Button>
@@ -43,7 +43,7 @@ onMounted(() => {
       </div>
 
       <div class="mt-3.5">
-        <div class="flex flex-col box box--stacked">
+        <div class="flex flex-col box box--stacked" id="table-expenses">
           <div class="flex flex-col p-5 sm:items-center sm:flex-row gap-y-2">
             <div>
               <div class="relative">

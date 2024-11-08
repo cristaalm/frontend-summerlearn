@@ -1,7 +1,6 @@
 <script setup>
 import { Chat, SectionSelect } from "@/components/ChatView/";
 import { ref, onMounted, provide, onUnmounted, computed, watch, inject } from "vue";
-import Button from "@/components/base/Button";
 
 
 // Crear una variable reactiva para el chat seleccionado

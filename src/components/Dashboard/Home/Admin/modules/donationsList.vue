@@ -28,7 +28,7 @@ onMounted(() => {
                 <div class="text-base font-medium dark:text-slate-200">Actividad de donaciones</div>
             </div>
 
-            <div class="p-5 mt-3.5 box box--stacked">
+            <div class="p-5 mt-3.5 box box--stacked" id="donationsList">
                 <!-- Total de donaciones -->
                 <div class="pb-5 mb-5 border-b border-dashed border-slate-300/70">
                     <div class="flex flex-col gap-3 sm:items-center sm:flex-row">

@@ -18,7 +18,7 @@ import {
   enter,
   leave
 } from './side-menu'
-import { watch, reactive, ref, computed, onMounted, provide, onUnmounted, inject } from 'vue'
+import { watch, reactive, ref, computed, onMounted, provide, inject } from 'vue'
 import SimpleBar from 'simplebar'
 //@ts-ignore
 import { logoutColorScheme } from '@/utils/switchColorScheme'
@@ -26,7 +26,10 @@ import { useColorSchemeStore } from '@/stores/color-scheme'
 // @ts-ignore
 import { Baseurl } from '@/utils/global'
 // @ts-ignore
-import { startTourDonor } from '@/utils/tours/tourDonations'; // Importa el archivo creado
+// ? tour
+import { getTour } from '@/utils/getTour';
+// @ts-ignore
+import { startTourAdmin, startTourDonor } from '@/utils/tours/'
 // @ts-ignore
 import getIdByToken from '@/logic/getIdByToken';
 
@@ -195,8 +198,25 @@ const closeSlideOver = () => {
   openSlide.value = false
 }
 
+// @ts-ignore
+const { isLoading } = inject('isLoading');
+
+watch(isLoading, async () => {
+  console.log('entramos al watch');
+  if (!isLoading.value) {
+    console.log('entramos al if');
+    const tour = await getTour(id);
+    console.log(tour);
+    if (tour.users_tour == false) {
+      if (role == 3) startTourDonor(router, id);
+      if (role == 1) startTourAdmin(router, id, formattedMenu, activeMobileMenu, showToast);
+    }
+  }
+}, { immediate: true });
+
 async function againTour() {
-  await startTourDonor(router, id);
+  if (role == 3) startTourDonor(router, id);
+  if (role == 1) startTourAdmin(router, id, formattedMenu, activeMobileMenu, showToast);
 }
 
 
@@ -312,7 +332,8 @@ async function againTour() {
                 <!-- BEGIN: Second Child -->
                 <Transition @enter="enter" @leave="leave">
                   <ul v-if="menu.subMenu && menu.activeDropdown" class="bg-slate-800">
-                    <li v-for="(subMenu, subMenuKey) in menu.subMenu" :key="subMenuKey">
+                    <li v-for="(subMenu, subMenuKey) in menu.subMenu" :key="subMenuKey"
+                      :id="`sideBar-${subMenu.pageName}`">
                       <a href="" :class="[
                         'side-menu__link ',
                         { 'side-menu__link--active': subMenu.active },
@@ -404,19 +425,7 @@ async function againTour() {
               quickSearch = true
             }
               "></div>
-
             <div class="flex justify-end px-4 space-x-5">
-              <!-- Close Button Menu -->
-              <!-- <Menu class="overflow-hidden w-9 h-9 border-3 relative group">
-                <Menu.Button @click="openSlideOver">
-                  <Tippy as="a" class="flex items-center justify-center ml-auto w-9 h-9" content="Contáctanos">
-                    <img alt="Tailwise - Admin Dashboard Template" :src="`/directorio-telefonico.png`" />
-                    <Lucide icon="MessagesSquare" class="w-9 h-9 text-white mx-auto" />
-                  </Tippy>
-                </Menu.Button>
-              </Menu> -->
-
-              <!-- User Profile Menu -->
               <Menu>
                 <Menu.Button class="overflow-hidden rounded-full w-9 h-9 border-3 border-white/15 image-fit">
                   <!-- Verifica si loadingUserPhoto es falso y photoUser tiene un valor válido -->
@@ -435,7 +444,7 @@ async function againTour() {
                         class="shadow-current pointer-events-none" />
                     </div>
                   </Menu.Item>
-                  <Menu.Item v-if="role == 3" @click="againTour"
+                  <Menu.Item v-if="role == 3 || role == 1" @click="againTour"
                     class="text-primary flex items-center px-4 py-2 hover:bg-gray-100 dark:text-slate-200 dark:hover:text-sky-500 dark:hover:bg-slate-600">
                     <Lucide icon="Users" class="w-4 h-4 mr-2  " />
                     Tour
