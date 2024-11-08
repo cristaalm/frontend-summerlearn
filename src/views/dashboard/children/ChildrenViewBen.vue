@@ -63,12 +63,12 @@ onMounted(() => {
                   <div class="pt-5">
                     <div class="flex flex-col gap-3.5 mb-5 pb-5 mt-auto border-b border-dashed border-slate-300/70">
                       <div class="flex items-center">
-                        <div class="text-slate-500 dark:text-slate-200">Padre:</div>
+                        <div class="text-slate-500 dark:text-slate-200">Fecha de nacimineto:</div>
                         <div class="ml-auto">
                           <div
                             class="flex items-center text-xs font-medium rounded-md text-success dark:text-slate-400 bg-success/10 border border-success/10 px-1.5 py-px">
                             <span class="-mt-px">
-                              {{ child.user }}
+                              {{ child.birthdate }}
                             </span>
                           </div>
                         </div>
