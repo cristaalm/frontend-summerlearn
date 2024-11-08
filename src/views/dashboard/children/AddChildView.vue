@@ -12,7 +12,7 @@ import { useSetChildren } from '@/hooks/childrens/addChildren/useSetChildren'
 
 const { validate, valid, status, name, birthdate, curp, validateInputCurp, resetFields, validateAll } = useValidationAddChildren()
 const { profileImage, errorMessagePhoto, validateImage, triggerFileSelect, removeImage, imageFile } = useValidationImage({ status, validateAll })
-const { setChildrenError, setChildrenLoading, addChildren  } = useSetChildren({ name, birthdate, curp, imageFile, valid, validateAll, resetFields })
+const { setChildrenError, setChildrenLoading, addChildren } = useSetChildren({ name, birthdate, curp, imageFile, valid, validateAll, resetFields })
 
 const router = useRouter()
 const minYear = new Date().getFullYear() - 6
@@ -40,7 +40,7 @@ const handleRegister = () => {
             class="group-[.mode--light]:!bg-white/[0.12] group-[.mode--light]:!text-slate-200 group-[.mode--light]:!border-transparent"
             @click="() => {
               router.push({
-                name: 'childrens'
+                name: 'childrensBen'
               })
             }
               ">
@@ -88,7 +88,8 @@ const handleRegister = () => {
                     </div>
 
                     <!-- Input tipo archivo oculto -->
-                    <input id="profileImageInput" name="profileImage" type="file" class="hidden" @change="validateImage" accept="image/*" />
+                    <input id="profileImageInput" name="profileImage" type="file" class="hidden" @change="validateImage"
+                      accept="image/*" />
                   </div>
 
                   <Button variant="outline-danger" size="sm"
@@ -119,11 +120,12 @@ const handleRegister = () => {
                 </div>
               </label>
               <div class="flex-1 w-full mt-3 xl:mt-0">
-                <FormInput type="text" placeholder="Escriba aquí su nombre del niño/a..." v-model="name"
+                <FormInput type="text" placeholder="Escriba aquí el nombre del niño/a..." v-model="name"
                   @keydown.enter.prevent="() => {
                     if (valid && !setChildrenLoading) handleRegister()
                   }" class="dark:text-slate-200 dark:placeholder:!text-slate-400"
                   @input="(e) => validate(e, 'name')" />
+
                 <div class="mt-1 text-xs text-red-500 h-4">
                   {{ status.name.message }}
                 </div>
@@ -141,7 +143,7 @@ const handleRegister = () => {
                     </div>
                   </div>
                   <div class="mt-1.5 xl:mt-3 text-xs leading-relaxed text-slate-500/80 dark:text-slate-400">
-                    Por favor, ingrese la fecha de nacimiento del usuario.
+                    Por favor, ingrese la fecha de nacimiento del niño/a.
                   </div>
                 </div>
               </label>
