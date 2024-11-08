@@ -30,7 +30,9 @@ onMounted(() => {
   <div class="grid grid-cols-12 gap-y-10 gap-x-6">
     <div class="col-span-12">
       <div class="flex flex-col md:h-10 gap-y-3 md:items-center md:flex-row">
-        <div class="text-base font-medium group-[.mode--light]:text-white">
+        <div class="text-base font-medium group-[.mode--light]:text-white" @click="() => {
+          errorChildrens = true
+        }">
           Hijos
         </div>
         <div class="flex flex-col sm:flex-row gap-x-3 gap-y-2 md:ml-auto">
@@ -45,7 +47,9 @@ onMounted(() => {
         <div class="flex flex-col">
           <div class="overflow-hidden">
             <div class="grid grid-cols-12 px-5 gap-5">
-              <template v-for="(child, index) in childrens" :key="child.id">
+
+              <!-- ? Cuando se termina de cargar los hijos, se muestra el contenido -->
+              <template v-if="!loadingChildrens && !errorChildrens" v-for="(child, index) in childrens" :key="child.id">
                 <div class="col-span-12 sm:col-span-6 xl:col-span-4 px-5 py-5 flex flex-col box box--stacked">
                   <div
                     class="overflow-hidden rounded-lg h-52 image-fit before:block before:absolute before:w-full before:h-full before:top-0 before:left-0 before:z-10 before:bg-gradient-to-t before:from-slate-900/90 before:to-black/20">
@@ -96,6 +100,23 @@ onMounted(() => {
                   </div>
                 </div>
               </template>
+
+              <!-- ? Cuando se está cargando los hijos, se muestra el icono de carga -->
+              <template v-if="loadingChildrens && !errorChildrens">
+                <div class="col-span-12 flex items-center justify-center">
+                  <LoadingIcon icon="tail-spin" color="gray" class="font-bold w-20" />
+                </div>
+              </template>
+
+              <!-- ? Cuando hay un error al cargar los hijos, se muestra el mensaje de error -->
+              <template v-if="errorChildrens">
+                <div class="col-span-12 flex items-center justify-center">
+                  <div class="text-danger dark:text-red-500">
+                    Ocurre un error al cargar los hijos
+                  </div>
+                </div>
+              </template>
+
             </div>
           </div>
         </div>
