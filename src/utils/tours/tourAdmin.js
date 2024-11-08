@@ -19,7 +19,7 @@ export const startTourAdmin = async (router, id, formattedMenu, activeMobileMenu
       {
         element: '#usersStats',
         popover: {
-          title: 'Estadisticas de usuarios',
+          title: 'Estadísticas de usuarios',
           description:
             'Se muestra la cantidad de usuarios registrados en la plataforma por cada rol.'
         }
@@ -28,21 +28,21 @@ export const startTourAdmin = async (router, id, formattedMenu, activeMobileMenu
         element: '#programList',
         popover: {
           title: 'Lista de programas',
-          description: 'Una lista de los ultimos programas creados en la plataforma.'
+          description: 'Una lista de los últimos programas creados en la plataforma.'
         }
       },
       {
         element: '#donationsList',
         popover: {
-          title: 'Lista de donaciones',
-          description: 'Una lista de las ultimas donaciones realizadas en la plataforma.'
+          title: 'Lista de donaciónes',
+          description: 'Una lista de las últimas donaciónes realizadas en la plataforma.'
         }
       },
       {
         element: '#billsList',
         popover: {
           title: 'Lista de gastos',
-          description: 'Una lista de los ultimos gastos generadas en la plataforma.',
+          description: 'Una lista de los últimos gastos generados en la plataforma.',
           onNextClick: () => {
             activeMobileMenu.value = true
             setTimeout(() => {
@@ -54,8 +54,8 @@ export const startTourAdmin = async (router, id, formattedMenu, activeMobileMenu
       {
         element: '#sideBar-users',
         popover: {
-          title: 'Menu de usuarios',
-          description: 'En este menu podras administrar los usuarios de la plataforma.',
+          title: 'Menú de usuarios',
+          description: 'En este menú podrás administrar los usuarios de la plataforma.',
           onNextClick: () => {
             // Asegúrate de manejar el avance al siguiente paso
             activeMobileMenu.value = false
@@ -75,7 +75,7 @@ export const startTourAdmin = async (router, id, formattedMenu, activeMobileMenu
         element: '#table-users',
         popover: {
           title: 'Tabla de usuarios',
-          description: 'En esta tabla podras ver y gestionar los usuarios de la plataforma.',
+          description: 'En esta tabla podrás ver y gestionar los usuarios de la plataforma.',
           onPrevClick: () => {
             activeMobileMenu.value = true
             setTimeout(() => {
@@ -87,8 +87,8 @@ export const startTourAdmin = async (router, id, formattedMenu, activeMobileMenu
       {
         element: '#button-add-user',
         popover: {
-          title: 'Boton de agregar usuario',
-          description: 'Con este boton podras agregar un nuevo usuario a la plataforma.',
+          title: 'Botón de agregar usuario',
+          description: 'Con este botón podrás agregar un nuevo usuario a la plataforma.',
           onNextClick: () => {
             const index = formattedMenu.findIndex((item) => {
               return item.pageName === 'users'
@@ -104,8 +104,8 @@ export const startTourAdmin = async (router, id, formattedMenu, activeMobileMenu
       {
         element: '#sideBar-users-request',
         popover: {
-          title: 'Menu de solicitudes',
-          description: 'En este menu podras gestionar las solicitudes de los usuarios.',
+          title: 'Menú de solicitudes',
+          description: 'En este menú podrás gestionar las solicitudes de los usuarios.',
           onNextClick: () => {
             activeMobileMenu.value = false
             router.push('/dashboard/users/request').then(() => {
@@ -124,7 +124,7 @@ export const startTourAdmin = async (router, id, formattedMenu, activeMobileMenu
         element: '#table-users-request',
         popover: {
           title: 'Tabla de solicitudes',
-          description: 'En esta tabla podras ver y gestionar las solicitudes de los usuarios.',
+          description: 'En esta tabla podrás ver y gestionar las solicitudes de los usuarios.',
           onPrevClick: () => {
             activeMobileMenu.value = true
             setTimeout(() => {
@@ -136,16 +136,16 @@ export const startTourAdmin = async (router, id, formattedMenu, activeMobileMenu
       {
         element: '#button-acept-request-user',
         popover: {
-          title: 'Boton de aceptar solicitud',
-          description: 'Con este boton podras aceptar la solicitud de un usuario.'
+          title: 'Botón de aceptar solicitud',
+          description: 'Con este botón podrás aceptar la solicitud de un usuario.'
         }
       },
       {
         element: '#button-reject-request-user',
         popover: {
-          title: 'Boton de rechazar solicitud',
+          title: 'Botón de rechazar solicitud',
           description:
-            'Con este boton podras rechazar la solicitud de un usuario, Ten en cuenta que el usuario sera eliminado de la plataforma.',
+            'Con este botón podrás rechazar la solicitud de un usuario, Ten en cuenta que el usuario será eliminado de la plataforma.',
           onNextClick: () => {
             const index = formattedMenu.findIndex((item) => {
               return item.pageName === 'users'
@@ -161,8 +161,8 @@ export const startTourAdmin = async (router, id, formattedMenu, activeMobileMenu
       {
         element: '#sideBar-programs',
         popover: {
-          title: 'Menu de programas',
-          description: 'En este menu podras administrar los programas de la plataforma.',
+          title: 'Menú de programas',
+          description: 'En este menú podrás administrar los programas de la plataforma.',
           onNextClick: () => {
             activeMobileMenu.value = false
             router.push({ name: 'programs' }).then(() => {
@@ -187,7 +187,7 @@ export const startTourAdmin = async (router, id, formattedMenu, activeMobileMenu
         element: '#table-programs',
         popover: {
           title: 'Tabla de programas',
-          description: 'En esta tabla podras ver y gestionar los programas de la plataforma.',
+          description: 'En esta tabla podrás ver y gestionar los programas de la plataforma.',
           onPrevClick: () => {
             activeMobileMenu.value = true
             setTimeout(() => {
@@ -199,8 +199,8 @@ export const startTourAdmin = async (router, id, formattedMenu, activeMobileMenu
       {
         element: '#button-add-program',
         popover: {
-          title: 'Boton de agregar programa',
-          description: 'Con este boton podras agregar un nuevo programa a la plataforma.',
+          title: 'Botón de agregar programa',
+          description: 'Con este botón podrás agregar un nuevo programa a la plataforma.',
           onNextClick: () => {
             const index = formattedMenu.findIndex((item) => {
               return item.pageName === 'programs'
@@ -216,8 +216,8 @@ export const startTourAdmin = async (router, id, formattedMenu, activeMobileMenu
       {
         element: '#sideBar-areas',
         popover: {
-          title: 'Menu de areas',
-          description: 'En este menu podras administrar las areas de la plataforma.',
+          title: 'Menú de áreas',
+          description: 'En este menú podrás administrar las áreas de la plataforma.',
           onNextClick: () => {
             activeMobileMenu.value = false
             router.push({ name: 'areas' }).then(() => {
@@ -241,8 +241,8 @@ export const startTourAdmin = async (router, id, formattedMenu, activeMobileMenu
       {
         element: '#table-areas',
         popover: {
-          title: 'Tabla de areas',
-          description: 'En esta tabla podras ver y gestionar las areas de la plataforma.',
+          title: 'Tabla de áreas',
+          description: 'En esta tabla podrás ver y gestionar las áreas de la plataforma.',
           onPrevClick: () => {
             activeMobileMenu.value = true
             setTimeout(() => {
@@ -254,8 +254,8 @@ export const startTourAdmin = async (router, id, formattedMenu, activeMobileMenu
       {
         element: '#button-add-area',
         popover: {
-          title: 'Boton de agregar area',
-          description: 'Con este boton podras agregar una nueva area a la plataforma.',
+          title: 'Botón de agregar área',
+          description: 'Con este botón podrás agregar una nueva área a la plataforma.',
           onNextClick: () => {
             activeMobileMenu.value = true
             setTimeout(() => {
@@ -267,8 +267,8 @@ export const startTourAdmin = async (router, id, formattedMenu, activeMobileMenu
       {
         element: '#sideBar-activities',
         popover: {
-          title: 'Menu de actividades',
-          description: 'En este menu podras administrar las actividades de la plataforma.',
+          title: 'Menú de actividades',
+          description: 'En este menú podrás administrar las actividades de la plataforma.',
           onNextClick: () => {
             activeMobileMenu.value = false
             router.push({ name: 'activities' }).then(() => {
@@ -287,7 +287,7 @@ export const startTourAdmin = async (router, id, formattedMenu, activeMobileMenu
         element: '#table-activities',
         popover: {
           title: 'Tabla de actividades',
-          description: 'En esta tabla podras ver y gestionar las actividades de la plataforma.',
+          description: 'En esta tabla podrás ver y gestionar las actividades de la plataforma.',
           onPrevClick: () => {
             activeMobileMenu.value = true
             setTimeout(() => {
@@ -299,8 +299,8 @@ export const startTourAdmin = async (router, id, formattedMenu, activeMobileMenu
       {
         element: '#button-add-activity',
         popover: {
-          title: 'Boton de agregar actividad',
-          description: 'Con este boton podras agregar una nueva actividad a la plataforma.',
+          title: 'Botón de agregar actividad',
+          description: 'Con este botón podrás agregar una nueva actividad a la plataforma.',
           onNextClick: () => {
             const index = formattedMenu.findIndex((item) => {
               return item.pageName === 'programs'
@@ -316,8 +316,8 @@ export const startTourAdmin = async (router, id, formattedMenu, activeMobileMenu
       {
         element: '#sideBar-performance',
         popover: {
-          title: 'Menu de rendimiento',
-          description: 'En este menu podras ver el rendimiento de la plataforma.',
+          title: 'Menú de rendimiento',
+          description: 'En este menú podrás ver el rendimiento de la plataforma.',
           onNextClick: () => {
             activeMobileMenu.value = false
             router.push({ name: 'performance' }).then(() => {
@@ -342,7 +342,7 @@ export const startTourAdmin = async (router, id, formattedMenu, activeMobileMenu
         element: '#table-performance',
         popover: {
           title: 'Tabla de rendimiento',
-          description: 'En esta tabla podras ver el rendimiento de la plataforma.',
+          description: 'En esta tabla podrás ver el rendimiento de la plataforma.',
           onPrevClick: () => {
             activeMobileMenu.value = true
             setTimeout(() => {
@@ -354,8 +354,8 @@ export const startTourAdmin = async (router, id, formattedMenu, activeMobileMenu
       {
         element: '#button-add-performance',
         popover: {
-          title: 'Boton de agregar rendimiento',
-          description: 'Con este boton podras agregar un nuevo rendimiento a la plataforma.',
+          title: 'Botón de agregar rendimiento',
+          description: 'Con este botón podrás agregar un nuevo rendimiento a la plataforma.',
           onNextClick: () => {
             activeMobileMenu.value = true
             setTimeout(() => {
@@ -367,8 +367,8 @@ export const startTourAdmin = async (router, id, formattedMenu, activeMobileMenu
       {
         element: '#sideBar-donations',
         popover: {
-          title: 'Menu de donaciones',
-          description: 'En este menu podras administrar las donaciones de la plataforma.',
+          title: 'Menú de donaciónes',
+          description: 'En este menú podrás administrar las donaciónes de la plataforma.',
           onNextClick: () => {
             activeMobileMenu.value = false
             router.push({ name: 'donations' }).then(() => {
@@ -387,7 +387,7 @@ export const startTourAdmin = async (router, id, formattedMenu, activeMobileMenu
         element: '#donationsGraph',
         popover: {
           title: 'Donaciones semanales',
-          description: 'Se mostrara estadisticas de las donaciones de la semana.',
+          description: 'Se mostrará estadísticas de las donaciónes de la semana.',
           onPrevClick: () => {
             activeMobileMenu.value = true
             setTimeout(() => {
@@ -399,23 +399,23 @@ export const startTourAdmin = async (router, id, formattedMenu, activeMobileMenu
       {
         element: '#bar-donations',
         popover: {
-          title: 'Barras de donaciones',
+          title: 'Barras de donaciónes',
           description:
-            'Aqui se mostrara inforamacion relevante, como cantidad de donaciones, monto total, ultima donacion y la ultima fecha.'
+            'Aquí se mostrará inforamacion relevante, como cantidad de donaciónes, monto total, última donación y la última fecha.'
         }
       },
       {
         element: '#table-donations',
         popover: {
-          title: 'Historial de donaciones',
-          description: 'Se muestran el historia de todas tus donaciones.'
+          title: 'Historial de donaciónes',
+          description: 'Se muestran el historia de todas tus donaciónes.'
         }
       },
       {
         element: '#button-add-donation',
         popover: {
-          title: 'Boton de agregar donacion',
-          description: 'Con este boton podras agregar una nueva donacion a la plataforma.',
+          title: 'Botón de agregar donación',
+          description: 'Con este botón podrás agregar una nueva donación a la plataforma.',
           onNextClick: () => {
             const index = formattedMenu.findIndex((item) => {
               return item.pageName === 'donations'
@@ -431,8 +431,8 @@ export const startTourAdmin = async (router, id, formattedMenu, activeMobileMenu
       {
         element: '#sideBar-expenses',
         popover: {
-          title: 'Menu de gastos',
-          description: 'En este menu podras administrar los gastos de la plataforma.',
+          title: 'Menú de gastos',
+          description: 'En este menú podrás administrar los gastos de la plataforma.',
           onNextClick: () => {
             activeMobileMenu.value = false
             router.push({ name: 'expenses' }).then(() => {
@@ -457,7 +457,7 @@ export const startTourAdmin = async (router, id, formattedMenu, activeMobileMenu
         element: '#table-expenses',
         popover: {
           title: 'Tabla de gastos',
-          description: 'En esta tabla podras ver y gestionar los gastos de la plataforma.',
+          description: 'En esta tabla podrás ver y gestionar los gastos de la plataforma.',
           onPrevClick: () => {
             activeMobileMenu.value = true
             setTimeout(() => {
@@ -469,8 +469,8 @@ export const startTourAdmin = async (router, id, formattedMenu, activeMobileMenu
       {
         element: '#button-add-expense',
         popover: {
-          title: 'Boton de agregar gasto',
-          description: 'Con este boton podras agregar un nuevo gasto a la plataforma.',
+          title: 'Botón de agregar gasto',
+          description: 'Con este botón podrás agregar un nuevo gasto a la plataforma.',
           onNextClick: () => {
             activeMobileMenu.value = true
             setTimeout(() => {
@@ -482,8 +482,8 @@ export const startTourAdmin = async (router, id, formattedMenu, activeMobileMenu
       {
         element: '#sideBar-chat',
         popover: {
-          title: 'Menu de chat',
-          description: 'En este menu podras comunicarte con los usuarios de la plataforma.',
+          title: 'Menú de chat',
+          description: 'En este menú podrás comunicarte con los usuarios de la plataforma.',
           onNextClick: () => {
             activeMobileMenu.value = false
             router.push({ name: 'chat' }).then(() => {
@@ -522,7 +522,7 @@ export const startTourAdmin = async (router, id, formattedMenu, activeMobileMenu
         popover: {
           title: 'Lista de chats',
           description:
-            'Aqui sera la seccion donde se mostrara tus chat y llevaras tus conversaciones.'
+            'Aquí será la seccion donde se mostrará tus chat y llevaras tus conversaciones.'
         }
       },
       {
@@ -536,8 +536,9 @@ export const startTourAdmin = async (router, id, formattedMenu, activeMobileMenu
         element: '#chat',
         popover: {
           title: 'Chat',
-          description: 'Aqui podras ver el chat seleccionado y enviar mensajes.',
+          description: 'Aquí podrás ver el chat seleccionado y enviar mensajes.',
           onNextClick: async () => {
+            router.push('/dashboard').then(() => {})
             // Marcar la función como async para poder usar await
             driverObj.destroy()
 
@@ -569,23 +570,6 @@ export const startTourAdmin = async (router, id, formattedMenu, activeMobileMenu
     onDestroyStarted: async () => {
       if (driverObj.hasNextStep()) {
         driverObj.destroy()
-
-        try {
-          const response = await fetch(`${Baseurl}users/${id}/`, {
-            method: 'PATCH',
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Bearer ${localStorage.getItem('access_token')}`
-            },
-            body: JSON.stringify({ users_tour: true })
-          })
-
-          if (!response.ok) {
-            throw new Error('Error al actualizar el tour')
-          }
-        } catch (error) {
-          console.error('Error en la solicitud PATCH:', error)
-        }
       }
     }
   })

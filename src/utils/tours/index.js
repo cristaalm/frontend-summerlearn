@@ -1,4 +1,5 @@
 import { startTourAdmin } from './tourAdmin'
+import { startTourCoord } from './tourCoord'
 import { startTourDonor } from './tourDonations'
 
-export { startTourAdmin, startTourDonor }
+export { startTourAdmin, startTourCoord, startTourDonor }

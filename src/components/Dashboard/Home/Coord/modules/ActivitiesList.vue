@@ -16,7 +16,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <div class="col-span-12 md:col-span-4 box box--stacked h-fit">
+    <div class="col-span-12 md:col-span-4 box box--stacked h-fit" id="activitiesList">
         <div class="flex flex-col gap-5 p-2 leading-relaxed">
             <div
                 class="flex items-center w-full px-3 py-3 font-medium border rounded-lg bg-slate-50 dark:bg-slate-800/50 text-slate-500 dark:text-slate-200 dark:border-slate-800/50 shadow-lg dark:shadow-slate-600/40">

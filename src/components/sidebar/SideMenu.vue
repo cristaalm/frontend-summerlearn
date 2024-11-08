@@ -29,7 +29,7 @@ import { Baseurl } from '@/utils/global'
 // ? tour
 import { getTour } from '@/utils/getTour';
 // @ts-ignore
-import { startTourAdmin, startTourDonor } from '@/utils/tours/'
+import { startTourAdmin, startTourCoord, startTourDonor } from '@/utils/tours/'
 // @ts-ignore
 import getIdByToken from '@/logic/getIdByToken';
 
@@ -208,15 +208,15 @@ watch(isLoading, async () => {
     const tour = await getTour(id);
     console.log(tour);
     if (tour.users_tour == false) {
-      if (role == 3) startTourDonor(router, id);
-      if (role == 1) startTourAdmin(router, id, formattedMenu, activeMobileMenu, showToast);
+      againTour();
     }
   }
 }, { immediate: true });
 
 async function againTour() {
-  if (role == 3) startTourDonor(router, id);
   if (role == 1) startTourAdmin(router, id, formattedMenu, activeMobileMenu, showToast);
+  if (role == 2) startTourCoord(router, id, formattedMenu, activeMobileMenu, showToast);
+  if (role == 3) startTourDonor(router, id);
 }
 
 
@@ -444,7 +444,7 @@ async function againTour() {
                         class="shadow-current pointer-events-none" />
                     </div>
                   </Menu.Item>
-                  <Menu.Item v-if="role == 3 || role == 1" @click="againTour"
+                  <Menu.Item v-if="role == 3 || role == 1 || role == 2" @click="againTour"
                     class="text-primary flex items-center px-4 py-2 hover:bg-gray-100 dark:text-slate-200 dark:hover:text-sky-500 dark:hover:bg-slate-600">
                     <Lucide icon="Users" class="w-4 h-4 mr-2  " />
                     Tour
