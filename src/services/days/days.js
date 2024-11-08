@@ -2,7 +2,7 @@ import { Baseurl } from '@/utils/global'
 
 export const getDays = async (actividadId) => {
   try {
-    const response = await fetch(`${Baseurl}days/get-days/?id_activity=${actividadId}`, {
+    const response = await fetch(`${Baseurl}days/get-unused-days/?id_activity=${actividadId}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -15,7 +15,7 @@ export const getDays = async (actividadId) => {
     }
 
     const json = await response.json()
-    const days = json.available_days || []
+    const days = json.unused_days || []
 
     // Sort and map the days
     return days

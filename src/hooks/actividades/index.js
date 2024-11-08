@@ -1,6 +1,7 @@
 import { useFilter } from './useFilter'
 import { useFilterObjective } from './useFilterObjective'
 import { useActividades } from './useActividades'
+import { useProgramsActividades } from './useProgramas'
 import { useDays } from './useDays'
 import { useSchudelesActivity } from './useSchudelesActivity'
 import { useSchedules } from './useSchedules'
@@ -19,6 +20,7 @@ export {
   useFilter,
   useFilterObjective,
   useActividades,
+  useProgramsActividades,
   useDays,
   useSchudelesActivity,
   useSchedules,

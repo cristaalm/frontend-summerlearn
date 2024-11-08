@@ -26,7 +26,9 @@ export const getActividades = async () => {
       date: formattedDate, // Fecha formateada
       status: actividades.activities_status,
       area_name: actividades.activities_program.area,
-      program_name: actividades.activities_program.name
+      program_name: actividades.activities_program.name,
+      num_beneficiario: actividades.num_son,
+      num_voluntario: actividades.num_volun
     }
   })
 }
