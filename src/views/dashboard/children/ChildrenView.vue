@@ -5,7 +5,6 @@ import { Menu } from '@/components/base/Headless'
 import { usePagination, useSearch, useChildrens } from '@/hooks/childrens/'
 import { onMounted, inject } from 'vue'
 import Lucide from '@/components/base/Lucide'
-import Button from '@/components/base/Button'
 import Table from '@/components/base/Table'
 import Tippy from '@/components/base/Tippy'
 import LoadingIcon from '@/components/base/LoadingIcon'
@@ -31,18 +30,6 @@ onMounted(() => {
     <div class="col-span-12">
       <div class="flex flex-col md:h-10 gap-y-3 md:items-center md:flex-row">
         <div class="text-base font-medium group-[.mode--light]:text-white">Niños</div>
-        <div class="flex flex-col sm:flex-row gap-x-3 gap-y-2 md:ml-auto">
-          <Button variant="primary"
-            class="group-[.mode--light]:!bg-white/[0.12] group-[.mode--light]:!text-slate-200 group-[.mode--light]:!border-transparent"
-            @click="() => {
-              router.push({
-                name: 'addChildrens'
-              })
-            }
-              ">
-            <Lucide icon="PenLine" class="stroke-[1.3] w-4 h-4 mr-2" /> Agregar nuevo niño
-          </Button>
-        </div>
       </div>
       <div class="mt-3.5">
         <div class="flex flex-col box box--stacked">
@@ -81,7 +68,7 @@ onMounted(() => {
                     Padre / Madre / Tutor
                   </Table.Td>
                   <Table.Td
-                    class="py-4 font-medium text-center border-t w-36 bg-slate-50 dark:bg-transparent border-slate-200/60 text-slate-500 dark:text-slate-200">
+                    class="py-4 font-medium text-center border-t w-5 bg-slate-50 dark:bg-transparent border-slate-200/60 text-slate-500 dark:text-slate-200">
                   </Table.Td>
                 </Table.Tr>
               </Table.Thead>
@@ -151,16 +138,16 @@ onMounted(() => {
                     </Table.Td>
 
                     <Table.Td class="relative py-4 border-dashed dark:bg-darkmode-600 dark:text-slate-200">
-                      <div class="flex items-center justify-center">
+                      <div class="flex items-center justify-end">
                         <Menu class="h-5">
                           <Menu.Button class="w-5 h-5 text-black dark:text-slate-200">
                             <Lucide icon="MoreVertical"
                               class="w-5 h-5 stroke-black dark:stroke-slate-200 fill-black dark:fill-slate-200" />
                           </Menu.Button>
                           <Menu.Items class="w-40 dark:bg-darkmode-600">
-                            <Menu.Item class="text-warning dark:text-yellow-500">
-                              <Lucide icon="CheckSquare" class="w-4 h-4 mr-2 dark:stroke-yellow-500" />
-                              Editar
+                            <Menu.Item class="text-danger dark:text-red-500">
+                              <Lucide icon="Trash2" class="w-4 h-4 mr-2 dark:stroke-red-500" />
+                              Eliminar
                             </Menu.Item>
                           </Menu.Items>
                         </Menu>

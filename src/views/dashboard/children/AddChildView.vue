@@ -12,7 +12,7 @@ import { useSetChildren } from '@/hooks/childrens/addChildren/useSetChildren'
 
 const { validate, valid, status, name, birthdate, curp, validateInputCurp, resetFields, validateAll } = useValidationAddChildren()
 const { profileImage, errorMessagePhoto, validateImage, triggerFileSelect, removeImage, imageFile } = useValidationImage({ status, validateAll })
-const { setChildrenError, setChildrenLoading, addChildren  } = useSetChildren({ name, birthdate, curp, imageFile, valid, validateAll, resetFields })
+const { setChildrenError, setChildrenLoading, addChildren } = useSetChildren({ name, birthdate, curp, imageFile, valid, validateAll, resetFields })
 
 const router = useRouter()
 const minYear = new Date().getFullYear() - 6
@@ -40,7 +40,7 @@ const handleRegister = () => {
             class="group-[.mode--light]:!bg-white/[0.12] group-[.mode--light]:!text-slate-200 group-[.mode--light]:!border-transparent"
             @click="() => {
               router.push({
-                name: 'childrens'
+                name: 'childrensBen'
               })
             }
               ">
@@ -88,7 +88,8 @@ const handleRegister = () => {
                     </div>
 
                     <!-- Input tipo archivo oculto -->
-                    <input id="profileImageInput" name="profileImage" type="file" class="hidden" @change="validateImage" accept="image/*" />
+                    <input id="profileImageInput" name="profileImage" type="file" class="hidden" @change="validateImage"
+                      accept="image/*" />
                   </div>
 
                   <Button variant="outline-danger" size="sm"
@@ -124,7 +125,7 @@ const handleRegister = () => {
                     if (valid && !setChildrenLoading) handleRegister()
                   }" class="dark:text-slate-200 dark:placeholder:!text-slate-400"
                   @input="(e) => validate(e, 'name')" />
-                  
+
                 <div class="mt-1 text-xs text-red-500 h-4">
                   {{ status.name.message }}
                 </div>
