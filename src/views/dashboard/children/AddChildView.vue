@@ -119,11 +119,12 @@ const handleRegister = () => {
                 </div>
               </label>
               <div class="flex-1 w-full mt-3 xl:mt-0">
-                <FormInput type="text" placeholder="Escriba aquí su nombre del niño/a..." v-model="name"
+                <FormInput type="text" placeholder="Escriba aquí el nombre del niño/a..." v-model="name"
                   @keydown.enter.prevent="() => {
                     if (valid && !setChildrenLoading) handleRegister()
                   }" class="dark:text-slate-200 dark:placeholder:!text-slate-400"
                   @input="(e) => validate(e, 'name')" />
+                  
                 <div class="mt-1 text-xs text-red-500 h-4">
                   {{ status.name.message }}
                 </div>
@@ -141,7 +142,7 @@ const handleRegister = () => {
                     </div>
                   </div>
                   <div class="mt-1.5 xl:mt-3 text-xs leading-relaxed text-slate-500/80 dark:text-slate-400">
-                    Por favor, ingrese la fecha de nacimiento del usuario.
+                    Por favor, ingrese la fecha de nacimiento del niño/a.
                   </div>
                 </div>
               </label>
