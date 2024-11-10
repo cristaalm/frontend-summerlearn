@@ -434,9 +434,10 @@ async function againTour() {
                   <!-- Mostrar un placeholder o ícono en caso de que loadingUserPhoto sea falso pero photoUser sea null -->
                   <Lucide icon="User" class="dark:!text-slate-200" v-else />
                 </Menu.Button>
+
                 <Menu.Items class="w-56 mt-1 bg-white shadow-lg rounded-md">
                   <Menu.Item
-                    class="text-primary flex items-center px-4 py-2 hover:bg-gray-100 dark:text-slate-200 dark:hover:text-sky-500 dark:hover:bg-slate-600 flex-row justify-between cursor-pointer"
+                    class="text-dark flex items-center px-4 py-2 hover:bg-gray-100 dark:text-slate-200 dark:hover:text-sky-500 dark:hover:bg-slate-800 flex-row justify-between cursor-pointer"
                     @click.prevent="() => { darkMode = !darkMode }">
                     Modo oscuro
                     <div class="cursor-pointer">
@@ -445,13 +446,13 @@ async function againTour() {
                     </div>
                   </Menu.Item>
                   <Menu.Item v-if="role == 3 || role == 1 || role == 2" @click="againTour"
-                    class="text-primary flex items-center px-4 py-2 hover:bg-gray-100 dark:text-slate-200 dark:hover:text-sky-500 dark:hover:bg-slate-600">
+                    class="text-success flex items-center px-4 py-2 hover:bg-gray-100 dark:text-slate-200 dark:hover:text-green-400 dark:hover:bg-slate-800">
                     <Lucide icon="HelpCircle" class="w-4 h-4 mr-2  " />
                     Guía de inicio
                   </Menu.Item>
                   <Menu.Item @click="() => router.push({ name: 'settings' })"
-                    class="text-primary flex items-center px-4 py-2 hover:bg-gray-100 dark:text-slate-200 dark:hover:text-sky-500 dark:hover:bg-slate-600">
-                    <Lucide icon="Users" class="w-4 h-4 mr-2  " />
+                    class="text-blue-500 flex items-center px-4 py-2 hover:bg-gray-100 dark:text-slate-200 dark:hover:text-sky-500 dark:hover:bg-slate-800">
+                    <Lucide icon="Settings" class="w-4 h-4 mr-2  " />
                     Configuración
                   </Menu.Item>
                   <Menu.Item @click="() => {
@@ -461,11 +462,12 @@ async function againTour() {
                     router.push({ name: 'login' })
                   }
                     "
-                    class="text-danger flex items-center px-4 py-2 hover:bg-gray-100 dark:text-slate-200 dark:hover:text-red-400 dark:hover:bg-slate-600 ">
+                    class="text-danger flex items-center px-4 py-2 hover:bg-gray-100 dark:text-slate-200 dark:hover:text-red-400 dark:hover:bg-slate-800 ">
                     <Lucide icon="Power" class="w-4 h-4 mr-2 " />
                     Cerrar Sesión
                   </Menu.Item>
                 </Menu.Items>
+
               </Menu>
             </div>
           </div>
