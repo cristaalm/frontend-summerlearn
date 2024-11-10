@@ -337,6 +337,16 @@ export const startTourAdmin = async (router, id, formattedMenu, activeMobileMenu
         }
       },
       {
+        element: '#buttonOptionsActivities',
+        popover: {
+          prevBtnText: 'Anterior',
+          nextBtnText: 'Siguiente',
+          title: 'Opciones de actividades',
+          description:
+            'Aqui puedes agregar los horarios, agregar los objectivos ademas de editar o eliminar la actividad.'
+        }
+      },
+      {
         element: '#button-add-activity',
         popover: {
           prevBtnText: 'Anterior',
