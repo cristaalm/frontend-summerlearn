@@ -1,23 +1,18 @@
 <script setup>
-import { FormInput, FormSelect } from '@/components/base/Form'
-import Pagination from '@/components/base/Pagination'
-import { Menu } from '@/components/base/Headless'
-import { usePagination, useSearch, useChildrens } from '@/hooks/childrens/'
 import { onMounted, inject } from 'vue'
 import Lucide from '@/components/base/Lucide'
 import Button from '@/components/base/Button'
-import Table from '@/components/base/Table'
-import Tippy from '@/components/base/Tippy'
 import LoadingIcon from '@/components/base/LoadingIcon'
+import { useDialogDeleteChild, useDialogEditChild } from '@/hooks/childrens/Dialogs'
+import { DeleteChildModal, EditChildModal } from '@/components/Dashboard/children/'
 import { calculateAge } from '@/logic/'
 import { useRouter } from 'vue-router'
 import { Baseurl } from '@/utils/global'
 
 const { childrens, loadingChildrens, errorChildrens, loadChildrens } = inject('childrens')
-const { searchQuery, filteredChildrens } = useSearch(childrens)
-const { currentPage, pageSize, totalPages, paginatedChildrens, changePage, changePageSize } =
-  usePagination(filteredChildrens)
 const router = useRouter()
+
+const { ModalDeleteChild, setModalDeleteChild, childInfoProvideDelete } = useDialogDeleteChild()
 
 // Cargar los niños al iniciar el componente
 onMounted(() => {
@@ -27,6 +22,10 @@ onMounted(() => {
 </script>
 
 <template>
+
+  <DeleteChildModal :ModalDeleteChild="ModalDeleteChild" :setModalDeleteChild="setModalDeleteChild"
+    :infoChild="childInfoProvideDelete" />
+
   <div class="grid grid-cols-12 gap-y-10 gap-x-6">
     <div class="col-span-12">
       <div class="flex flex-col md:h-10 gap-y-3 md:items-center md:flex-row">
@@ -95,7 +94,9 @@ onMounted(() => {
                         <Button class="flex items-center mr-3" variant="success">
                           <Lucide icon="CheckSquare" class="w-4 h-4 stroke-[1.3] text-white" />
                         </Button>
-                        <Button class="flex items-center text-danger" variant="danger">
+                        <Button class="flex items-center text-danger" variant="danger" @click="() => {
+                          setModalDeleteChild({ open: true, childInfo: child })
+                        }">
                           <Lucide icon="Trash2" class="w-4 h-4 stroke-[1.3] text-white" />
                         </Button>
                       </div>
