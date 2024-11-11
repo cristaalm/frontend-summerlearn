@@ -21,7 +21,8 @@ export function useValidationAddChildren() {
       success: false,
       message: '',
       name: 'curp',
-      Regex: /^([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)$/
+      Regex:
+        /^([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)$/
     },
     profileImage: {
       value: false,
@@ -35,8 +36,13 @@ export function useValidationAddChildren() {
   const valid = ref(false)
 
   const validateAll = () => {
-    // debugger de todos los campos
-    if (status.value.name.success && status.value.birthdate.success && status.value.curp.success && status.value.profileImage.value) { // Si todos los campos son válidos
+    if (
+      status.value.name.success &&
+      status.value.birthdate.success &&
+      status.value.curp.success &&
+      status.value.profileImage.value
+    ) {
+      // Si todos los campos son válidos
       valid.value = true
     } else {
       valid.value = false
@@ -74,19 +80,29 @@ export function useValidationAddChildren() {
       status.value.birthdate.success = true
       status.value.birthdate.message = ''
     }
-
   }
-  
+
   const validateInputCurp = (e) => {
     const { value } = e.target
 
     curp.value = value.toUpperCase()
   }
 
-  watch(() => birthdate.value, () => {
-    validateDate()
-    validateAll()
-  })
+  watch(
+    () => birthdate.value,
+    () => {
+      validateDate()
+      validateAll()
+    }
+  )
+
+  const setValueTrueAll = () => {
+    Object.keys(status.value).forEach((key) => {
+      status.value[key].success = true
+    })
+    status.value.profileImage.value = true
+    valid.value = true
+  }
 
   // Copia profunda manual para preservar las expresiones regulares
   const deepCopy = (obj) => {
@@ -116,6 +132,7 @@ export function useValidationAddChildren() {
     validate,
     validateAll,
     validateInputCurp,
+    setValueTrueAll,
     resetFields
   }
 }

@@ -13,6 +13,7 @@ const { childrens, loadingChildrens, errorChildrens, loadChildrens } = inject('c
 const router = useRouter()
 
 const { ModalDeleteChild, setModalDeleteChild, childInfoProvideDelete } = useDialogDeleteChild()
+const { ModalEditChild, childInfoProvideEdit, setModalEditChild } = useDialogEditChild()
 
 // Cargar los niños al iniciar el componente
 onMounted(() => {
@@ -25,6 +26,9 @@ onMounted(() => {
 
   <DeleteChildModal :ModalDeleteChild="ModalDeleteChild" :setModalDeleteChild="setModalDeleteChild"
     :infoChild="childInfoProvideDelete" />
+
+  <EditChildModal :ModalEditChild="ModalEditChild" :setModalEditChild="setModalEditChild"
+    :infoChild="childInfoProvideEdit" />
 
   <div class="grid grid-cols-12 gap-y-10 gap-x-6">
     <div class="col-span-12">
@@ -91,7 +95,9 @@ onMounted(() => {
                         </div>
                       </div>
                       <div class="flex items-center justify-end">
-                        <Button class="flex items-center mr-3" variant="success">
+                        <Button class="flex items-center mr-3" variant="success" @click="() => {
+                          setModalEditChild({ open: true, childInfo: child })
+                        }">
                           <Lucide icon="CheckSquare" class="w-4 h-4 stroke-[1.3] text-white" />
                         </Button>
                         <Button class="flex items-center text-danger" variant="danger" @click="() => {

@@ -5,6 +5,8 @@ export function useValidationImage({ status, validateAll }) {
   const imageFile = ref(null) // Archivo seleccionado
   const errorMessagePhoto = ref('')
   const maxFileSize = 2 * 1024 * 1024
+  const isChangeImage = ref(false)
+  let initialValue
 
   // Validar el archivo seleccionado
   const validateImage = (event) => {
@@ -37,6 +39,7 @@ export function useValidationImage({ status, validateAll }) {
       profileImage.value = URL.createObjectURL(file)
       imageFile.value = file
       errorMessagePhoto.value = '' // Limpiar mensaje de error si la validación es exitosa
+      isChangeImage.value = true
     }
     validateAll()
   }
@@ -66,12 +69,35 @@ export function useValidationImage({ status, validateAll }) {
     validateAll()
   }
 
+  // función para restalecer la imagen a su valor inicial, la cual va ser una imagen valida
+  const resetImage = () => {
+    if (initialValue) {
+      profileImage.value = initialValue
+      status.value.profileImage.value = true
+      status.value.profileImage.error = false
+      isChangeImage.value = false
+    }
+    imageFile.value = null
+    // Restablecer el valor del input:file a null
+    const fileInput = document.getElementById('profileImageInput')
+    if (fileInput) {
+      fileInput.value = null // Esta línea restablece el input tipo file
+    }
+  }
+
+  const setInitialValue = (value) => {
+    initialValue = value
+  }
+
   return {
     profileImage,
     errorMessagePhoto,
+    isChangeImage,
     validateImage,
     triggerFileSelect,
     removeImage,
+    resetImage,
+    setInitialValue,
     imageFile
   }
 }

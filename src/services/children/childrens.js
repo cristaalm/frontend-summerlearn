@@ -11,8 +11,16 @@ export const getChildrens = async () => {
   const json = await response.json()
   const childrens = json
 
-  // Ordenar por id DESC
-  childrens.sort((a, b) => b.id - a.id)
+  // Ordenar por nombre
+  childrens.sort((a, b) => {
+    if (a.children_name > b.children_name) {
+      return 1
+    }
+    if (a.children_name < b.children_name) {
+      return -1
+    }
+    return 0
+  })
 
   return childrens?.map((children) => ({
     id: children.children_id,
@@ -20,6 +28,6 @@ export const getChildrens = async () => {
     photo: children.children_photo,
     birthdate: children.children_birthdate,
     curp: children.children_curp,
-    user: children.children_user.name,
+    user: children.children_user.name
   }))
 }
