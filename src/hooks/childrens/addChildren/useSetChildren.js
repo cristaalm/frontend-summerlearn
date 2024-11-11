@@ -52,7 +52,7 @@ export function useSetChildren({
       const response = await fetch(Baseurl + 'childrens/', {
         method: 'POST', // No necesitas agregar 'Content-Type'
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+          Authorization: `Bearer ${localStorage.getItem('access_token')}`
         },
         body: formData
       })
@@ -67,7 +67,7 @@ export function useSetChildren({
         imageFile.value = null
         resetFields()
         showToast({ message: 'Niño/a registrado', tipo: 'success', persistente: true })
-        router.push({ name: 'childrens' })
+        router.push({ name: 'childrensBen' })
       } else {
         if (data?.children_curp) {
           setChildrenError.value = 'La CURP que intentas registrar ya existe'
