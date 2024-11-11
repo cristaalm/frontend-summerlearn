@@ -140,19 +140,36 @@ const router = createRouter({
           return next()
         }
 
-        // Si el token de refresco está presente, intenta refrescar el token de acceso
-        const response = await fetch(`${Baseurl}auth/refresh-token/`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            refresh: refresh_token
+        try {
+          // Si el token de refresco está presente, intenta refrescar el token de acceso
+          const response = await fetch(`${Baseurl}auth/refresh-token/`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              refresh: refresh_token
+            })
           })
-        })
 
-        // Si la respuesta no es exitosa, redirige al login y elimina el token de acceso y refresco
-        if (!response.ok) {
+          // Si la respuesta no es exitosa, redirige al login y elimina el token de acceso y refresco
+          if (!response.ok) {
+            localStorage.removeItem('access_token')
+            localStorage.removeItem('refresh_token')
+            // seteamos el tema por defecto
+            localStorage.setItem('darkMode', false)
+            localStorage.setItem('colorScheme', 'theme-19')
+            return next({ name: 'login' })
+          }
+
+          // Si la respuesta es exitosa, guarda el nuevo token de acceso y permite el acceso
+          const data = await response.json()
+          localStorage.setItem('access_token', data.access)
+
+          next() // Permite acceso
+        } catch (error) {
+          console.error('Error al refrescar el token de acceso:', error)
+          // Si ocurre un error, redirige al login y elimina los tokens de acceso y refresco
           localStorage.removeItem('access_token')
           localStorage.removeItem('refresh_token')
           // seteamos el tema por defecto
@@ -160,12 +177,6 @@ const router = createRouter({
           localStorage.setItem('colorScheme', 'theme-19')
           return next({ name: 'login' })
         }
-
-        // Si la respuesta es exitosa, guarda el nuevo token de acceso y permite el acceso
-        const data = await response.json()
-        localStorage.setItem('access_token', data.access)
-
-        next() // Permite acceso
       },
       children: [
         {
@@ -432,7 +443,13 @@ router.beforeEach(async (to, from, next) => {
         }
       } catch (error) {
         console.error('Error al refrescar el token de acceso:', error)
-        // Si ocurre un error, continuar con la navegación normal
+        // Si ocurre un error, redirigir al login y eliminar los tokens
+        localStorage.removeItem('access_token')
+        localStorage.removeItem('refresh_token')
+        // seteamos el tema por defecto
+        localStorage.setItem('darkMode', false)
+        localStorage.setItem('colorScheme', 'theme-19')
+        return next({ name: from.name })
       }
     } else if (access_token || refresh_token) {
       // Si solo uno de los tokens está presente, eliminar ambos y redirigir al login
