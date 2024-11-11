@@ -139,14 +139,12 @@ const handleDayChange = async () => {
   if (daySh.value) {
     try {
       schedulesList.value = await getSchedules(id_actividad.value, daySh.value)
-      console.log('entra')
     } catch (error) {
       console.error('Error al obtener los horarios:', error)
     }
   } else {
     schedulesList.value = []
   }
-  console.log('entra1')
   isTomDisabled.value = schedulesList.value.length === 0
 }
 

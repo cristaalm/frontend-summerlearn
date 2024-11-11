@@ -158,7 +158,6 @@ const changeNumber = (e) => {
         props.formData.cardNumber = value.replace(/(\d{4})/, "$1 ").replace(/(\d{4}) (\d{6})/, "$1 $2 ");
         cardNumberMaxLength.value = 16;
         e.target.value = props.formData.cardNumber;
-        console.log(props.formData.cardNumber);
 
         // Visa/MasterCard/Default (#### #### #### ####)
     } else if (/^\d{0,16}$/.test(value)) {

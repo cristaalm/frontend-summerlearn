@@ -202,11 +202,8 @@ const closeSlideOver = () => {
 const { isLoading } = inject('isLoading');
 
 watch(isLoading, async () => {
-  console.log('entramos al watch');
   if (!isLoading.value) {
-    console.log('entramos al if');
     const tour = await getTour(id);
-    console.log(tour);
     if (tour.users_tour == false) {
       againTour();
     }

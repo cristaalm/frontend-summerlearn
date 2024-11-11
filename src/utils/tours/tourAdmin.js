@@ -641,8 +641,6 @@ export const startTourAdmin = async (router, id, formattedMenu, activeMobileMenu
 
               if (!response.ok) {
                 throw new Error('Error al actualizar el tour')
-              } else {
-                console.log('Tour actualizado exitosamente')
               }
             } catch (error) {
               console.error('Error en la solicitud PATCH:', error)
