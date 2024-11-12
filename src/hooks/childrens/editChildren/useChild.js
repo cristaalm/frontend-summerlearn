@@ -61,7 +61,8 @@ export function useChild() {
       }
 
       //? ############# Actualizar la información del niño #############
-      const data = await response.json()
+      const dataResponse = await response.json()
+      const data = dataResponse.data
 
       successEditChild.value = true
       child.name = data.children_name

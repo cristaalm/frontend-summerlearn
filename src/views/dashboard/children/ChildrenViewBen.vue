@@ -36,7 +36,7 @@ onMounted(() => {
         <div class="text-base font-medium group-[.mode--light]:text-white" @click="() => {
           errorChildrens = true
         }">
-          Hijos
+          Mis Hijos
         </div>
         <div class="flex flex-col sm:flex-row gap-x-3 gap-y-2 md:ml-auto">
           <Button variant="primary" @click="router.push({ name: 'addChildrens' })" class="group-[.mode--light]:!bg-white/[0.12] group-[.mode--light]:!text-slate-200
@@ -72,7 +72,7 @@ onMounted(() => {
                     <div class="pt-5">
                       <div class="flex flex-col gap-3.5 mb-5 pb-5 mt-auto border-b border-dashed border-slate-300/70">
                         <div class="flex items-center">
-                          <div class="text-slate-500 dark:text-slate-200">Fecha de nacimineto:</div>
+                          <div class="text-slate-500 dark:text-slate-200">Fecha de nacimiento:</div>
                           <div class="ml-auto">
                             <div
                               class="flex items-center text-xs font-medium rounded-md text-success dark:text-slate-400 bg-success/10 border border-success/10 px-1.5 py-px">
