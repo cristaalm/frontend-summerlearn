@@ -17,11 +17,11 @@ const chatSearchText = ref("");
 const contactSearchText = ref("");
 
 // Aplicamos los filtros usando los hooks y pasamos las refs directamente
-const { filteredChats } = useChatFilter(chats, chatSearchText);
+const { filteredChats, updateFilter } = useChatFilter(chats, chatSearchText);
 const { filteredContacts } = useContactFilter(contacts, contactSearchText);
 
 // Proporcionamos los datos filtrados a los componentes hijos
-provide("filteredChats", { filteredChats });
+provide("filteredChats", { filteredChats, updateFilter });
 provide("filteredContacts", { filteredContacts });
 
 // Define la referencia del botón

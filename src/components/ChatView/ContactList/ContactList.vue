@@ -10,6 +10,7 @@ const { contacts, loadingContacts, chats } = inject("socket");
 const { selectChat } = inject("selectChat");
 const { btnSectionChat } = inject('btnSectionChat');
 const { filteredContacts } = inject('filteredContacts')
+const { updateFilter } = inject("filteredChats");
 
 const changeContactToChat = ({ contact }) => {
     // verificamos si el contacto ya esta en la lista de chats
@@ -17,6 +18,7 @@ const changeContactToChat = ({ contact }) => {
     if (!chat) {
         // si no esta, lo agregamos de forma visual
         chats.value.unshift(contact); // Agregamos el contacto a la lista de chats
+        updateFilter(); // Actualizamos el filtro
     }
     // cambiamos de seccion y seleccionamos el chat correspondiente
     btnSectionChat();

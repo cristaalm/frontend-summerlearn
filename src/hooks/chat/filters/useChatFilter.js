@@ -6,6 +6,7 @@ export function useChatFilter(chatsRef, searchTextRef) {
   watch(
     [chatsRef, searchTextRef],
     ([chats, searchText]) => {
+      console.log('chats', chats)
       if (chats && chats.length > 0) {
         filteredChats.value = chats.filter(
           (chat) =>
@@ -20,5 +21,20 @@ export function useChatFilter(chatsRef, searchTextRef) {
     { immediate: true }
   )
 
-  return { filteredChats }
+  // función para actualizar el filtro de búsqueda manualmente
+
+  const updateFilter = () => {
+    const chats = chatsRef.value
+    const searchText = searchTextRef.value
+    if (chats && chats.length > 0) {
+      filteredChats.value = chats.filter(
+        (chat) =>
+          chat.user.name.toLowerCase().includes(searchText.toLowerCase()) ||
+          (chat.lastMessage &&
+            chat.lastMessage.content.toLowerCase().includes(searchText.toLowerCase()))
+      )
+    }
+  }
+
+  return { filteredChats, updateFilter }
 }
