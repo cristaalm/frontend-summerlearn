@@ -248,7 +248,7 @@
             color: theme('colors.slate.700');
           }
           .side-menu__link__title {
-            color: theme('colors.slate.200');
+            color: theme('colors.slate.900');
             font-weight: theme('fontWeight.medium');
           }
           background-color: theme('colors.slate.600');
@@ -263,7 +263,7 @@
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
-          color: theme('colors.slate.200');
+          color: theme('colors.slate.900');
           margin-left: theme('spacing.3');
         }
         &__badge {
