@@ -158,32 +158,40 @@ onMounted(() => {
                 <Table class="border-b border-slate-200/60">
                   <Table.Thead>
                     <Table.Tr>
-                      <Table.Td class="text-center">Nombre</Table.Td>
-                      <Table.Td class="text-center">Actividad</Table.Td>
-                      <Table.Td class="text-center">Calificación</Table.Td>
-                      <Table.Td class="text-center">Acción</Table.Td>
+                      <Table.Td class="text-center text-black dark:text-slate-200">Nombre</Table.Td>
+                      <Table.Td class="text-center text-black dark:text-slate-200"
+                        >Actividad</Table.Td
+                      >
+                      <Table.Td class="text-center text-black dark:text-slate-200"
+                        >Calificación</Table.Td
+                      >
+                      <Table.Td class="text-center text-black dark:text-slate-200">Acción</Table.Td>
                     </Table.Tr>
                   </Table.Thead>
 
                   <Table.Tbody v-if="!loadingPerformance && !errorPerformance">
                     <template v-for="performance in paginatedItems" :key="performance.id">
                       <Table.Tr>
-                        <Table.Td class="text-center">{{ performance.child.name }}</Table.Td>
-                        <Table.Td class="text-center">{{ performance.activity.name }}</Table.Td>
-                        <Table.Td class="text-center">
+                        <Table.Td class="text-center text-black dark:text-slate-200">{{
+                          performance.child.name
+                        }}</Table.Td>
+                        <Table.Td class="text-center text-black dark:text-slate-200">{{
+                          performance.activity.name
+                        }}</Table.Td>
+                        <Table.Td class="text-center text-black dark:text-slate-200">
                           <div v-if="performance.value == null">
                             <input
                               type="text"
-                              class="w-20 rounded-lg border-gray-200 border-2 text-center"
+                              class="w-20 mr-2 rounded-lg border-gray-200 border-2 text-center text-black dark:text-slate-200 dark:bg-transparent dark:border-slate-400"
                               @input="handleInput(performance.id)"
                               v-model="nota[performance.id]"
-                            />/{{ notamax }}
+                            />/ {{ notamax }}
                           </div>
                           <!-- ponemos un color al texto segun la nota -->
                           <div
                             v-else
                             :class="{
-                              'text-red-500': performance.value < 5,
+                              'text-red-500 dark:text-red-400': performance.value < 5,
                               'text-yellow-500': performance.value >= 5 && performance.value < 7,
                               'text-green-500': performance.value >= 7
                             }"
@@ -191,7 +199,7 @@ onMounted(() => {
                             {{ performance.value }}/{{ notamax }}
                           </div>
                         </Table.Td>
-                        <Table.Td class="text-center">
+                        <Table.Td class="text-center text-black dark:text-slate-200">
                           <Button
                             v-if="performance.value == null"
                             variant="outline-success"
@@ -297,8 +305,8 @@ onMounted(() => {
                   variant="outline-primary"
                   :class="`${
                     Object.values(loadings).some((v) => v === true) || !isSaveButtonEnabled
-                      ? 'bg-white text-black'
-                      : 'bg-white text-blue-600 border-blue-900 hover:bg-blue-300'
+                      ? 'bg-white text-black border-slate-400 dark:bg-transparent dark:text-slate-400 dark:border-slate-400'
+                      : 'bg-white text-blue-600 border-blue-900 hover:bg-blue-300 dark:bg-transparent dark:text-slate-200 dark:border-primary'
                   }
                   `"
                   :disabled="
