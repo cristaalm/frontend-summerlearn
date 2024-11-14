@@ -36,7 +36,14 @@ const notamax = 10
 
 // Actualización de isSaveButtonEnabled
 const isSaveButtonEnabled = computed(() => {
-  return Object.values(valid.value).some((v) => v === true)
+  // validamos que las notas locales sean diferentes a las de la base de datos
+  return Object.keys(nota.value).some((id) => {
+    const index = performance.value.findIndex((p) => p.id === parseInt(id))
+    if (nota.value[id] == '') {
+      nota.value[id] = null
+    }
+    return performance.value[index].value !== nota.value[id] && valid.value[id]
+  })
 })
 
 const handleInput = (id) => {
@@ -71,6 +78,8 @@ const updateScoreHandler = async (id) => {
   const index = performance.value.findIndex((p) => p.id === id)
   if (index || index == 0) {
     performance.value[index].value = nota.value[id]
+    nota.value[id] = performance.value[index].value
+    valid.value[id] = false
   }
   loadPerformance()
 }
@@ -87,7 +96,7 @@ const saveAllHandler = async () => {
   scores.forEach((score) => {
     loadings.value[score.id] = true
   })
-  await saveAllScores(scores, performance, nota) // Usa la función importada
+  await saveAllScores(scores, performance, nota, valid) // Usa la función importada
   // Actualizamos el estado de carga de todas las calificaciones
   scores.forEach((score) => {
     loadings.value[score.id] = false
@@ -100,8 +109,8 @@ onMounted(() => {
   loadPerformance().then(() => {
     if (performance.value) {
       performance.value.forEach((item) => {
-        nota.value[item.id] = null // Inicializar los valores en null
-        valid.value[item.id] = false // Inicializar como inválidos
+        nota.value[item.id] = item.value
+        valid.value[item.id] = item.value !== null
       })
     }
   })
@@ -179,45 +188,86 @@ onMounted(() => {
                               'text-green-500': performance.value >= 7
                             }"
                           >
-                            {{ performance.id }}/{{ notamax }}
+                            {{ performance.value }}/{{ notamax }}
                           </div>
                         </Table.Td>
                         <Table.Td class="text-center">
                           <Button
+                            v-if="performance.value == null"
                             variant="outline-success"
-                            :class="[
-                              'w-full px-10 md:w-auto font-bold',
-                              !valid[performance.id] ||
-                              loadingPerformance ||
-                              performance.value == null
-                                ? 'border-gray-500 text-gray-500'
-                                : 'border-green text-green dark:text-slate-200'
-                            ]"
+                            :class="`w-full px-10 md:w-auto font-bold ${
+                              loadings[performance.id]
+                                ? 'border-warning text-warning'
+                                : valid[performance.id] && performance.value == null
+                                  ? 'border-green text-green dark:text-slate-200'
+                                  : 'border-gray-500 text-gray-500'
+                            }`"
                             :disabled="
                               !valid[performance.id] ||
-                              loadingPerformance ||
+                              loadings[performance.id] ||
                               performance.value != null
                             "
                             @click="() => updateScoreHandler(performance.id)"
                           >
+                            <Lucide
+                              v-if="!loadings[performance.id] && performance.value == null"
+                              icon="Check"
+                              class="stroke-[1.3] w-4 h-4 mr-2"
+                            />
                             <LoadingIcon
-                              v-if="loadingPerformance"
+                              v-if="loadings[performance.id] && performance.value == null"
                               icon="tail-spin"
                               class="stroke-[1.3] w-4 h-4 mr-2 -ml-2"
                               color="black"
                             />
-                            <Lucide
-                              v-if="!loadingPerformance"
-                              icon="Check"
-                              class="stroke-[1.3] w-4 h-4 mr-2"
-                            />
-                            <span v-if="!loadingPerformance">Calificar</span>
-                            <span v-else-if="loadingPerformance">Calificando ...</span>
-                            <span v-else>Calificado</span>
+
+                            <span v-if="!loadings[performance.id] && performance.value == null"
+                              >Calificar</span
+                            >
+                            <span v-else-if="loadings[performance.id] && performance.value == null"
+                              >Calificando</span
+                            >
                           </Button>
+                          <span
+                            v-else
+                            class="flex flex-row items-center justify-center text-success"
+                          >
+                            <Lucide icon="CheckCircle" class="stroke-[1.3] w-4 h-4 mr-2" />
+                            Calificado
+                          </span>
                         </Table.Td>
                       </Table.Tr>
                     </template>
+                  </Table.Tbody>
+
+                  <Table.Tbody
+                    v-else-if="
+                      !loadingPerformance && !errorPerformance && !paginatedItems.length > 0
+                    "
+                  >
+                    <Table.Tr>
+                      <Table.Td class="text-center" colspan="4">
+                        <div class="text-red-500">No se encontraron resultados</div>
+                      </Table.Td>
+                    </Table.Tr>
+                  </Table.Tbody>
+
+                  <Table.Tbody v-else-if="loadingPerformance">
+                    <Table.Tr>
+                      <Table.Td class="text-center" colspan="4">
+                        <LoadingIcon icon="tail-spin" class="stroke-[1.3] w-4 h-4" color="black" />
+                      </Table.Td>
+                    </Table.Tr>
+                  </Table.Tbody>
+
+                  <Table.Tbody v-else-if="errorPerformance">
+                    <Table.Tr>
+                      <Table.Td class="text-center" colspan="4">
+                        <div class="text-red-500">
+                          Error al cargar los datos, intentelo mas tarde.
+                        </div>
+                      </Table.Td>
+                    </Table.Tr>
                   </Table.Tbody>
                 </Table>
               </div>
@@ -245,17 +295,33 @@ onMounted(() => {
 
                 <Button
                   variant="outline-primary"
-                  :class="{
-                    'bg-white text-black cursor-not-allowed': !isSaveButtonEnabled,
-                    'bg-white text-blue-600 border-blue-900 hover:bg-blue-300': isSaveButtonEnabled
-                  }"
-                  :disabled="!isSaveButtonEnabled"
+                  :class="`${
+                    Object.values(loadings).some((v) => v === true) || !isSaveButtonEnabled
+                      ? 'bg-white text-black'
+                      : 'bg-white text-blue-600 border-blue-900 hover:bg-blue-300'
+                  }
+                  `"
+                  :disabled="
+                    (() => {
+                      return Object.values(loadings).some((v) => v === true) || !isSaveButtonEnabled
+                    })()
+                  "
                   @click="saveAllHandler"
                 >
                   <Lucide
-                    v-if="!loadingPerformance"
+                    v-if="
+                      (() => {
+                        return !Object.values(loadings).some((v) => v === true)
+                      })()
+                    "
                     icon="Check"
                     class="stroke-[1.3] w-4 h-4 mr-2"
+                  />
+                  <LoadingIcon
+                    v-else
+                    icon="tail-spin"
+                    class="stroke-[1.3] w-4 h-4 mr-2"
+                    color="black"
                   />
                   Guardar Todos
                 </Button>
