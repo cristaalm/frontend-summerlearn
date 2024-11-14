@@ -12,12 +12,22 @@ export const getPerformance = async () => {
   const performances = json
 
   // Ordenar por id DESC
-  performances.sort((a, b) => b.performances_id - a.performances_id)
+  performances.sort((a, b) => b.performance_beneficiaries_id - a.performance_beneficiaries_id)
 
-  return performances?.map((performance) => ({
+  const performanceList = performances?.map((performance) => ({
     id: performance.performance_beneficiaries_id,
     value: performance.performance_beneficiaries_value,
-    child: performance.performance_beneficiaries_subscription.child,
-    activity: performance.performance_beneficiaries_subscription.activity
+    activity: {
+      id: performance.performance_beneficiaries_subscription.subscriptions_children_activity.activities_id,
+      name: performance.performance_beneficiaries_subscription.subscriptions_children_activity.activities_name,
+    },
+    child: {
+      id: performance.performance_beneficiaries_subscription.subscriptions_children_child.children_id,
+      name: performance.performance_beneficiaries_subscription.subscriptions_children_child.children_name,
+    }
   }))
+
+  console.log(performanceList)
+
+  return performanceList
 }

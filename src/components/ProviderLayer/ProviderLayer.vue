@@ -199,9 +199,9 @@ if (role === 3 || role === 1) {
   onMounted(() => loadDonations())
 }
 
-if (role === 1 || role === 2 || role === 4) {
-  const { performance, loadingPerformance, loadPerformance } = usePerformance()
-  provide('performance', { performance, loadingPerformance, loadPerformance })
+if (role === 1 || role === 2 || role === 4 || role === 5) {
+  const { performance, loadingPerformance, loadPerformance, errorPerformance } = usePerformance()
+  provide('performance', { performance, loadingPerformance, loadPerformance, errorPerformance })
   onMounted(() => loadPerformance())
 }
 
