@@ -61,7 +61,7 @@ onMounted(() => {
             }
           "
         >
-          Hijos
+          Mis Hijos
         </div>
         <div class="flex flex-col sm:flex-row gap-x-3 gap-y-2 md:ml-auto">
           <Button
@@ -132,20 +132,8 @@ onMounted(() => {
                       </div>
                       <div class="flex items-center justify-end">
                         <Button
-                          class="flex items-center text-primary mr-3"
-                          variant="primary"
-                          @click="
-                            () => {
-                              setModalActivitiesChild({ open: true, childInfo: child })
-                            }
-                          "
-                        >
-                          <Lucide icon="Book" class="w-4 h-4 stroke-[1.3] text-white" />
-                          <span class="text-white ml-2">Suscripciones</span>
-                        </Button>
-                        <Button
                           class="flex items-center mr-3"
-                          variant="success"
+                          variant="warning"
                           @click="
                             () => {
                               setModalEditChild({ open: true, childInfo: child })

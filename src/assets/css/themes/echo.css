@@ -86,7 +86,7 @@
           opacity: theme('opacity.100');
         }
         .side-menu__link__title {
-          color: theme('colors.theme.1');
+          color: theme('colors.slate.900');
           font-weight: theme('fontWeight.medium');
         }
       }
@@ -100,7 +100,7 @@
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
-        color: theme('colors.slate.600');
+        color: theme('colors.slate.700');
         margin-left: theme('spacing.3');
       }
       &__badge {
