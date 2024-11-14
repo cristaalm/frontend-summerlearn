@@ -25,7 +25,7 @@ export function useDialogSubConfirm({ actividades }) {
         const result = await confirmSubVolunteer(userId, idActivity.value)
         if (result) {
           setTimeout(() => {
-            showToast({ message: '¡Te suscribiste a una actividad!.', type: 'success' }) // Use showToast for success message
+            showToast({ message: '¡Te suscribiste a una actividad!', type: 'success' }) // Use showToast for success message
           }, 1000)
         } else {
           setTimeout(() => {

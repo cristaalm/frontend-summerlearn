@@ -122,7 +122,7 @@ if (role === 2) {
   onMounted(() => loadLastProgramsUnasigned())
 }
 
-if (role === 4) {
+if (role === 4 || role == 5) {
   const { areasSub, loadingSub, errorSub, loadAreasSub } = useAreasInSubs()
   loadings.push(loadingSub)
   provide('areasInSubs', { areasSub, loadingSub, errorSub, loadAreasSub })

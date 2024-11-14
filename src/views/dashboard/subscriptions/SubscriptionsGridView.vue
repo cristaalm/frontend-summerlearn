@@ -8,29 +8,36 @@ import Table from '@/components/base/Table'
 import LoadingIcon from '@/components/base/LoadingIcon'
 import { ref, onMounted, inject } from 'vue'
 import Button from '@/components/base/Button'
+import getIdByToken from '@/logic/getIdByToken'
 import {
   useSearch,
   usePagination,
-  // useActividades,
+  useDialogSchedules,
   useDialogObjective,
-  useDialogDelete
+  useSchudelesActivity
 } from '@/hooks/actividades/'
-import { useDialogSubConfirm } from '@/hooks/subscriptions/'
-import { useObjectives } from '@/services/actividades/useObjectives'
-
 const {
   actividadesSubscribed,
   loadingActividadesSubscribed,
   errorActividadesSubscribed,
   loadActividadesSubscribed
 } = inject('actividadesSubscribed')
+import { useDialogSubConfirm } from '@/hooks/subscriptions/'
+import { useObjectives } from '@/services/actividades/useObjectives'
+const { dialogStatusSchedulesView, openSchedulesModalView, closeSchedulesModalView } =
+  useDialogSchedules({ actividadesSubscribed })
 const { searchQuery, selectedArea, filteredActividades, filtersCount } =
   useSearch(actividadesSubscribed)
 const { currentPage, pageSize, totalPages, paginatedItems, changePage, changePageSize } =
   usePagination(filteredActividades)
 
 const { areasSub, loadingSub, errorSub, loadAreasSub } = inject('areasInSubs')
-
+const {
+  schudelesActivity,
+  loadingSchudelesActivity,
+  errorSchudelesActivity,
+  loadSchudelesActivity
+} = useSchudelesActivity()
 const { objectives, loadingObjectives, errorObjectives, loadObjectives } = useObjectives()
 const { dialogStatusObjective, openObjectiveModal, closeAddObjective } = useDialogObjective({
   actividades: actividadesSubscribed
@@ -64,7 +71,10 @@ const guardarId = (id) => {
     .catch((error) => {
       console.error('Error al cargar objetivos:', error)
     })
+  loadSchudelesActivity(id_actividad.value)
 }
+
+const { rol: role } = getIdByToken(localStorage.getItem('access_token'))
 
 const nombre_actividad = ref(null) // Variable reactiva para guardar el ID
 // Función para guardar el ID
@@ -79,6 +89,77 @@ onMounted(() => {
 </script>
 
 <template>
+  <!--- BEGIN: Super Large Modal Content VIEW dialogStatusSchedules --->
+  <Dialog size="xl" :open="dialogStatusSchedulesView" @close="closeSchedulesModalView">
+    <Dialog.Panel class="w-full max-w-full">
+      <div class="px-10 py-5 w-full dark:border-slate-600 border-slate-300 border-b">
+        <div class="flex justify-between space-x-4">
+          <h2 class="text-2xl font-bold text-black dark:text-slate-200">Horarios</h2>
+          <div class="flex flex-row gap-5">
+            <Lucide
+              icon="XCircle"
+              class="w-10 h-full mx-auto text-danger cursor-pointer dark:text-red-500"
+              @click="closeSchedulesModalView"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="flex flex-col">
+        <div class="dark:border-slate-600 border-slate-300 border-b">
+          <div class="px-6 pb-6">
+            <div class="mt-2 text-slate-500 dark:text-slate-400">
+              <template v-if="loadingSchudelesActivity">
+                <p class="text-warning pt-4 text-base">Cargando información...</p>
+              </template>
+              <template v-else-if="errorSchudelesActivity">
+                <p class="text-danger">Error al cargar información</p>
+              </template>
+              <template
+                v-if="
+                  !loadingSchudelesActivity &&
+                  !errorSchudelesActivity &&
+                  schudelesActivity.length <= 0
+                "
+              >
+                <p class="text-danger pt-4 text-base">No hay horarios registrados aún</p>
+              </template>
+              <template v-if="!loadingSchudelesActivity && schudelesActivity.length">
+                <ul class="list-disc text-justify dark:text-white/80">
+                  <li
+                    v-for="d in schudelesActivity"
+                    :key="d.id"
+                    class="flex flex-col justify-between p-4 border-b border-gray-200 dark:border-gray-700"
+                  >
+                    <!-- Descripción de la actividad a la izquierda -->
+                    <div class="text-base font-semibold text-gray-800 dark:text-white mb-2">
+                      {{ d.description }}
+                    </div>
+
+                    <!-- Contenedor de Horarios -->
+                    <ul class="flex flex-wrap gap-2">
+                      <li
+                        v-for="(schedule, index) in d.schedules"
+                        :key="index"
+                        class="flex items-center"
+                      >
+                        <span
+                          class="p-2 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white rounded-md shadow hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors duration-200"
+                        >
+                          {{ schedule.start }} - {{ schedule.end }}
+                        </span>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </template>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Dialog.Panel>
+  </Dialog>
+  <!-- END: Modal Content -->
+
   <!-- BEGIN: Modal Content -->
   <Dialog :open="dialogStatusObjective" @close="dialogStatusObjective = false">
     <Dialog.Panel>
@@ -296,8 +377,8 @@ onMounted(() => {
                       class="dark:text-blue-300 text-blue"
                       @click="
                         () => {
-                          openObjectiveModal(actividad.id)
                           guardarId(actividad.id)
+                          openObjectiveModal(actividad.id)
                         }
                       "
                     >
@@ -305,6 +386,7 @@ onMounted(() => {
                       Ver objetivos
                     </Menu.Item>
                     <Menu.Item
+                      v-if="role === 4"
                       class="dark:text-green-400 text-green"
                       @click="
                         () => {
@@ -350,6 +432,12 @@ onMounted(() => {
                     <div>Horario y días:</div>
                     <div class="ml-auto">
                       <a
+                        @click="
+                          () => {
+                            openSchedulesModalView(actividad.id)
+                            guardarId(actividad.id)
+                          }
+                        "
                         href="#"
                         class="text-sm whitespace-nowrap underline decoration-dotted decoration-slate-500/30 underline-offset-[3px] truncate w-40 md:w-52 block text-right"
                       >
