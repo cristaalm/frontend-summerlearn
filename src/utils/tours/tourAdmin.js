@@ -404,16 +404,7 @@ export const startTourAdmin = async (router, id, formattedMenu, activeMobileMenu
             setTimeout(() => {
               driverObj.movePrevious()
             }, 100)
-          }
-        }
-      },
-      {
-        element: '#button-add-performance',
-        popover: {
-          prevBtnText: 'Anterior',
-          nextBtnText: 'Siguiente',
-          title: 'Botón de agregar rendimiento',
-          description: 'Con este botón podrás agregar un nuevo rendimiento a la plataforma.',
+          },
           onNextClick: () => {
             activeMobileMenu.value = true
             setTimeout(() => {
