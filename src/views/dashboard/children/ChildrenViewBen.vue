@@ -29,6 +29,11 @@ const { ModalEditChild, childInfoProvideEdit, setModalEditChild } = useDialogEdi
 onMounted(() => {
   loadChildrens()
 })
+
+const formatDate = (dateString) => {
+  const [year, month, day] = dateString.split('-')
+  return `${day}-${month}-${year}`
+}
 </script>
 
 <template>
@@ -112,7 +117,7 @@ onMounted(() => {
                               class="flex items-center text-xs font-medium rounded-md text-success dark:text-slate-400 bg-success/10 border border-success/10 px-1.5 py-px"
                             >
                               <span class="-mt-px">
-                                {{ child.birthdate }}
+                                {{ formatDate(child.birthdate) }}
                               </span>
                             </div>
                           </div>
