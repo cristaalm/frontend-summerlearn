@@ -1,11 +1,12 @@
 import { ref, inject } from 'vue'
 import { changeStatus, deleteUser } from '@/services/users/changeStatus'
 
-export function useDialog({ users }) {
+export function useDialog({ usersRequest }) {
   const dialogStatusModal = ref(false)
   const userIdSub = ref('')
   const statusId = ref('')
   const showToast = inject('showToast')
+  const loadingUserRequest = ref(false)
 
   const openModal = (id, action) => {
     userIdSub.value = id
@@ -15,6 +16,7 @@ export function useDialog({ users }) {
 
   const confirmSubscription = async () => {
     let result = false
+    loadingUserRequest.value = true
     try {
       if (statusId.value === 'accept') {
         result = await changeStatus(userIdSub.value, 1)
@@ -23,7 +25,8 @@ export function useDialog({ users }) {
       }
 
       if (result) {
-        users.value = users.value.filter((user) => user.id !== userIdSub.value)
+        console.log(usersRequest)
+        usersRequest.value = usersRequest.value.filter((user) => user.id !== userIdSub.value)
         showToast({ message: 'Acción realizada exitosamente.', type: 'success' })
       } else {
         showToast({ message: 'Error al realizar la acción.', type: 'error' })
@@ -34,6 +37,8 @@ export function useDialog({ users }) {
     } catch (error) {
       console.error('Error en la acción:', error)
       showToast({ message: 'Error inesperado.', type: 'error' })
+    } finally {
+      loadingUserRequest.value = false
     }
   }
 
@@ -41,5 +46,5 @@ export function useDialog({ users }) {
     dialogStatusModal.value = false
   }
 
-  return { dialogStatusModal, openModal, confirmSubscription, closeModal }
+  return { dialogStatusModal, openModal, confirmSubscription, closeModal, loadingUserRequest }
 }
