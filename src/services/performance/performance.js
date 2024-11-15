@@ -18,16 +18,18 @@ export const getPerformance = async () => {
     id: performance.performance_beneficiaries_id,
     value: performance.performance_beneficiaries_value,
     activity: {
-      id: performance.performance_beneficiaries_subscription.subscriptions_children_activity.activities_id,
-      name: performance.performance_beneficiaries_subscription.subscriptions_children_activity.activities_name,
+      id: performance.performance_beneficiaries_subscription.subscriptions_children_activity
+        .activities_id,
+      name: performance.performance_beneficiaries_subscription.subscriptions_children_activity
+        .activities_name
     },
     child: {
-      id: performance.performance_beneficiaries_subscription.subscriptions_children_child.children_id,
-      name: performance.performance_beneficiaries_subscription.subscriptions_children_child.children_name,
+      id: performance.performance_beneficiaries_subscription.subscriptions_children_child
+        .children_id,
+      name: performance.performance_beneficiaries_subscription.subscriptions_children_child
+        .children_name
     }
   }))
-
-  console.log(performanceList)
 
   return performanceList
 }

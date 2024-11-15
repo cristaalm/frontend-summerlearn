@@ -64,7 +64,6 @@ const handleInput = (id) => {
     }
   }
 
-  console.log(valid.value)
 }
 
 // Actualiza o envía los datos de la calificación individual

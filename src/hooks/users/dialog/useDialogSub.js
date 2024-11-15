@@ -25,7 +25,6 @@ export function useDialog({ usersRequest }) {
       }
 
       if (result) {
-        console.log(usersRequest)
         usersRequest.value = usersRequest.value.filter((user) => user.id !== userIdSub.value)
         showToast({ message: 'Acción realizada exitosamente.', type: 'success' })
       } else {

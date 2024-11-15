@@ -19,8 +19,6 @@ export const updateScore = async (id, score) => {
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`)
     }
-
-    console.log(`Calificación para ID ${id} registrada exitosamente.`)
   } catch (error) {
     console.error(`Error al registrar la calificación para ID ${id}:`, error)
   }
@@ -52,8 +50,6 @@ export const saveAllScores = async (scores, performance, nota, valid) => {
           valid.value[score.id] = false
         }
       })
-
-      console.log('Todas las calificaciones válidas se han registrado.')
     } catch (error) {
       console.error('Error al registrar las calificaciones:', error)
     }

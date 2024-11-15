@@ -6,7 +6,6 @@ export function useChatFilter(chatsRef, searchTextRef) {
   watch(
     [chatsRef, searchTextRef],
     ([chats, searchText]) => {
-      console.log('chats', chats)
       if (chats && chats.length > 0) {
         filteredChats.value = chats.filter(
           (chat) =>
