@@ -265,9 +265,12 @@ onMounted(() => {
                   <Pagination.Link @click="changePage(currentPage + 1)">
                     <Lucide icon="ChevronRight" class="w-4 h-4" />
                   </Pagination.Link>
+                  <Pagination.Link @click="changePage(totalPages)">
+                    <Lucide icon="ChevronsRight" class="w-4 h-4" />
+                  </Pagination.Link>
                 </Pagination>
 
-                <Button variant="outline-primary" :class="`${Object.values(loadings).some((v) => v === true) || !isSaveButtonEnabled
+                <Button v-if="currentUserRol == 4" variant="outline-primary" :class="`${Object.values(loadings).some((v) => v === true) || !isSaveButtonEnabled
                   ? 'bg-white text-black border-slate-400 dark:bg-transparent dark:text-slate-400 dark:border-slate-400'
                   : 'bg-white text-blue-600 border-blue-900 hover:bg-blue-300 dark:bg-transparent dark:text-slate-200 dark:border-primary'
                   }
