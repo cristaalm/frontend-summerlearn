@@ -6,10 +6,15 @@ export function useFilter(items) {
 
   const filteredItems = computed(() => {
     return items.value.filter((item) => {
-      const matchesQuery = item.activity.name.toLowerCase().includes(searchQuery.value.toLowerCase())
-      // const matchesStatus = selectedStatus.value === null || item.status === selectedStatus.value
+      const matchesQuery =
+        item.activity.name.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+        (item.value?.toString() + '/10')
+          .replace(/\s/g, '')
+          .includes(searchQuery.value.replace(/\s/g, '')) ||
+        (item.value == null && 'pendiente'.includes(searchQuery.value.toLowerCase())) ||
+        item.child.name.toLowerCase().includes(searchQuery.value.toLowerCase())
 
-      return matchesQuery // && matchesStatus
+      return matchesQuery
     })
   })
 
