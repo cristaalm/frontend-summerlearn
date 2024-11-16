@@ -187,7 +187,7 @@ export const startTourCoord = async (router, id, formattedMenu, activeMobileMenu
           nextBtnText: 'Siguiente',
           title: 'Opciones de actividades',
           description:
-            'Aqui puedes agregar los horarios, agregar los objectivos ademas de editar o eliminar la actividad.'
+            'Aqui puedes agregar los horarios, agregar los objetivos ademas de editar o eliminar la actividad.'
         }
       },
       {
