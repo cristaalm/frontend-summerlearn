@@ -298,8 +298,8 @@ const router = createRouter({
           name: 'childrensBen',
           component: () =>
             import('@/views/dashboard/children/ChildrenViewBen.vue').catch(
-              () => import('@/views/dashboard/notFoundView/NotFoundView.vue')
-            )
+          () => import('@/views/dashboard/notFoundView/NotFoundView.vue')
+          )
         },
         {
           path: '/dashboard/childrens/add',
