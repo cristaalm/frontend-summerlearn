@@ -1,5 +1,5 @@
 <script setup>
-import { Dialog } from '@/components/base/Headless'
+import { Dialog, Menu } from '@/components/base/Headless'
 import LoadingIcon from '@/components/base/LoadingIcon'
 import Button from '@/components/base/Button'
 import Lucide from '@/components/base/Lucide'

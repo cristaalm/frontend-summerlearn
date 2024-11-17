@@ -6,12 +6,14 @@ import LoadingIcon from '@/components/base/LoadingIcon'
 import {
   useDialogDeleteChild,
   useDialogEditChild,
-  useDialogActivities
+  useDialogActivities,
+  useDialogGradesChild
 } from '@/hooks/childrens/Dialogs'
 import {
   DeleteChildModal,
   EditChildModal,
-  ActivitiesChildModal
+  ActivitiesChildModal,
+  GradesChildModal
 } from '@/components/Dashboard/children/'
 import { calculateAge } from '@/logic/'
 import { useRouter } from 'vue-router'
@@ -25,6 +27,8 @@ const router = useRouter()
 const { ModalDeleteChild, setModalDeleteChild, childInfoProvideDelete } = useDialogDeleteChild()
 const { ModalEditChild, childInfoProvideEdit, setModalEditChild } = useDialogEditChild()
 
+const { ModalGradesChild, setModalGradesChild, childInfoProvideGrades } = useDialogGradesChild()
+
 // Cargar los niños al iniciar el componente
 onMounted(() => {
   loadChildrens()
@@ -32,7 +36,7 @@ onMounted(() => {
 
 const formatDate = (dateString) => {
   const [year, month, day] = dateString.split('-')
-  return `${day}/${month}/${year}`
+  return `${day}-${month}-${year}`
 }
 </script>
 
@@ -49,6 +53,11 @@ const formatDate = (dateString) => {
     :infoChild="childInfoProvideEdit"
   />
 
+  <GradesChildModal
+    :ModalGradesChild="ModalGradesChild"
+    :setModalGradesChild="setModalGradesChild"
+    :infoChild="childInfoProvideGrades "
+  />
   <ActivitiesChildModal
     :ModalActivitiesChild="ModalActivitiesChild"
     :setModalActivitiesChild="setModalActivitiesChild"
@@ -136,6 +145,17 @@ const formatDate = (dateString) => {
                         </div>
                       </div>
                       <div class="flex items-center justify-end">
+                        <Button
+                          class="flex items-center mr-3"
+                          variant="success"
+                          @click="
+                            () => {
+                              setModalGradesChild({ open: true, childInfo: child })
+                            }
+                          "
+                        >
+                          <Lucide icon="NotebookPen" class="w-4 h-4 stroke-[1.3] text-white" />
+                        </Button>
                         <Button
                           class="flex items-center mr-3"
                           variant="warning"
