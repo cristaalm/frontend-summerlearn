@@ -1,8 +1,6 @@
-const Baseurl = 'https://backend-summerlearn.onrender.com/'
-// const Baseurl = 'http://127.0.0.1:8000/'  // Solo para desarrollo local
-
-const Baseurl2 = 'wss://backend-summerlearn.onrender.com/'
-// const Baseurl2 = 'ws://localhost:8000/'  // Solo para desarrollo local
+const Baseurl = 'http://localhost:8000/'
+// const Baseurl = 'http://127.0.0.1:8001/'
+const Baseurl2 = 'ws://localhost:8000/'
+// const Baseurl2 = 'ws://localhost:8001/'
 
 export { Baseurl, Baseurl2 }
-
