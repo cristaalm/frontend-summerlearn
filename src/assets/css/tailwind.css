@@ -9059,6 +9059,11 @@ input {
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
 
+.even\:bg-gray-200:nth-child(even) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(229 231 235 / var(--tw-bg-opacity));
+}
+
 .checked\:border-primary:checked {
   --tw-border-opacity: 1;
   border-color: rgb(var(--color-primary) / var(--tw-border-opacity));

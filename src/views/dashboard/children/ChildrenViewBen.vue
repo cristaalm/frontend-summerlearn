@@ -113,6 +113,9 @@ const formatDate = (dateString) => {
                         <span class="mt-3 text-xs text-white/80">
                           {{ child.curp }}
                         </span>
+                        <!-- <span class="mt-3 text-xs text-white/80">
+                          {{ child.grade }}
+                        </span> -->
                       </div>
                     </div>
                     <div class="pt-5">

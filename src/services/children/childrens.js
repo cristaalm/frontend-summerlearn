@@ -28,6 +28,7 @@ export const getChildrens = async () => {
     photo: children.children_photo,
     birthdate: children.children_birthdate,
     curp: children.children_curp,
-    user: children.children_user.name
+    user: children.children_user.name,
+    grade: children.children_grade,
   }))
 }
