@@ -1,3 +1,4 @@
+// path: /vite.config.js
 import { fileURLToPath, URL } from 'node:url'
 
 import { defineConfig } from 'vite'
@@ -12,6 +13,9 @@ export default defineConfig({
   },
   optimizeDeps: {
     include: ['tailwind-config']
+  },
+  build: {
+    outDir: 'dist'
   },
   plugins: [vue()],
   resolve: {
