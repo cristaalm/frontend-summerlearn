@@ -7,15 +7,13 @@ import vue from '@vitejs/plugin-vue'
 // https://vitejs.dev/config/
 export default defineConfig({
   build: {
+    outDir: 'dist',
     commonjsOptions: {
       include: ['tailwind.config.js', 'node_modules/**']
     }
   },
   optimizeDeps: {
     include: ['tailwind-config']
-  },
-  build: {
-    outDir: 'dist'
   },
   plugins: [vue()],
   resolve: {
