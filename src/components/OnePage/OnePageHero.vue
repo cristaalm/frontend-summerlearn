@@ -1,4 +1,5 @@
 <script setup>
+import { ref, onMounted, onUnmounted } from 'vue';
 const smoothScroll = (event) => {
   event.preventDefault()
   const targetId = event.target.getAttribute('href').substring(1)
@@ -10,6 +11,32 @@ const smoothScroll = (event) => {
     })
   }
 }
+
+// Lista de imágenes para el carrusel
+const images = ref([
+  '/src/assets/images/Photo1.png',
+  '/src/assets/images/Photo2.jpg',
+  '/src/assets/images/Photo3.jpg',
+  '/src/assets/images/Photo4.png'
+]);
+
+const currentImageIndex = ref(0);
+let intervalId = null;
+
+// Función para cambiar a la siguiente imagen
+const nextImage = () => {
+  currentImageIndex.value = (currentImageIndex.value + 1) % images.value.length;
+};
+
+onMounted(() => {
+  intervalId = setInterval(nextImage, 3000); // Cambia cada 3 segundos
+});
+
+onUnmounted(() => {
+  clearInterval(intervalId);
+});
+
+console.log(currentImageIndex)
 
 </script>
 
@@ -43,13 +70,21 @@ const smoothScroll = (event) => {
             </a>
           </div>
         </div>
-        <img
+        <!-- <img
           src="/src/assets/images/Photo4.png"
           alt="Hero"
           class="mx-auto shadow-xl aspect-video overflow-hidden rounded-xl object-cover sm:w-full lg:order-last lg:aspect-square w-[550] h-[550] z-10"
           data-aos="fade-left"
           data-aos-delay="100"
-        />
+        /> -->
+        <div class="relative w-full h-[300px] sm:h-[400px] lg:h-[500px] overflow-hidden rounded-lg shadow-lg z-20">
+          <img
+            :src="images[currentImageIndex]"
+            alt="Carrusel"
+            class="mx-auto shadow-xl aspect-video overflow-hidden rounded-xl object-cover sm:w-full lg:order-last lg:aspect-square w-[550] h-[550] z-20"
+          />
+        </div>
+
       </div>
 
     </div>
