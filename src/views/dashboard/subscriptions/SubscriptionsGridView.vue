@@ -32,6 +32,10 @@ const { currentPage, pageSize, totalPages, paginatedItems, changePage, changePag
   usePagination(filteredActividades)
 
 const { areasSub, loadingSub, errorSub, loadAreasSub } = inject('areasInSubs')
+const { childrens, loadingChildrens, errorChildrens, loadChildrens } = inject('childrens')
+const { performance, loadingPerformance, errorPerformance, loadPerformance } = inject('performance')
+
+
 const {
   schudelesActivity,
   loadingSchudelesActivity,
@@ -85,10 +89,97 @@ const guardarNombre = (nombre) => {
 onMounted(() => {
   loadActividadesSubscribed()
   loadAreasSub()
+  loadPerformance()
 })
+console.log('actividadesSubscribed', performance.value)
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+const fetchSubscribedChildren = (activityId) => {
+  // Filtra los niños basándose en el activityId
+  const filteredChildren = performance.value
+    .filter((item) => item.activity.id === activityId)
+    .map((item) => ({
+      id: item.child.id,
+      name: item.child.name,
+    }));
+
+  subscribedChildren.value = filteredChildren; // Actualiza la lista para el modal
+};
+
+
+
+// Variables reactivas
+const isOpen = ref(false)
+const subscribedChildren = ref([])
+const activityName = ref('Actividad de ejemplo')
+
+
+const handleOpenModal = (activityId, activityNameValue) => {
+  isOpen.value = true; // Abre el modal
+  activityName.value = activityNameValue; // Actualiza el nombre de la actividad
+  fetchSubscribedChildren(activityId); // Filtra los niños basados en el activityId
+};
+
+
 </script>
 
 <template>
+
+
+    <!-- Modal utilizando Dialog y DialogPanel -->
+    <Dialog size="xl" :open="isOpen" @close="isOpen = false">
+  <Dialog.Panel class="text-center flex flex-col">
+    <!-- Encabezado del modal -->
+    <div class="flex flex-row px-10 py-5 justify-between items-center w-full dark:border-slate-600 border-slate-300 border-b">
+      <h1 class="text-2xl font-bold text-black dark:text-slate-200">
+        Niños suscritos a {{ activityName }}
+      </h1>
+     
+    </div>
+
+    <!-- Contenido principal -->
+    <div class="flex flex-col">
+      <div class="dark:border-slate-600 border-slate-300 border-b max-h-[70vh] overflow-y-auto scrollbar-custom">
+        <div class="flex flex-col md:flex-row justify-between py-5 my-5 sm:flex mx-5 px-5 rounded-lg dark:border-slate-600 border bg-theme-1/10 dark:bg-slate-700">
+          <table class="table-auto w-full border-collapse">
+            <thead>
+              <tr>
+                <th class="text-center font-bold text-slate-700 dark:text-slate-200 border-b dark:border-slate-600 py-2">
+                  Nombre
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                v-for="child in subscribedChildren"
+                :key="child.id"
+                class="odd:bg-gray-300 even:bg-gray-200 dark:odd:bg-slate-800 dark:even:bg-slate-700"
+              >
+                <td class="border-t border-slate-200/60 dark:border-slate-700 py-2">
+                  {{ child.name }}
+                </td>
+              </tr>
+              <tr v-if="subscribedChildren.length === 0">
+                <td colspan="1" class="text-center text-slate-500 py-4">
+                  No hay niños suscritos a esta actividad.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Botón de cierre -->
+    <div class="px-10 py-5">
+      <Button variant="secondary" @click="isOpen = false">Cerrar</Button>
+    </div>
+  </Dialog.Panel>
+</Dialog>
+    
+  <!-- END: Modal Content -->
+
+
   <!--- BEGIN: Super Large Modal Content VIEW dialogStatusSchedules --->
   <Dialog size="xl" :open="dialogStatusSchedulesView" @close="closeSchedulesModalView">
     <Dialog.Panel class="w-full max-w-full">
@@ -390,7 +481,7 @@ onMounted(() => {
                       class="dark:text-green-400 text-green"
                       @click="
                         () => {
-                          guardarId(actividad.id)
+                          handleOpenModal(actividad.id, actividad.name)
                         }
                       "
                     >

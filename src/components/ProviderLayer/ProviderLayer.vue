@@ -143,7 +143,7 @@ if (role === 4 || role == 5) {
   })
   onMounted(() => loadActividadesSubscribed())
 }
-if (role === 5 || role == 1) {
+if (role === 5 || role == 1 || role == 4) {
   const { childrens, loadingChildrens, errorChildrens, loadChildrens } = useChildrens()
   if (role === 5) {
     loadings.push(loadingChildrens)
