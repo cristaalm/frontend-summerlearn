@@ -404,9 +404,14 @@ async function againTour() {
             class="container flex items-center justify-between w-full h-full transition-[padding,background-color,border-color] ease-in-out duration-300 bg-transparent border-transparent shadow-none group-[.top-bar--active]:box group-[.top-bar--active]:px-5 group-[.top-bar--active]:bg-transparent group-[.top-bar--active]:border-transparent group-[.top-bar--active]:bg-gradient-to-r group-[.top-bar--active]:from-theme-1 group-[.top-bar--active]:to-theme-2">
             <!-- mostramos el nombre y el correo del usuario -->
             <div class="xl:flex flex-col gap-2 hidden">
-              <div class="text-white dark:text-slate-200 font-semibold text-lg">¡Hola, {{ user ? user.firstName : '' }} {{ user
-                ?
-                user.lastName : '' }} Nos alegra verte¡
+              <div class="text-white dark:text-slate-200 font-semibold text-lg">
+                ¡Hola, 
+                <span class="italic mr-1">
+                  {{ user ? user.firstName : '' }}
+                </span> 
+                <span class="italic"> 
+                  {{ user ? user.lastName : '' }}
+                </span>! Nos alegra verte.
               </div>
             </div>
             <div class="flex items-center gap-1 xl:hidden">
