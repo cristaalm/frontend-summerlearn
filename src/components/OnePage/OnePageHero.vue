@@ -36,8 +36,6 @@ onUnmounted(() => {
   clearInterval(intervalId);
 });
 
-console.log(currentImageIndex)
-
 </script>
 
 
@@ -47,11 +45,8 @@ console.log(currentImageIndex)
 
     <div className="container px-4 md:px-6 lg:px-8">
       <div class="grid gap-6 lg:grid-cols-[1fr_400px] lg:gap-12 xl:grid-cols-[1fr_600px]">
-        <div
-          class="flex flex-col justify-center space-y-6 md:space-y-8 lg:space-y-12"
-          data-aos="fade-right"
-          data-aos-delay="100"
-        >
+        <div class="flex flex-col justify-center space-y-6 md:space-y-8 lg:space-y-12" data-aos="fade-right"
+          data-aos-delay="100">
           <div class="space-y-6 md:mx-auto">
             <h1 class="text-3xl md:mx-autofont-bold tracking-tighter sm:text-5xl xl:text-6xl/none text-hblue1">
               {{ $t('hero.title') }}
@@ -61,11 +56,8 @@ console.log(currentImageIndex)
             </p>
           </div>
           <div class="flex gap-2 flex-row justify-center md:justify-start ">
-            <a
-              href="#joinOurTeam"
-              @click="smoothScroll"
-              class="inline-flex h-10 w-3/4 md:mx-auto md:w-fit items-center justify-center cursor-pointer select-none rounded-md bg-emerald-500 px-8 py-6 text-xl font-medium text-white shadow transition-colors hover:bg-emerald-500/80 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 duration-300"
-            >
+            <a href="#joinOurTeam" @click="smoothScroll"
+              class="inline-flex h-10 w-3/4 md:mx-auto md:w-fit items-center justify-center cursor-pointer select-none rounded-md bg-emerald-500 px-8 py-6 text-xl font-medium text-white shadow transition-colors hover:bg-emerald-500/80 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 duration-300">
               {{ $t('hero.button') }}
             </a>
           </div>
@@ -78,11 +70,8 @@ console.log(currentImageIndex)
           data-aos-delay="100"
         /> -->
         <div class="relative w-full h-[300px] sm:h-[400px] lg:h-[500px] overflow-hidden rounded-lg shadow-lg z-20">
-          <img
-            :src="images[currentImageIndex]"
-            alt="Carrusel"
-            class="mx-auto shadow-xl aspect-video overflow-hidden rounded-xl object-cover sm:w-full lg:order-last lg:aspect-square w-[550] h-[550] z-20"
-          />
+          <img :src="images[currentImageIndex]" alt="Carrusel"
+            class="mx-auto shadow-xl aspect-video overflow-hidden rounded-xl object-cover sm:w-full lg:order-last lg:aspect-square w-[550] h-[550] z-20" />
         </div>
 
       </div>
@@ -106,7 +95,7 @@ console.log(currentImageIndex)
   </section>
 </template>
 
-  <!-- 
+<!-- 
   <template>
     <section
       id="home"

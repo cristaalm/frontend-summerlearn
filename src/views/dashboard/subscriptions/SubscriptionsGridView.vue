@@ -91,7 +91,6 @@ onMounted(() => {
   loadAreasSub()
   loadPerformance()
 })
-console.log('actividadesSubscribed', performance.value)
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
 const fetchSubscribedChildren = (activityId) => {
@@ -279,8 +278,8 @@ const handleOpenModal = (activityId, activityNameValue) => {
 
   <!-- BEGIN: Modal Content -->
   <Dialog size="lg" :open="dialogStatusModalSubConfirm" @close="() => {
-      dialogStatusModalSubConfirm.value = false
-    }
+    dialogStatusModalSubConfirm.value = false
+  }
     ">
     <Dialog.Panel>
       <div class="p-8 text-center">
@@ -350,8 +349,8 @@ const handleOpenModal = (activityId, activityNameValue) => {
                 </div>
                 <div class="flex items-center mt-4">
                   <Button variant="secondary" @click="() => {
-                      close()
-                    }
+                    close()
+                  }
                     " class="w-32 ml-auto">
                     Cerrar
                   </Button>
@@ -397,16 +396,16 @@ const handleOpenModal = (activityId, activityNameValue) => {
                   </Menu.Button>
                   <Menu.Items class="w-40">
                     <Menu.Item class="dark:text-blue-300 text-blue" @click="() => {
-                        guardarId(actividad.id)
-                        openObjectiveModal(actividad.id)
-                      }
+                      guardarId(actividad.id)
+                      openObjectiveModal(actividad.id)
+                    }
                       ">
                       <Lucide icon="CheckCircle" class="w-4 h-4 mr-2 stroke-[1.3]" />
                       Ver objetivos
                     </Menu.Item>
                     <Menu.Item v-if="role === 4" class="dark:text-green-400 text-green" @click="() => {
-                        handleOpenModal(actividad.id, actividad.name)
-                      }
+                      handleOpenModal(actividad.id, actividad.name)
+                    }
                       ">
                       <Lucide icon="CheckCircle" class="w-4 h-4 mr-2 stroke-[1.3]" />
                       Ver suscritos
@@ -421,7 +420,7 @@ const handleOpenModal = (activityId, activityNameValue) => {
                         <span class="mt-px dark:text-slate-200 text-sm text-warning text-right">
                           <span
                             class="p-1 tracking-wide rounded leading-6 text-warning bg-yellow-50 dark:bg-yellow-500/20 dark:text-white border-warning/5">{{
-                            actividad.program_name }}</span>
+                              actividad.program_name }}</span>
                         </span>
                       </div>
                     </div>
@@ -432,7 +431,7 @@ const handleOpenModal = (activityId, activityNameValue) => {
                       <div class="flex items-center text-xs rounded-md px-1.5 py-px">
                         <span class="mt-px dark:text-slate-200 text-sm"><span
                             class="text-info p-1 tracking-wide rounded leading-6 border-success/5 bg-blue-50 dark:bg-blue-500/20 dark:text-white">{{
-                            actividad.area_name }}</span></span>
+                              actividad.area_name }}</span></span>
                       </div>
                     </div>
                   </div>
@@ -440,9 +439,9 @@ const handleOpenModal = (activityId, activityNameValue) => {
                     <div>Horario y días:</div>
                     <div class="ml-auto">
                       <a @click="() => {
-                          openSchedulesModalView(actividad.id)
-                          guardarId(actividad.id)
-                        }
+                        openSchedulesModalView(actividad.id)
+                        guardarId(actividad.id)
+                      }
                         " href="#"
                         class="text-sm whitespace-nowrap underline decoration-dotted decoration-slate-500/30 underline-offset-[3px] truncate w-40 md:w-52 block text-right">
                         Ver horario
@@ -460,9 +459,9 @@ const handleOpenModal = (activityId, activityNameValue) => {
                       <Button variant="outline-primary"
                         class="px-4 ml-auto border-primary/50 flex items-center dark:border-white dark:text-white"
                         @click="() => {
-                            openModalSubConfirm(actividad.id)
-                            guardarNombre(actividad.name)
-                          }
+                          openModalSubConfirm(actividad.id)
+                          guardarNombre(actividad.name)
+                        }
                           ">
                         <Lucide icon="UserPlus" class="stroke-[1.3] w-4 h-4 mr-2" />
                         Suscribirme

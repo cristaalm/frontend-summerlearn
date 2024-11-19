@@ -41,7 +41,6 @@ export const useMenuStore = defineStore('menu', {
 
       // Construir el menú dependiendo del rol
       let menuItems: Array<Menu | string> = []
-      console.log(status)
       if (status == 3) return []
       switch (role) {
         case 1:
