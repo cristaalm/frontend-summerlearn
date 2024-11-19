@@ -8,7 +8,7 @@ import { computed, inject, onMounted, watch } from 'vue'
 const props = defineProps({
   ModalGradesChild: Boolean,
   setModalGradesChild: Function,
-  infoChild: Object 
+  infoChild: Object
 })
 
 const { performance, loadingPerformance, errorPerformance, loadPerformance } = inject('performance')
@@ -18,8 +18,6 @@ onMounted(() => {
 })
 
 const grades = computed(() => {
-  console.log('props.infoChild:', props.infoChild);
-  console.log('performance.value:', performance.value);
 
   if (!performance.value || !props.infoChild?.id) {
     console.warn('performance.value o props.infoChild no están definidos correctamente');
@@ -27,10 +25,10 @@ const grades = computed(() => {
   }
 
   return performance.value
-    .filter(perf => perf.child?.id === props.infoChild.id) 
+    .filter(perf => perf.child?.id === props.infoChild.id)
     .map(perf => ({
-      activity: perf.activity?.name || 'Actividad desconocida', 
-      score: perf.value || 0 
+      activity: perf.activity?.name || 'Actividad desconocida',
+      score: perf.value || 0
     }));
 });
 
@@ -46,38 +44,32 @@ const closeModal = () => {
 
 
 <template>
-  <Dialog
-    size="xl"
-    :open="ModalGradesChild"
-    @close="closeModal"
-  >
+  <Dialog size="xl" :open="ModalGradesChild" @close="closeModal">
     <Dialog.Panel class="text-center flex flex-col">
       <!-- Encabezado del modal -->
       <div
-        class="flex flex-row px-10 py-5 justify-between items-center w-full dark:border-slate-600 border-slate-300 border-b"
-      >
+        class="flex flex-row px-10 py-5 justify-between items-center w-full dark:border-slate-600 border-slate-300 border-b">
         <h1 class="text-2xl font-bold text-black dark:text-slate-200">
           Información de {{ props.infoChild?.name || 'el niño' }}
         </h1>
-        <Lucide
-          icon="XCircle"
-          class="w-10 h-full text-danger cursor-pointer dark:text-red-500"
-          @click="closeModal"
-        />
+        <Lucide icon="XCircle" class="w-10 h-full text-danger cursor-pointer dark:text-red-500" @click="closeModal" />
       </div>
 
       <h2 class="text-2xl font-bold text-black dark:text-slate-200">Calificaciones</h2>
 
       <div class="flex flex-col">
         <div class="dark:border-slate-600 border-slate-300 border-b max-h-[70vh] overflow-y-auto scrollbar-custom">
-          <div class="flex flex-col md:flex-row justify-between py-5 my-5 sm:flex mx-5 px-5 rounded-lg dark:border-slate-600 border bg-theme-1/10 dark:bg-slate-700">
+          <div
+            class="flex flex-col md:flex-row justify-between py-5 my-5 sm:flex mx-5 px-5 rounded-lg dark:border-slate-600 border bg-theme-1/10 dark:bg-slate-700">
             <table class="table-auto w-full border-collapse">
               <thead>
                 <tr>
-                  <th class="text-center font-bold text-slate-700 dark:text-slate-200 border-b dark:border-slate-600 py-2">
+                  <th
+                    class="text-center font-bold text-slate-700 dark:text-slate-200 border-b dark:border-slate-600 py-2">
                     Actividad
                   </th>
-                  <th class="text-center font-bold text-slate-700 dark:text-slate-200 border-b dark:border-slate-600 py-2">
+                  <th
+                    class="text-center font-bold text-slate-700 dark:text-slate-200 border-b dark:border-slate-600 py-2">
                     Calificación
                   </th>
                 </tr>

@@ -31,6 +31,10 @@ export function useAuth() {
           router.push({ name: 'dashboard' })
         }, 3000)
       } else {
+        if (data.error == 'User is not active') {
+          error.value = 'Cuenta no activa'
+          return
+        }
         error.value = 'Correo electrónico o contraseña incorrectos'
       }
     } catch (e) {

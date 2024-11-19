@@ -2,9 +2,9 @@
   <div
     class="fixed top-0 right-0 sm:right-5 p-4 transition-opacity w-screen sm:w-fit duration-300 z-[2147483647] flex flex-col gap-3">
     <!-- Usamos transition-group para controlar las animaciones -->
-    <transition-group name="toast" tag="div" class="flex flex-col gap-3">
+    <transition-group name="toast" tag="div" class="flex flex-col gap-3 justify-end items-end max-w-[550px]">
       <div v-for="(toast, index) in toastMessages" :key="toast.id" ref="container" :class="[
-        'right-22 p-4 rounded shadow-lg transition-opacity duration-300 flex items-center gap-2 min-w-[350px] w-full sm:w-fit',
+        'right-22 p-4 rounded shadow-lg transition-opacity duration-300 flex items-center gap-2 min-w-[350px] w-full sm:w-fit max-w-[550px]',
         getToastTypeClass(toast.tipo),  // Aplicar la clase basada en el tipo de mensaje
         toast.moveClass
       ]">
@@ -12,7 +12,7 @@
         <component :is="getIconComponent(toast.tipo)" class="w-6 h-6" />
 
         <!-- Mensaje -->
-        <p>{{ toast.message }}</p>
+        <p class="break-words !max-w-[calc(100%-70px)]">{{ toast.message }}</p>
 
         <!-- Botón de cierre si el mensaje es persistente -->
         <button v-if="toast.persistente" @click="removeToast(toast.id)"
