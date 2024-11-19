@@ -1,3 +1,7 @@
+<script setup>
+import Alert from '@/components/base/Alert'
+</script>
+
 <template>
     <div
         class="bg-white dark:bg-[#28334e] w-full h-[calc(100vh-190px)] rounded-xl flex flex-col justify-center items-center dark:text-slate-200">

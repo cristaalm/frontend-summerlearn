@@ -160,7 +160,7 @@ export const useMenuStore = defineStore('menu', {
             'ACTIVIDADES DISPONIBLES',
             {
               icon: 'Notebook',
-              pageName: 'subscriptionsGrid',
+              pageName: 'dashboard',
               title: 'Suscripciones'
             },
             'GESTIÓN DE PROGRAMAS',

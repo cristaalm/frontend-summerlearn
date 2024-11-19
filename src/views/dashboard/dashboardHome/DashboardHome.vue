@@ -1,11 +1,11 @@
 <script setup>
 import InvalidAccount from './modules/InvalidAccount.vue'
 import DashboardHomeBenef from '@/views/dashboard/children/ChildrenViewBen.vue'
+import DashboardHomeVolun from '@/views/dashboard/subscriptions/SubscriptionsGridView.vue'
 import DashboardHomeDonor from '@/components/Dashboard/Home/Donor/DashboardHome.vue'
 import DashBoardHomeAdmin from '@/components/Dashboard/Home/Admin/DashboardHome.vue'
 import DashboardHomeCoord from '@/components/Dashboard/Home/Coord/DashboardHome.vue'
 import getIdByToken from '@/logic/getIdByToken'
-import Alert from '@/components/base/Alert'
 
 // Obtener el rol del usuario a partir del token
 const { rol: role, status } = getIdByToken(localStorage.getItem('access_token'))
@@ -22,6 +22,8 @@ const { rol: role, status } = getIdByToken(localStorage.getItem('access_token'))
   <DashboardHomeCoord v-else-if="role === 2" />
 
   <DashboardHomeDonor v-else-if="role === 3" />
+
+  <DashboardHomeVolun v-else-if="role === 4" />
 
   <DashboardHomeBenef v-else-if="role === 5" />
 
