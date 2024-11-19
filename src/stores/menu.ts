@@ -31,7 +31,7 @@ export const useMenuStore = defineStore('menu', {
     async loadMenu() {
       // Obtén el rol desde el token desencriptado
       const router = useRouter()
-      const role = getIdByTokenm(localStorage.getItem('access_token')).rol
+      const { rol: role, status } = getIdByTokenm(localStorage.getItem('access_token'))
 
       if (!role) {
         console.warn('No se pudo cargar el rol.')
@@ -41,6 +41,7 @@ export const useMenuStore = defineStore('menu', {
 
       // Construir el menú dependiendo del rol
       let menuItems: Array<Menu | string> = []
+      if (status == 3) return []
       switch (role) {
         case 1:
           menuItems = []
@@ -143,7 +144,7 @@ export const useMenuStore = defineStore('menu', {
             {
               icon: 'PiggyBank',
               pageName: 'donations',
-              title: 'Donaciones',
+              title: 'Donaciones'
             },
             'CONTACTOS',
             {

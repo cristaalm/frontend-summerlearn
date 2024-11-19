@@ -33,7 +33,7 @@ import { startTourAdmin, startTourCoord, startTourDonor } from '@/utils/tours/'
 // @ts-ignore
 import getIdByToken from '@/logic/getIdByToken';
 
-const { user_id: id, rol: role } = getIdByToken(localStorage.getItem('access_token'));
+const { user_id: id, rol: role, status } = getIdByToken(localStorage.getItem('access_token'));
 
 // @ts-ignore
 const showToast = inject('showToast');
@@ -248,7 +248,7 @@ async function againTour() {
           <Lucide icon="X" class="w-8 h-8 text-white dark:!text-slate-200" />
         </a>
       </div>
-      <div id="uno" :class="[
+      <div v-if="status != 3" id="uno" :class="[
         'h-full box bg-white/[0.95] darl:bg-slate-700 rounded-none xl:rounded-xl z-20 relative w-[275px] duration-300 transition-[width] group-[.side-menu--collapsed]:xl:w-[91px] group-[.side-menu--collapsed.side-menu--on-hover]:xl:shadow-[6px_0_12px_-4px_#0000000f] group-[.side-menu--collapsed.side-menu--on-hover]:xl:w-[275px] overflow-hidden flex flex-col'
       ]" @mouseover="(event) => {
         event.preventDefault()
@@ -404,9 +404,14 @@ async function againTour() {
             class="container flex items-center justify-between w-full h-full transition-[padding,background-color,border-color] ease-in-out duration-300 bg-transparent border-transparent shadow-none group-[.top-bar--active]:box group-[.top-bar--active]:px-5 group-[.top-bar--active]:bg-transparent group-[.top-bar--active]:border-transparent group-[.top-bar--active]:bg-gradient-to-r group-[.top-bar--active]:from-theme-1 group-[.top-bar--active]:to-theme-2">
             <!-- mostramos el nombre y el correo del usuario -->
             <div class="xl:flex flex-col gap-2 hidden">
-              <div class="text-white dark:text-slate-200 font-semibold text-lg">¡Hola, {{ user ? user.firstName : '' }} {{ user
-                ?
-                user.lastName : '' }} Nos alegra verte¡
+              <div class="text-white dark:text-slate-200 font-semibold text-lg">
+                ¡Hola,
+                <span class="italic mr-1">
+                  {{ user ? user.firstName : '' }}
+                </span>
+                <span class="italic">
+                  {{ user ? user.lastName : '' }}
+                </span>! Nos alegra verte.
               </div>
             </div>
             <div class="flex items-center gap-1 xl:hidden">

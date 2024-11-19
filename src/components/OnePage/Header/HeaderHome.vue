@@ -13,7 +13,7 @@ const changeColor = () => {
 
 const logoSrc = computed(() => {
   return color.value || !topScroll.value
-    ? '/2.png'
+    ? '/logo_letra_sinbg.png'
     : '/logo_completo.png'
 })
 

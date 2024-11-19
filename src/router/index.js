@@ -164,6 +164,7 @@ const router = createRouter({
 
           // Si la respuesta es exitosa, guarda el nuevo token de acceso y permite el acceso
           const data = await response.json()
+          localStorage.removeItem('access_token')
           localStorage.setItem('access_token', data.access)
 
           next() // Permite acceso
@@ -298,8 +299,8 @@ const router = createRouter({
           name: 'childrensBen',
           component: () =>
             import('@/views/dashboard/children/ChildrenViewBen.vue').catch(
-          () => import('@/views/dashboard/notFoundView/NotFoundView.vue')
-          )
+              () => import('@/views/dashboard/notFoundView/NotFoundView.vue')
+            )
         },
         {
           path: '/dashboard/childrens/add',
@@ -427,6 +428,7 @@ router.beforeEach(async (to, from, next) => {
 
         if (response.ok) {
           const data = await response.json()
+          localStorage.removeItem('access_token')
           localStorage.setItem('access_token', data.access) // Guardar el nuevo token de acceso
 
           // Si el refresco del token es exitoso, redirigir al dashboard

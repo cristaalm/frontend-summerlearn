@@ -86,6 +86,7 @@ onMounted(() => {
                         <option :value="null">Todos</option>
                         <option :value="1">Activo</option>
                         <option :value="2">Inactivo</option>
+                        <option :value="4">Rechazado</option>
                       </FormSelect>
                     </div>
                     <div>
@@ -148,7 +149,7 @@ onMounted(() => {
                     Rol
                   </Table.Td>
                   <Table.Td
-                    class="w-5 py-4 font-medium border-t bg-slate-50 dark:bg-transparent border-slate-200/60 text-slate-500 dark:text-slate-200">
+                    class="w-5 py-4 font-medium border-t bg-slate-50 dark:bg-transparent border-slate-200/60 text-slate-500 dark:text-slate-200 text-center">
                     Estado
                   </Table.Td>
                   <Table.Td
@@ -231,15 +232,37 @@ onMounted(() => {
                         { 'text-danger dark:text-red-400': user.status !== 1 },
                         { 'text-[#FFA500] dark:text-[#ffb941]': user.status == 0 }
                       ]">
-                        <Lucide v-if="user.status == 1 || user.status == 2" icon="Database"
-                          class="w-3.5 h-3.5 stroke-[1.7] dark:stroke-current" />
-                        <div class="ml-1.5 whitespace-nowrap max-h-8 flex flex-row items-center justify-center gap-2">
-                          <div class="w-4 h-4" v-if="user.status == 0">
-                            <LoadingIcon icon="bars" class="w-8 h-8" customClass="fill-[#FFA500] dark:fill-[#ffb941]" />
+                        <div
+                          class="ml-1.5 whitespace-nowrap w-full h-full flex flex-row items-center justify-center gap-2">
+
+
+                          <div
+                            class="bg-warning/20 rounded-lg my-auto py-1 px-5 min-w-[115px] flex flex-row justify-center"
+                            v-if="user.status == 0">
+                            <div class="h-5 w-8">
+                              <LoadingIcon icon="three-dots" class="w-8 h-2"
+                                customClass="fill-[#FFA500] dark:fill-[#ffb941]" color="yellow" />
+                            </div>
                           </div>
-                          <span v-if="user.status == 0" class="text-amber-500 dark:text-[#ffb941]">Cambiando....</span>
-                          <span v-else-if="user.status == 1" class="text-success dark:text-green-400">Activo</span>
-                          <span v-else class="text-danger dark:text-red-400">Inactivo</span>
+                          <span v-else-if="user.status == 1"
+                            class="bg-success/20 flex flex-row  justify-center items-center gap-2 min-w-[115px] rounded-lg my-auto py-1 px-5 text-success dark:text-green-400">
+                            <Lucide icon="Database" class="w-3.5 h-3.5 stroke-[1.7] dark:stroke-current" />
+                            Activo
+                          </span>
+
+                          <!-- rechazado -->
+                          <span v-else-if="user.status == 4"
+                            class="bg-danger/20 flex flex-row  justify-center items-center gap-2 min-w-[115px] rounded-lg my-auto py-1 px-5 text-danger dark:text-red-400">
+                            <Lucide icon="Database" class="w-3.5 h-3.5 stroke-[1.7] dark:stroke-current" />
+                            Rechazado
+                          </span>
+
+                          <span v-else
+                            class="bg-orange-500/10 flex flex-row  justify-center items-center gap-2 min-w-[115px] rounded-lg my-auto py-1 px-5 text-orange dark:text-orange-400">
+                            <Lucide icon="Database" class="w-3.5 h-3.5 stroke-[1.7] dark:stroke-current" />
+                            Inactivo
+                          </span>
+
                         </div>
                       </div>
                     </Table.Td>
@@ -266,7 +289,7 @@ onMounted(() => {
                             </Menu.Item>
 
                             <Menu.Item v-if="user.id !== currentUser.id"
-                              :class="`${user.status == 1 ? 'text-blue dark:text-blue-400' : user.status == 2 ? 'text-[#ff6f0f] dark:text-[#ff6f0f]' : 'text-slate-800 dark:text-slate-400'} flex flex-row justify-center items-center`"
+                              :class="`${user.status == 0 ? 'text-slate-800 dark:text-slate-400' : user.status == 4 ? ' text-success dark:text-green-500' : 'text-blue dark:text-blue-400'} flex flex-row justify-center items-center`"
                               @click="() => {
                                 updateStatus({ user }).then((updatedUser) => {
                                   const index = users.findIndex((u) => u.id == updatedUser.id)
@@ -276,8 +299,11 @@ onMounted(() => {
                                 })
                               }
                                 ">
-                              <Lucide icon="RefreshCw" class="w-4 h-4 mr-2 dark:stroke-current" />
-                              Cambiar Estado
+                              <Lucide v-if="user.status != 4" icon="RefreshCw"
+                                class="w-4 h-4 mr-2 dark:stroke-current" />
+                              <Lucide v-else icon="CheckCircle"
+                                class="w-4 h-4 mr-2 stroke-success dark:stroke-green-500" />
+                              {{ user.status == 4 ? 'Aprobar usuario' : ' Cambiar estado' }}
                             </Menu.Item>
 
                             <Menu.Item class="text-warning dark:text-yellow-500" v-if="user.id === currentUser.id"
