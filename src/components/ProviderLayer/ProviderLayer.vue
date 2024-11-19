@@ -56,10 +56,6 @@ if (role === 1 && status != 3) {
   provide('roles', { roles, loadingRoles, loadRoles })
   onMounted(() => loadRoles())
 
-  const { usersRequest, loadingUsersRequest, loadUsersRequest } = useUserRequest()
-  provide('usersRequest', { usersRequest, loadingUsersRequest, loadUsersRequest })
-  onMounted(() => loadUsersRequest())
-
   const { bills, loadingBills, loadBills } = useBills()
   provide('bills', { bills, loadingBills, loadBills })
   onMounted(() => loadBills())
@@ -94,6 +90,12 @@ if (role === 2 && status != 3) {
   loadings.push(loadingLastProgramsUnasigned)
   provide('lastProgramsUnasigned', { lastProgramsUnasigned, loadingLastProgramsUnasigned, loadLastProgramsUnasigned, errorLastProgramsUnasigned })
   onMounted(() => loadLastProgramsUnasigned())
+}
+
+if ((role === 1 || role === 2) && status != 3) {
+  const { usersRequest, loadingUsersRequest, loadUsersRequest } = useUserRequest()
+  provide('usersRequest', { usersRequest, loadingUsersRequest, loadUsersRequest })
+  onMounted(() => loadUsersRequest())
 }
 
 if ((role === 4 || role == 5) && status != 3) {
