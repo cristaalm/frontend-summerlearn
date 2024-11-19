@@ -11,7 +11,8 @@ export function useStatusUser() {
 
     //? ############# Change Status #############
 
-    userRef.status = userRef.status == 1 ? 2 : 1
+    userRef.status = userRef.status == 4 ? 2 : userRef.status // si es rechazado lo paso a inactivo
+    userRef.status = userRef.status == 1 ? 2 : 1 // si es activo lo paso a inactivo y viceversa
 
     //? ############# Fetching Data #############
 

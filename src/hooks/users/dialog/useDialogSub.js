@@ -21,14 +21,14 @@ export function useDialog({ usersRequest }) {
       if (statusId.value === 'accept') {
         result = await changeStatus(userIdSub.value, 1)
       } else if (statusId.value === 'reject') {
-        result = await deleteUser(userIdSub.value)
+        result = await changeStatus(userIdSub.value, 4)
       }
 
       if (result) {
         usersRequest.value = usersRequest.value.filter((user) => user.id !== userIdSub.value)
-        showToast({ message: 'Acción realizada exitosamente.', type: 'success' })
+        showToast({ message: 'Se hacambiado el estado del usuario.', type: 'success' })
       } else {
-        showToast({ message: 'Error al realizar la acción.', type: 'error' })
+        showToast({ message: 'Error al cambiar el estado del usuario.', type: 'error' })
       }
 
       dialogStatusModal.value = false
