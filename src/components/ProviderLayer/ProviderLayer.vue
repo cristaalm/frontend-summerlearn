@@ -126,10 +126,6 @@ if ((role === 1 || role === 2 || role === 5) && status != 3) {
   provide('programs', { programs, loadingPrograms, loadPrograms })
   onMounted(() => loadPrograms())
 
-  const { areas, loadingAreas, loadAreas } = useAreas()
-  provide('areas', { areas, loadingAreas, loadAreas })
-  onMounted(() => loadAreas())
-
   const { grades, loadingGrades, errorGrades, loadGrades } = useGrades()
   provide('grades', { grades, loadingGrades, errorGrades, loadGrades })
   onMounted(() => loadGrades())
@@ -152,12 +148,14 @@ if ((role === 1 || role === 2 || role === 4 || role === 5) && status != 3) {
   const { performance, loadingPerformance, loadPerformance, errorPerformance } = usePerformance()
   provide('performance', { performance, loadingPerformance, loadPerformance, errorPerformance })
   onMounted(() => loadPerformance())
-}
 
-if ((role === 1 || role === 2 || role === 4 || role === 5) && status != 3) {
   const { programas, loadingProgram, loadProgram } = useProgramsActividades()
   provide('programasActivosActividades', { programas, loadingProgram, loadProgram })
   onMounted(() => loadProgram())
+
+  const { areas, loadingAreas, loadAreas } = useAreas()
+  provide('areas', { areas, loadingAreas, loadAreas })
+  onMounted(() => loadAreas())
 }
 
 import { useUserPhoto, useUser } from '@/hooks/settings/'
