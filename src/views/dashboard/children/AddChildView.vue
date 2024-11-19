@@ -10,7 +10,7 @@ import { useValidationImage } from '@/hooks/childrens/addChildren/useValidationI
 import { useValidationAddChildren } from '@/hooks/childrens/addChildren/useValidationAddChildren'
 import { useSetChildren } from '@/hooks/childrens/addChildren/useSetChildren'
 import { FormSelect } from '@/components/base/Form'
-import { inject, onMounted } from 'vue'
+  import { inject, onMounted } from 'vue'
 
 const { grades, loadingGrades, errorGrades, loadGrades } = inject('grades')
 const { validate, valid, status, name, birthdate, curp, validateInputCurp, resetFields, validateAll } = useValidationAddChildren()
@@ -202,11 +202,9 @@ onMounted(() => {
                 </div>
               </div>
             </div>
-          </div>
+          
 
-          <div
-              class="flex-col block pt-5 mt-5 xl:items-center sm:flex xl:flex-row first:mt-0 first:pt-0"
-            >
+          <div class="flex-col block pt-5 mt-5 xl:items-center sm:flex xl:flex-row first:mt-0 first:pt-0">
               <label class="inline-block mb-2 sm:mb-0 sm:mr-5 sm:text-right xl:w-60 xl:mr-14">
                 <div class="text-left">
                   <div class="flex items-center">
@@ -257,7 +255,7 @@ onMounted(() => {
                                 </div> -->
               </div>
             </div>
-
+          </div>
           <!--? ######################### BOTON DE REGISTRO ######################### -->
 
           <div class="flex py-5 border-t md:justify-end px-7 border-slate-200/80 dark:border-slate-600">

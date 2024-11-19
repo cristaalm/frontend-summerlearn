@@ -88,15 +88,15 @@ const closeModal = () => {
                   :key="index"
                   class="odd:bg-gray-300 even:bg-white dark:odd:bg-slate-800 dark:even:bg-slate-700"
                 >
-                  <td class="border-t border-slate-200/60 dark:border-slate-700 py-2">
+                  <td class="border-t border-slate-200/60 dark:border-slate-700 py-2  text-black dark:text-slate-200">
                     {{ grades.activity }}
                   </td>
-                  <td class="border-t border-slate-200/60 dark:border-slate-700 py-2">
+                  <td class="border-t border-slate-200/60 dark:border-slate-700 py-2  text-black dark:text-slate-200">
                     {{ grades.score }}/ {{ notaMax }}
                   </td>
                 </tr>
                 <tr v-if="grades.length === 0">
-                  <td colspan="2" class="text-center text-slate-500 py-4">
+                  <td colspan="2" class="text-center text-black dark:text-slate-200 py-4">
                     No hay calificaciones disponibles para este niño.
                   </td>
                 </tr>

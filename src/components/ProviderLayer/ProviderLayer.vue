@@ -152,7 +152,7 @@ if (role === 5 || role == 1 || role == 4) {
   onMounted(() => loadChildrens())
 }
 
-if (role === 1 || role === 2) {
+if (role === 1 || role === 2 || role === 5) {
   const { users, loadingUsers, loadUsers } = useUsers()
   provide('users', { users, loadingUsers, loadUsers })
   onMounted(() => loadUsers())

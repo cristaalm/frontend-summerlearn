@@ -22,6 +22,9 @@ import getPayloadByToken from '@/logic/getIdByToken'
 
 const { rol: currentUserRol } = getPayloadByToken(localStorage.getItem('access_token'))
 const { performance, loadingPerformance, errorPerformance, loadPerformance } = inject('performance')
+const { childrens, loadingChildrens, errorChildrens, loadChildrens } = inject('childrens')
+const { areas, loadingAreas, errorAreas, loadAreas } = inject('areas')
+const { programs, loadingPrograms, errorPrograms, loadPrograms } = inject('programs')
 const { searchQuery, selectedStatus, filteredItems, activeFilters } = useFilter(performance)
 const { currentPage, pageSize, totalPages, paginatedItems, changePage, changePageSize } = usePagination(filteredItems)
 const { dialogStatusDelete, openDeleteModal, confirmDeleteProgram, closeDeleteProgram } = useDialogDelete({ performance })
@@ -105,6 +108,9 @@ const saveAllHandler = async () => {
 
 // Cargar datos y asignar valores a `nota` y `valid`
 onMounted(() => {
+  loadAreas()
+  loadChildrens()
+  loadPrograms()
   loadPerformance().then(() => {
     if (performance.value) {
       performance.value.forEach((item) => {
