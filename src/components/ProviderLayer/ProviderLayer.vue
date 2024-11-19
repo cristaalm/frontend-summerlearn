@@ -22,14 +22,14 @@ import getIdByToken from '@/logic/getIdByToken'
 import { useActividadesSubscribed } from '@/hooks/subscriptions/'
 import { useChildrens } from '@/hooks/childrens/'
 
-const { rol: role } = getIdByToken(localStorage.getItem('access_token'))
+const { rol: role, status } = getIdByToken(localStorage.getItem('access_token'))
 const isLoading = ref(true)
 const animate = ref(false)
 const endLoad = ref(false)
 // Declaración de los estados de carga
 let loadings = []
 
-if (role === 1) {
+if (role === 1 && status != 3) {
   const showToast = inject('showToast')
 
   const { countUsers, loadingCountUsers, loadCountUsers } = useCountUsers()
@@ -79,71 +79,36 @@ if (role === 1) {
   })
 }
 
-if (role === 2) {
+if (role === 2 && status != 3) {
   const { lastActivities, loadingLastActivities, loadLastActivities, errorLastActivities } =
     useLastActivities()
   loadings.push(loadingLastActivities)
-  provide('lastActivities', {
-    lastActivities,
-    loadingLastActivities,
-    loadLastActivities,
-    errorLastActivities
-  })
+  provide('lastActivities', { lastActivities, loadingLastActivities, loadLastActivities, errorLastActivitie })
   onMounted(() => loadLastActivities())
 
-  const {
-    lastProgramsAsigned,
-    loadingLastProgramsAsigned,
-    loadLastProgramsAsigned,
-    errorLastProgramsAsigned
-  } = useLastProgramsAsigned()
+  const { lastProgramsAsigned, loadingLastProgramsAsigned, loadLastProgramsAsigned, errorLastProgramsAsigned } = useLastProgramsAsigned()
   loadings.push(loadingLastProgramsAsigned)
-  provide('lastProgramsAsigned', {
-    lastProgramsAsigned,
-    loadingLastProgramsAsigned,
-    loadLastProgramsAsigned,
-    errorLastProgramsAsigned
-  })
+  provide('lastProgramsAsigned', { lastProgramsAsigned, loadingLastProgramsAsigned, loadLastProgramsAsigned, errorLastProgramsAsigned })
   onMounted(() => loadLastProgramsAsigned())
 
-  const {
-    lastProgramsUnasigned,
-    loadingLastProgramsUnasigned,
-    loadLastProgramsUnasigned,
-    errorLastProgramsUnasigned
-  } = useLastProgramsUnasigned()
+  const { lastProgramsUnasigned, loadingLastProgramsUnasigned, loadLastProgramsUnasigned, errorLastProgramsUnasigned } = useLastProgramsUnasigned()
   loadings.push(loadingLastProgramsUnasigned)
-  provide('lastProgramsUnasigned', {
-    lastProgramsUnasigned,
-    loadingLastProgramsUnasigned,
-    loadLastProgramsUnasigned,
-    errorLastProgramsUnasigned
-  })
+  provide('lastProgramsUnasigned', { lastProgramsUnasigned, loadingLastProgramsUnasigned, loadLastProgramsUnasigned, errorLastProgramsUnasigned })
   onMounted(() => loadLastProgramsUnasigned())
 }
 
-if (role === 4 || role == 5) {
+if ((role === 4 || role == 5) && status != 3) {
   const { areasSub, loadingSub, errorSub, loadAreasSub } = useAreasInSubs()
   loadings.push(loadingSub)
   provide('areasInSubs', { areasSub, loadingSub, errorSub, loadAreasSub })
   onMounted(() => loadAreasSub())
 
-  const {
-    actividadesSubscribed,
-    loadingActividadesSubscribed,
-    errorActividadesSubscribed,
-    loadActividadesSubscribed
-  } = useActividadesSubscribed()
+  const { actividadesSubscribed, loadingActividadesSubscribed, errorActividadesSubscribed, loadActividadesSubscribed } = useActividadesSubscribed()
   loadings.push(loadingActividadesSubscribed)
-  provide('actividadesSubscribed', {
-    actividadesSubscribed,
-    loadingActividadesSubscribed,
-    errorActividadesSubscribed,
-    loadActividadesSubscribed
-  })
+  provide('actividadesSubscribed', { actividadesSubscribed, loadingActividadesSubscribed, errorActividadesSubscribed, loadActividadesSubscribed })
   onMounted(() => loadActividadesSubscribed())
 }
-if (role === 5 || role == 1 || role == 4) {
+if ((role === 5 || role == 1 || role == 4) && status != 3) {
   const { childrens, loadingChildrens, errorChildrens, loadChildrens } = useChildrens()
   if (role === 5) {
     loadings.push(loadingChildrens)
@@ -152,7 +117,7 @@ if (role === 5 || role == 1 || role == 4) {
   onMounted(() => loadChildrens())
 }
 
-if (role === 1 || role === 2) {
+if ((role === 1 || role === 2) && status != 3) {
   const { users, loadingUsers, loadUsers } = useUsers()
   provide('users', { users, loadingUsers, loadUsers })
   onMounted(() => loadUsers())
@@ -174,38 +139,22 @@ if (role === 1 || role === 2) {
   onMounted(() => loadActivities())
 }
 
-if (role === 3 || role === 1) {
-  const {
-    graphicDonations,
-    barDonations,
-    donations,
-    loadingDonations,
-    errorDonations,
-    loadDonations,
-    deleteDonation
-  } = useDonations()
+if ((role === 3 || role === 1) && status != 3) {
+  const { graphicDonations, barDonations, donations, loadingDonations, errorDonations, loadDonations, deleteDonation } = useDonations()
   if (role === 3) {
     loadings.push(loadingDonations)
   }
-  provide('donations', {
-    graphicDonations,
-    barDonations,
-    donations,
-    loadingDonations,
-    errorDonations,
-    loadDonations,
-    deleteDonation
-  })
+  provide('donations', { graphicDonations, barDonations, donations, loadingDonations, errorDonations, loadDonations, deleteDonation })
   onMounted(() => loadDonations())
 }
 
-if (role === 1 || role === 2 || role === 4 || role === 5) {
+if ((role === 1 || role === 2 || role === 4 || role === 5) && status != 3) {
   const { performance, loadingPerformance, loadPerformance, errorPerformance } = usePerformance()
   provide('performance', { performance, loadingPerformance, loadPerformance, errorPerformance })
   onMounted(() => loadPerformance())
 }
 
-if (role === 1 || role === 2 || role === 4 || role === 5) {
+if ((role === 1 || role === 2 || role === 4 || role === 5) && status != 3) {
   const { programas, loadingProgram, loadProgram } = useProgramsActividades()
   provide('programasActivosActividades', { programas, loadingProgram, loadProgram })
   onMounted(() => loadProgram())
@@ -226,35 +175,9 @@ onMounted(() => {
 // ? ############################ SOCKET ############################
 
 import { useWebSocket } from '@/hooks/chat'
-const {
-  mountedSocket,
-  unmountedSocket,
-  chats,
-  messages,
-  loadingChats,
-  loadingMessages,
-  newMessage,
-  sendMessage,
-  isTyping,
-  loadingSendMessage,
-  changeSeen,
-  contacts,
-  loadingContacts
-} = useWebSocket()
+const { mountedSocket, unmountedSocket, chats, messages, loadingChats, loadingMessages, newMessage, sendMessage, isTyping, loadingSendMessage, changeSeen, contacts, loadingContacts } = useWebSocket()
+provide('socket', { chats, messages, loadingChats, loadingMessages, newMessage, sendMessage, isTyping, loadingSendMessage, changeSeen, contacts, loadingContacts })
 
-provide('socket', {
-  chats,
-  messages,
-  loadingChats,
-  loadingMessages,
-  newMessage,
-  sendMessage,
-  isTyping,
-  loadingSendMessage,
-  changeSeen,
-  contacts,
-  loadingContacts
-})
 onMounted(() => {
   mountedSocket()
 })
@@ -286,10 +209,8 @@ provide('isLoading', { isLoading })
 </script>
 
 <template>
-  <div
-    v-if="isLoading || animate"
-    :class="`min-w-[100vw] min-h-[100vh] fixed z-[999999999] flex justify-center items-center bg-gray-100 dark:bg-[#28334e] ${animate ? 'animate-provider-out' : ''}`"
-  >
+  <div v-if="isLoading || animate"
+    :class="`min-w-[100vw] min-h-[100vh] fixed z-[999999999] flex justify-center items-center bg-gray-100 dark:bg-[#28334e] ${animate ? 'animate-provider-out' : ''}`">
     <div class="flex flex-col items-center gap-10">
       <h1 class="text-4xl font-bold text-gray-800 dark:text-white">
         Bienvenido a tu panel de control
