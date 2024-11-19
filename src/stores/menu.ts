@@ -182,7 +182,7 @@ export const useMenuStore = defineStore('menu', {
             'MI(S) HIJO(S)',
             {
               icon: 'BookUser',
-              pageName: 'childrensBen',
+              pageName: 'dashboard',
               title: 'Hijos'
             },
             'GESTIÓN DE PROGRAMAS',
