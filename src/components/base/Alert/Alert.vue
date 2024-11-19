@@ -78,7 +78,7 @@ const show = ref<boolean>(true)
 // Main Colors
 const primary = [
   'bg-primary border-primary text-white', // Default
-  'dark:border-primary' // Dark
+  'dark:bg-darkmode-800 dark:border-transparent dark:text-slate-300' // Dark mode
 ]
 const secondary = [
   'bg-secondary/70 border-secondary/70 text-slate-500', // Default
@@ -86,19 +86,19 @@ const secondary = [
 ]
 const success = [
   'bg-success border-success text-slate-900', // Default
-  'dark:border-success' // Dark mode
+  'dark:bg-success dark:border-transparent dark:text-slate-300' // Dark mode
 ]
 const warning = [
   'bg-warning border-warning text-slate-900', // Default
-  'dark:border-warning' // Dark mode
+  'dark:bg-warning dark:border-transparent dark:text-slate-300' // Dark mode
 ]
 const pending = [
   'bg-pending border-pending text-white', // Default
-  'dark:border-pending' // Dark mode
+  'dark:bg-pending dark:border-transparent dark:text-slate-300' // Dark mode
 ]
 const danger = [
   'bg-danger border-danger text-white', // Default
-  'dark:border-danger' // Dark mode
+  'dark:bg-danger dark:border-transparent dark:text-slate-300' // Dark mode
 ]
 const dark = [
   'bg-dark border-dark text-white', // Default
@@ -107,31 +107,31 @@ const dark = [
 
 // Outline
 const outlinePrimary = [
-  'border-primary text-primary', // Default
-  'dark:border-primary' // Dark mode
+  'border-primary text-primary bg-primary/10', // Default
+  'dark:border-primary dark:bg-primary/10 dark:text-slate-400' // Dark mode
 ]
 const outlineSecondary = [
-  'border-secondary text-slate-500', // Default
-  'dark:border-darkmode-100/40 dark:text-slate-300' // Dark mode
+  'border-secondary text-slate-900 bg-secondary', // Default
+  'dark:border-darkmode-100 dark:text-slate-300 dark:bg-darkmode-500' // Dark mode
 ]
 const outlineSuccess = [
-  'border-success text-success dark:border-success', // Default
-  'dark:border-success' // Dark mode
+  'border-success text-success bg-success/10', // Default
+  'dark:border-success dark:bg-success/10 dark:text-slate-400' // Dark mode
 ]
 const outlineWarning = [
-  'border-warning text-warning', // Default
-  'dark:border-warning' // Dark mode
+  'border-warning text-warning bg-warning/10', // Default
+  'dark:border-warning dark:bg-warning/10 dark:text-slate-400' // Dark mode
 ]
 const outlinePending = [
-  'border-pending text-pending', // Default
-  'dark:border-pending' // Dark mode
+  'border-pending text-pending bg-pending/10', // Default
+  'dark:border-pending dark:bg-pending/10 dark:text-slate-400' // Dark mode
 ]
 const outlineDanger = [
-  'border-danger text-danger', // Default
-  'dark:border-danger' // Dark mode
+  'border-danger text-danger bg-danger/10', // Default
+  'dark:border-danger dark:bg-danger/10 dark:text-slate-400' // Dark mode
 ]
 const outlineDark = [
-  'border-dark text-dark', // Default
+  'border-dark text-dark bg-dark/10', // Default
   'dark:border-darkmode-800 dark:text-slate-300' // Dark mode
 ]
 
