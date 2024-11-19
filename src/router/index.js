@@ -247,18 +247,10 @@ const router = createRouter({
             )
         },
         {
-          path: '/dashboard/activities/book_volunteer',
-          name: 'book_volunteer',
+          path: '/dashboard/activities/programsActivities',
+          name: 'programsActivities',
           component: () =>
-            import('@/views/dashboard/activities/book/BookVolunteer.vue').catch(
-              () => import('@/views/dashboard/notFoundView/NotFoundView.vue')
-            )
-        },
-        {
-          path: '/dashboard/activities/book_son',
-          name: 'book_son',
-          component: () =>
-            import('@/views/dashboard/activities/book/BookSon.vue').catch(
+            import('@/views/dashboard/activities/ProgramsActivities.vue').catch(
               () => import('@/views/dashboard/notFoundView/NotFoundView.vue')
             )
         },
