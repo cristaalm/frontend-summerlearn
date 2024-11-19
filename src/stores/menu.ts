@@ -165,11 +165,6 @@ export const useMenuStore = defineStore('menu', {
             },
             'GESTIÓN DE PROGRAMAS',
             {
-              icon: 'BookMarked',
-              pageName: 'book_volunteer',
-              title: 'Diario'
-            },
-            {
               icon: 'BarChartBig',
               pageName: 'performance',
               title: 'Desempeño'
@@ -194,12 +189,7 @@ export const useMenuStore = defineStore('menu', {
             {
               icon: 'BookMarked',
               pageName: 'book_son',
-              title: 'Diario'
-            },
-            {
-              icon: 'BarChartBig',
-              pageName: 'performance_view',
-              title: 'Desempeño'
+              title: 'Programas'
             },
             'CONTACTOS',
             {

@@ -80,10 +80,9 @@ if (role === 1 && status != 3) {
 }
 
 if (role === 2 && status != 3) {
-  const { lastActivities, loadingLastActivities, loadLastActivities, errorLastActivities } =
-    useLastActivities()
+  const { lastActivities, loadingLastActivities, loadLastActivities, errorLastActivities } = useLastActivities()
   loadings.push(loadingLastActivities)
-  provide('lastActivities', { lastActivities, loadingLastActivities, loadLastActivities, errorLastActivitie })
+  provide('lastActivities', { lastActivities, loadingLastActivities, loadLastActivities, errorLastActivities })
   onMounted(() => loadLastActivities())
 
   const { lastProgramsAsigned, loadingLastProgramsAsigned, loadLastProgramsAsigned, errorLastProgramsAsigned } = useLastProgramsAsigned()
