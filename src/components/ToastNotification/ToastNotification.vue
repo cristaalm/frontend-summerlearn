@@ -69,9 +69,6 @@ const removeToast = (id) => {
   }
 }
 
-// mensajes de prueba
-showToast({ message: 'Mensaje de informaciónaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', tipo: 'info', persistente: true })
-
 provide('showToast', showToast)
 
 // Función para determinar la clase según el tipo de mensaje
