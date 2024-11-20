@@ -1,5 +1,5 @@
 import { startTourAdmin } from './tourAdmin'
 import { startTourCoord } from './tourCoord'
 import { startTourDonor } from './tourDonations'
-
-export { startTourAdmin, startTourCoord, startTourDonor }
+import { startTourVolun } from './tourVoluntaries'
+export { startTourAdmin, startTourCoord, startTourDonor, startTourVolun }
