@@ -85,10 +85,6 @@ onMounted(() => {
                         Aumente su rendimiento
                       </div>
                     </div>
-                    <a class="flex items-center font-medium text-black dark:text-slate-200" href="">
-                      Actualizar ahora
-                      <Lucide icon="MoveRight" class="w-4 h-4 ml-1.5" />
-                    </a>
                   </div>
                 </div>
               </TinySlider>
@@ -97,7 +93,8 @@ onMounted(() => {
 
           <!--? Card -->
 
-          <div class="flex flex-col col-span-12 p-5 md:col-span-6 2xl:col-span-6 box box--stacked" id="estadisticasDonaciones">
+          <div class="flex flex-col col-span-12 p-5 md:col-span-6 2xl:col-span-6 box box--stacked"
+            id="estadisticasDonaciones">
             <div class="pb-5 mb-5 border-b border-dashed border-slate-300/70">
               <div class="text-base text-slate-500  dark:text-slate-200" v-if="!loadingDonations">Donación semanal</div>
               <div class="flex items-center mt-1">
