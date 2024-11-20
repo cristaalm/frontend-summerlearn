@@ -27,7 +27,7 @@ const grades = computed(() => {
     .filter(perf => perf.child?.id === props.infoChild.id)
     .map(perf => ({
       activity: perf.activity?.name || 'Actividad desconocida',
-      score: perf.value || 0
+      score: perf.value || '__ '
     }));
 });
 
