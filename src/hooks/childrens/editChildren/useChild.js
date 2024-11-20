@@ -36,6 +36,7 @@ export function useChild() {
       formData.append('children_name', newChild.name)
       formData.append('children_birthdate', birthdateFormat)
       formData.append('children_curp', newChild.curp)
+      formData.append('children_grade', newChild.grade)
 
       // Añadir la imagen si existe, de lo contrario usar un avatar por defecto
       if (newChild.photo.value) {
@@ -69,6 +70,7 @@ export function useChild() {
       child.photo = data.children_photo
       child.birthdate = data.children_birthdate
       child.curp = data.children_curp
+      child.grade = data.children_grade
       setModalEditChild({ open: false })
       showToast({ message: 'Información del niño actualizada corractamente.', type: 'success' })
       loadChildrens()
