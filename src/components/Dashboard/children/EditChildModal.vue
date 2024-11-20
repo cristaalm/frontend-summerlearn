@@ -7,8 +7,8 @@ import Button from '@/components/base/Button'
 import Lucide from '@/components/base/Lucide'
 import Litepicker from '@/components/base/Litepicker'
 import { watch, computed, inject } from 'vue'
-import { useValidationImage } from '@/hooks/childrens/addChildren/useValidationImage'
-import { useValidationAddChildren } from '@/hooks/childrens/addChildren/useValidationAddChildren'
+import { useValidationImage } from '@/hooks/childrens/editChildren/useValidationImage'
+import { useValidationEditChildren } from '@/hooks/childrens/editChildren/useValidationEditChildren'
 import { Baseurl } from '@/utils/global'
 
 // obtenemos las props del componente padre
@@ -25,7 +25,7 @@ function formatDateToDDMMYYYY(dateString) {
 }
 
 const { grades, loadingGrades, errorGrades, loadGrades } = inject('grades')
-const { validate, valid, status, name, birthdate, curp, grade, validateInputCurp, validateGrade, resetFields, validateAll, setValueTrueAll } = useValidationAddChildren()
+const { validate, valid, status, name, birthdate, curp, validateInputCurp, resetFields, validateAll, setValueTrueAll } = useValidationEditChildren()
 const { profileImage, errorMessagePhoto, validateImage, triggerFileSelect, resetImage, setInitialValue, imageFile, isChangeImage } = useValidationImage({ status, validateAll })
 const { updateChild, loadingEditChild } = useChild()
 
@@ -35,8 +35,7 @@ const isChange = computed(() => {
     name.value !== props.infoChild.name ||
     birthdate.value !== formatDateToDDMMYYYY(props.infoChild.birthdate) ||
     curp.value !== props.infoChild.curp ||
-    isChangeImage.value ||
-    grade.value !== props.infoChild.grade.id
+    isChangeImage.value
   )
 })
 
@@ -51,9 +50,6 @@ watch(
 
       curp.value = newVal.curp
       validate({ target: { value: curp.value } }, 'curp')
-
-      grade.value = newVal.grade.id
-      validateGrade()
 
       profileImage.value = newVal.photo
       setInitialValue(newVal.photo)
@@ -74,7 +70,6 @@ const handleUpdateChild = () => {
     name: name.value,
     birthdate: birthdate.value,
     curp: curp.value,
-    grade: grade.value,
     photo: imageFile
   }
   updateChild({
@@ -237,49 +232,6 @@ const handleUpdateChild = () => {
                     " />
               <div class="mt-1 text-xs text-red-500 h-4">
                 {{ status.curp.message }}
-              </div>
-            </div>
-          </div>
-
-          <!-- ? ################################# GRADO ESCOLAR ######################################## ? -->
-
-          <div
-            class="flex-col block py-5 my-5 sm:flex mx-5 px-5 rounded-lg dark:border-slate-600 border bg-theme-1/10 dark:bg-slate-700">
-            <label class="inline-block mb-2 sm:mb-0 sm:mr-5 sm:text-right xl:w-60 xl:mr-14">
-              <div class="text-left">
-                <div class="flex items-center">
-                  <div class="font-medium dark:text-slate-200">Escolaridad</div>
-                </div>
-                <div class="mt-1.5 xl:mt-3 text-xs leading-relaxed text-slate-500/80 dark:text-slate-400">
-                  Por favor, seleccione la escolaridad del programa
-                </div>
-              </div>
-            </label>
-
-            <div class="flex-1 w-full mt-3 xl:mt-0">
-              <FormSelect v-model="grade" class="dark:text-slate-200 dark:placeholder:!text-slate-400"
-                @change="validateGrade" @keydown.enter.prevent="() => {
-                  if (valid && !loadingEditChild && isChange) handleUpdateChild()
-                }
-                  ">
-                <template v-if="loadingGrades">
-                  <option :value="0" disabled selected>Cargando...</option>
-                </template>
-
-                <template v-else-if="errorGrades">
-                  <option :value="0" disabled selected>Error al cargar la escolaridad</option>
-                </template>
-
-                <template v-else>
-                  <template v-for="grade in grades" :key="grade.id">
-                    <option :value="grade.id">
-                      {{ grade.description }}
-                    </option>
-                  </template>
-                </template>
-              </FormSelect>
-              <div class="mt-1 text-xs text-red-500 h-4">
-                {{ status.grade.message }}
               </div>
             </div>
           </div>

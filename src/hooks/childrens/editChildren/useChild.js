@@ -36,7 +36,6 @@ export function useChild() {
       formData.append('children_name', newChild.name)
       formData.append('children_birthdate', birthdateFormat)
       formData.append('children_curp', newChild.curp)
-      formData.append('children_grade', newChild.grade)
 
       // Añadir la imagen si existe, de lo contrario usar un avatar por defecto
       if (newChild.photo.value) {
