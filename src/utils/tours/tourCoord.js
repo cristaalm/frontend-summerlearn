@@ -52,15 +52,15 @@ export const startTourCoord = async (router, id, formattedMenu, activeMobileMenu
         }
       },
       {
-        element: '#sideBar-subscriptions',
+        element: '#sideBar-users-request',
         popover: {
           prevBtnText: 'Anterior',
           nextBtnText: 'Siguiente',
-          title: 'Menú de suscripciones',
-          description: 'En este menú podrás administrar las suscripciones de la plataforma.',
+          title: 'Menú de solicitudes',
+          description: 'En este menú podrás gestionar las solicitudes de los usuarios.',
           onNextClick: () => {
             activeMobileMenu.value = false
-            router.push({ name: 'subscriptions' }).then(() => {
+            router.push({ name: 'users-request' }).then(() => {
               driverObj.moveNext()
             })
           },
@@ -73,16 +73,41 @@ export const startTourCoord = async (router, id, formattedMenu, activeMobileMenu
         }
       },
       {
-        element: '#containerSubscriptions',
+        element: '#table-users-request',
         popover: {
           prevBtnText: 'Anterior',
           nextBtnText: 'Siguiente',
-          title: 'Tabla de suscripciones',
-          description: 'En esta tabla podrás ver y gestionar las suscripciones de la plataforma.',
+          title: 'Tabla de solicitudes',
+          description: 'En esta tabla podrás ver y gestionar las solicitudes de los usuarios.',
           onPrevClick: () => {
             activeMobileMenu.value = true
             setTimeout(() => {
               driverObj.movePrevious()
+            }, 100)
+          }
+        }
+      },
+      {
+        element: '#button-acept-request-user',
+        popover: {
+          prevBtnText: 'Anterior',
+          nextBtnText: 'Siguiente',
+          title: 'Botón de aceptar solicitud',
+          description: 'Con este botón podrás aceptar la solicitud de un usuario.'
+        }
+      },
+      {
+        element: '#button-reject-request-user',
+        popover: {
+          prevBtnText: 'Anterior',
+          nextBtnText: 'Siguiente',
+          title: 'Botón de rechazar solicitud',
+          description:
+            'Con este botón podrás rechazar la solicitud de un usuario, Ten en cuenta que el usuario será eliminado de la plataforma.',
+          onNextClick: () => {
+            activeMobileMenu.value = true
+            setTimeout(() => {
+              driverObj.moveNext()
             }, 100)
           }
         }
@@ -103,7 +128,7 @@ export const startTourCoord = async (router, id, formattedMenu, activeMobileMenu
           onPrevClick: () => {
             activeMobileMenu.value = false
             setTimeout(() => {
-              router.push({ name: 'subscriptions' }).then(() => {
+              router.push({ name: 'users-request' }).then(() => {
                 driverObj.movePrevious()
               })
             }, 100)
@@ -248,16 +273,7 @@ export const startTourCoord = async (router, id, formattedMenu, activeMobileMenu
             setTimeout(() => {
               driverObj.movePrevious()
             }, 100)
-          }
-        }
-      },
-      {
-        element: '#button-add-performance',
-        popover: {
-          prevBtnText: 'Anterior',
-          nextBtnText: 'Siguiente',
-          title: 'Botón de agregar rendimiento',
-          description: 'Con este botón podrás agregar un nuevo rendimiento a la plataforma.',
+          },
           onNextClick: () => {
             activeMobileMenu.value = true
             setTimeout(() => {

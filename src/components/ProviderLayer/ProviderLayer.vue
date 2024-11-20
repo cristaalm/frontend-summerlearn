@@ -109,14 +109,6 @@ if ((role === 4 || role == 5) && status != 3) {
   provide('actividadesSubscribed', { actividadesSubscribed, loadingActividadesSubscribed, errorActividadesSubscribed, loadActividadesSubscribed })
   onMounted(() => loadActividadesSubscribed())
 }
-if ((role === 5 || role == 1 || role == 4) && status != 3) {
-  const { childrens, loadingChildrens, errorChildrens, loadChildrens } = useChildrens()
-  if (role === 5) {
-    loadings.push(loadingChildrens)
-  }
-  provide('childrens', { childrens, loadingChildrens, errorChildrens, loadChildrens })
-  onMounted(() => loadChildrens())
-}
 
 if ((role === 1 || role === 2 || role === 5) && status != 3) {
   const { users, loadingUsers, loadUsers } = useUsers()
@@ -142,6 +134,13 @@ if ((role === 3 || role === 1) && status != 3) {
 }
 
 if ((role === 1 || role === 2 || role === 4 || role === 5) && status != 3) {
+  const { childrens, loadingChildrens, errorChildrens, loadChildrens } = useChildrens()
+  if (role === 5) {
+    loadings.push(loadingChildrens)
+  }
+  provide('childrens', { childrens, loadingChildrens, errorChildrens, loadChildrens })
+  onMounted(() => loadChildrens())
+
   const { performance, loadingPerformance, loadPerformance, errorPerformance } = usePerformance()
   provide('performance', { performance, loadingPerformance, loadPerformance, errorPerformance })
   onMounted(() => loadPerformance())

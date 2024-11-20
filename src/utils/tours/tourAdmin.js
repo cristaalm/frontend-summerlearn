@@ -126,7 +126,7 @@ export const startTourAdmin = async (router, id, formattedMenu, activeMobileMenu
           description: 'En este menú podrás gestionar las solicitudes de los usuarios.',
           onNextClick: () => {
             activeMobileMenu.value = false
-            router.push('/dashboard/users/request').then(() => {
+            router.push({ name: 'users-request' }).then(() => {
               driverObj.moveNext()
             })
           },
