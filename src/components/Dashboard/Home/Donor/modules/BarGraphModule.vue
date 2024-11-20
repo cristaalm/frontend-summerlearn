@@ -15,11 +15,11 @@ const handleFilterChange = (event) => {
 </script>
 
 <template>
-  <div class="flex flex-col col-span-12 p-5 box box--stacked" id="uno">
+  <div class="flex flex-col col-span-12 p-5 box box--stacked" id="graficaBarra">
     <div class="flex flex-col lg:items-center lg:flex-row gap-y-5">
       <div class="flex flex-col sm:items-center sm:flex-row gap-x-3 gap-y-2">
         <Lucide icon="CalendarCheck2" class="absolute inset-y-0 left-0 z-10 w-4 h-4 my-auto ml-3 stroke-[1.3] dark:text-slate-200" />
-        <FormSelect class="sm:w-55 pl-9 dark:text-slate-200 dark:placeholder:text-slate-400" @change="handleFilterChange" id="dos">
+        <FormSelect class="sm:w-55 pl-9 dark:text-slate-200 dark:placeholder:text-slate-400" @change="handleFilterChange" id="filtrarFecha">
           <option value="daily">Días</option>
           <option value="weekly">Semanal</option>
           <option value="monthly">Mensual</option>
@@ -27,7 +27,7 @@ const handleFilterChange = (event) => {
       </div>
     </div>
 
-    <div class="mb-1 mt-7" id="tres">
+    <div class="mb-1 mt-7" id="barraDonaciones">
       <ReportBarChart5 :height="220" :filter="generalReportFilter" />
     </div>
 

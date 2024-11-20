@@ -41,7 +41,7 @@ provide('btnSectionChat', { btnSectionChat });
 <template>
     <div class="w-full lg:w-1/3 flex-none">
         <Tab.Group class="flex flex-col gap-y-7">
-            <div class="flex flex-col p-2 box box--stacked" id="sectionSelect">
+            <div class="flex flex-col p-2 box box--stacked" id="panelContactos">
                 <Tab.List variant="boxed-tabs" class="bg-transparent border-transparent">
                     <Tab>
                         <div ref="SelectSection">
@@ -70,7 +70,7 @@ provide('btnSectionChat', { btnSectionChat });
                     <!-- Panel de Chats -->
                     <Tab.Panel>
                         <div>
-                            <div class="relative" id="searchChat">
+                            <div class="relative" id="buscarChat">
                                 <Lucide icon="Search"
                                     class="absolute inset-y-0 left-0 z-10 w-4 h-4 my-auto ml-4 stroke-[1.3] text-slate-500/90 dark:text-slate-200 dark:placeholder:text-slate-400" />
                                 <FormInput v-model="chatSearchText" type="text" rounded placeholder="Buscar chat"

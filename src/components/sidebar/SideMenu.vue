@@ -29,7 +29,7 @@ import { Baseurl } from '@/utils/global'
 // ? tour
 import { getTour } from '@/utils/getTour';
 // @ts-ignore
-import { startTourAdmin, startTourCoord, startTourDonor } from '@/utils/tours/'
+import { startTourAdmin, startTourCoord, startTourDonor, startTourVolun } from '@/utils/tours/'
 // @ts-ignore
 import getIdByToken from '@/logic/getIdByToken';
 
@@ -213,7 +213,8 @@ watch(isLoading, async () => {
 async function againTour() {
   if (role == 1) startTourAdmin(router, id, formattedMenu, activeMobileMenu, showToast);
   if (role == 2) startTourCoord(router, id, formattedMenu, activeMobileMenu, showToast);
-  if (role == 3) startTourDonor(router, id);
+  if (role == 3) startTourDonor(router, id, formattedMenu, activeMobileMenu, showToast);
+  if (role == 4) startTourVolun(router, id, formattedMenu, activeMobileMenu, showToast);
 }
 
 
@@ -248,7 +249,7 @@ async function againTour() {
           <Lucide icon="X" class="w-8 h-8 text-white dark:!text-slate-200" />
         </a>
       </div>
-      <div v-if="status != 3" id="uno" :class="[
+      <div v-if="status != 3"  :class="[
         'h-full box bg-white/[0.95] darl:bg-slate-700 rounded-none xl:rounded-xl z-20 relative w-[275px] duration-300 transition-[width] group-[.side-menu--collapsed]:xl:w-[91px] group-[.side-menu--collapsed.side-menu--on-hover]:xl:shadow-[6px_0_12px_-4px_#0000000f] group-[.side-menu--collapsed.side-menu--on-hover]:xl:w-[275px] overflow-hidden flex flex-col'
       ]" @mouseover="(event) => {
         event.preventDefault()
@@ -447,7 +448,7 @@ async function againTour() {
                         class="shadow-current pointer-events-none" />
                     </div>
                   </Menu.Item>
-                  <Menu.Item v-if="role == 3 || role == 1 || role == 2" @click="againTour"
+                  <Menu.Item v-if="role == 3 || role == 1 || role == 2 || role == 4" @click="againTour"
                     class="text-success flex items-center px-4 py-2 hover:bg-gray-100 dark:text-slate-200 dark:hover:text-green-400 dark:hover:bg-slate-800">
                     <Lucide icon="HelpCircle" class="w-4 h-4 mr-2  " />
                     Guía de inicio

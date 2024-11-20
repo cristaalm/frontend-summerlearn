@@ -127,22 +127,22 @@ onMounted(() => {
     <div class="col-span-12">
       <div class="mt-3.5">
         <div class="flex flex-col box box--stacked" id="table-performance">
-          <div class="flex flex-col p-5 sm:items-center sm:flex-row gap-y-2">
-            <div class="relative">
+          <div class="flex flex-col p-5 sm:items-center sm:flex-row gap-y-2" id="filtrarCalf">
+            <div class="relative" >
               <Lucide icon="Search"
                 class="absolute inset-y-0 left-0 z-10 w-4 h-4 my-auto ml-3 stroke-[1.3] text-slate-500" />
               <FormInput v-model="searchQuery" type="text" placeholder="Buscar nombre..."
                 class="pl-9 sm:w-72 rounded-[0.5rem] dark:text-slate-200 dark:placeholder:text-slate-400" />
             </div>
             <div class="flex flex-col sm:flex-row gap-x-3 gap-y-2 sm:ml-auto">
-              <Menu>
+              <!-- <Menu>
                 <Menu.Button :as="Button" variant="outline-secondary"
                   :disabled="loadingExportExcel || loadingExportPDF">
                   <Lucide icon="Download" class="stroke-[1.3] w-4 h-4 mr-2" />
                   Exportar
                   <Lucide icon="ChevronDown" class="stroke-[1.3] w-4 h-4 ml-2" />
                 </Menu.Button>
-              </Menu>
+              </Menu> -->
             </div>
           </div>
 
@@ -173,17 +173,17 @@ onMounted(() => {
                         }}</Table.Td>
                         <Table.Td class="text-center text-black dark:text-slate-200">
                           <template v-if="currentUserRol == 4">
-                            <div v-if="performance.value == null">
+                            <div id="addCalf" v-if="performance.value == null">
                               <input type="text"
                                 class="w-20 mr-2 rounded-lg border-gray-200 border-2 text-center text-black dark:text-slate-200 dark:bg-transparent dark:border-slate-400"
                                 @input="handleInput(performance.id)" v-model="nota[performance.id]" />/ {{ notamax }}
                             </div>
                             <!-- ponemos un color al texto segun la nota -->
-                            <div v-else :class="{
+                            <div id="addCalf" v-else :class="{
                               'text-red-500 dark:text-red-400': performance.value < 5,
                               'text-yellow-500': performance.value >= 5 && performance.value < 7,
                               'text-green-500': performance.value >= 7
-                            }">
+                            }" >
                               {{ performance.value }}/{{ notamax }}
                             </div>
                           </template>
@@ -197,7 +197,7 @@ onMounted(() => {
                             </div>
                           </template>
                         </Table.Td>
-                        <Table.Td class="text-center text-black dark:text-slate-200" v-if="currentUserRol == 4">
+                        <Table.Td id="btnIndividual" class="text-center text-black dark:text-slate-200" v-if="currentUserRol == 4">
                           <Button v-if="performance.value == null" variant="outline-success" :class="`w-full px-10 md:w-auto font-bold ${loadings[performance.id]
                             ? 'border-warning text-warning'
                             : valid[performance.id] && performance.value == null
@@ -276,7 +276,7 @@ onMounted(() => {
                   </Pagination.Link>
                 </Pagination>
 
-                <Button v-if="currentUserRol == 4" variant="outline-primary" :class="`${Object.values(loadings).some((v) => v === true) || !isSaveButtonEnabled
+                <Button id="btnAll" v-if="currentUserRol == 4" variant="outline-primary" :class="`${Object.values(loadings).some((v) => v === true) || !isSaveButtonEnabled
                   ? 'bg-white text-black border-slate-400 dark:bg-transparent dark:text-slate-400 dark:border-slate-400'
                   : 'bg-white text-blue-600 border-blue-900 hover:bg-blue-300 dark:bg-transparent dark:text-slate-200 dark:border-primary'
                   }
