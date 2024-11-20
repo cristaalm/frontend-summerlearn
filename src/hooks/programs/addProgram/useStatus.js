@@ -23,6 +23,13 @@ export function useStatus() {
       name: 'responsable del programa',
       Regex: /^\d+$/
     },
+    grade: {
+      error: false,
+      success: false,
+      message: '',
+      name: 'grado escolar',
+      Regex: /^[1-6]$/
+    },
     area: {
       error: false,
       success: false,

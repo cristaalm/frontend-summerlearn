@@ -24,6 +24,13 @@ export function useValidationAddChildren() {
       Regex:
         /^([A-Z][AEIOUX][A-Z]{2}\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])[HM](?:AS|B[CS]|C[CLMSH]|D[FG]|G[TR]|HG|JC|M[CNS]|N[ETL]|OC|PL|Q[TR]|S[PLR]|T[CSL]|VZ|YN|ZS)[B-DF-HJ-NP-TV-Z]{3}[A-Z\d])(\d)$/
     },
+    grade: {
+      error: false,
+      success: false,
+      message: '',
+      name: 'grado escolar',
+      Regex: /^[1-6]$/
+    },
     profileImage: {
       value: false,
       error: false
@@ -34,19 +41,34 @@ export function useValidationAddChildren() {
   const birthdate = ref('DD/MM/YYYY')
   const curp = ref('')
   const valid = ref(false)
+  const grade = ref(0)
 
   const validateAll = () => {
     if (
       status.value.name.success &&
       status.value.birthdate.success &&
       status.value.curp.success &&
-      status.value.profileImage.value
+      status.value.profileImage.value &&
+      status.value.grade.success
     ) {
       // Si todos los campos son válidos
       valid.value = true
     } else {
       valid.value = false
     }
+  }
+
+  const validateGrade = () => {
+    if (!status.value.grade.Regex.test(grade.value)) {
+      status.value.grade.error = true
+      status.value.grade.success = false
+      status.value.grade.message = `El campo "Escolaridad" es inválido.`
+    } else {
+      status.value.grade.error = false
+      status.value.grade.success = true
+      status.value.grade.message = ''
+    }
+    validateAll()
   }
 
   const validate = (e, field) => {
@@ -128,10 +150,12 @@ export function useValidationAddChildren() {
     name,
     birthdate,
     curp,
+    grade,
     valid,
     validate,
     validateAll,
     validateInputCurp,
+    validateGrade,
     setValueTrueAll,
     resetFields
   }

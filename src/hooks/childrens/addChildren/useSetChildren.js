@@ -8,6 +8,7 @@ export function useSetChildren({
   imageFile, // archivo de imagen
   birthdate,
   curp,
+  grade,
   valid,
   validateAll,
   resetFields
@@ -39,6 +40,7 @@ export function useSetChildren({
     formData.append('children_name', name.value)
     formData.append('children_birthdate', birthdateFormat)
     formData.append('children_curp', curp.value)
+    formData.append('children_grade', grade.value)
     formData.append('children_user', idUser)
 
     // Añadir la imagen si existe, de lo contrario usar un avatar por defecto

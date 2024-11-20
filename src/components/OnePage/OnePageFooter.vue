@@ -1,6 +1,6 @@
 <template>
   <footer class="text-black dark:text-slate-200 py-10 flex flex-row justify-center items-center w-full bg-footerColor">
-    <div class="container">
+    <div class="container px-10 md:px-24">
       <div class="flex flex-row w-full">
         <div class="w-1/2 flex flex-col justify-center items-start">
           <!-- Display the copyright text -->

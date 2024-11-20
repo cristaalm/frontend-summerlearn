@@ -1,6 +1,6 @@
 import { ref, watch } from 'vue'
 
-export function useValidations({ status, name, duration, responsible, area }) {
+export function useValidations({ status, name, duration, responsible, area, grade }) {
   const valid = ref(false)
 
   //?  ########################## VALIDATIONS ##########################
@@ -66,12 +66,26 @@ export function useValidations({ status, name, duration, responsible, area }) {
     }
   }
 
+  const validateGrade = () => {
+    if (!status.value.grade.Regex.test(grade.value)) {
+      status.value.grade.error = true
+      status.value.grade.success = false
+      status.value.grade.message = `El campo "Escolaridad" es inválido.`
+    } else {
+      status.value.grade.error = false
+      status.value.grade.success = true
+      status.value.grade.message = ''
+    }
+    validateAll()
+  }
+
   const validateAll = () => {
     if (
       status.value.name.success &&
       status.value.duration.success &&
       status.value.responsible.success &&
-      status.value.area.success
+      status.value.area.success &&
+      status.value.grade.success
     ) {
       valid.value = true
     } else {
@@ -88,6 +102,8 @@ export function useValidations({ status, name, duration, responsible, area }) {
   watch(responsible, validateResponsible)
 
   watch(area, validateArea)
+
+  watch(grade, validateGrade)
 
   watch(status.value, () => {
     validateAll()

@@ -35,17 +35,10 @@ onMounted(() => {
     <JoinOurTeam />
 
     <!-- Enlace con logo y desplazamiento suave -->
-    <a
-    href="#home"
-    @click.prevent="smoothScroll('#home')"
-    class="fixed bottom-0 right-0 z-10 hover:text-gray-400 transition-all duration-300 hover:scale-105 flex flex-row justify-center items-center m-4"
-  >
-    <img
-      src="/icono.png"
-      alt="Logo"
-      class="w-[50px] lg:w-[75px]"
-    />
-  </a>
+    <a href="#home" @click.prevent="smoothScroll('#home')"
+      class="hidden fixed bottom-0 right-0 z-10 hover:text-gray-400 transition-all duration-300 hover:scale-105 md:flex flex-row justify-center items-center m-4">
+      <img src="/icono.png" alt="Logo" class="w-[50px] lg:w-[75px]" />
+    </a>
   </main>
 
   <Footer />

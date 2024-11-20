@@ -106,12 +106,13 @@ export const useMenuStore = defineStore('menu', {
         case 2:
           menuItems = []
           menuItems = [
-            'GESTIÓN DE PROGRAMAS',
+            'GESTIÓN DE USUARIOS',
             {
-              icon: 'Notebook',
-              pageName: 'subscriptions',
-              title: 'Suscripciones'
+              icon: 'GalleryVerticalEnd',
+              pageName: 'users-request',
+              title: 'Solicitudes'
             },
+            'GESTIÓN DE PROGRAMAS',
             {
               icon: 'Album',
               pageName: 'programs',
@@ -160,7 +161,7 @@ export const useMenuStore = defineStore('menu', {
             'ACTIVIDADES DISPONIBLES',
             {
               icon: 'Notebook',
-              pageName: 'subscriptionsGrid',
+              pageName: 'dashboard',
               title: 'Suscripciones'
             },
             'GESTIÓN DE PROGRAMAS',
@@ -182,7 +183,7 @@ export const useMenuStore = defineStore('menu', {
             'MI(S) HIJO(S)',
             {
               icon: 'BookUser',
-              pageName: 'childrensBen',
+              pageName: 'dashboard',
               title: 'Hijos'
             },
             'GESTIÓN DE PROGRAMAS',
