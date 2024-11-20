@@ -45,7 +45,7 @@ const language = ref(route.params.lang || 'es') // Get the current language from
 const changeLanguage = () => {
   // Check if the selected language is different from the current language
   if (language.value !== route.params.lang) {
-    // Use the router to change the language without fully reloading the page
+    // Use router to navigate to the new language route
     router.push({ path: `/${language.value}` })
   }
 }

@@ -17,9 +17,9 @@ import { changeLoginColorScheme, changeColorScheme } from '@/utils/switchColorSc
 const colorSchame = ref('theme-19')
 const changeColor = () => {
 
-  // if (valid.value) {
-  //   return 
-  // }
+  if (success.value) {
+    return
+  }
 
   if (colorSchame.value === 'theme-19') {
     colorSchame.value = 'theme-20';
@@ -85,6 +85,10 @@ onMounted(() => {
   } else {
     router.push({ name: 'home' }) // Redirige si el rol no es válido
   }
+
+  // subimos el scrollbar hasta arriba de la etiqueta html
+  document.documentElement.scrollTop = 0 // For Chrome, Firefox, IE and Opera
+  document.body.scrollTop = 0 // For Safari
 })
 
 const handleSubmit = () => {
@@ -92,7 +96,6 @@ const handleSubmit = () => {
     registerUser()
   }
 }
-
 
 </script>
 
@@ -329,8 +332,9 @@ const handleSubmit = () => {
       'before:content-[\'\'] before:absolute before:lg:-ml-10 before:left-0 before:inset-y-0 before:bg-gradient-to-b before:from-theme-1 before:to-theme-2 before:w-screen before:lg:w-[800%]',
       'after:content-[\'\'] after:absolute after:inset-y-0 after:left-0 after:w-screen after:lg:w-[800%] after:bg-texture-white after:bg-fixed after:bg-center after:lg:bg-[25rem_-25rem] after:bg-no-repeat',
     ]">
-      <DynamicText class="hidden lg:sticky" :phrases="phrases[route.params.rol]" />
-      <br><div class="hidden xl:ml-[115px] 2xl:ml-[140px] lg:block absolute lg:ml-[70px] bottom-40 text-white">
+      <DynamicText class="hidden lg:sticky" :phrases="phrases[route.params.rol]" :changeColor="changeColor" />
+      <br>
+      <div class="hidden xl:ml-[115px] 2xl:ml-[140px] lg:block absolute lg:ml-[70px] bottom-40 text-white">
         <h2 class="text-4xl font-bold">SummerLearn</h2>
         <p class="mt-2 text-lg">Transformando la educación, un paso a la vez.</p>
       </div>
