@@ -2,6 +2,7 @@
 import Lucide from '@/components/base/Lucide'
 import Button from '@/components/base/Button'
 import Alert from '@/components/base/Alert'
+import Litepicker from '@/components/base/Litepicker'
 import LoadingIcon from '@/components/base/LoadingIcon'
 import { FormInput, FormTextarea, FormSelect } from '@/components/base/Form'
 import { onMounted, inject, computed } from 'vue'
@@ -13,9 +14,10 @@ const router = useRouter()
 const { users, loadingResponsable, errorResponsable, loadUsers } = inject('users')
 const { programs, loadingPrograms, errorPrograms, loadPrograms } = inject('programs')
 const { setActividadesLoading, setActividadesError, addActividades } = useSetActividades()
-const { status, name, description, responsible, program, valid, validate } = useValidationAddActividades()
+const { status, name, description, responsible, program, date, valid, validate } = useValidationAddActividades()
 
 const filterUsers = computed(() => users.value.filter(user => user.rol === 4))
+const programSelect = computed(() => programs.value.find((programList) => programList.id == program.value))
 
 const handleRegister = () => {
   if (valid.value) {
@@ -23,7 +25,8 @@ const handleRegister = () => {
       name: name.value,
       description: description.value,
       responsible: responsible.value,
-      program: program.value
+      program: program.value,
+      date: date.value
     }
     addActividades({ actividad })
   }
@@ -183,15 +186,59 @@ onMounted(async () => {
                   <template v-else>
                     <option value="" disabled selected>Seleccione aquí un programa...</option>
                     <template v-for="program in programs" :key="program.id">
-                      <option :value="program.id">{{ program.name }}</option>
+                      <option :value="program.id">{{ program.name }} - ({{ program.start.split('-').reverse().join('/')
+                        }}
+                        - {{ program.end.split('-').reverse().join('/') }})
+                      </option>
                     </template>
                   </template>
                 </FormSelect>
-                <div class="mt-1 text-xs text-red-500 h-4">
+                <div class="mt-1 text-xs text-red-500 h-4" v-if="status.program.message">
                   {{ status.program.message }}
                 </div>
               </div>
             </div>
+
+            <!-- Date -->
+            <div class="flex-col block pt-5 mt-5 xl:items-center sm:flex xl:flex-row first:mt-0 first:pt-0">
+              <label class="inline-block mb-2 sm:mb-0 sm:mr-5 sm:text-right xl:w-60 xl:mr-14">
+                <div class="text-left">
+                  <div class="flex items-center">
+                    <div class="font-medium dark:text-slate-200">Fecha de actividad</div>
+                    <div
+                      class="ml-2.5 px-2 py-0.5 bg-slate-100 text-slate-500 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md border border-slate-200 dark:border-slate-500">
+                      Requerido
+                    </div>
+                  </div>
+                  <div class="mt-1.5 xl:mt-3 text-xs leading-relaxed text-slate-500/80 dark:text-slate-400">
+                    Por favor, ingrese la fecha de la actividad.
+                  </div>
+                </div>
+              </label>
+              <div class="flex-1 w-full mt-3 xl:mt-0">
+                <Litepicker v-model="date" name="birthdate"
+                  class="cursor-[pointer!important] dark:!text-slate-200 dark:placeholder:!text-slate-400" readonly
+                  :options="{
+                    autoApply: false,
+                    dropdowns: {
+                      minYear: new Date().getFullYear() - 1,
+                      maxYear: new Date().getFullYear() + 1,
+                      months: true,
+                      years: true
+                    },
+                    format: 'DD/MM/YYYY'
+                  }" placeholder="DD/MM/YYYY" />
+
+                <div class="text-red-500 mt-2 dark:text-red-400" v-if="status.date.message">{{ status.date.message }}
+                </div>
+                <div class="mt-1 text-xs text-green-500 h-4" v-if="program">
+                  {{ programSelect.start.split('-').reverse().join('/') }}
+                  <span class="mx-1">-</span>
+                  {{ programSelect.end.split('-').reverse().join('/') }}
+                </div>
+              </div>
+            </div>
+
           </div>
           <!--? Fin de Campos Entrada -->
 
