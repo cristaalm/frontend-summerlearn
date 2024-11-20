@@ -13,23 +13,16 @@ import { FormSelect } from '@/components/base/Form'
 import { inject, onMounted } from 'vue'
 
 const { grades, loadingGrades, errorGrades, loadGrades } = inject('grades')
-const { validate, valid, status, name, birthdate, curp, validateInputCurp, resetFields, validateAll } = useValidationAddChildren()
+const { validate, valid, status, name, birthdate, curp, grade, validateInputCurp, validateGrade, resetFields, validateAll } = useValidationAddChildren()
 const { profileImage, errorMessagePhoto, validateImage, triggerFileSelect, removeImage, imageFile } = useValidationImage({ status, validateAll })
-const { setChildrenError, setChildrenLoading, addChildren } = useSetChildren({ name, birthdate, curp, imageFile, valid, validateAll, resetFields })
+const { setChildrenError, setChildrenLoading, addChildren } = useSetChildren({ name, birthdate, curp, grade, imageFile, valid, validateAll, resetFields })
 
 const router = useRouter()
 const minYear = new Date().getFullYear() - 6
 
 const handleRegister = () => {
-  if (valid.value) {
-    const children = {
-      name: name.value,
-      birthdate: birthdate.value,
-      curp: curp.value,
-      profileImage: imageFile.value,
-      grade: grades.value
-    }
-    addChildren({ children })
+  if (valid.value && !setChildrenLoading.value) {
+    addChildren()
   }
 }
 
@@ -222,20 +215,20 @@ onMounted(() => {
 
               <div class="flex-1 w-full mt-3 xl:mt-0">
                 <FormSelect v-model="grade" class="dark:text-slate-200 dark:placeholder:!text-slate-400"
-                  @keydown.enter.prevent="() => {
-                      if (valid && !setChildrenLoading) handleRegister()
-                    }
+                  @change="validateGrade" @keydown.enter.prevent="() => {
+                    if (valid && !setChildrenLoading) handleRegister()
+                  }
                     ">
                   <template v-if="loadingGrades">
-                    <option value="" disabled selected>Cargando...</option>
+                    <option :value="0" disabled selected>Cargando...</option>
                   </template>
 
                   <template v-else-if="errorGrades">
-                    <option value="" disabled selected>Error al cargar la escolaridad</option>
+                    <option :value="0" disabled selected>Error al cargar la escolaridad</option>
                   </template>
 
                   <template v-else>
-                    <option value="" disabled selected>Seleccione una escolaridad...</option>
+                    <option :value="0" selected>Seleccione una escolaridad...</option>
                     <template v-for="grade in grades" :key="grade.id">
                       <option :value="grade.id">
                         {{ grade.description }}
@@ -243,9 +236,9 @@ onMounted(() => {
                     </template>
                   </template>
                 </FormSelect>
-                <!-- <div class="mt-1 text-xs text-red-500 h-4">
-                                    {{ status.grade.message }}
-                                </div> -->
+                <div class="mt-1 text-xs text-red-500 h-4">
+                  {{ status.grade.message }}
+                </div>
               </div>
             </div>
           </div>
