@@ -35,17 +35,18 @@
 
 <script setup>
 import { ref } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 
 const route = useRoute()
+const router = useRouter()
 
 const language = ref(route.params.lang || 'es') // Get the current language from the URL or use 'es' as default
 
 const changeLanguage = () => {
   // Check if the selected language is different from the current language
   if (language.value !== route.params.lang) {
-    // Redirect and fully reload the page
-    window.location.href = `/${language.value}`
+    // Use router to navigate to the new language route
+    router.push({ path: `/${language.value}` })
   }
 }
 </script>

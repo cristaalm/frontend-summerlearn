@@ -14,7 +14,7 @@ export const startTourDonor = async (router, id,formattedMenu, activeMobileMenu,
 
           onNextClick: () => {
             router
-              .push('/dashboard')
+              .push({ name: 'dashboard' })
               .then(() => {
                 // Espera que la nueva vista se haya montado
                 nextTick(() => {

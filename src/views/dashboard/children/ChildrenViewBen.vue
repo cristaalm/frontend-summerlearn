@@ -36,7 +36,7 @@ onMounted(() => {
 
 const formatDate = (dateString) => {
   const [year, month, day] = dateString.split('-')
-  return `${day}-${month}-${year}`
+  return `${day}/${month}/${year}`
 }
 </script>
 
@@ -121,16 +121,16 @@ const formatDate = (dateString) => {
                       <div class="flex items-center justify-end">
                         <Button class="flex items-center mr-3" variant="success" @click="() => {
                           setModalGradesChild({ open: true, childInfo: child })
-                        }
-                          ">
-                          <Lucide icon="NotebookPen" class="w-4 h-4 stroke-[1.3] text-white" />
+                        }">
+                          <Lucide icon="ClipboardList" class="w-4 h-4 stroke-[1.3] text-white" />
                         </Button>
+
                         <Button class="flex items-center mr-3" variant="warning" @click="() => {
                           setModalEditChild({ open: true, childInfo: child })
-                        }
-                          ">
-                          <Lucide icon="CheckSquare" class="w-4 h-4 stroke-[1.3] text-white" />
+                        }">
+                          <Lucide icon="Edit" class="w-4 h-4 stroke-[1.3] text-white" />
                         </Button>
+
                         <Button class="flex items-center text-danger" variant="danger" @click="() => {
                           setModalDeleteChild({ open: true, childInfo: child })
                         }
