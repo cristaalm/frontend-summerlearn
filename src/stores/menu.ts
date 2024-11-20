@@ -204,7 +204,7 @@ export const useMenuStore = defineStore('menu', {
           menuItems = []
           console.warn('Rol desconocido:', role)
           clearLocalStorage()
-          router.push('/login')
+          router.push({ name: 'login' })
           break
       }
 

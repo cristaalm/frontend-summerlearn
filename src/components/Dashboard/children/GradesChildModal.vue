@@ -20,7 +20,6 @@ onMounted(() => {
 const grades = computed(() => {
 
   if (!performance.value || !props.infoChild?.id) {
-    console.warn('performance.value o props.infoChild no están definidos correctamente');
     return [];
   }
 
@@ -75,11 +74,8 @@ const closeModal = () => {
                 </tr>
               </thead>
               <tbody>
-                <tr
-                  v-for="(grades, index) in grades"
-                  :key="index"
-                  class="odd:bg-gray-300 even:bg-white dark:odd:bg-slate-800 dark:even:bg-slate-700"
-                >
+                <tr v-for="(grades, index) in grades" :key="index"
+                  class="odd:bg-gray-300 even:bg-white dark:odd:bg-slate-800 dark:even:bg-slate-700">
                   <td class="border-t border-slate-200/60 dark:border-slate-700 py-2  text-black dark:text-slate-200">
                     {{ grades.activity }}
                   </td>

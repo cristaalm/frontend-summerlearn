@@ -14,7 +14,7 @@ export const startTourDonor = async (router, id) => {
 
           onNextClick: () => {
             router
-              .push('/dashboard')
+              .push({ name: 'dashboard' })
               .then(() => {
                 // Espera que la nueva vista se haya montado
                 nextTick(() => {
@@ -87,7 +87,7 @@ export const startTourDonor = async (router, id) => {
           onNextClick: () => {
             // Asegúrate de manejar el avance al siguiente paso
             router
-              .push('/dashboard/donations')
+              .push({ name: 'donations' })
               .then(() => {
                 // Espera que la nueva vista se haya montado
                 nextTick(() => {
@@ -101,7 +101,7 @@ export const startTourDonor = async (router, id) => {
           onPrevClick: () => {
             // Asegúrate de manejar el retroceso al paso anterior
             router
-              .push('/dashboard')
+              .push({ name: 'dashboard' })
               .then(() => {
                 // Espera que la nueva vista se haya montado
                 nextTick(() => {
@@ -202,7 +202,7 @@ export const startTourDonor = async (router, id) => {
           description: 'Se muestra las donaciones de Lunes a Viernes.',
           onNextClick: () => {
             router
-              .push('/dashboard/chat')
+              .push({ name: 'chat' })
               .then(() => {
                 // Espera que la nueva vista se haya montado
                 nextTick(() => {
@@ -216,7 +216,7 @@ export const startTourDonor = async (router, id) => {
           onPrevClick: () => {
             // Asegúrate de manejar el retroceso al paso anterior
             router
-              .push('/dashboard/donations')
+              .push({ name: 'donations' })
               .then(() => {
                 // Espera que la nueva vista se haya montado
                 nextTick(() => {

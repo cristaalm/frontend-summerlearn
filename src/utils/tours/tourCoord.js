@@ -14,7 +14,7 @@ export const startTourCoord = async (router, id, formattedMenu, activeMobileMenu
           nextBtnText: 'Siguiente',
           title: 'Bienvenidos a tu perfil de coordinador',
           onPopoverRender: () => {
-            router.push('/dashboard').then(() => {})
+            router.push({ name: 'dashboard' }).then(() => {})
           }
         }
       },
@@ -347,7 +347,7 @@ export const startTourCoord = async (router, id, formattedMenu, activeMobileMenu
           title: 'Chat',
           description: 'Aquí podrás ver el chat seleccionado y enviar mensajes.',
           onNextClick: async () => {
-            router.push('/dashboard').then(() => {})
+            router.push({ name: 'dashboard' }).then(() => {})
             // Marcar la función como async para poder usar await
             driverObj.destroy()
 

@@ -12,7 +12,7 @@ export const startTourAdmin = async (router, id, formattedMenu, activeMobileMenu
         popover: {
           title: 'Bienvenidos a tu perfil de administrador',
           onPopoverRender: () => {
-            router.push('/dashboard').then(() => {})
+            router.push({ name: 'dashboard' }).then(() => {})
           },
           prevBtnText: 'Anterior',
           nextBtnText: 'Siguiente'
@@ -71,13 +71,13 @@ export const startTourAdmin = async (router, id, formattedMenu, activeMobileMenu
           onNextClick: () => {
             // Asegúrate de manejar el avance al siguiente paso
             activeMobileMenu.value = false
-            router.push('/dashboard/users').then(() => {
+            router.push({ name: 'users' }).then(() => {
               driverObj.moveNext()
             })
           },
           onPrevClick: () => {
             activeMobileMenu.value = false
-            router.push('/dashboard').then(() => {
+            router.push({ name: 'dashboard' }).then(() => {
               driverObj.movePrevious()
             })
           }
@@ -613,7 +613,7 @@ export const startTourAdmin = async (router, id, formattedMenu, activeMobileMenu
           title: 'Chat',
           description: 'Aquí podrás ver el chat seleccionado y enviar mensajes.',
           onNextClick: async () => {
-            router.push('/dashboard').then(() => {})
+            router.push({ name: 'dashboard' }).then(() => {})
             // Marcar la función como async para poder usar await
             driverObj.destroy()
 
