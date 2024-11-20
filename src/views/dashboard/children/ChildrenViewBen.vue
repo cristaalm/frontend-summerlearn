@@ -62,7 +62,7 @@ const formatDate = (dateString) => {
           Mis Hijos
         </div>
         <div class="flex flex-col sm:flex-row gap-x-3 gap-y-2 md:ml-auto">
-          <Button variant="primary" @click="router.push({ name: 'addChildrens' })"
+          <Button variant="primary" @click="router.push({ name: 'addChildrens' })" id="btnAddChild"
             class="group-[.mode--light]:!bg-white/[0.12] group-[.mode--light]:!text-slate-200 group-[.mode--light]:!border-transparent">
             <Lucide icon="PenLine" class="stroke-[1.3] w-4 h-4 mr-2" />
             Agregar hijo
@@ -72,11 +72,12 @@ const formatDate = (dateString) => {
       <div class="mt-3.5">
         <div class="flex flex-col">
           <div class="overflow-hidden">
-            <div class="grid grid-cols-12 px-5 gap-5">
+            <div class="grid grid-cols-12 px-5 gap-5" id="containerChildren">
               <!-- ? Cuando se termina de cargar los hijos, se muestra el contenido -->
               <template v-if="!loadingChildrens && !errorChildrens">
                 <template v-for="child in childrens" :key="child.id">
-                  <div class="col-span-12 sm:col-span-6 xl:col-span-4 px-5 py-5 flex flex-col box box--stacked">
+                  <div class="col-span-12 sm:col-span-6 xl:col-span-4 px-5 py-5 flex flex-col box box--stacked"
+                    id="children">
                     <div
                       class="overflow-hidden rounded-lg h-52 image-fit before:block before:absolute before:w-full before:h-full before:top-0 before:left-0 before:z-10 before:bg-gradient-to-t before:from-slate-900/90 before:to-black/20">
                       <img alt="Tailwise - Admin Dashboard Template" class="rounded-md select-none"
@@ -88,9 +89,9 @@ const formatDate = (dateString) => {
                         <span class="mt-3 text-xs text-white/80">
                           {{ child.curp }}
                         </span>
-                        <!-- <span class="mt-3 text-xs text-white/80">
-                          {{ child.grade }}
-                        </span> -->
+                        <span class="mt-3 text-xs text-white/80">
+                          · {{ child.grade.description }}
+                        </span>
                       </div>
                     </div>
                     <div class="pt-5">
@@ -119,19 +120,19 @@ const formatDate = (dateString) => {
                         </div>
                       </div>
                       <div class="flex items-center justify-end">
-                        <Button class="flex items-center mr-3" variant="success" @click="() => {
+                        <Button class="flex items-center mr-3" variant="success" id="btnGrade" @click="() => {
                           setModalGradesChild({ open: true, childInfo: child })
                         }">
                           <Lucide icon="ClipboardList" class="w-4 h-4 stroke-[1.3] text-white" />
                         </Button>
 
-                        <Button class="flex items-center mr-3" variant="warning" @click="() => {
+                        <Button class="flex items-center mr-3" variant="warning" id="btnEdit" @click="() => {
                           setModalEditChild({ open: true, childInfo: child })
                         }">
                           <Lucide icon="Edit" class="w-4 h-4 stroke-[1.3] text-white" />
                         </Button>
 
-                        <Button class="flex items-center text-danger" variant="danger" @click="() => {
+                        <Button class="flex items-center text-danger" variant="danger" id="btnDelete" @click="() => {
                           setModalDeleteChild({ open: true, childInfo: child })
                         }
                           ">

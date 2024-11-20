@@ -435,37 +435,80 @@ export const startTourAdmin = async (router, id, formattedMenu, activeMobileMenu
         }
       },
       {
-        element: '#donationsGraph',
+        element: '#donacionSemanal',
         popover: {
-          prevBtnText: 'Anterior',
-          nextBtnText: 'Siguiente',
           title: 'Donaciones semanales',
-          description: 'Se mostrará estadísticas de las donaciónes de la semana.',
+          description: 'Se mostrara estadisticas de las donaciones de la semana.',
           onPrevClick: () => {
             activeMobileMenu.value = true
             setTimeout(() => {
               driverObj.movePrevious()
             }, 100)
+          },
+          onNextClick: () => {
+            driverObj.moveNext()
           }
         }
       },
       {
-        element: '#bar-donations',
+        element: '#estadisticasDonaciones',
         popover: {
-          prevBtnText: 'Anterior',
-          nextBtnText: 'Siguiente',
-          title: 'Barras de donaciónes',
-          description:
-            'Aquí se mostrará inforamacion relevante, como cantidad de donaciónes, monto total, última donación y la última fecha.'
+          title: 'Estadisticas de donaciones',
+          description: 'Se muestra las donaciones de Lunes a Viernes.',
+          onNextClick: () => {
+            driverObj.moveNext()
+          }
         }
       },
       {
-        element: '#table-donations',
+        element: '#barDonaciones',
         popover: {
-          prevBtnText: 'Anterior',
-          nextBtnText: 'Siguiente',
-          title: 'Historial de donaciónes',
-          description: 'Se muestran el historia de todas tus donaciónes.'
+          title: 'Barras de donaciones',
+          description:
+            'Aqui se mostrara inforamacion relevante, como cantidad de donaciones, monto total, ultima donacion y la ultima fecha.',
+          onNextClick: () => {
+            driverObj.moveNext()
+          }
+        }
+      },
+      {
+        element: '#historialDonaciones',
+        popover: {
+          title: 'Historial de donaciones',
+          description: 'Se muestran el historia de todas tus donaciones.',
+          onNextClick: () => {
+            driverObj.moveNext()
+          }
+        }
+      },
+      {
+        element: '#buscarDonaciones',
+        popover: {
+          title: 'Buscar donaciones',
+          description: 'Aqui podras buscar la donacion por su concepto.',
+          onNextClick: () => {
+            driverObj.moveNext()
+          }
+        }
+      },
+      {
+        element: '#exportarDonaciones',
+        popover: {
+          title: 'Exportar donaciones',
+          description: 'Aqui podras exportar en PDF o Excel tu historia de donaciones.',
+          onNextClick: () => {
+            driverObj.moveNext()
+          }
+        }
+      },
+      {
+        element: '#donacion',
+        popover: {
+          title: 'Donacion',
+          description: 'Aqui se mostrar todas tu donaciones.',
+          onNextClick: () => {
+            driverObj.moveNext()
+          }
         }
       },
       {

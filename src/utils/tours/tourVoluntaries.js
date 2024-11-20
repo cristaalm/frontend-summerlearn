@@ -4,7 +4,7 @@ import 'driver.js/dist/driver.css'
 import { nextTick } from 'vue'
 import { Baseurl } from '@/utils/global'
 
-export const startTourVolun = async (router, id, formattedMenu, activeMobileMenu, showToas) => {
+export const startTourVolun = async (router, id, formattedMenu, activeMobileMenu, showToast) => {
   const driverObj = driver({
     showProgress: true,
     steps: [
@@ -60,7 +60,8 @@ export const startTourVolun = async (router, id, formattedMenu, activeMobileMenu
         element: '#suscritoActividades',
         popover: {
           title: 'Suscribirse a actividades',
-          description: 'En este boton podras suscribirte a una actividad si es que no te has suscrito.',
+          description:
+            'En este boton podras suscribirte a una actividad si es que no te has suscrito.',
           onNextClick: () => {
             activeMobileMenu.value = true
             setTimeout(() => {
@@ -88,7 +89,6 @@ export const startTourVolun = async (router, id, formattedMenu, activeMobileMenu
               })
             }, 100)
           }
-          
         }
       },
       {
@@ -96,6 +96,12 @@ export const startTourVolun = async (router, id, formattedMenu, activeMobileMenu
         popover: {
           title: 'Buscar alumnos',
           description: 'En este campo podras buscar el nombre del estudiante.',
+          onPrevClick: () => {
+            activeMobileMenu.value = true
+            setTimeout(() => {
+              driverObj.movePrevious()
+            }, 100)
+          },
           onNextClick: () => {
             driverObj.moveNext()
           }
@@ -105,7 +111,8 @@ export const startTourVolun = async (router, id, formattedMenu, activeMobileMenu
         element: '#table-performance',
         popover: {
           title: 'Tabla de desempeño de los alumnos',
-          description: 'Se muestra la tabla donde salen todos los alumnos y se muestran el nombre, la actividad y la calificacion correspondiente.',
+          description:
+            'Se muestra la tabla donde salen todos los alumnos y se muestran el nombre, la actividad y la calificacion correspondiente.',
           onNextClick: () => {
             driverObj.moveNext()
           }
@@ -126,7 +133,8 @@ export const startTourVolun = async (router, id, formattedMenu, activeMobileMenu
         element: '#btnIndividual',
         popover: {
           title: 'Boton de calificaciones',
-          description: 'En este boton podras asignar la calificacion de un solo alumno, si en caso de que ya tenga una, solo mostrara un texto de calificado.',
+          description:
+            'En este boton podras asignar la calificacion de un solo alumno, si en caso de que ya tenga una, solo mostrara un texto de calificado.',
           onNextClick: () => {
             driverObj.moveNext()
           }
@@ -148,8 +156,10 @@ export const startTourVolun = async (router, id, formattedMenu, activeMobileMenu
       {
         element: '#sideBar-chat',
         popover: {
-          title: 'Panel de chat',
-          description: 'Aqui sera la seccion donde se mostrara tus chat y llevaras tus conversaciones.',
+          prevBtnText: 'Anterior',
+          nextBtnText: 'Siguiente',
+          title: 'Menú de chat',
+          description: 'En este menú podrás comunicarte con los usuarios de la plataforma.',
           onNextClick: () => {
             activeMobileMenu.value = false
             router.push({ name: 'chat' }).then(() => {
@@ -167,54 +177,52 @@ export const startTourVolun = async (router, id, formattedMenu, activeMobileMenu
         }
       },
       {
+        element: '#sectionSelect',
+        popover: {
+          prevBtnText: 'Anterior',
+          nextBtnText: 'Siguiente',
+          title: 'Selección de apartado',
+          description: 'Aquí puedes seleccionar entre los chats y los contactos.',
+          onPrevClick: () => {
+            activeMobileMenu.value = true
+            setTimeout(() => {
+              driverObj.movePrevious()
+            }, 100)
+          }
+        }
+      },
+      {
+        element: '#chatList',
+        popover: {
+          prevBtnText: 'Anterior',
+          nextBtnText: 'Siguiente',
+          title: 'Lista de chats',
+          description:
+            'Aquí será la seccion donde se mostrará tus chat y llevaras tus conversaciones.'
+        }
+      },
+      {
+        element: '#searchChat',
+        popover: {
+          prevBtnText: 'Anterior',
+          nextBtnText: 'Siguiente',
+          title: 'Buscador de chat',
+          description: 'Podras buscar un chat en especifico.'
+        }
+      },
+      {
         element: '#chat',
         popover: {
+          prevBtnText: 'Anterior',
+          doneBtnText: 'Finalizar',
           title: 'Chat',
-          description:
-            'Aqui sera la seccion donde se mostrara tus chat y llevaras tus conversaciones.',
-          onNextClick: () => {
-            driverObj.moveNext()
-          }
-        }
-      },
-      {
-        element: '#panelContactos',
-        popover: {
-          title: 'Contactos',
-          description:
-            'Aqui sera la seccion donde podras ver tus contactos con los que podras chatear.',
-          onNextClick: () => {
-            driverObj.moveNext()
-          }
-        }
-      },
-      {
-        element: '#buscarChat',
-        popover: {
-          title: 'Buscar chat',
-          description: 'Aqui puedes buscar el nombre del chat que ocupes.',
-          onNextClick: () => {
-            driverObj.moveNext()
-          }
-        }
-      },
-      {
-        element: '#listaConversaciones',
-        popover: {
-          title: 'Lista de conversaciones',
-          description: 'Se mostrara los contacto con los que has chateado.',
-          onNextClick: () => {
-            driverObj.moveNext()
-          }
-        }
-      },
-      {
-        popover: {
-          title: 'Finalizar tour',
-          description: 'Espero que te haya gustado y tengas una lindas experiencia con nosotros.',
+          description: 'Aquí podrás ver el chat seleccionado y enviar mensajes.',
           onNextClick: async () => {
+            router.push({ name: 'dashboard' }).then(() => {})
             // Marcar la función como async para poder usar await
             driverObj.destroy()
+
+            showToast({ message: '¡Felicidades! Has completado el tour.', type: 'success' })
 
             try {
               const response = await fetch(`${Baseurl}users/${id}/`, {
@@ -237,27 +245,9 @@ export const startTourVolun = async (router, id, formattedMenu, activeMobileMenu
         }
       }
     ],
-
     onDestroyStarted: async () => {
       if (driverObj.hasNextStep()) {
         driverObj.destroy()
-
-        try {
-          const response = await fetch(`${Baseurl}users/${id}/`, {
-            method: 'PATCH',
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Bearer ${localStorage.getItem('access_token')}`
-            },
-            body: JSON.stringify({ users_tour: true })
-          })
-
-          if (!response.ok) {
-            throw new Error('Error al actualizar el tour')
-          }
-        } catch (error) {
-          console.error('Error en la solicitud PATCH:', error)
-        }
       }
     }
   })

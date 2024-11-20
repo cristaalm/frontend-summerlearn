@@ -4,27 +4,130 @@ import 'driver.js/dist/driver.css'
 import { nextTick } from 'vue'
 import { Baseurl } from '@/utils/global'
 
-export const startTourCoord = async (router, id, formattedMenu, activeMobileMenu, showToast) => {
+export const startTourBenef = async (router, id, formattedMenu, activeMobileMenu, showToast) => {
   const driverObj = driver({
     showProgress: true,
     steps: [
       {
+        // 0
         popover: {
           prevBtnText: 'Anterior',
           nextBtnText: 'Siguiente',
-          title: 'Bienvenidos a tu perfil de coordinador',
+          title: 'Bienvenidos a tu perfil de Beneficiario',
           onPopoverRender: () => {
             router.push({ name: 'dashboard' }).then(() => {})
           }
         }
       },
       {
-        element: '#table-performance',
+        // 1
+        element: '#containerChildren',
         popover: {
           prevBtnText: 'Anterior',
           nextBtnText: 'Siguiente',
-          title: 'Tabla de rendimiento',
-          description: 'En esta tabla podrás ver el rendimiento de la plataforma.',
+          title: 'Niños registrados',
+          description: 'Aquí podrás ver tus hijos registrados en la plataforma.',
+          onNextClick: () => {
+            // verificamos si existe un id llamado children
+            if (document.getElementById('children')) {
+              // si existe, lo seleccionamos, continuamos con el tour normal
+              driverObj.moveNext()
+            } else {
+              // si no existe, saltamos al siguiente paso
+              driverObj.moveTo(5)
+            }
+          }
+        }
+      },
+      {
+        // 2
+        element: '#btnGrade',
+        popover: {
+          prevBtnText: 'Anterior',
+          nextBtnText: 'Siguiente',
+          title: 'Botón de calificaciones',
+          description: 'Aquí podrás ver las calificaciones de tus hijos.'
+        }
+      },
+      {
+        // 3
+        element: '#btnEdit',
+        popover: {
+          prevBtnText: 'Anterior',
+          nextBtnText: 'Siguiente',
+          title: 'Botón de editar',
+          description: 'Aquí podrás editar los datos de tus hijos.'
+        }
+      },
+      {
+        // 4
+        element: '#btnDelete',
+        popover: {
+          prevBtnText: 'Anterior',
+          nextBtnText: 'Siguiente',
+          title: 'Botón de eliminar',
+          description: 'Aquí podrás eliminar a tus hijos de la plataforma.'
+        }
+      },
+      {
+        // 5
+        element: '#btnAddChild',
+        popover: {
+          prevBtnText: 'Anterior',
+          nextBtnText: 'Siguiente',
+          title: 'Botón de agregar hijo',
+          description: 'Aquí podrás agregar a tus hijos a la plataforma.',
+          onPrevClick: () => {
+            // verificamos si existe un id llamado btnDelete
+            if (document.getElementById('btnDelete')) {
+              // si existe, lo seleccionamos, continuamos con el tour normal
+              driverObj.movePrevious()
+            } else {
+              // si no existe, saltamos al paso anterior
+              driverObj.moveTo(1)
+            }
+          },
+          onNextClick: () => {
+            activeMobileMenu.value = true
+            setTimeout(() => {
+              driverObj.moveNext()
+            }, 100)
+          }
+        }
+      },
+      {
+        // 6
+        element: '#sideBar-programsActivities',
+        popover: {
+          prevBtnText: 'Anterior',
+          nextBtnText: 'Siguiente',
+          title: 'Menú de programas',
+          description: 'En este menú podrás ver los programas disponibles para tus hijos.',
+          onNextClick: () => {
+            activeMobileMenu.value = false
+            router.push({ name: 'programsActivities' }).then(() => {
+              driverObj.moveNext()
+            })
+          },
+          onPrevClick: () => {
+            activeMobileMenu.value = false
+            setTimeout(() => {
+              router.push({ name: 'dashboard' }).then(() => {
+                driverObj.movePrevious()
+              })
+            }, 100)
+          }
+        }
+      },
+      {
+        // 7
+        element: '#containerProgramsActivities',
+        popover: {
+          prevBtnText: 'Anterior',
+          nextBtnText: 'Siguiente',
+          title: 'Programas y actividades',
+          description:
+            'Aquí podrás ver los programas y actividades disponibles para tus hijos por área.',
           onPrevClick: () => {
             activeMobileMenu.value = true
             setTimeout(() => {
@@ -55,7 +158,7 @@ export const startTourCoord = async (router, id, formattedMenu, activeMobileMenu
           onPrevClick: () => {
             activeMobileMenu.value = false
             setTimeout(() => {
-              router.push({ name: 'performance' }).then(() => {
+              router.push({ name: 'programsActivities' }).then(() => {
                 driverObj.movePrevious()
               })
             }, 100)

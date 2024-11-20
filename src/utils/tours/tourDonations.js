@@ -4,7 +4,7 @@ import 'driver.js/dist/driver.css'
 import { nextTick } from 'vue'
 import { Baseurl } from '@/utils/global'
 
-export const startTourDonor = async (router, id,formattedMenu, activeMobileMenu, showToas) => {
+export const startTourDonor = async (router, id, formattedMenu, activeMobileMenu, showToast) => {
   const driverObj = driver({
     showProgress: true,
     steps: [
@@ -74,15 +74,15 @@ export const startTourDonor = async (router, id,formattedMenu, activeMobileMenu,
       {
         element: '#formatoDonacion',
         popover: {
-          title: 'Formato de donacione',
+          title: 'Formato de donaciones',
           description:
             'Se te mostrara la ultima donacion con su concepto, el monto y la fecha de realizacion.',
-            onNextClick: () => {
-              activeMobileMenu.value = true
-              setTimeout(() => {
-                driverObj.moveNext()
-              }, 100)
-            }
+          onNextClick: () => {
+            activeMobileMenu.value = true
+            setTimeout(() => {
+              driverObj.moveNext()
+            }, 100)
+          }
         }
       },
       {
@@ -111,6 +111,12 @@ export const startTourDonor = async (router, id,formattedMenu, activeMobileMenu,
         popover: {
           title: 'Donaciones semanales',
           description: 'Se mostrara estadisticas de las donaciones de la semana.',
+          onPrevClick: () => {
+            activeMobileMenu.value = true
+            setTimeout(() => {
+              driverObj.movePrevious()
+            }, 100)
+          },
           onNextClick: () => {
             driverObj.moveNext()
           }
@@ -193,8 +199,10 @@ export const startTourDonor = async (router, id,formattedMenu, activeMobileMenu,
       {
         element: '#sideBar-chat',
         popover: {
-          title: 'Panel de chat',
-          description: 'Aqui sera la seccion donde se mostrara tus chat y llevaras tus conversaciones.',
+          prevBtnText: 'Anterior',
+          nextBtnText: 'Siguiente',
+          title: 'Menú de chat',
+          description: 'En este menú podrás comunicarte con los usuarios de la plataforma.',
           onNextClick: () => {
             activeMobileMenu.value = false
             router.push({ name: 'chat' }).then(() => {
@@ -212,54 +220,52 @@ export const startTourDonor = async (router, id,formattedMenu, activeMobileMenu,
         }
       },
       {
+        element: '#sectionSelect',
+        popover: {
+          prevBtnText: 'Anterior',
+          nextBtnText: 'Siguiente',
+          title: 'Selección de apartado',
+          description: 'Aquí puedes seleccionar entre los chats y los contactos.',
+          onPrevClick: () => {
+            activeMobileMenu.value = true
+            setTimeout(() => {
+              driverObj.movePrevious()
+            }, 100)
+          }
+        }
+      },
+      {
+        element: '#chatList',
+        popover: {
+          prevBtnText: 'Anterior',
+          nextBtnText: 'Siguiente',
+          title: 'Lista de chats',
+          description:
+            'Aquí será la seccion donde se mostrará tus chat y llevaras tus conversaciones.'
+        }
+      },
+      {
+        element: '#searchChat',
+        popover: {
+          prevBtnText: 'Anterior',
+          nextBtnText: 'Siguiente',
+          title: 'Buscador de chat',
+          description: 'Podras buscar un chat en especifico.'
+        }
+      },
+      {
         element: '#chat',
         popover: {
+          prevBtnText: 'Anterior',
+          doneBtnText: 'Finalizar',
           title: 'Chat',
-          description:
-            'Aqui sera la seccion donde se mostrara tus chat y llevaras tus conversaciones.',
-          onNextClick: () => {
-            driverObj.moveNext()
-          }
-        }
-      },
-      {
-        element: '#panelContactos',
-        popover: {
-          title: 'Contactos',
-          description:
-            'Aqui sera la seccion donde podras ver tus contactos con los que podras chatear.',
-          onNextClick: () => {
-            driverObj.moveNext()
-          }
-        }
-      },
-      {
-        element: '#buscarChat',
-        popover: {
-          title: 'Buscar chat',
-          description: 'Aqui puedes buscar el nombre del chat que ocupes.',
-          onNextClick: () => {
-            driverObj.moveNext()
-          }
-        }
-      },
-      {
-        element: '#listaConversaciones',
-        popover: {
-          title: 'Lista de conversaciones',
-          description: 'Se mostrara los contacto con los que has chateado.',
-          onNextClick: () => {
-            driverObj.moveNext()
-          }
-        }
-      },
-      {
-        popover: {
-          title: 'Finalizar tour',
-          description: 'Espero que te haya gustado y tengas una lindas experiencia con nosotros.',
+          description: 'Aquí podrás ver el chat seleccionado y enviar mensajes.',
           onNextClick: async () => {
+            router.push({ name: 'dashboard' }).then(() => {})
             // Marcar la función como async para poder usar await
             driverObj.destroy()
+
+            showToast({ message: '¡Felicidades! Has completado el tour.', type: 'success' })
 
             try {
               const response = await fetch(`${Baseurl}users/${id}/`, {
@@ -282,27 +288,9 @@ export const startTourDonor = async (router, id,formattedMenu, activeMobileMenu,
         }
       }
     ],
-
     onDestroyStarted: async () => {
       if (driverObj.hasNextStep()) {
         driverObj.destroy()
-
-        try {
-          const response = await fetch(`${Baseurl}users/${id}/`, {
-            method: 'PATCH',
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Bearer ${localStorage.getItem('access_token')}`
-            },
-            body: JSON.stringify({ users_tour: true })
-          })
-
-          if (!response.ok) {
-            throw new Error('Error al actualizar el tour')
-          }
-        } catch (error) {
-          console.error('Error en la solicitud PATCH:', error)
-        }
       }
     }
   })

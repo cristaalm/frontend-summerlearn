@@ -48,7 +48,8 @@ const childrenData = computed(() => {
 
 <template>
   <div
-    class="bg-white dark:bg-[#28334e] w-full min-h-screen p-8 rounded-xl flex flex-col items-center dark:text-slate-200">
+    class="bg-white dark:bg-[#28334e] w-full min-h-screen p-8 rounded-xl flex flex-col items-center dark:text-slate-200 box box--stacked"
+    id="containerProgramsActivities">
     <h2 class="text-5xl text-black dark:text-slate-200 mb-8">
       Programas de actividades
     </h2>
