@@ -5,12 +5,12 @@ export function useDialogEditActivity() {
   const activityInfoProvideEdit = ref(null)
   const setModalEditActivity = ({ open, activityInfo = null }) => {
     if (open) {
-      if (!activityInfoProvideEdit) return
-      ModalEditActivity.value = open
+      if (!activityInfo) return
+      console.log(ModalEditActivity)
+      ModalEditActivity.value = true
       activityInfoProvideEdit.value = activityInfo
     } else {
-      ModalEditActivity.value = open
-      console.log('no obtiene nada')
+      ModalEditActivity.value = false
     }
   }
 

@@ -20,8 +20,10 @@ export function useActivity() {
         },
         body: JSON.stringify({
           activities_name: newActivity.value.name,
-          activities_user: newActivity.value.user.id,
-          activities_description: newActivity.value.description
+          activities_user: newActivity.value.responsible,
+          activities_description: newActivity.value.description,
+          activities_program: newActivity.value.program,
+          activities_date: newActivity.value.date.split('/').reverse().join('-')
         })
       })
       if (!response.ok) {
@@ -39,9 +41,16 @@ export function useActivity() {
       }
       successEditActivity.value = true
       activity.name = data.activities_name
-      activity.activities_user.id = data.activities_user.id
-      activity.activities_user.name = data.activities_user.name
+      activity.activities_user = data.activities_user.id
       activity.description = data.activities_description
+      activity.program_id = data.activities_program.id
+      activity.program_name = data.activities_program.name
+
+      const dateParts = data.activities_date.split('-')
+      const formattedDate = `${dateParts[2]}/${dateParts[1]}/${dateParts[0]}`
+
+      activity.date = formattedDate
+
       setModalEditActivity({ open: false })
       showToast({ message: 'Actividad actualizada exitosamente.', type: 'success' })
     } catch (e) {
