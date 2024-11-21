@@ -215,6 +215,7 @@ async function againTour() {
   // verificamos si existe el componente del tour que tiene la clase driver-popover
   const driverPopover = document.querySelector('.driver-popover');
   if (driverPopover) return // si existe, no hacemos nada
+  if (status !== 1) return
   if (role == 1) startTourAdmin(router, id, formattedMenu, activeMobileMenu, showToast);
   if (role == 2) startTourCoord(router, id, formattedMenu, activeMobileMenu, showToast);
   if (role == 3) startTourDonor(router, id, formattedMenu, activeMobileMenu, showToast);
