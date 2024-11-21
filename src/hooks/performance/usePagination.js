@@ -1,4 +1,4 @@
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 
 export function usePagination(items, initialPageSize = 10) {
   const pageSize = ref(initialPageSize)
@@ -16,6 +16,7 @@ export function usePagination(items, initialPageSize = 10) {
     if (page > totalPages.value) page = totalPages.value
     currentPage.value = page
   }
+
 
   const changePageSize = (size) => {
     if (size > 0) {

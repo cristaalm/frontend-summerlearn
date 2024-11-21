@@ -142,6 +142,9 @@ if ((role === 1 || role === 2 || role === 4 || role === 5) && status != 3) {
   onMounted(() => loadChildrens())
 
   const { performance, loadingPerformance, loadPerformance, errorPerformance } = usePerformance()
+  if (role === 4){ // si el rol es voluntario
+    loadings.push(loadingPerformance) // va esperar a que termine de cargar los performance
+  }
   provide('performance', { performance, loadingPerformance, loadPerformance, errorPerformance })
   onMounted(() => loadPerformance())
 
