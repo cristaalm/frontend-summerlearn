@@ -28,7 +28,8 @@ export const getActividades = async () => {
       area_name: actividades.activities_program.area,
       program_name: actividades.activities_program.name,
       num_beneficiario: actividades.num_son,
-      num_voluntario: actividades.num_volun
+      num_voluntario: actividades.num_volun,
+      activities_user: actividades.activities_user.id
     }
   })
 }
