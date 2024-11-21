@@ -6,7 +6,6 @@ export function useDialogEditActivity() {
   const setModalEditActivity = ({ open, activityInfo = null }) => {
     if (open) {
       if (!activityInfo) return
-      console.log(ModalEditActivity)
       ModalEditActivity.value = true
       activityInfoProvideEdit.value = activityInfo
     } else {

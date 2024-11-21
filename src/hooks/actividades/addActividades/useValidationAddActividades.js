@@ -92,7 +92,6 @@ export function useValidationAddActividades() {
     const { start, end } = programs.value.find((program) => program.id == programId) // start y end son fechas en formato YYYY-MM-DD
 
     if (dateFormat >= start && dateFormat <= end) {
-      console.log('Fecha de la actividad dentro del rango de fechas del programa.')
       status.value.date.error = false
       status.value.date.success = true
       status.value.date.message = ''

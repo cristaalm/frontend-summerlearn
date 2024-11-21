@@ -14,7 +14,6 @@ onMounted(() => {
   loadPrograms()
   loadAreas()
   loadChildrens()
-  console.log("Actividades cargadas: ", actividades.value)
 })
 
 const childrenData = computed(() => {
