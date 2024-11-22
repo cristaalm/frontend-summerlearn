@@ -43,7 +43,7 @@ const initTippy = (el: PopperElement, content: string, options?: Partial<Props>)
         }
       ]
     },
-    ...options,
+    ...options
   })
   return instance
 }
@@ -58,7 +58,7 @@ const updateContent = (newContent: string) => {
 // Enlazar la instancia de tippy
 const bindInstance = (el: PopperElement) => {
   if (props.refKey) {
-    const bind = inject<ProvideTippy>(`bind[${props.refKey}]`, () => { })
+    const bind = inject<ProvideTippy>(`bind[${props.refKey}]`, () => {})
     if (bind) {
       bind(el)
     }
@@ -73,9 +73,12 @@ const isDisabled = () => {
 }
 
 // Reactividad para cuando cambie el contenido del tooltip
-watch(() => props.content, (newContent) => {
-  updateContent(newContent)
-})
+watch(
+  () => props.content,
+  (newContent) => {
+    updateContent(newContent)
+  }
+)
 
 // Montaje de tippy.js en el elemento
 onMounted(() => {
@@ -86,7 +89,6 @@ onMounted(() => {
     isDisabled()
   }
 })
-
 </script>
 
 <template>

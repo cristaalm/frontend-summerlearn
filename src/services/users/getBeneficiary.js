@@ -15,6 +15,6 @@ export const getUsers = async () => {
 
   return users?.map((user) => ({
     id: user.id,
-    name: user.name,
+    name: user.name
   }))
 }

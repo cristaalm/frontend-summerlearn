@@ -20,9 +20,18 @@ import { FormInput, FormSelect } from '@/components/base/Form'
 import Table from '@/components/base/Table'
 
 const router = useRouter()
-const { graphicDonations, barDonations, donations, loadingDonations, errorDonations, loadDonations, deleteDonation } = inject('donations')
+const {
+  graphicDonations,
+  barDonations,
+  donations,
+  loadingDonations,
+  errorDonations,
+  loadDonations,
+  deleteDonation
+} = inject('donations')
 const { searchQuery, filteredItems } = useDonationSearch(donations)
-const { currentPage, pageSize, totalPages, paginatedItems, changePage, changePageSize } = usePagination(filteredItems)
+const { currentPage, pageSize, totalPages, paginatedItems, changePage, changePageSize } =
+  usePagination(filteredItems)
 const { loadDonationsWeek, totalDonationsWeek } = useWeeklyDonations()
 const { loadExportExcel, loadingExportExcel } = useExportExcel()
 const { loadExportPDF, loadingExportPDF } = useExportPDF()
@@ -37,13 +46,6 @@ onMounted(() => {
   loadDonations()
   loadDonationsWeek()
 })
-
-
-
-
-
-
-
 </script>
 
 <template>
@@ -53,8 +55,12 @@ onMounted(() => {
         <div class="text-base font-medium group-[.mode--light]:text-white">Donaciones</div>
 
         <div class="flex flex-col sm:flex-row gap-x-3 gap-y-2 md:ml-auto" id="agregarDonacion">
-          <Button variant="primary" @click="() => router.push({ name: 'addDonation' })" id="button-add-donation"
-            class="group-[.mode--light]:!bg-white/[0.12] group-[.mode--light]:!text-slate-200 group-[.mode--light]:!border-transparent">
+          <Button
+            variant="primary"
+            @click="() => router.push({ name: 'addDonation' })"
+            id="button-add-donation"
+            class="group-[.mode--light]:!bg-white/[0.12] group-[.mode--light]:!text-slate-200 group-[.mode--light]:!border-transparent"
+          >
             <Lucide icon="PenLine" class="stroke-[1.3] w-4 h-4 mr-2" />
             Agregar nueva donación
           </Button>
@@ -68,13 +74,17 @@ onMounted(() => {
 
           <div class="col-span-12 p-1 md:col-span-6 2xl:col-span-6 box box--stacked">
             <div
-              class="-mx-1 overflow-hidden h-[244px] [&_.tns-outer_.tns-nav]:bottom-auto [&_.tns-outer_.tns-nav]:w-auto [&_.tns-outer_.tns-nav]:ml-5 [&_.tns-outer_.tns-nav]:mt-5 [&_.tns-outer_.tns-nav_button]:w-2 [&_.tns-outer_.tns-nav_button]:h-2 [&_.tns-outer_.tns-nav_button.tns-nav-active]:w-5 [&_.tns-outer_.tns-nav_button]:mx-0.5 [&_.tns-outer_.tns-nav_button]:bg-black/40 [&_.tns-outer_.tns-nav_button.tns-nav-active]:bg-black/70">
+              class="-mx-1 overflow-hidden h-[244px] [&_.tns-outer_.tns-nav]:bottom-auto [&_.tns-outer_.tns-nav]:w-auto [&_.tns-outer_.tns-nav]:ml-5 [&_.tns-outer_.tns-nav]:mt-5 [&_.tns-outer_.tns-nav_button]:w-2 [&_.tns-outer_.tns-nav_button]:h-2 [&_.tns-outer_.tns-nav_button.tns-nav-active]:w-5 [&_.tns-outer_.tns-nav_button]:mx-0.5 [&_.tns-outer_.tns-nav_button]:bg-black/40 [&_.tns-outer_.tns-nav_button.tns-nav-active]:bg-black/70"
+            >
               <TinySlider :options="{ mode: 'gallery', nav: true }">
                 <div class="px-1">
                   <div
-                    class="overflow-hidden relative flex flex-col w-full h-full p-5 rounded-[0.5rem] bg-gradient-to-b from-theme-2/90 to-theme-1/[0.85]">
-                    <Lucide icon="Medal"
-                      class="absolute top-0 right-0 w-36 h-36 -mt-5 -mr-5 text-white/20 fill-white/[0.03] transform rotate-[-10deg] stroke-[0.3]" />
+                    class="overflow-hidden relative flex flex-col w-full h-full p-5 rounded-[0.5rem] bg-gradient-to-b from-theme-2/90 to-theme-1/[0.85]"
+                  >
+                    <Lucide
+                      icon="Medal"
+                      class="absolute top-0 right-0 w-36 h-36 -mt-5 -mr-5 text-white/20 fill-white/[0.03] transform rotate-[-10deg] stroke-[0.3]"
+                    />
                     <div class="mt-12 mb-9">
                       <div class="text-2xl font-medium leading-snug text-black dark:text-slate-200">
                         Estadísticas de
@@ -93,10 +103,14 @@ onMounted(() => {
 
           <!--? Card -->
 
-          <div class="flex flex-col col-span-12 p-5 md:col-span-6 2xl:col-span-6 box box--stacked"
-            id="estadisticasDonaciones">
+          <div
+            class="flex flex-col col-span-12 p-5 md:col-span-6 2xl:col-span-6 box box--stacked"
+            id="estadisticasDonaciones"
+          >
             <div class="pb-5 mb-5 border-b border-dashed border-slate-300/70">
-              <div class="text-base text-slate-500  dark:text-slate-200" v-if="!loadingDonations">Donación semanal</div>
+              <div class="text-base text-slate-500 dark:text-slate-200" v-if="!loadingDonations">
+                Donación semanal
+              </div>
               <div class="flex items-center mt-1">
                 <div class="flex items-center text-xl font-medium dark:text-slate-400">
                   <span class="mr-px">$</span>{{ totalDonationsWeek }}
@@ -106,7 +120,9 @@ onMounted(() => {
             </div>
             <ReportBarChart3 class="relative z-10 -ml-1" :height="80" />
 
-            <span class="flex items-center mt-6 font-medium text-primary dark:text-slate-200">Donaciones diarias</span>
+            <span class="flex items-center mt-6 font-medium text-primary dark:text-slate-200"
+              >Donaciones diarias</span
+            >
           </div>
         </div>
 
@@ -115,9 +131,11 @@ onMounted(() => {
         <div v-if="!errorDonations" class="flex flex-col p-5 box box--stacked" id="barDonaciones">
           <div class="grid grid-cols-4 gap-5">
             <div
-              class="col-span-4 md:col-span-2 xl:col-span-1 p-5 border border-dashed rounded-[0.6rem] border-slate-300/80 box shadow-sm">
-              <div class="text-base text-slate-500  dark:text-slate-200" v-if="!loadingDonations">Cantidad de
-                donaciones:</div>
+              class="col-span-4 md:col-span-2 xl:col-span-1 p-5 border border-dashed rounded-[0.6rem] border-slate-300/80 box shadow-sm"
+            >
+              <div class="text-base text-slate-500 dark:text-slate-200" v-if="!loadingDonations">
+                Cantidad de donaciones:
+              </div>
               <div class="mt-1.5 text-2xl font-medium dark:text-slate-200">
                 <div v-if="loadingDonations" class="w-full h-4 mt-4">
                   <LoadingIcon icon="three-dots" color="gray" />
@@ -127,8 +145,10 @@ onMounted(() => {
               <div class="absolute inset-y-0 right-0 flex flex-col justify-center mr-5"></div>
             </div>
             <div
-              class="col-span-4 md:col-span-2 xl:col-span-1 p-5 border border-dashed rounded-[0.6rem] border-slate-300/80 box shadow-sm">
-              <div class="text-base text-slate-500  dark:text-slate-200" v-if="!loadingDonations">Dinero total donado:
+              class="col-span-4 md:col-span-2 xl:col-span-1 p-5 border border-dashed rounded-[0.6rem] border-slate-300/80 box shadow-sm"
+            >
+              <div class="text-base text-slate-500 dark:text-slate-200" v-if="!loadingDonations">
+                Dinero total donado:
               </div>
               <div class="mt-1.5 text-2xl font-medium dark:text-slate-200">
                 <div v-if="loadingDonations" class="w-full h-4 mt-4">
@@ -137,18 +157,20 @@ onMounted(() => {
                 {{
                   !loadingDonations
                     ? `${new Intl.NumberFormat('es-MX', {
-                      style: 'currency',
-                      currency: 'MXN'
-                    }).format(barDonations.totalDonations)}`
+                        style: 'currency',
+                        currency: 'MXN'
+                      }).format(barDonations.totalDonations)}`
                     : ''
                 }}
               </div>
               <div class="absolute inset-y-0 right-0 flex flex-col justify-center mr-5"></div>
             </div>
             <div
-              class="col-span-4 md:col-span-2 xl:col-span-1 p-5 border border-dashed rounded-[0.6rem] border-slate-300/80 box shadow-sm">
-              <div class="text-base text-slate-500  dark:text-slate-200" v-if="!loadingDonations">Última cantidad
-                donada:</div>
+              class="col-span-4 md:col-span-2 xl:col-span-1 p-5 border border-dashed rounded-[0.6rem] border-slate-300/80 box shadow-sm"
+            >
+              <div class="text-base text-slate-500 dark:text-slate-200" v-if="!loadingDonations">
+                Última cantidad donada:
+              </div>
               <div class="mt-1.5 text-2xl font-medium dark:text-slate-200">
                 <div v-if="loadingDonations" class="w-full h-4 mt-4">
                   <LoadingIcon icon="three-dots" color="gray" />
@@ -156,24 +178,30 @@ onMounted(() => {
                 {{
                   !loadingDonations
                     ? `${new Intl.NumberFormat('es-MX', {
-                      style: 'currency',
-                      currency: 'MXN'
-                    }).format(barDonations.lastDonationAmount)}`
+                        style: 'currency',
+                        currency: 'MXN'
+                      }).format(barDonations.lastDonationAmount)}`
                     : ''
                 }}
               </div>
               <div class="absolute inset-y-0 right-0 flex flex-col justify-center mr-5"></div>
             </div>
             <div
-              class="col-span-4 md:col-span-2 xl:col-span-1 p-5 border border-dashed rounded-[0.6rem] border-slate-300/80 box shadow-sm">
-              <div class="text-base text-slate-500  dark:text-slate-200" v-if="!loadingDonations">Última fecha de
-                donación:</div>
+              class="col-span-4 md:col-span-2 xl:col-span-1 p-5 border border-dashed rounded-[0.6rem] border-slate-300/80 box shadow-sm"
+            >
+              <div class="text-base text-slate-500 dark:text-slate-200" v-if="!loadingDonations">
+                Última fecha de donación:
+              </div>
               <div class="mt-1.5 text-2xl font-medium dark:text-slate-200">
                 <div v-if="loadingDonations" class="w-full h-4 mt-4">
                   <LoadingIcon icon="three-dots" color="gray" />
                 </div>
                 <div v-if="!loadingDonations">
-                  {{ barDonations.lastDonationDate ? formatDateToDDMMYYYY(barDonations.lastDonationDate) : 'N/A' }}
+                  {{
+                    barDonations.lastDonationDate
+                      ? formatDateToDDMMYYYY(barDonations.lastDonationDate)
+                      : 'N/A'
+                  }}
                 </div>
               </div>
               <div class="absolute inset-y-0 right-0 flex flex-col justify-center mr-5"></div>
@@ -195,44 +223,82 @@ onMounted(() => {
               <div class="flex flex-col p-5 sm:items-center sm:flex-row gap-y-2">
                 <div>
                   <div class="relative" id="buscarDonaciones">
-                    <Lucide icon="Search"
-                      class="absolute inset-y-0 left-0 z-10 w-4 h-4 my-auto ml-3 stroke-[1.3] text-slate-500" />
-                    <FormInput v-model="searchQuery" type="text" placeholder="Buscar nombre de donante..."
-                      class="pl-9 sm:w-64 rounded-[0.5rem] dark:text-slate-200 dark:placeholder:text-slate-400" />
+                    <Lucide
+                      icon="Search"
+                      class="absolute inset-y-0 left-0 z-10 w-4 h-4 my-auto ml-3 stroke-[1.3] text-slate-500"
+                    />
+                    <FormInput
+                      v-model="searchQuery"
+                      type="text"
+                      placeholder="Buscar nombre de donante..."
+                      class="pl-9 sm:w-64 rounded-[0.5rem] dark:text-slate-200 dark:placeholder:text-slate-400"
+                    />
                   </div>
                 </div>
-                <div class="flex flex-col sm:flex-row gap-x-3 gap-y-2 sm:ml-auto" id="exportarDonaciones">
+                <div
+                  class="flex flex-col sm:flex-row gap-x-3 gap-y-2 sm:ml-auto"
+                  id="exportarDonaciones"
+                >
                   <Menu>
-                    <Menu.Button :as="Button" variant="outline-secondary"
+                    <Menu.Button
+                      :as="Button"
+                      variant="outline-secondary"
                       :class="`w-full sm:w-auto ${loadingExportExcel || loadingExportPDF ? 'text-amber-500 dark:text-yellow-500' : ' text-black dark:text-slate-200'}`"
-                      :disabled="loadingExportExcel || loadingExportPDF">
-                      <Lucide v-if="!loadingExportExcel && !loadingExportPDF" icon="Download"
-                        class="stroke-[1.3] w-4 h-4 mr-2 text-black dark:text-slate-200" />
-                      <LoadingIcon v-if="loadingExportExcel || loadingExportPDF" icon="tail-spin"
-                        class="stroke-[1.3] w-4 h-4 mr-2 text-black dark:text-slate-200" color="black" />
+                      :disabled="loadingExportExcel || loadingExportPDF"
+                    >
+                      <Lucide
+                        v-if="!loadingExportExcel && !loadingExportPDF"
+                        icon="Download"
+                        class="stroke-[1.3] w-4 h-4 mr-2 text-black dark:text-slate-200"
+                      />
+                      <LoadingIcon
+                        v-if="loadingExportExcel || loadingExportPDF"
+                        icon="tail-spin"
+                        class="stroke-[1.3] w-4 h-4 mr-2 text-black dark:text-slate-200"
+                        color="black"
+                      />
                       Exportar
-                      <Lucide icon="ChevronDown" class="stroke-[1.3] w-4 h-4 ml-2 text-black dark:text-slate-200" />
+                      <Lucide
+                        icon="ChevronDown"
+                        class="stroke-[1.3] w-4 h-4 ml-2 text-black dark:text-slate-200"
+                      />
                     </Menu.Button>
                     <Menu.Items class="w-40">
                       <Menu.Item @click="loadExportExcel">
                         <Button
                           :class="`w-full dark:border-none ${loadingExportExcel ? 'text-amber-500 dark:text-yellow-500' : ' text-black dark:text-slate-200'}`"
-                          :disabled="loadingExportExcel">
-                          <Lucide v-if="!loadingExportExcel" icon="FileSpreadsheet"
-                            class="stroke-[1.3] w-4 h-4 mr-2 text-black dark:text-slate-200" />
-                          <LoadingIcon v-if="loadingExportExcel" icon="tail-spin"
-                            class="stroke-[1.3] w-4 h-4 mr-2 text-black dark:text-slate-200" color="black" />
+                          :disabled="loadingExportExcel"
+                        >
+                          <Lucide
+                            v-if="!loadingExportExcel"
+                            icon="FileSpreadsheet"
+                            class="stroke-[1.3] w-4 h-4 mr-2 text-black dark:text-slate-200"
+                          />
+                          <LoadingIcon
+                            v-if="loadingExportExcel"
+                            icon="tail-spin"
+                            class="stroke-[1.3] w-4 h-4 mr-2 text-black dark:text-slate-200"
+                            color="black"
+                          />
                           Excel
                         </Button>
                       </Menu.Item>
                       <Menu.Item @click="loadExportPDF">
                         <Button
                           :class="`w-full dark:border-none ${loadingExportPDF ? 'text-amber-500 dark:text-yellow-500' : ' text-black dark:text-slate-200'}`"
-                          :disabled="loadingExportPDF">
-                          <Lucide v-if="!loadingExportPDF" icon="File"
-                            class="stroke-[1.3] w-4 h-4 mr-2 text-black dark:text-slate-200" />
-                          <LoadingIcon v-if="loadingExportPDF" icon="tail-spin"
-                            class="stroke-[1.3] w-4 h-4 mr-2 text-black dark:text-slate-200" color="black" />
+                          :disabled="loadingExportPDF"
+                        >
+                          <Lucide
+                            v-if="!loadingExportPDF"
+                            icon="File"
+                            class="stroke-[1.3] w-4 h-4 mr-2 text-black dark:text-slate-200"
+                          />
+                          <LoadingIcon
+                            v-if="loadingExportPDF"
+                            icon="tail-spin"
+                            class="stroke-[1.3] w-4 h-4 mr-2 text-black dark:text-slate-200"
+                            color="black"
+                          />
                           PDF
                         </Button>
                       </Menu.Item>
@@ -246,19 +312,23 @@ onMounted(() => {
                   <Table.Thead>
                     <Table.Tr>
                       <Table.Td
-                        class="w-5 py-4 font-medium border-t bg-slate-50 dark:bg-transparent border-slate-200/60 text-slate-500 dark:text-slate-200">
+                        class="w-5 py-4 font-medium border-t bg-slate-50 dark:bg-transparent border-slate-200/60 text-slate-500 dark:text-slate-200"
+                      >
                         Donante
                       </Table.Td>
                       <Table.Td
-                        class="w-5 py-4 font-medium border-t bg-slate-50 dark:bg-transparent border-slate-200/60 text-slate-500 dark:text-slate-200">
+                        class="w-5 py-4 font-medium border-t bg-slate-50 dark:bg-transparent border-slate-200/60 text-slate-500 dark:text-slate-200"
+                      >
                         Monto
                       </Table.Td>
                       <Table.Td
-                        class="w-5 py-4 font-medium border-t bg-slate-50 dark:bg-transparent border-slate-200/60 text-slate-500 dark:text-slate-200">
+                        class="w-5 py-4 font-medium border-t bg-slate-50 dark:bg-transparent border-slate-200/60 text-slate-500 dark:text-slate-200"
+                      >
                         Concepto
                       </Table.Td>
                       <Table.Td
-                        class="w-5 py-4 font-medium border-t bg-slate-50 dark:bg-transparent border-slate-200/60 text-slate-500 dark:text-slate-200">
+                        class="w-5 py-4 font-medium border-t bg-slate-50 dark:bg-transparent border-slate-200/60 text-slate-500 dark:text-slate-200"
+                      >
                         Fecha
                       </Table.Td>
                     </Table.Tr>
@@ -267,7 +337,10 @@ onMounted(() => {
                   <!--? Mostrar 'Cargando información...' cuando loadingDonations es true -->
                   <Table.Tbody v-if="loadingDonations">
                     <Table.Tr>
-                      <Table.Td colspan="4" class="py-8 text-center text-xl font-bold text-green-500">
+                      <Table.Td
+                        colspan="4"
+                        class="py-8 text-center text-xl font-bold text-green-500"
+                      >
                         <div class="flex flex-col w-full justify-center items-center text-nowrap">
                           <LoadingIcon icon="tail-spin" class="h-8" color="black" />
                           <div class="mt-2">Cargando información...</div>
@@ -288,15 +361,22 @@ onMounted(() => {
                   <!--? Mostrar mensaje de error cuando no se encuentran usuarios -->
                   <Table.Tbody v-if="!loadingDonations && totalPages <= 0 && !errorDonations">
                     <Table.Tr>
-                      <Table.Td colspan="4" class="py-8 text-center text-xl font-bold text-amber-500">
+                      <Table.Td
+                        colspan="4"
+                        class="py-8 text-center text-xl font-bold text-amber-500"
+                      >
                         No se encontraron donaciones
                       </Table.Td>
                     </Table.Tr>
                   </Table.Tbody>
 
                   <Table.Tbody v-if="!loadingDonations && !errorDonations">
-                    <Table.Tr id="donacion" class="[&_td]:last:border-b-0" v-for="(donations, key) in paginatedItems"
-                      :key="key">
+                    <Table.Tr
+                      id="donacion"
+                      class="[&_td]:last:border-b-0"
+                      v-for="(donations, key) in paginatedItems"
+                      :key="key"
+                    >
                       <Table.Td class="py-4 border-dashed dark:bg-darkmode-600 dark:text-slate-200">
                         {{ donations.user.name }}
                       </Table.Td>
@@ -318,7 +398,9 @@ onMounted(() => {
                   </Table.Tbody>
                 </Table>
               </div>
-              <div class="flex flex-col-reverse flex-wrap items-center p-5 flex-reverse gap-y-2 sm:flex-row">
+              <div
+                class="flex flex-col-reverse flex-wrap items-center p-5 flex-reverse gap-y-2 sm:flex-row"
+              >
                 <Pagination class="flex-1 w-full mr-auto sm:w-auto">
                   <Pagination.Link @click="changePage(1)">
                     <Lucide icon="ChevronsLeft" class="w-4 h-4" />
@@ -338,8 +420,11 @@ onMounted(() => {
                     <Lucide icon="ChevronsRight" class="w-4 h-4" />
                   </Pagination.Link>
                 </Pagination>
-                <FormSelect class="sm:w-20 rounded-[0.5rem] dark:text-slate-200" v-model="pageSize"
-                  @change="changePageSize">
+                <FormSelect
+                  class="sm:w-20 rounded-[0.5rem] dark:text-slate-200"
+                  v-model="pageSize"
+                  @change="changePageSize"
+                >
                   <option value="10">10</option>
                   <option value="20">20</option>
                   <option value="30">30</option>

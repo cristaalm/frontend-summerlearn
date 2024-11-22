@@ -1,5 +1,3 @@
 <template>
-  <div>
-      AddPerformanceview
-  </div>
+  <div>AddPerformanceview</div>
 </template>

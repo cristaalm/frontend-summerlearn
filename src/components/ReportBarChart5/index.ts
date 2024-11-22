@@ -1,3 +1,3 @@
-import ReportBarChart5 from "./ReportBarChart5.vue";
+import ReportBarChart5 from './ReportBarChart5.vue'
 
-export default ReportBarChart5;
+export default ReportBarChart5

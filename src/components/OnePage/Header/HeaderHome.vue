@@ -12,9 +12,7 @@ const changeColor = () => {
 }
 
 const logoSrc = computed(() => {
-  return color.value || !topScroll.value
-    ? '/logo_letra_sinbg.png'
-    : '/logo_completo.png'
+  return color.value || !topScroll.value ? '/logo_letra_sinbg.png' : '/logo_completo.png'
 })
 
 window.addEventListener('scroll', () => {

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import "@/assets/css/vendors/zoom-vanilla.css";
-import "zoom-vanilla.js/dist/zoom-vanilla.min.js";
+import '@/assets/css/vendors/zoom-vanilla.css'
+import 'zoom-vanilla.js/dist/zoom-vanilla.min.js'
 </script>
 
 <template>

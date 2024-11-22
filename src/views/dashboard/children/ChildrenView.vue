@@ -22,7 +22,6 @@ const router = useRouter()
 onMounted(() => {
   loadChildrens()
 })
-
 </script>
 
 <template>
@@ -36,10 +35,16 @@ onMounted(() => {
           <div class="flex flex-col p-5 sm:items-center sm:flex-row gap-y-2">
             <div>
               <div class="relative">
-                <Lucide icon="Search"
-                  class="absolute inset-y-0 left-0 z-10 w-4 h-4 my-auto ml-3 stroke-[1.3] text-slate-500" />
-                <FormInput v-model="searchQuery" type="text" placeholder="Buscar nombre del niño..."
-                  class="pl-9 sm:w-72 rounded-[0.5rem] dark:text-slate-200" />
+                <Lucide
+                  icon="Search"
+                  class="absolute inset-y-0 left-0 z-10 w-4 h-4 my-auto ml-3 stroke-[1.3] text-slate-500"
+                />
+                <FormInput
+                  v-model="searchQuery"
+                  type="text"
+                  placeholder="Buscar nombre del niño..."
+                  class="pl-9 sm:w-72 rounded-[0.5rem] dark:text-slate-200"
+                />
               </div>
             </div>
           </div>
@@ -48,27 +53,33 @@ onMounted(() => {
               <Table.Thead>
                 <Table.Tr>
                   <Table.Td
-                    class="w-5 py-4 font-medium border-t bg-slate-50 dark:bg-transparent border-slate-200/60 text-slate-500 dark:text-slate-200">
+                    class="w-5 py-4 font-medium border-t bg-slate-50 dark:bg-transparent border-slate-200/60 text-slate-500 dark:text-slate-200"
+                  >
                     Foto
                   </Table.Td>
                   <Table.Td
-                    class="w-5 py-4 font-medium border-t bg-slate-50 dark:bg-transparent border-slate-200/60 text-slate-500 dark:text-slate-200">
+                    class="w-5 py-4 font-medium border-t bg-slate-50 dark:bg-transparent border-slate-200/60 text-slate-500 dark:text-slate-200"
+                  >
                     Nombre
                   </Table.Td>
                   <Table.Td
-                    class="w-5 py-4 font-medium border-t bg-slate-50 dark:bg-transparent border-slate-200/60 text-slate-500 dark:text-slate-200">
+                    class="w-5 py-4 font-medium border-t bg-slate-50 dark:bg-transparent border-slate-200/60 text-slate-500 dark:text-slate-200"
+                  >
                     Edad
                   </Table.Td>
                   <Table.Td
-                    class="w-5 py-4 font-medium border-t bg-slate-50 dark:bg-transparent border-slate-200/60 text-slate-500 dark:text-slate-200">
+                    class="w-5 py-4 font-medium border-t bg-slate-50 dark:bg-transparent border-slate-200/60 text-slate-500 dark:text-slate-200"
+                  >
                     CURP
                   </Table.Td>
                   <Table.Td
-                    class="w-5 py-4 font-medium border-t bg-slate-50 dark:bg-transparent border-slate-200/60 text-slate-500 dark:text-slate-200">
+                    class="w-5 py-4 font-medium border-t bg-slate-50 dark:bg-transparent border-slate-200/60 text-slate-500 dark:text-slate-200"
+                  >
                     Padre / Madre / Tutor
                   </Table.Td>
                   <Table.Td
-                    class="py-4 font-medium text-center border-t w-5 bg-slate-50 dark:bg-transparent border-slate-200/60 text-slate-500 dark:text-slate-200">
+                    class="py-4 font-medium text-center border-t w-5 bg-slate-50 dark:bg-transparent border-slate-200/60 text-slate-500 dark:text-slate-200"
+                  >
                   </Table.Td>
                 </Table.Tr>
               </Table.Thead>
@@ -110,9 +121,14 @@ onMounted(() => {
                     <Table.Td class="py-4 border-dashed dark:bg-darkmode-600 dark:text-slate-200">
                       <div class="flex">
                         <div class="w-9 h-9 image-fit zoom-in">
-                          <Tippy as="img" alt="Tailwise - Admin Dashboard Template"
+                          <Tippy
+                            as="img"
+                            alt="Tailwise - Admin Dashboard Template"
                             class="rounded-full cursor-default shadow-[0px_0px_0px_2px_#fff,_1px_1px_5px_rgba(0,0,0,0.32)] dark:shadow-[0px_0px_0px_2px_#3f4865,_1px_1px_5px_rgba(0,0,0,0.32)]"
-                            :src="`${Baseurl}${children.photo}`" :disable="true" :content="`Image Children`" />
+                            :src="`${Baseurl}${children.photo}`"
+                            :disable="true"
+                            :content="`Image Children`"
+                          />
                         </div>
                       </div>
                     </Table.Td>
@@ -137,12 +153,16 @@ onMounted(() => {
                       </div>
                     </Table.Td>
 
-                    <Table.Td class="relative py-4 border-dashed dark:bg-darkmode-600 dark:text-slate-200">
+                    <Table.Td
+                      class="relative py-4 border-dashed dark:bg-darkmode-600 dark:text-slate-200"
+                    >
                       <div class="flex items-center justify-end">
                         <Menu class="h-5">
                           <Menu.Button class="w-5 h-5 text-black dark:text-slate-200">
-                            <Lucide icon="MoreVertical"
-                              class="w-5 h-5 stroke-black dark:stroke-slate-200 fill-black dark:fill-slate-200" />
+                            <Lucide
+                              icon="MoreVertical"
+                              class="w-5 h-5 stroke-black dark:stroke-slate-200 fill-black dark:fill-slate-200"
+                            />
                           </Menu.Button>
                           <Menu.Items class="w-40 dark:bg-darkmode-600">
                             <Menu.Item class="text-danger dark:text-red-500">
@@ -158,7 +178,9 @@ onMounted(() => {
               </Table.Tbody>
             </Table>
           </div>
-          <div class="flex flex-col-reverse flex-wrap items-center p-5 flex-reverse gap-y-2 sm:flex-row">
+          <div
+            class="flex flex-col-reverse flex-wrap items-center p-5 flex-reverse gap-y-2 sm:flex-row"
+          >
             <Pagination class="flex-1 w-full mr-auto sm:w-auto">
               <Pagination.Link @click="changePage(1)">
                 <Lucide icon="ChevronsLeft" class="w-4 h-4" />
@@ -178,8 +200,11 @@ onMounted(() => {
                 <Lucide icon="ChevronsRight" class="w-4 h-4" />
               </Pagination.Link>
             </Pagination>
-            <FormSelect class="sm:w-20 rounded-[0.5rem] dark:text-slate-200" v-model="pageSize"
-              @change="changePageSize">
+            <FormSelect
+              class="sm:w-20 rounded-[0.5rem] dark:text-slate-200"
+              v-model="pageSize"
+              @change="changePageSize"
+            >
               <option value="10">10</option>
               <option value="20">20</option>
               <option value="30">30</option>

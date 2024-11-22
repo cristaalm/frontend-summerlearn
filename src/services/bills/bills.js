@@ -2,7 +2,6 @@ import { Baseurl } from '@/utils/global'
 import getIdByToken from '@/logic/getIdByToken'
 
 export const getBills = async () => {
-
   const token = localStorage.getItem('access_token')
 
   // Verificamos si el token existe

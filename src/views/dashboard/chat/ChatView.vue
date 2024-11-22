@@ -1,41 +1,38 @@
 <script setup>
-import { Chat, SectionSelect } from "@/components/ChatView/";
-import { ref, onMounted, provide, onUnmounted, computed, watch, inject } from "vue";
-
+import { Chat, SectionSelect } from '@/components/ChatView/'
+import { ref, onMounted, provide, onUnmounted, computed, watch, inject } from 'vue'
 
 // Crear una variable reactiva para el chat seleccionado
-const selectedChatIndex = ref('chats');
+const selectedChatIndex = ref('chats')
 
 // Función para seleccionar un chat
 const selectChat = (index) => {
-  selectedChatIndex.value = index;
-};
-
+  selectedChatIndex.value = index
+}
 
 // si preciona esc deseleccionar el chat
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') {
     if (selectedChatIndex.value === 'contacts') {
-      selectedChatIndex.value = 'contacts';
+      selectedChatIndex.value = 'contacts'
       return
     }
-    selectedChatIndex.value = 'chats';
+    selectedChatIndex.value = 'chats'
   }
-});
+})
 
-const { chats, messages, loadingChats, loadingMessages, newMessage } = inject("socket");
+const { chats, messages, loadingChats, loadingMessages, newMessage } = inject('socket')
 
 const selectChatInfo = computed(() => {
-  return chats.value.find((chat) => chat.id === selectedChatIndex.value);
-});
+  return chats.value.find((chat) => chat.id === selectedChatIndex.value)
+})
 
 const messagesSelectChat = computed(() => {
-  return messages.value.filter((message) => message.chat === selectedChatIndex.value);
+  return messages.value.filter((message) => message.chat === selectedChatIndex.value)
 })
 
 // Proporcionar los datos de los chats
-provide('selectChat', { selectChat, selectedChatIndex, selectChatInfo, messagesSelectChat });
-
+provide('selectChat', { selectChat, selectedChatIndex, selectChatInfo, messagesSelectChat })
 </script>
 
 <template>

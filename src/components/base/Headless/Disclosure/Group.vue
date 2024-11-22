@@ -21,7 +21,6 @@ const slots = useSlots()
 
 const { as = 'div', selectedIndex = 0, variant = 'default' } = defineProps<GroupProps>()
 
-
 const active = ref(selectedIndex)
 const setActive = (value: number) => {
   active.value = value

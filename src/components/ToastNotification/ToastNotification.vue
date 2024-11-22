@@ -1,13 +1,23 @@
 <template>
   <div
-    class="fixed top-0 right-0 sm:right-5 p-4 transition-opacity w-screen sm:w-fit duration-300 z-[2147483647] flex flex-col gap-3">
+    class="fixed top-0 right-0 sm:right-5 p-4 transition-opacity w-screen sm:w-fit duration-300 z-[2147483647] flex flex-col gap-3"
+  >
     <!-- Usamos transition-group para controlar las animaciones -->
-    <transition-group name="toast" tag="div" class="flex flex-col gap-3 justify-end items-end max-w-[550px]">
-      <div v-for="(toast, index) in toastMessages" :key="toast.id" ref="container" :class="[
-        'right-22 p-4 rounded shadow-lg transition-opacity duration-300 flex items-center gap-2 min-w-[350px] w-full sm:w-fit max-w-[550px]',
-        getToastTypeClass(toast.tipo),  // Aplicar la clase basada en el tipo de mensaje
-        toast.moveClass
-      ]">
+    <transition-group
+      name="toast"
+      tag="div"
+      class="flex flex-col gap-3 justify-end items-end max-w-[550px]"
+    >
+      <div
+        v-for="(toast, index) in toastMessages"
+        :key="toast.id"
+        ref="container"
+        :class="[
+          'right-22 p-4 rounded shadow-lg transition-opacity duration-300 flex items-center gap-2 min-w-[350px] w-full sm:w-fit max-w-[550px]',
+          getToastTypeClass(toast.tipo), // Aplicar la clase basada en el tipo de mensaje
+          toast.moveClass
+        ]"
+      >
         <!-- Ícono dinámico según el tipo de mensaje -->
         <component :is="getIconComponent(toast.tipo)" class="w-6 h-6" />
 
@@ -15,8 +25,11 @@
         <p class="break-words !max-w-[calc(100%-70px)]">{{ toast.message }}</p>
 
         <!-- Botón de cierre si el mensaje es persistente -->
-        <button v-if="toast.persistente" @click="removeToast(toast.id)"
-          class="ml-auto text-2xl font-bold text-gray-600 hover:text-gray-900">
+        <button
+          v-if="toast.persistente"
+          @click="removeToast(toast.id)"
+          class="ml-auto text-2xl font-bold text-gray-600 hover:text-gray-900"
+        >
           <component :is="X" class="w-6 h-6" />
         </button>
       </div>
@@ -40,11 +53,11 @@ const generateId = () => '_' + Math.random().toString(36).substr(2, 9)
 // Función para mostrar el toast
 const showToast = ({ message, tipo = 'info', duration = 3000, persistente = false }) => {
   const toast = {
-    id: generateId(),  // ID único para que el DOM mantenga su estabilidad
+    id: generateId(), // ID único para que el DOM mantenga su estabilidad
     message,
     tipo,
     persistente, // Propiedad para saber si es persistente
-    moveClass: 'transition-all duration-500 ease-in-out',
+    moveClass: 'transition-all duration-500 ease-in-out'
   }
 
   // Agregar el nuevo mensaje al array
@@ -53,7 +66,7 @@ const showToast = ({ message, tipo = 'info', duration = 3000, persistente = fals
   // Eliminar automáticamente si no es persistente
   if (!persistente) {
     setTimeout(() => {
-      const index = toastMessages.value.findIndex(t => t.id === toast.id)
+      const index = toastMessages.value.findIndex((t) => t.id === toast.id)
       if (index !== -1) {
         toastMessages.value.splice(index, 1) // Eliminar el mensaje
       }
@@ -63,7 +76,7 @@ const showToast = ({ message, tipo = 'info', duration = 3000, persistente = fals
 
 // Función para eliminar manualmente un mensaje
 const removeToast = (id) => {
-  const index = toastMessages.value.findIndex(t => t.id === id)
+  const index = toastMessages.value.findIndex((t) => t.id === id)
   if (index !== -1) {
     toastMessages.value.splice(index, 1)
   }
@@ -113,7 +126,9 @@ const getIconComponent = (tipo) => {
 
 .toast-enter-active,
 .toast-leave-active {
-  transition: opacity 0.5s ease, transform 0.5s ease;
+  transition:
+    opacity 0.5s ease,
+    transform 0.5s ease;
   /* Duración y transición */
 }
 

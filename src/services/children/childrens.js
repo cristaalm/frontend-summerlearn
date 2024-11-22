@@ -29,6 +29,6 @@ export const getChildrens = async () => {
     birthdate: children.children_birthdate,
     curp: children.children_curp,
     user: children.children_user.name,
-    grade: children.children_grade,
+    grade: children.children_grade
   }))
 }

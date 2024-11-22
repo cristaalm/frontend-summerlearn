@@ -37,11 +37,15 @@ onMounted(async () => {
   loadDonations()
 })
 
-watch(donations, (newDonations) => {
-  filteredDonations.value = newDonations.filter(
-    (donation) => donation.spent === null || donation.spent < donation.quanty
-  )
-}, { immediate: true })
+watch(
+  donations,
+  (newDonations) => {
+    filteredDonations.value = newDonations.filter(
+      (donation) => donation.spent === null || donation.spent < donation.quanty
+    )
+  },
+  { immediate: true }
+)
 
 // Manejo del registro de gastos
 const handleRegister = async () => {
@@ -85,8 +89,11 @@ const handleRegister = async () => {
       <div class="flex flex-col md:h-10 gap-y-3 md:items-center md:flex-row">
         <div class="text-base font-medium group-[.mode--light]:text-white">Agregar Gasto</div>
         <div class="flex flex-col sm:flex-row gap-x-3 gap-y-2 md:ml-auto">
-          <Button variant="primary" @click="() => router.push({ name: 'expenses' })"
-            class="group-[.mode--light]:!bg-white/[0.12] group-[.mode--light]:!text-slate-200 group-[.mode--light]:!border-transparent">
+          <Button
+            variant="primary"
+            @click="() => router.push({ name: 'expenses' })"
+            class="group-[.mode--light]:!bg-white/[0.12] group-[.mode--light]:!text-slate-200 group-[.mode--light]:!border-transparent"
+          >
             <Lucide icon="ArrowLeft" class="stroke-[1.3] w-4 h-4 mr-2" /> Regresar
           </Button>
         </div>
@@ -95,24 +102,33 @@ const handleRegister = async () => {
         <div class="flex flex-col box box--stacked">
           <div class="p-7">
             <!-- Donación Fuente -->
-            <div class="flex-col block pt-5 mt-5 xl:items-center sm:flex xl:flex-row first:mt-0 first:pt-0">
+            <div
+              class="flex-col block pt-5 mt-5 xl:items-center sm:flex xl:flex-row first:mt-0 first:pt-0"
+            >
               <label class="inline-block mb-2 sm:mb-0 sm:mr-5 sm:text-right xl:w-60 xl:mr-14">
                 <div class="text-left">
                   <div class="flex items-center">
                     <div class="font-medium dark:text-slate-200">Donaciones</div>
                     <div
-                      class="ml-2.5 px-2 py-0.5 bg-slate-100 text-slate-500 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md border border-slate-200 dark:border-slate-500">
+                      class="ml-2.5 px-2 py-0.5 bg-slate-100 text-slate-500 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md border border-slate-200 dark:border-slate-500"
+                    >
                       Requerido
                     </div>
                   </div>
-                  <div class="mt-1.5 xl:mt-3 text-xs leading-relaxed text-slate-500/80 dark:text-slate-400">
+                  <div
+                    class="mt-1.5 xl:mt-3 text-xs leading-relaxed text-slate-500/80 dark:text-slate-400"
+                  >
                     Por favor, seleccione la donación de la cual se obtiene el gasto.
                   </div>
                 </div>
               </label>
               <div class="flex-1 w-full mt-3 xl:mt-0">
-                <TomSelect v-model="selectMultiple" :options="{ placeholder: 'Seleccione una donación...' }"
-                  class="w-full " multiple>
+                <TomSelect
+                  v-model="selectMultiple"
+                  :options="{ placeholder: 'Seleccione una donación...' }"
+                  class="w-full"
+                  multiple
+                >
                   <template v-for="donation in filteredDonations" :key="donation.id">
                     <option :value="donation.id">
                       {{ donation.concept }} ($ {{ donation.quanty - donation.spent }})
@@ -127,26 +143,38 @@ const handleRegister = async () => {
             </div>
 
             <!-- Concepto de gasto -->
-            <div class="flex-col block pt-5 mt-5 xl:items-center sm:flex xl:flex-row first:mt-0 first:pt-0">
+            <div
+              class="flex-col block pt-5 mt-5 xl:items-center sm:flex xl:flex-row first:mt-0 first:pt-0"
+            >
               <label class="inline-block mb-2 sm:mb-0 sm:mr-5 sm:text-right xl:w-60 xl:mr-14">
                 <div class="text-left">
                   <div class="flex items-center">
                     <div class="font-medium text-nowrap dark:text-slate-200">Concepto</div>
                     <div
-                      class="ml-2.5 px-2 py-0.5 bg-slate-100 text-slate-500 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md border border-slate-200 dark:border-slate-500">
+                      class="ml-2.5 px-2 py-0.5 bg-slate-100 text-slate-500 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md border border-slate-200 dark:border-slate-500"
+                    >
                       Requerido
                     </div>
                   </div>
-                  <div class="mt-1.5 xl:mt-3 text-xs leading-relaxed text-slate-500/80 dark:text-slate-400">
+                  <div
+                    class="mt-1.5 xl:mt-3 text-xs leading-relaxed text-slate-500/80 dark:text-slate-400"
+                  >
                     Por favor, proporcione un concepto para el gasto.
                   </div>
                 </div>
               </label>
               <div class="flex-1 w-full mt-3 xl:mt-0">
-                <FormInput type="text" placeholder="Escriba aquí el concepto..." v-model="concept"
-                  @keydown.enter.prevent="() => {
-                    if (valid && !setDonationLoading) handleRegister()
-                  }" class="dark:text-slate-200 dark:placeholder:!text-slate-400" />
+                <FormInput
+                  type="text"
+                  placeholder="Escriba aquí el concepto..."
+                  v-model="concept"
+                  @keydown.enter.prevent="
+                    () => {
+                      if (valid && !setDonationLoading) handleRegister()
+                    }
+                  "
+                  class="dark:text-slate-200 dark:placeholder:!text-slate-400"
+                />
                 <div class="mt-1 text-xs text-red-500 h-4">
                   {{ status.concept.message }}
                 </div>
@@ -154,17 +182,22 @@ const handleRegister = async () => {
             </div>
 
             <!-- Monto -->
-            <div class="flex-col block pt-5 mt-5 xl:items-center sm:flex xl:flex-row first:mt-0 first:pt-0">
+            <div
+              class="flex-col block pt-5 mt-5 xl:items-center sm:flex xl:flex-row first:mt-0 first:pt-0"
+            >
               <label class="inline-block mb-2 sm:mb-0 sm:mr-5 sm:text-right xl:w-60 xl:mr-14">
                 <div class="text-left">
                   <div class="flex items-center">
                     <div class="font-medium dark:text-slate-200">Monto</div>
                     <div
-                      class="ml-2.5 px-2 py-0.5 bg-slate-100 text-slate-500 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md border border-slate-200 dark:border-slate-500">
+                      class="ml-2.5 px-2 py-0.5 bg-slate-100 text-slate-500 dark:bg-darkmode-300 dark:text-slate-400 text-xs rounded-md border border-slate-200 dark:border-slate-500"
+                    >
                       Requerido
                     </div>
                   </div>
-                  <div class="mt-1.5 xl:mt-3 text-xs leading-relaxed text-slate-500/80 dark:text-slate-400">
+                  <div
+                    class="mt-1.5 xl:mt-3 text-xs leading-relaxed text-slate-500/80 dark:text-slate-400"
+                  >
                     Por favor, proporcione el monto que se gastará.
                   </div>
                 </div>
@@ -172,9 +205,18 @@ const handleRegister = async () => {
               <div class="flex-1 w-full mt-3 xl:mt-0">
                 <InputGroup>
                   <InputGroup.Text> $ </InputGroup.Text>
-                  <FormInput type="text" placeholder="Escriba aquí su monto..." v-model="amount" @keydown.enter.prevent="() => {
-                    if (valid && !setDonationLoading) handleRegister()
-                  }" class="dark:text-slate-200 dark:placeholder:!text-slate-400" @input="validateInputAmount" />
+                  <FormInput
+                    type="text"
+                    placeholder="Escriba aquí su monto..."
+                    v-model="amount"
+                    @keydown.enter.prevent="
+                      () => {
+                        if (valid && !setDonationLoading) handleRegister()
+                      }
+                    "
+                    class="dark:text-slate-200 dark:placeholder:!text-slate-400"
+                    @input="validateInputAmount"
+                  />
                 </InputGroup>
                 <div class="mt-1 text-xs text-red-500 h-4">
                   {{ status.amount.message }}
@@ -184,13 +226,22 @@ const handleRegister = async () => {
           </div>
 
           <!-- Botón Registrar -->
-          <div class="flex py-5 border-t md:justify-end px-7 border-slate-200/80 dark:border-slate-600">
-            <Button variant="outline-success"
+          <div
+            class="flex py-5 border-t md:justify-end px-7 border-slate-200/80 dark:border-slate-600"
+          >
+            <Button
+              variant="outline-success"
               :class="`w-full px-10 md:w-auto font-bold ${!valid || !isValid ? 'border-gray-500 text-gray-500' : 'border-green text-green dark:text-slate-200'}`"
-              @click="handleRegister" :disabled="!valid || !isValid">
+              @click="handleRegister"
+              :disabled="!valid || !isValid"
+            >
               <Lucide v-if="!loadingSetBill" icon="Check" class="stroke-[1.3] w-4 h-4 mr-2 -ml-2" />
-              <LoadingIcon v-if="loadingSetBill" icon="tail-spin" class="stroke-[1.3] w-4 h-4 mr-2 -ml-2"
-                color="black" />
+              <LoadingIcon
+                v-if="loadingSetBill"
+                icon="tail-spin"
+                class="stroke-[1.3] w-4 h-4 mr-2 -ml-2"
+                color="black"
+              />
               {{ loadingSetBill ? 'Registrando...' : 'Registrar' }}
             </Button>
           </div>

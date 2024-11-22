@@ -57,5 +57,5 @@ export const changeLoginColorScheme = (): void => {
 }
 
 export const changeColorScheme = (scheme: ColorSchemes): void => {
-  switchColorScheme(scheme , false)
+  switchColorScheme(scheme, false)
 }

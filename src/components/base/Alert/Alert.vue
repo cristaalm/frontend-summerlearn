@@ -45,13 +45,13 @@ const { dismissible, variant, message = '' } = defineProps<AlertProps>()
 
 // Define los íconos para cada variante
 const iconMap = {
-  'primary': 'CheckCircle',  // Puedes ajustar estos íconos según tus preferencias
-  'secondary': 'Info',
-  'success': 'CheckCircle',
-  'warning': 'AlertTriangle',
-  'pending': 'Clock',
-  'danger': 'AlertTriangle',
-  'dark': 'Moon',
+  primary: 'CheckCircle', // Puedes ajustar estos íconos según tus preferencias
+  secondary: 'Info',
+  success: 'CheckCircle',
+  warning: 'AlertTriangle',
+  pending: 'Clock',
+  danger: 'AlertTriangle',
+  dark: 'Moon',
   'outline-primary': 'CheckCircle',
   'outline-danger': 'AlertTriangle',
   'outline-success': 'CheckCircle',
@@ -165,7 +165,6 @@ const softDark = [
   'dark:bg-darkmode-800/30 dark:border-darkmode-800/60 dark:text-slate-300' // Dark mode
 ]
 
-
 const computedClass = computed(() =>
   twMerge([
     'relative border rounded-md px-5 py-4',
@@ -195,8 +194,6 @@ const computedClass = computed(() =>
   ])
 )
 
-
-
 // Dismiss the alert
 const dismiss = () => {
   show.value = false
@@ -204,10 +201,16 @@ const dismiss = () => {
 </script>
 
 <template>
-  <TransitionRoot as="template" :show="show" enter="transition-all ease-linear duration-150"
-    enterFrom="invisible opacity-0 translate-y-1" enterTo="visible opacity-100 translate-y-0"
-    leave="transition-all ease-linear duration-150" leaveFrom="visible opacity-100 translate-y-0"
-    leaveTo="invisible opacity-0 translate-y-1">
+  <TransitionRoot
+    as="template"
+    :show="show"
+    enter="transition-all ease-linear duration-150"
+    enterFrom="invisible opacity-0 translate-y-1"
+    enterTo="visible opacity-100 translate-y-0"
+    leave="transition-all ease-linear duration-150"
+    leaveFrom="visible opacity-100 translate-y-0"
+    leaveTo="invisible opacity-0 translate-y-1"
+  >
     <div :class="`flex items-center ${computedClass}`">
       <Lucide :icon="computedIcon" class="stroke-[0.8] w-7 h-7 mr-2" />
       <div class="ml-1 mr-8">

@@ -14,5 +14,5 @@ export function useDialogGradesChild() {
   }
 
   // Retorna las variables y funciones para su uso en otros componentes
-  return { ModalGradesChild, setModalGradesChild, childInfoProvideGrades}
+  return { ModalGradesChild, setModalGradesChild, childInfoProvideGrades }
 }

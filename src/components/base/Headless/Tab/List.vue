@@ -22,13 +22,12 @@ interface ListProps extends /* @vue-ignore */ ExtractProps<typeof HeadlessTabLis
 
 const { variant = 'tabs' } = defineProps<ListProps>()
 
-
 const attrs = useAttrs()
 const computedClass = computed(() =>
   twMerge([
     variant == 'tabs' && 'border-b border-slate-200 dark:border-darkmode-400',
     variant == 'boxed-tabs' &&
-    'p-0.5 border bg-slate-50/70 border-slate-200/70 rounded-lg dark:border-darkmode-400',
+      'p-0.5 border bg-slate-50/70 border-slate-200/70 rounded-lg dark:border-darkmode-400',
     'w-full flex',
     typeof attrs.class === 'string' && attrs.class
   ])

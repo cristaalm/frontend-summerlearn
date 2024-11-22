@@ -38,10 +38,14 @@ const computedClass = computed(() =>
 </script>
 
 <template>
-  <HeadlessDisclosureButton as="template" @click="() => {
-      disclosure && group?.setSelectedIndex(disclosure.index)
-    }
-    ">
+  <HeadlessDisclosureButton
+    as="template"
+    @click="
+      () => {
+        disclosure && group?.setSelectedIndex(disclosure.index)
+      }
+    "
+  >
     <component :is="as" :class="computedClass" v-bind="_.omit(attrs, 'class')">
       <slot></slot>
     </component>

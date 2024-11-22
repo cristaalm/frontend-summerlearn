@@ -13,7 +13,7 @@ interface DismissButtonProps extends /* @vue-ignore */ ButtonHTMLAttributes {
   as?: string | object
 }
 
-const { as = 'button' } = defineProps<DismissButtonProps>();
+const { as = 'button' } = defineProps<DismissButtonProps>()
 
 const attrs = useAttrs()
 
@@ -26,7 +26,13 @@ const computedClass = computed(() =>
 </script>
 
 <template>
-  <component :is="as" type="button" aria-label="Close" :class="computedClass" v-bind="_.omit(attrs, 'class')">
+  <component
+    :is="as"
+    type="button"
+    aria-label="Close"
+    :class="computedClass"
+    v-bind="_.omit(attrs, 'class')"
+  >
     <slot></slot>
   </component>
 </template>

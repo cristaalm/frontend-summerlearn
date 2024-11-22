@@ -76,19 +76,45 @@ if (role === 1 && status != 3) {
 }
 
 if (role === 2 && status != 3) {
-  const { lastActivities, loadingLastActivities, loadLastActivities, errorLastActivities } = useLastActivities()
+  const { lastActivities, loadingLastActivities, loadLastActivities, errorLastActivities } =
+    useLastActivities()
   loadings.push(loadingLastActivities)
-  provide('lastActivities', { lastActivities, loadingLastActivities, loadLastActivities, errorLastActivities })
+  provide('lastActivities', {
+    lastActivities,
+    loadingLastActivities,
+    loadLastActivities,
+    errorLastActivities
+  })
   onMounted(() => loadLastActivities())
 
-  const { lastProgramsAsigned, loadingLastProgramsAsigned, loadLastProgramsAsigned, errorLastProgramsAsigned } = useLastProgramsAsigned()
+  const {
+    lastProgramsAsigned,
+    loadingLastProgramsAsigned,
+    loadLastProgramsAsigned,
+    errorLastProgramsAsigned
+  } = useLastProgramsAsigned()
   loadings.push(loadingLastProgramsAsigned)
-  provide('lastProgramsAsigned', { lastProgramsAsigned, loadingLastProgramsAsigned, loadLastProgramsAsigned, errorLastProgramsAsigned })
+  provide('lastProgramsAsigned', {
+    lastProgramsAsigned,
+    loadingLastProgramsAsigned,
+    loadLastProgramsAsigned,
+    errorLastProgramsAsigned
+  })
   onMounted(() => loadLastProgramsAsigned())
 
-  const { lastProgramsUnasigned, loadingLastProgramsUnasigned, loadLastProgramsUnasigned, errorLastProgramsUnasigned } = useLastProgramsUnasigned()
+  const {
+    lastProgramsUnasigned,
+    loadingLastProgramsUnasigned,
+    loadLastProgramsUnasigned,
+    errorLastProgramsUnasigned
+  } = useLastProgramsUnasigned()
   loadings.push(loadingLastProgramsUnasigned)
-  provide('lastProgramsUnasigned', { lastProgramsUnasigned, loadingLastProgramsUnasigned, loadLastProgramsUnasigned, errorLastProgramsUnasigned })
+  provide('lastProgramsUnasigned', {
+    lastProgramsUnasigned,
+    loadingLastProgramsUnasigned,
+    loadLastProgramsUnasigned,
+    errorLastProgramsUnasigned
+  })
   onMounted(() => loadLastProgramsUnasigned())
 }
 
@@ -105,10 +131,20 @@ if ((role === 4 || role == 5) && status != 3) {
   onMounted(() => loadAreasSub())
 }
 
-if ((role === 4 || role === 5 || role === 1)) {
-  const { actividadesSubscribed, loadingActividadesSubscribed, errorActividadesSubscribed, loadActividadesSubscribed } = useActividadesSubscribed()
+if (role === 4 || role === 5 || role === 1) {
+  const {
+    actividadesSubscribed,
+    loadingActividadesSubscribed,
+    errorActividadesSubscribed,
+    loadActividadesSubscribed
+  } = useActividadesSubscribed()
   loadings.push(loadingActividadesSubscribed)
-  provide('actividadesSubscribed', { actividadesSubscribed, loadingActividadesSubscribed, errorActividadesSubscribed, loadActividadesSubscribed })
+  provide('actividadesSubscribed', {
+    actividadesSubscribed,
+    loadingActividadesSubscribed,
+    errorActividadesSubscribed,
+    loadActividadesSubscribed
+  })
   onMounted(() => loadActividadesSubscribed())
 }
 
@@ -127,11 +163,27 @@ if ((role === 1 || role === 2 || role === 5) && status != 3) {
 }
 
 if ((role === 3 || role === 1) && status != 3) {
-  const { graphicDonations, barDonations, donations, loadingDonations, errorDonations, loadDonations, deleteDonation } = useDonations()
+  const {
+    graphicDonations,
+    barDonations,
+    donations,
+    loadingDonations,
+    errorDonations,
+    loadDonations,
+    deleteDonation
+  } = useDonations()
   if (role === 3) {
     loadings.push(loadingDonations)
   }
-  provide('donations', { graphicDonations, barDonations, donations, loadingDonations, errorDonations, loadDonations, deleteDonation })
+  provide('donations', {
+    graphicDonations,
+    barDonations,
+    donations,
+    loadingDonations,
+    errorDonations,
+    loadDonations,
+    deleteDonation
+  })
   onMounted(() => loadDonations())
 }
 
@@ -144,7 +196,8 @@ if ((role === 1 || role === 2 || role === 4 || role === 5) && status != 3) {
   onMounted(() => loadChildrens())
 
   const { performance, loadingPerformance, loadPerformance, errorPerformance } = usePerformance()
-  if (role === 4) { // si el rol es voluntario
+  if (role === 4) {
+    // si el rol es voluntario
     loadings.push(loadingPerformance) // va esperar a que termine de cargar los performance
   }
   provide('performance', { performance, loadingPerformance, loadPerformance, errorPerformance })
@@ -162,7 +215,6 @@ if ((role === 1 || role === 2 || role === 4 || role === 5) && status != 3) {
   const { programs, loadingPrograms, loadPrograms } = usePrograms()
   provide('programs', { programs, loadingPrograms, loadPrograms })
   onMounted(() => loadPrograms())
-
 }
 
 import { useUserPhoto, useUser } from '@/hooks/settings/'
@@ -181,8 +233,34 @@ onMounted(() => {
 
 import { useWebSocket } from '@/hooks/chat'
 if (status == 1) {
-  const { mountedSocket, unmountedSocket, chats, messages, loadingChats, loadingMessages, newMessage, sendMessage, isTyping, loadingSendMessage, changeSeen, contacts, loadingContacts } = useWebSocket()
-  provide('socket', { chats, messages, loadingChats, loadingMessages, newMessage, sendMessage, isTyping, loadingSendMessage, changeSeen, contacts, loadingContacts })
+  const {
+    mountedSocket,
+    unmountedSocket,
+    chats,
+    messages,
+    loadingChats,
+    loadingMessages,
+    newMessage,
+    sendMessage,
+    isTyping,
+    loadingSendMessage,
+    changeSeen,
+    contacts,
+    loadingContacts
+  } = useWebSocket()
+  provide('socket', {
+    chats,
+    messages,
+    loadingChats,
+    loadingMessages,
+    newMessage,
+    sendMessage,
+    isTyping,
+    loadingSendMessage,
+    changeSeen,
+    contacts,
+    loadingContacts
+  })
 
   onMounted(() => {
     mountedSocket()
@@ -215,8 +293,10 @@ provide('isLoading', { isLoading })
 </script>
 
 <template>
-  <div v-if="isLoading || animate"
-    :class="`min-w-[100vw] min-h-[100vh] fixed z-[999999999] flex justify-center items-center bg-gray-100 dark:bg-[#28334e] ${animate ? 'animate-provider-out' : ''}`">
+  <div
+    v-if="isLoading || animate"
+    :class="`min-w-[100vw] min-h-[100vh] fixed z-[999999999] flex justify-center items-center bg-gray-100 dark:bg-[#28334e] ${animate ? 'animate-provider-out' : ''}`"
+  >
     <div class="flex flex-col items-center gap-10">
       <h1 class="text-4xl font-bold text-gray-800 dark:text-white">
         Bienvenido a tu panel de control

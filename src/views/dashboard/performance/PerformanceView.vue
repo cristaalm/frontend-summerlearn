@@ -24,26 +24,34 @@ const { rol: currentUserRol } = getPayloadByToken(localStorage.getItem('access_t
 const { performance, loadingPerformance, errorPerformance, loadPerformance } = inject('performance')
 const { childrens, loadingChildrens, errorChildrens, loadChildrens } = inject('childrens')
 const { areas, loadingAreas, errorAreas, loadAreas } = inject('areas')
-const { actividadesSubscribed, loadingActividadesSubscribed, errorActividadesSubscribed, loadActividadesSubscribed } = inject('actividadesSubscribed')
+const {
+  actividadesSubscribed,
+  loadingActividadesSubscribed,
+  errorActividadesSubscribed,
+  loadActividadesSubscribed
+} = inject('actividadesSubscribed')
 const { programs, loadingPrograms, errorPrograms, loadPrograms } = inject('programs')
 
-const filteredPerformance = computed(() => { // prueba a recargar y ver si ya funciona ok
+const filteredPerformance = computed(() => {
+  // prueba a recargar y ver si ya funciona ok
   console.log(performance)
-  if (currentUserRol != 4) return performance.value;
-  if (!actividadesSubscribed.value || actividadesSubscribed.value.length === 0) return [];
+  if (currentUserRol != 4) return performance.value
+  if (!actividadesSubscribed.value || actividadesSubscribed.value.length === 0) return []
 
   // Extraemos los IDs de actividades suscritas
-  const subscribedActivityIds = actividadesSubscribed.value.map(activity => activity.id);
+  const subscribedActivityIds = actividadesSubscribed.value.map((activity) => activity.id)
 
   // Filtramos las performances que coinciden con esas actividades aqui es donde se hace eso
 
-  console.log(performance.value.filter(item => subscribedActivityIds.includes(item.activity.id)))
-  return performance.value.filter(item => subscribedActivityIds.includes(item.activity.id));
-});
+  console.log(performance.value.filter((item) => subscribedActivityIds.includes(item.activity.id)))
+  return performance.value.filter((item) => subscribedActivityIds.includes(item.activity.id))
+})
 
 const { searchQuery, selectedStatus, filteredItems, activeFilters } = useFilter(filteredPerformance)
-const { currentPage, pageSize, totalPages, paginatedItems, changePage, changePageSize } = usePagination(filteredItems)
-const { dialogStatusDelete, openDeleteModal, confirmDeleteProgram, closeDeleteProgram } = useDialogDelete({ performance })
+const { currentPage, pageSize, totalPages, paginatedItems, changePage, changePageSize } =
+  usePagination(filteredItems)
+const { dialogStatusDelete, openDeleteModal, confirmDeleteProgram, closeDeleteProgram } =
+  useDialogDelete({ performance })
 const { loadExportExcel, loadingExportExcel } = useExportExcel()
 const { loadExportPDF, loadingExportPDF } = useExportPDF()
 const router = useRouter()
@@ -82,7 +90,6 @@ const handleInput = (id) => {
       nota.value[id] = inputValue.slice(0, -1)
     }
   }
-
 }
 
 // Actualiza o envía los datos de la calificación individual
@@ -122,7 +129,6 @@ const saveAllHandler = async () => {
   loadPerformance()
 }
 
-
 // Cargar datos y asignar valores a `nota` y `valid`
 onMounted(() => {
   loadAreas()
@@ -147,10 +153,16 @@ onMounted(() => {
         <div class="flex flex-col box box--stacked" id="table-performance">
           <div class="flex flex-col p-5 sm:items-center sm:flex-row gap-y-2" id="filtrarCalf">
             <div class="relative">
-              <Lucide icon="Search"
-                class="absolute inset-y-0 left-0 z-10 w-4 h-4 my-auto ml-3 stroke-[1.3] text-slate-500" />
-              <FormInput v-model="searchQuery" type="text" placeholder="Buscar nombre..."
-                class="pl-9 sm:w-72 rounded-[0.5rem] dark:text-slate-200 dark:placeholder:text-slate-400" />
+              <Lucide
+                icon="Search"
+                class="absolute inset-y-0 left-0 z-10 w-4 h-4 my-auto ml-3 stroke-[1.3] text-slate-500"
+              />
+              <FormInput
+                v-model="searchQuery"
+                type="text"
+                placeholder="Buscar nombre..."
+                class="pl-9 sm:w-72 rounded-[0.5rem] dark:text-slate-200 dark:placeholder:text-slate-400"
+              />
             </div>
             <div class="flex flex-col sm:flex-row gap-x-3 gap-y-2 sm:ml-auto">
               <!-- <Menu>
@@ -173,9 +185,16 @@ onMounted(() => {
                   <Table.Thead>
                     <Table.Tr>
                       <Table.Td class="text-center text-black dark:text-slate-200">Nombre</Table.Td>
-                      <Table.Td class="text-center text-black dark:text-slate-200">Actividad</Table.Td>
-                      <Table.Td class="text-center text-black dark:text-slate-200">Calificación</Table.Td>
-                      <Table.Td class="text-center text-black dark:text-slate-200" v-if="currentUserRol == 4">Acción
+                      <Table.Td class="text-center text-black dark:text-slate-200"
+                        >Actividad</Table.Td
+                      >
+                      <Table.Td class="text-center text-black dark:text-slate-200"
+                        >Calificación</Table.Td
+                      >
+                      <Table.Td
+                        class="text-center text-black dark:text-slate-200"
+                        v-if="currentUserRol == 4"
+                        >Acción
                       </Table.Td>
                     </Table.Tr>
                   </Table.Thead>
@@ -184,54 +203,89 @@ onMounted(() => {
                     <template v-if="filteredPerformance.length">
                       <template v-for="item in filteredItems" :key="item.id">
                         <Table.Tr>
-                          <Table.Td class="text-center text-black dark:text-slate-200">{{ item.child.name }}</Table.Td>
-                          <Table.Td class="text-center text-black dark:text-slate-200">{{ item.activity.name }}
+                          <Table.Td class="text-center text-black dark:text-slate-200">{{
+                            item.child.name
+                          }}</Table.Td>
+                          <Table.Td class="text-center text-black dark:text-slate-200"
+                            >{{ item.activity.name }}
                           </Table.Td>
                           <Table.Td class="text-center text-black dark:text-slate-200">
                             <template v-if="currentUserRol == 4">
                               <div id="addCalf" v-if="item.value == null">
-                                <input type="text"
+                                <input
+                                  type="text"
                                   class="w-20 mr-2 rounded-lg border-gray-200 border-2 text-center text-black dark:text-slate-200 dark:bg-transparent dark:border-slate-400"
-                                  @input="handleInput(item.id)" v-model="nota[item.id]" />/ {{ notamax }}
+                                  @input="handleInput(item.id)"
+                                  v-model="nota[item.id]"
+                                />/ {{ notamax }}
                               </div>
-                              <div id="addCalf" v-else :class="{
-                                'text-red-500 dark:text-red-400': item.value < 5,
-                                'text-yellow-500': item.value >= 5 && item.value < 7,
-                                'text-green-500': item.value >= 7
-                              }">
+                              <div
+                                id="addCalf"
+                                v-else
+                                :class="{
+                                  'text-red-500 dark:text-red-400': item.value < 5,
+                                  'text-yellow-500': item.value >= 5 && item.value < 7,
+                                  'text-green-500': item.value >= 7
+                                }"
+                              >
                                 {{ item.value }}/{{ notamax }}
                               </div>
                             </template>
                             <template v-else>
-                              <div :class="{
-                                'text-red-500 dark:text-red-400': item.value < 5 && item.value !== null,
-                                'text-yellow-500': item.value === null || (item.value >= 5 && item.value < 7),
-                                'text-green-500': item.value >= 7
-                              }">
-                                {{ item.value == null ? 'Pendiente' : `${item.value} / ${notamax}` }}
+                              <div
+                                :class="{
+                                  'text-red-500 dark:text-red-400':
+                                    item.value < 5 && item.value !== null,
+                                  'text-yellow-500':
+                                    item.value === null || (item.value >= 5 && item.value < 7),
+                                  'text-green-500': item.value >= 7
+                                }"
+                              >
+                                {{
+                                  item.value == null ? 'Pendiente' : `${item.value} / ${notamax}`
+                                }}
                               </div>
                             </template>
                           </Table.Td>
-                          <Table.Td id="btnIndividual" class="text-center text-black dark:text-slate-200"
-                            v-if="currentUserRol == 4">
-                            <Button v-if="item.value == null" variant="outline-success" :class="`w-full px-10 md:w-auto font-bold ${loadings[item.id]
-                              ? 'border-warning text-warning'
-                              : valid[item.id] && item.value == null
-                                ? 'border-green text-green dark:text-slate-200'
-                                : 'border-gray-500 text-gray-500'
-                              }`" :disabled="!valid[item.id] ||
-                                loadings[item.id] ||
-                                item.value != null
-                                " @click="() => updateScoreHandler(item.id)">
-                              <Lucide v-if="!loadings[item.id] && item.value == null" icon="Check"
-                                class="stroke-[1.3] w-4 h-4 mr-2" />
-                              <LoadingIcon v-if="loadings[item.id] && item.value == null" icon="tail-spin"
-                                class="stroke-[1.3] w-4 h-4 mr-2 -ml-2" color="black" />
+                          <Table.Td
+                            id="btnIndividual"
+                            class="text-center text-black dark:text-slate-200"
+                            v-if="currentUserRol == 4"
+                          >
+                            <Button
+                              v-if="item.value == null"
+                              variant="outline-success"
+                              :class="`w-full px-10 md:w-auto font-bold ${
+                                loadings[item.id]
+                                  ? 'border-warning text-warning'
+                                  : valid[item.id] && item.value == null
+                                    ? 'border-green text-green dark:text-slate-200'
+                                    : 'border-gray-500 text-gray-500'
+                              }`"
+                              :disabled="!valid[item.id] || loadings[item.id] || item.value != null"
+                              @click="() => updateScoreHandler(item.id)"
+                            >
+                              <Lucide
+                                v-if="!loadings[item.id] && item.value == null"
+                                icon="Check"
+                                class="stroke-[1.3] w-4 h-4 mr-2"
+                              />
+                              <LoadingIcon
+                                v-if="loadings[item.id] && item.value == null"
+                                icon="tail-spin"
+                                class="stroke-[1.3] w-4 h-4 mr-2 -ml-2"
+                                color="black"
+                              />
 
                               <span v-if="!loadings[item.id] && item.value == null">Calificar</span>
-                              <span v-else-if="loadings[item.id] && item.value == null">Calificando</span>
+                              <span v-else-if="loadings[item.id] && item.value == null"
+                                >Calificando</span
+                              >
                             </Button>
-                            <span v-else class="flex flex-row items-center justify-center text-success">
+                            <span
+                              v-else
+                              class="flex flex-row items-center justify-center text-success"
+                            >
                               <Lucide icon="CheckCircle" class="stroke-[1.3] w-4 h-4 mr-2" />
                               Calificado
                             </span>
@@ -248,7 +302,11 @@ onMounted(() => {
                     </template>
                   </Table.Tbody>
 
-                  <Table.Tbody v-else-if="!loadingPerformance && !errorPerformance && !filteredPerformance.length > 0">
+                  <Table.Tbody
+                    v-else-if="
+                      !loadingPerformance && !errorPerformance && !filteredPerformance.length > 0
+                    "
+                  >
                     <Table.Tr>
                       <Table.Td class="text-center" colspan="4">
                         <div class="text-red-500">No se encontraron resultados</div>
@@ -276,9 +334,10 @@ onMounted(() => {
                 </Table>
               </div>
 
-
               <!-- PAGINATION AND SAVE ALL BUTTON -->
-              <div class="flex flex-col-reverse flex-wrap items-center p-5 flex-reverse gap-y-2 sm:flex-row">
+              <div
+                class="flex flex-col-reverse flex-wrap items-center p-5 flex-reverse gap-y-2 sm:flex-row"
+              >
                 <Pagination class="flex-1 w-full mr-auto sm:w-auto">
                   <Pagination.Link @click="changePage(1)">
                     <Lucide icon="ChevronsLeft" class="w-4 h-4" />
@@ -299,20 +358,38 @@ onMounted(() => {
                   </Pagination.Link>
                 </Pagination>
 
-                <Button id="btnAll" v-if="currentUserRol == 4" variant="outline-primary" :class="`${Object.values(loadings).some((v) => v === true) || !isSaveButtonEnabled
-                  ? 'bg-white text-black border-slate-400 dark:bg-transparent dark:text-slate-400 dark:border-slate-400'
-                  : 'bg-white text-blue-600 border-blue-900 hover:bg-blue-300 dark:bg-transparent dark:text-slate-200 dark:border-primary'
+                <Button
+                  id="btnAll"
+                  v-if="currentUserRol == 4"
+                  variant="outline-primary"
+                  :class="`${
+                    Object.values(loadings).some((v) => v === true) || !isSaveButtonEnabled
+                      ? 'bg-white text-black border-slate-400 dark:bg-transparent dark:text-slate-400 dark:border-slate-400'
+                      : 'bg-white text-blue-600 border-blue-900 hover:bg-blue-300 dark:bg-transparent dark:text-slate-200 dark:border-primary'
                   }
-                  `" :disabled="(() => {
-                    return Object.values(loadings).some((v) => v === true) || !isSaveButtonEnabled
-                  })()
-                    " @click="saveAllHandler">
-                  <Lucide v-if="
+                  `"
+                  :disabled="
                     (() => {
-                      return !Object.values(loadings).some((v) => v === true)
+                      return Object.values(loadings).some((v) => v === true) || !isSaveButtonEnabled
                     })()
-                  " icon="Check" class="stroke-[1.3] w-4 h-4 mr-2" />
-                  <LoadingIcon v-else icon="tail-spin" class="stroke-[1.3] w-4 h-4 mr-2" color="black" />
+                  "
+                  @click="saveAllHandler"
+                >
+                  <Lucide
+                    v-if="
+                      (() => {
+                        return !Object.values(loadings).some((v) => v === true)
+                      })()
+                    "
+                    icon="Check"
+                    class="stroke-[1.3] w-4 h-4 mr-2"
+                  />
+                  <LoadingIcon
+                    v-else
+                    icon="tail-spin"
+                    class="stroke-[1.3] w-4 h-4 mr-2"
+                    color="black"
+                  />
                   Guardar Todos
                 </Button>
               </div>

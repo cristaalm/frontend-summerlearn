@@ -29,8 +29,16 @@ const data = computed<ChartData>(() => {
         borderRadius: 2,
         data: donationsWeek.value, // Verifica que donationsWeek.value esté bien alineado
         borderWidth: 1,
-        borderColor: darkMode ? getColor('slate.400', 0.8) : colorScheme.value ? getColor('theme.1', 0.7) : '',
-        backgroundColor: darkMode ? getColor('slate.400', 0.8) : colorScheme.value ? getColor('theme.1', 0.7) : ''
+        borderColor: darkMode
+          ? getColor('slate.400', 0.8)
+          : colorScheme.value
+            ? getColor('theme.1', 0.7)
+            : '',
+        backgroundColor: darkMode
+          ? getColor('slate.400', 0.8)
+          : colorScheme.value
+            ? getColor('theme.1', 0.7)
+            : ''
       }
     ]
   }

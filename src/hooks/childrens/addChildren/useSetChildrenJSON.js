@@ -17,13 +17,11 @@ import getIdByToken from '@/logic/getIdByToken'
  * @param {string} children.user - Usuario asociado al niño.
  */
 
-
 export function useSetChildren() {
   const router = useRouter()
   const setChildrenLoading = ref(false)
   const setChildrenError = ref('')
   const showToast = inject('showToast')
-  
 
   const addChildren = async ({ children }) => {
     const access_token = localStorage.getItem('access_token')
@@ -44,9 +42,9 @@ export function useSetChildren() {
         body: JSON.stringify({
           children_name: children.name,
           children_photo: children.photo,
-          children_birthdate: birthdateFormat, 
+          children_birthdate: birthdateFormat,
           children_curp: children.curp,
-          children_user: idUser,
+          children_user: idUser
         })
       })
       const data = await response.json()

@@ -30,11 +30,11 @@ const computedClass = computed(() =>
     // Default
     list?.variant == 'tabs' && 'block border-transparent rounded-t-md dark:border-transparent',
     list?.variant == 'tabs' &&
-    tab?.selected.value &&
-    'bg-white border-slate-200 border-b-transparent font-medium dark:bg-transparent dark:border-t-darkmode-400 dark:border-b-darkmode-600 dark:border-x-darkmode-400',
+      tab?.selected.value &&
+      'bg-white border-slate-200 border-b-transparent font-medium dark:bg-transparent dark:border-t-darkmode-400 dark:border-b-darkmode-600 dark:border-x-darkmode-400',
     list?.variant == 'tabs' &&
-    !tab?.selected.value &&
-    'hover:bg-slate-100 dark:hover:bg-darkmode-400 dark:hover:border-transparent',
+      !tab?.selected.value &&
+      'hover:bg-slate-100 dark:hover:bg-darkmode-400 dark:hover:border-transparent',
 
     // Pills
     list?.variant == 'pills' && 'rounded-md border-0',
@@ -43,14 +43,14 @@ const computedClass = computed(() =>
     // Boxed tabs
     list?.variant == 'boxed-tabs' && 'rounded-md py-1.5 dark:border-transparent',
     list?.variant == 'boxed-tabs' &&
-    tab?.selected.value &&
-    'text-slate-700 border shadow-sm font-medium border-slate-200 bg-white dark:text-slate-300 dark:bg-darkmode-400 dark:border-darkmode-400',
+      tab?.selected.value &&
+      'text-slate-700 border shadow-sm font-medium border-slate-200 bg-white dark:text-slate-300 dark:bg-darkmode-400 dark:border-darkmode-400',
 
     // Link tabs
     list?.variant == 'link-tabs' && 'border-b-2 border-transparent dark:border-transparent',
     list?.variant == 'link-tabs' &&
-    tab?.selected.value &&
-    'border-b-primary font-medium dark:border-b-primary',
+      tab?.selected.value &&
+      'border-b-primary font-medium dark:border-b-primary',
 
     typeof attrs.class === 'string' && attrs.class
   ])

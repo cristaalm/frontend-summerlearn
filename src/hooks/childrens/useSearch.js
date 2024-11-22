@@ -1,7 +1,6 @@
 import { ref, computed } from 'vue'
 import { calculateAge } from '@/logic/'
 
-
 export function useSearch(childrens) {
   const searchQuery = ref('')
 
@@ -14,9 +13,9 @@ export function useSearch(childrens) {
         children.user.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
         calculateAge(children.birthdate) == searchQuery.value
 
-        return matchesQuery
+      return matchesQuery
     })
   })
 
-  return { searchQuery, filteredChildrens}
+  return { searchQuery, filteredChildrens }
 }
