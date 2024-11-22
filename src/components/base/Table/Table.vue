@@ -25,13 +25,7 @@ interface TableProps extends /* @vue-ignore */ TableHTMLAttributes {
   sm?: boolean
 }
 
-const { dark, bordered, hover, striped, sm } = withDefaults(defineProps<TableProps>(), {
-  dark: false,
-  bordered: false,
-  hover: false,
-  striped: false,
-  sm: false
-})
+const { dark = false, bordered = false, hover = false, striped = false, sm = false } = defineProps<TableProps>()
 
 const attrs = useAttrs()
 

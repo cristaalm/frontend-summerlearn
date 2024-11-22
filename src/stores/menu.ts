@@ -1,52 +1,12 @@
 import { type Icon } from '@/components/base/Lucide/Lucide.vue'
-import { Baseurl } from '@/../global'
+// @ts-ignore
+import getIdByTokenm from '@/logic/getIdByToken'
+import { useRouter } from 'vue-router'
 import { defineStore } from 'pinia'
 
-// Función para obtener el rol del token desencriptado
-async function getRoleFromToken(): Promise<string | null> {
-  const encryptedToken = localStorage.getItem('access_token')
-
-  if (encryptedToken) {
-    try {
-      // Split the token to access the payload
-      const payloadBase64 = encryptedToken.split('.')[1] // Get the payload (second element of JWT)
-      const payloadJson = JSON.parse(atob(payloadBase64)) // Decode and convert to JSON object
-
-      // Ensure that the role is present in the payload
-      const encryptedRole = payloadJson.rol ? String(payloadJson.rol) : null // Convert to string or assign null
-
-      if (encryptedRole) {
-        try {
-          // Prepare the request for decryption
-          const response = await fetch(`${Baseurl}api/decrypt/`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Bearer ${localStorage.getItem('access_token')}`
-            },
-            body: JSON.stringify({ encrypted_text: encryptedRole })
-          })
-
-          // Check if the response is ok
-          if (!response.ok) {
-            throw new Error('Network response was not ok')
-          }
-
-          // Parse the JSON response
-          const data = await response.json()
-          const role = data.decrypted_text // Adjust this depending on your API response structure
-          return role // Return the decrypted role
-        } catch (decryptError) {
-          console.error('Error al desencriptar el rol:', decryptError)
-          return null // Handle error as needed
-        }
-      }
-    } catch (error) {
-      console.error('Error al procesar el access_token:', error)
-      return null
-    }
-  }
-  return null // If no token in localStorage
+const clearLocalStorage = () => {
+  localStorage.removeItem('access_token')
+  localStorage.removeItem('refresh_token')
 }
 
 export interface Menu {
@@ -70,7 +30,8 @@ export const useMenuStore = defineStore('menu', {
   actions: {
     async loadMenu() {
       // Obtén el rol desde el token desencriptado
-      const role = await getRoleFromToken() // Llama a la función para obtener el rol desencriptado
+      const router = useRouter()
+      const { rol: role, status } = getIdByTokenm(localStorage.getItem('access_token'))
 
       if (!role) {
         console.warn('No se pudo cargar el rol.')
@@ -80,8 +41,9 @@ export const useMenuStore = defineStore('menu', {
 
       // Construir el menú dependiendo del rol
       let menuItems: Array<Menu | string> = []
+      if (status == 3) return []
       switch (role) {
-        case '1':
+        case 1:
           menuItems = []
           menuItems = [
             'GESTIÓN DE USUARIOS',
@@ -98,11 +60,6 @@ export const useMenuStore = defineStore('menu', {
               ]
             },
             'GESTIÓN DE PROGRAMAS',
-            {
-              icon: 'Notebook',
-              pageName: 'subscriptions',
-              title: 'Suscripciones'
-            },
             {
               icon: 'Album',
               pageName: 'programs',
@@ -137,31 +94,25 @@ export const useMenuStore = defineStore('menu', {
                   title: 'Gastos'
                 }
               ]
+            },
+            'CONTACTOS',
+            {
+              icon: 'MessagesSquare',
+              pageName: 'chat',
+              title: 'Chat'
             }
-            // 'CONTÁCTANOS',
-            // {
-            //   icon: 'MessagesSquare',
-            //   pageName: 'chat',
-            //   title: 'Contacto'
-            // }
           ]
           break
-        case '2':
+        case 2:
           menuItems = []
           menuItems = [
-            'GESTIÓN DE PROGRAMAS',
+            'GESTIÓN DE USUARIOS',
             {
-              icon: 'Notebook',
-              pageName: 'subscriptions',
-              title: 'Suscripciones',
-              subMenu: [
-                {
-                  icon: 'GalleryVerticalEnd',
-                  pageName: 'request_subscriptions',
-                  title: 'Solicitudes'
-                }
-              ]
+              icon: 'GalleryVerticalEnd',
+              pageName: 'users-request',
+              title: 'Solicitudes'
             },
+            'GESTIÓN DE PROGRAMAS',
             {
               icon: 'Album',
               pageName: 'programs',
@@ -178,85 +129,82 @@ export const useMenuStore = defineStore('menu', {
               icon: 'BarChartBig',
               pageName: 'performance',
               title: 'Desempeño'
+            },
+            'CONTACTOS',
+            {
+              icon: 'MessagesSquare',
+              pageName: 'chat',
+              title: 'Chat'
             }
-            // 'CONTÁCTANOS',
-            // {
-            //   icon: 'MessagesSquare',
-            //   pageName: 'chat',
-            //   title: 'Contacto'
-            // }
           ]
           break
-        case '3':
+        case 3:
           menuItems = []
           menuItems = [
             'GESTIÓN ECONÓMICA',
             {
               icon: 'PiggyBank',
               pageName: 'donations',
-              title: 'Donaciones',
-              subMenu: [
-                {
-                  icon: 'ReceiptText',
-                  pageName: 'expenses',
-                  title: 'Gastos'
-                }
-              ]
+              title: 'Donaciones'
+            },
+            'CONTACTOS',
+            {
+              icon: 'MessagesSquare',
+              pageName: 'chat',
+              title: 'Chat'
             }
-            // 'CONTÁCTANOS',
-            // {
-            //   icon: 'MessagesSquare',
-            //   pageName: 'chat',
-            //   title: 'Contacto'
-            // }
           ]
           break
-        case '4':
+        case 4:
           menuItems = []
           menuItems = [
-            'GESTIÓN DE PROGRAMAS',
+            'ACTIVIDADES DISPONIBLES',
             {
-              icon: 'BookMarked',
-              pageName: 'activities_view',
-              title: 'Actividades Vista'
+              icon: 'Notebook',
+              pageName: 'dashboard',
+              title: 'Suscripciones'
             },
+            'GESTIÓN DE PROGRAMAS',
             {
               icon: 'BarChartBig',
               pageName: 'performance',
               title: 'Desempeño'
+            },
+            'CONTACTOS',
+            {
+              icon: 'MessagesSquare',
+              pageName: 'chat',
+              title: 'Chat'
             }
-            // 'CONTÁCTANOS',
-            // {
-            //   icon: 'MessagesSquare',
-            //   pageName: 'chat',
-            //   title: 'Contacto'
-            // }
           ]
           break
-        case '5':
+        case 5:
           menuItems = [
+            'MI(S) HIJO(S)',
+            {
+              icon: 'BookUser',
+              pageName: 'dashboard',
+              title: 'Hijos'
+            },
             'GESTIÓN DE PROGRAMAS',
             {
               icon: 'BookMarked',
-              pageName: 'activities_view',
-              title: 'Actividades-Vista'
+              pageName: 'programsActivities',
+              title: 'Programas'
             },
+            'CONTACTOS',
             {
-              icon: 'BarChartBig',
-              pageName: 'performance_view',
-              title: 'Desempeño'
+              icon: 'MessagesSquare',
+              pageName: 'chat',
+              title: 'Chat'
             }
-            // 'CONTÁCTANOS',
-            // {
-            //   icon: 'MessagesSquare',
-            //   pageName: 'chat',
-            //   title: 'Contacto'
-            // }
           ]
           break
         default:
           menuItems = []
           console.warn('Rol desconocido:', role)
+          clearLocalStorage()
+          router.push({ name: 'login' })
           break
       }
 

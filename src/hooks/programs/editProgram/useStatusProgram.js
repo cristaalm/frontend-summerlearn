@@ -1,6 +1,8 @@
-import { Baseurl } from '@/../global'
+import { Baseurl } from '@/utils/global'
+import { inject } from 'vue'
 
-export function useStatusProgram({ showToast }) {
+export function useStatusProgram() {
+  const showToast = inject('showToast')
   const updateStatus = async ({ program }) => {
     //? ############# Copy Object #############
 
@@ -26,13 +28,14 @@ export function useStatusProgram({ showToast }) {
       })
       if (!response.ok) {
         programRef.status = programRef.status === 2 ? 1 : 2
-        showToast('Error al actualizar el estado del programa.')
+        showToast({ message: 'Error al actualizar el estado del programa.', type: 'error' })
+      } else {
+        showToast({ message: 'Estado del programa actualizado exitosamente.', type: 'success' })
       }
-      showToast('Estado del programa actualizado exitosamente.')
     } catch (e) {
       console.error('Error:', e)
       programRef.status = programRef.status === 2 ? 1 : 2
-      showToast('Error al actualizar el estado del programa.')
+      showToast({ message: 'Error al actualizar el estado del programa.', type: 'error' })
     }
 
     return programRef

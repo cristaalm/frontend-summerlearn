@@ -1,6 +1,6 @@
-import { ref } from 'vue'
+import { ref, inject } from 'vue'
 import { useRouter } from 'vue-router'
-import { Baseurl } from '@/../global'
+import { Baseurl } from '@/utils/global'
 import { unformatPhone } from '@/logic/formatNumber'
 
 export function useSetUser({
@@ -19,6 +19,7 @@ export function useSetUser({
   const router = useRouter()
   const error = ref('')
   const loading = ref(false)
+  const showToast = inject('showToast')
 
   const addUser = async () => {
     error.value = ''
@@ -73,6 +74,7 @@ export function useSetUser({
         rol.value = ''
         imageFile.value = null
         resetFields()
+        showToast({ message: 'Usuario registrado', type: 'success', persistente: true })
         router.push({ name: 'users' })
       } else {
         console.error('Registration failed', data)

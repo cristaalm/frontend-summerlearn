@@ -31,8 +31,8 @@
           </h2>
           <p>
             <strong>Responsable:</strong><br />
-            Nombre de la Organización: SummerLearn<br />
-            Correo Electrónico para Notificaciones:
+            Nombre de la organización: SummerLearn<br />
+            Correo electrónico para notificaciones:
             <a href="mailto:summerlandnotification@gmail.com" class="underline text-blue-600"
               >summerlandnotification@gmail.com</a
             ><br />
@@ -45,17 +45,17 @@
         <!-- Finalidades del Tratamiento -->
         <section>
           <h2 class="text-2xl font-semibold text-gray-800 mb-3">
-            Finalidades del Tratamiento de Datos Personales
+            Finalidades del tratamiento de datos personales
           </h2>
           <p>
-            <strong>Finalidades Principales:</strong><br />
-            • Gestión de Voluntarios y Participantes.<br />
-            • Organización de Actividades Educativas y Deportivas.<br />
-            • Comunicación y Envío de Información.<br />
+            <strong>Finalidades principales:</strong><br />
+            • Gestión de voluntarios y participantes.<br />
+            • Organización de actividades educativas y deportivas.<br />
+            • Comunicación y envío de información.<br />
             <br />
-            <strong>Finalidades Secundarias:</strong><br />
-            • Fines Mercadotécnicos.<br />
-            • Mejoramiento de Servicios.<br />
+            <strong>Finalidades secundarias:</strong><br />
+            • Fines mercadotécnicos.<br />
+            • Mejoramiento de servicios.<br />
             Nota: Las finalidades secundarias requieren su consentimiento expreso.
           </p>
         </section>
@@ -66,11 +66,11 @@
             Los Datos Personales que se Tratan
           </h2>
           <p>
-            <strong>Listado Completo de Datos Personales:</strong><br />
-            • Datos de Identificación: Nombre completo, fecha de nacimiento.<br />
-            • Datos de Contacto: Correo electrónico, número telefónico.<br />
-            • Datos Académicos: Nivel educativo, institución educativa.<br />
-            • Datos de Participación: Cursos inscritos, historial de participación.<br />
+            <strong>Listado completo de datos personales:</strong><br />
+            • Datos de identificación: Nombre completo, fecha de nacimiento.<br />
+            • Datos de contacto: Correo electrónico, número telefónico.<br />
+            • Datos académicos: Nivel educativo, institución educativa.<br />
+            • Datos de participación: Cursos inscritos, historial de participación.<br />
             • Datos Financieros: Información sobre donaciones.
           </p>
         </section>
@@ -78,7 +78,7 @@
         <!-- Transferencias de Datos -->
         <section>
           <h2 class="text-2xl font-semibold text-gray-800 mb-3">
-            Transferencias de Datos Personales
+            Transferencias de datos Personales
           </h2>
           <p>
             <strong>Terceros Receptores:</strong><br />
@@ -94,7 +94,7 @@
         <!-- Derechos ARCO -->
         <section>
           <h2 class="text-2xl font-semibold text-gray-800 mb-3">
-            Mecanismos para que el Titular Decida sobre sus Datos Personales
+            Mecanismos para que el titular decida sobre sus datos personales
           </h2>
           <p>
             <strong>Derechos ARCO:</strong><br />
@@ -116,9 +116,9 @@
             Opciones y Medios para Limitar el Uso o Divulgación de sus Datos
           </h2>
           <p>
-            • Registro Público para Evitar Publicidad.<br />
-            • Listado de Exclusión de SummerLearn.<br />
-            • Negativa a Recibir Comunicaciones.<br />
+            • Registro público para evitar publicidad.<br />
+            • Listado de exclusión de SummerLearn.<br />
+            • Negativa a recibir comunicaciones.<br />
             Para más información, puede enviarnos un correo a
             <a href="mailto:summerlandnotification@gmail.com" class="underline text-blue-600"
               >summerlandnotification@gmail.com</a
@@ -129,7 +129,7 @@
         <!-- Uso de Cookies -->
         <section>
           <h2 class="text-2xl font-semibold text-gray-800 mb-3">
-            Uso de Cookies y Otras Tecnologías
+            Uso de cookies y otras tecnologías
           </h2>
           <p>
             SummerLearn utiliza cookies y otras tecnologías para mejorar la experiencia del usuario.
@@ -141,7 +141,7 @@
         <!-- Cambios en el Aviso de Privacidad -->
         <section>
           <h2 class="text-2xl font-semibold text-gray-800 mb-3">
-            Cambios en el Aviso de Privacidad
+            Cambios en el aviso de privacidad
           </h2>
           <p>
             SummerLearn se compromete a mantener este aviso actualizado. Los cambios se comunicarán
@@ -151,8 +151,8 @@
 
         <!-- Fecha de última actualización -->
         <section>
-          <h2 class="text-2xl font-semibold text-gray-800 mb-3">Fecha de Última Actualización</h2>
-          <p>jueves, 3 de octubre de 2024</p>
+          <h2 class="text-2xl font-semibold text-gray-800 mb-3">Fecha de última actualización</h2>
+          <p>Jueves, 3 de octubre de 2024</p>
         </section>
       </div>
     </div>

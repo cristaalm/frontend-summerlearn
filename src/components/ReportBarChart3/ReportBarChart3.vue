@@ -3,7 +3,7 @@ import { computed, onMounted } from 'vue'
 import { type ChartData, type ChartOptions } from 'chart.js/auto'
 import { useColorSchemeStore } from '@/stores/color-scheme'
 import { useDarkModeStore } from '@/stores/dark-mode'
-import Chart from '@/components/Base/Chart'
+import Chart from '@/components/base/Chart'
 import { getColor } from '@/utils/colors'
 import { useWeeklyDonations } from '@/hooks/donations/'
 
@@ -29,8 +29,8 @@ const data = computed<ChartData>(() => {
         borderRadius: 2,
         data: donationsWeek.value, // Verifica que donationsWeek.value esté bien alineado
         borderWidth: 1,
-        borderColor: colorScheme.value ? getColor('theme.1', 0.7) : '',
-        backgroundColor: colorScheme.value ? getColor('theme.1', 0.3) : ''
+        borderColor: darkMode ? getColor('slate.400', 0.8) : colorScheme.value ? getColor('theme.1', 0.7) : '',
+        backgroundColor: darkMode ? getColor('slate.400', 0.8) : colorScheme.value ? getColor('theme.1', 0.7) : ''
       }
     ]
   }
@@ -47,7 +47,7 @@ const options = computed<ChartOptions>(() => {
     scales: {
       x: {
         ticks: {
-          color: getColor('slate.500', 0.8)
+          color: darkMode ? getColor('slate.200', 0.8) : getColor('slate.500', 0.8)
         },
         grid: {
           display: false
@@ -75,8 +75,4 @@ const options = computed<ChartOptions>(() => {
 
 <template>
   <Chart type="bar" :width="props.width" :height="props.height" :data="data" :options="options" />
-
-  <!-- <div v-if="!loading && donations && donations.length > 0"> 
-    {{ !loading ? donations : "Loading..." }} 
-  </div> -->
 </template>

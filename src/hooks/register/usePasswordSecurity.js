@@ -103,7 +103,5 @@ export function usePasswordSecurity({ status, validate }) {
     validate()
   }
 
-  return {
-    validatePassword
-  }
+  return { validatePassword }
 }

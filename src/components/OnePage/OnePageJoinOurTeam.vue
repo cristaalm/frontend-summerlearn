@@ -1,107 +1,73 @@
 <script setup>
-import { useRouter } from 'vue-router'
+import { useRouter } from 'vue-router';
 
-const router = useRouter()
+const router = useRouter();
 </script>
 
 <template>
   <div
-    class="min-h-screen w-full py-12 md:py-24 lg:py-32 flex flex-col justify-center items-center bg-redd space-y-4"
-    id="joinOurTeam"
-  >
-    <h1 class="text-7xl font-bold text-center mb-10">{{ $t('joinOurTeam.title') }}</h1>
+    class="min-h-screen h-fit w-full py-12 md:py-24 lg:py-32 flex flex-col justify-center items-center space-y-8 bg-gradient-to-r from-hred1 to-hred2"
+    id="joinOurTeam">
+    <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-center mb-8 text-white">
+      {{ $t('joinOurTeam.title') }}
+    </h1>
     <div
-      class="w-full flex flex-col lg:flex-row justify-center items-center p-10 space-y-4 lg:space-y-0 lg:space-x-4"
-      data-aos="fade-up"
-      data-aos-duration="1000"
-      data-aos-easing="ease-in-out"
-      data-aos-delay="300"
-    >
+      class="w-full flex flex-wrap justify-center items-stretch gap-4 px-4 lg:px-10"
+      data-aos="fade-up" data-aos-duration="1000" data-aos-easing="ease-in-out" data-aos-delay="300">
       <!-- Sección de voluntarios -->
       <section
         id="volunteer"
-        class="w-full h-[300px] lg:w-1/3 flex flex-col justify-center items-center p-6 rounded-lg bg-white shadow-lg hover:shadow-2xl transition-all duration-200 hover:scale-110"
-      >
-        <div class="container px-4 md:px-6">
-          <div class="flex flex-col items-center justify-center space-y-4 text-center">
-            <div class="space-y-2">
-              <h2 class="text-3xl font-bold tracking-tighter sm:text-5xl text-nowrap">
-                {{ $t('joinOurTeam.volunteer.title') }}
-              </h2>
-              <p
-                class="max-w-[900px] md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed text-justify"
-              >
-                {{ $t('joinOurTeam.volunteer.description') }}
-              </p>
-            </div>
-            <div class="flex gap-2 flex-row justify-center">
-              <button
-                @click="router.push({ name: 'register', params: { rol: 'voluntario' } })"
-                class="inline-flex h-10 w-3/4 md:w-fit items-center whitespace-nowrap justify-center cursor-pointer select-none rounded-md bg-emerald-500 px-10 py-6 text-lg font-medium text-white shadow transition-all hover:bg-emerald-500/80 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 duration-300 transform hover:scale-105 hover:rotate-2"
-              >
-                {{ $t('joinOurTeam.volunteer.button') }}
-              </button>
-            </div>
-          </div>
+        class="w-full sm:w-[90%] md:w-[48%] lg:w-[30%] flex flex-col justify-between items-center p-6 rounded-lg bg-white shadow-lg hover:shadow-2xl transition-transform duration-200 hover:scale-105">
+        <div class="flex flex-col items-center text-center space-y-4">
+          <h2 class="text-xl sm:text-2xl md:text-3xl font-bold text-hblue2">
+            {{ $t('joinOurTeam.volunteer.title') }}
+          </h2>
+          <p class="text-sm sm:text-base md:text-lg text-justify text-black">
+            {{ $t('joinOurTeam.volunteer.description') }}
+          </p>
         </div>
+        <button
+          @click="router.push({ name: 'register', params: { rol: 'voluntario' } })"
+          class="mt-4 w-full sm:w-auto px-6 py-3 text-sm sm:text-base font-medium text-white bg-emerald-500 rounded-lg shadow hover:bg-emerald-500/80 transition-transform duration-200 hover:scale-105">
+          {{ $t('joinOurTeam.volunteer.button') }}
+        </button>
       </section>
 
-      <!-- Sección de beneficiarios -->
+      <!-- Repetir estructura para beneficiarios y donantes -->
       <section
         id="beneficiary"
-        class="w-full h-[300px] lg:w-1/3 flex flex-col justify-center items-center p-6 rounded-lg bg-white shadow-lg hover:shadow-2xl transition-all duration-200 hover:scale-110"
-      >
-        <div class="container px-4 md:px-6">
-          <div class="flex flex-col items-center justify-center space-y-4 text-center">
-            <div class="space-y-2">
-              <h2 class="text-3xl font-bold tracking-tighter sm:text-5xl text-nowrap">
-                {{ $t('joinOurTeam.beneficiary.title') }}
-              </h2>
-              <p
-                class="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed text-justify"
-              >
-                {{ $t('joinOurTeam.beneficiary.description') }}
-              </p>
-            </div>
-            <div class="flex gap-2 flex-row justify-center">
-              <button
-                @click="router.push({ name: 'register', params: { rol: 'beneficiario' } })"
-                class="inline-flex h-10 w-3/4 md:w-fit items-center whitespace-nowrap justify-center cursor-pointer select-none rounded-md bg-emerald-500 px-10 py-6 text-lg font-medium text-white shadow transition-all hover:bg-emerald-500/80 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 duration-300 transform hover:scale-105 hover:rotate-2"
-              >
-                {{ $t('joinOurTeam.beneficiary.button') }}
-              </button>
-            </div>
-          </div>
+        class="w-full sm:w-[90%] md:w-[48%] lg:w-[30%] flex flex-col justify-between items-center p-6 rounded-lg bg-white shadow-lg hover:shadow-2xl transition-transform duration-200 hover:scale-105">
+        <div class="flex flex-col items-center text-center space-y-4">
+          <h2 class="text-xl sm:text-2xl md:text-3xl font-bold text-hblue2">
+            {{ $t('joinOurTeam.beneficiary.title') }}
+          </h2>
+          <p class="text-sm sm:text-base md:text-lg text-justify text-black">
+            {{ $t('joinOurTeam.beneficiary.description') }}
+          </p>
         </div>
+        <button
+          @click="router.push({ name: 'register', params: { rol: 'beneficiario' } })"
+          class="mt-4 w-full sm:w-auto px-6 py-3 text-sm sm:text-base font-medium text-white bg-emerald-500 rounded-lg shadow hover:bg-emerald-500/80 transition-transform duration-200 hover:scale-105">
+          {{ $t('joinOurTeam.beneficiary.button') }}
+        </button>
       </section>
 
-      <!-- Sección de donantes -->
       <section
         id="donor"
-        class="w-full h-[300px] lg:w-1/3 flex flex-col justify-center items-center p-6 rounded-lg bg-white shadow-lg hover:shadow-2xl transition-all duration-200 hover:scale-110"
-      >
-        <div class="container px-4 md:px-6">
-          <div class="flex flex-col items-center justify-center space-y-4 text-center">
-            <div class="space-y-2">
-              <h2 class="text-3xl font-bold tracking-tighter sm:text-5xl text-nowrap">
-                {{ $t('joinOurTeam.donor.title') }}
-              </h2>
-              <p
-                class="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed text-justify"
-              >
-                {{ $t('joinOurTeam.donor.description') }}
-              </p>
-            </div>
-            <div class="flex gap-2 flex-row justify-center">
-              <button
-                @click="router.push({ name: 'register', params: { rol: 'donante' } })"
-                class="inline-flex h-10 w-3/4 md:w-fit items-center whitespace-nowrap justify-center cursor-pointer select-none rounded-md bg-emerald-500 px-10 py-6 text-lg font-medium text-white shadow transition-all hover:bg-emerald-500/80 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 duration-300 transform hover:scale-105 hover:rotate-2"
-              >
-                {{ $t('joinOurTeam.donor.button') }}
-              </button>
-            </div>
-          </div>
+        class="w-full sm:w-[90%] md:w-[48%] lg:w-[30%] flex flex-col justify-between items-center p-6 rounded-lg bg-white shadow-lg hover:shadow-2xl transition-transform duration-200 hover:scale-105">
+        <div class="flex flex-col items-center text-center space-y-4">
+          <h2 class="text-xl sm:text-2xl md:text-3xl font-bold text-hblue2">
+            {{ $t('joinOurTeam.donor.title') }}
+          </h2>
+          <p class="text-sm sm:text-base md:text-lg text-justify text-black">
+            {{ $t('joinOurTeam.donor.description') }}
+          </p>
         </div>
+        <button
+          @click="router.push({ name: 'register', params: { rol: 'donante' } })"
+          class="mt-4 w-full sm:w-auto px-6 py-3 text-sm sm:text-base font-medium text-white bg-emerald-500 rounded-lg shadow hover:bg-emerald-500/80 transition-transform duration-200 hover:scale-105">
+          {{ $t('joinOurTeam.donor.button') }}
+        </button>
       </section>
     </div>
   </div>

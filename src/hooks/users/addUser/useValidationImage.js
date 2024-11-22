@@ -55,7 +55,14 @@ export function useValidationImage({ status, validate }) {
     status.value.profileImage.error = true
     profileImage.value = null
     imageFile.value = null
-    errorMessagePhoto.value = ''
+
+    // Restablecer el valor del input:file a null
+    const fileInput = document.getElementById('profileImageInput')
+    if (fileInput) {
+      fileInput.value = null // Esta línea restablece el input tipo file
+    }
+
+    errorMessagePhoto.value = 'La foto de perfil es obligatoria'
     validate()
   }
 

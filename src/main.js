@@ -8,6 +8,8 @@ import AOS from 'aos'
 import 'aos/dist/aos.css' // Import AOS styles
 import '@/assets/css/custom.css' // Import custom styles
 import { createPinia } from 'pinia'
+import letterOnly from './directives/letterOnly.js'
+import numberOnly from './directives/numberOnly.js'
 
 // 1. Import Pinia
 
@@ -30,6 +32,8 @@ router.beforeEach((to, from, next) => {
 app.use(pinia)
 app.use(router)
 app.use(i18n)
+app.directive('letter-only', letterOnly)
+app.directive('number-only', numberOnly)
 
 app.mount('#app')
 

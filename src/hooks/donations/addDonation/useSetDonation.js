@@ -1,20 +1,19 @@
-import { ref } from 'vue'
+import { ref, inject } from 'vue'
 import { useRouter } from 'vue-router'
-import { Baseurl } from '@/../global'
+import { Baseurl } from '@/utils/global'
 import getIdByToken from '@/logic/getIdByToken'
 
 export function useSetDonation() {
   const router = useRouter()
   const setDonationLoading = ref(false)
-  const setDonationError = ref('')
   const access_token = localStorage.getItem('access_token')
+  const showToast = inject('showToast')
 
   // ! Obtiene el id del usuario desde el token almacenado en localStorage
   const userId = getIdByToken(access_token).user_id
 
-  const addDonation = async ({ donation }) => {
+  const addDonation = async ({ donation, btnConfirm, btnForm }) => {
     setDonationLoading.value = true
-    setDonationError.value = ''
     try {
       const response = await fetch(`${Baseurl}donations/`, {
         method: 'POST',
@@ -31,13 +30,21 @@ export function useSetDonation() {
       })
       const data = await response.json()
       if (response.ok) {
-        // Aquí puedes manejar la redirección o mostrar un mensaje de éxito
-        router.push({ name: 'donations' }) // Redirige a la página de donaciones
+        showToast({ message: 'Donación realizada con éxito', type: 'success' })
+        btnConfirm()
+        setTimeout(() => {
+          router.push({ name: 'donations' }) // Redirige a la página de donaciones
+        }, 3000)
       } else {
-        setDonationError.value = data.detail || 'Error al agregar la donación'
+        showToast({
+          message: 'Ocurrió un error al intentar completar la transacción',
+          type: 'error'
+        })
+        btnForm()
       }
     } catch (error) {
-      setDonationError.value = 'Error de conexión'
+      showToast({ message: 'Ocurrió un error al intentar completar la transacción', type: 'error' })
+      btnForm()
     } finally {
       setDonationLoading.value = false
     }
@@ -45,7 +52,6 @@ export function useSetDonation() {
 
   return {
     setDonationLoading,
-    setDonationError,
     addDonation
   }
 }

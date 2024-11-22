@@ -15,9 +15,7 @@ interface DescriptionProps
   as?: string | object
 }
 
-const { as } = withDefaults(defineProps<DescriptionProps>(), {
-  as: 'div'
-})
+const { as = 'div' } = defineProps<DescriptionProps>()
 
 const attrs = useAttrs()
 const computedClass = computed(() =>

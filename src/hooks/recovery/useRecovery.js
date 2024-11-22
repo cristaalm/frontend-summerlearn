@@ -1,4 +1,4 @@
-import { Baseurl } from '@/../global'
+import { Baseurl } from '@/utils/global'
 
 export const recoveryPassword = async (key, password) => {
   try {

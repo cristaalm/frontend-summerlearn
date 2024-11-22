@@ -3,19 +3,24 @@ import { getPrograms } from '@/services/programs/programs'
 
 export function usePrograms() {
   const programs = ref([])
-  const loading = ref(false)
-  const error = ref(null)
+  const loadingPrograms = ref(false)
+  const errorPrograms = ref(null)
+  const firstLoad = ref(true)
 
   const loadPrograms = async () => {
-    loading.value = true
+    if (loadingPrograms.value) return
+    if (firstLoad.value) {
+      firstLoad.value = false
+      loadingPrograms.value = true
+    }
     try {
       programs.value = await getPrograms()
     } catch (e) {
-      error.value = e
+      errorPrograms.value = e
     } finally {
-      loading.value = false
+      loadingPrograms.value = false
     }
   }
 
-  return { programs, loading, error, loadPrograms }
+  return { programs, loadingPrograms, errorPrograms, loadPrograms }
 }

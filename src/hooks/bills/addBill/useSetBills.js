@@ -1,10 +1,12 @@
-import { ref } from 'vue'
-import { Baseurl } from '@/../global'
+import { ref, inject } from 'vue'
+import { Baseurl } from '@/utils/global'
 import getIdByToken from '@/logic/getIdByToken'
 
 export function useSetBill() {
   const setBillError = ref(null)
   const loadingSetBill = ref(false)
+  const showToast = inject('showToast')
+  const { donations: donationsList } = inject('donations')
 
   const addBill = async (billData) => {
     setBillError.value = null
@@ -85,12 +87,24 @@ export function useSetBill() {
           return { success: false }
         }
 
+        // Actualizar la donación en la lista con lo que nos devolvió el servidor
+        const updatedDonation = await spentUpdateResponse.json()
+        donationsList.value = donationsList.value.map((donationItem) => {
+          if (donationItem.id === updatedDonation.donations_id) {
+            return {
+              ...donationItem,
+              spent: updatedDonation.donations_spent
+            }
+          }
+          return donationItem
+        })
         return { success: true }
       })
 
       // Esperar que todas las actualizaciones se completen
       const updateResults = await Promise.all(updatePromises)
       if (updateResults.some((result) => !result.success)) {
+        showToast({ message: 'Gasto registrado con éxito', type: 'success', persistente: true })
         return { success: false }
       }
 

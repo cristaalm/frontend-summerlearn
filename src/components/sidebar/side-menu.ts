@@ -74,9 +74,12 @@ const nestedMenu = (menu: Array<Menu | string>, route: Route) => {
 
 const linkTo = (menu: FormattedMenu, router: Router) => {
   if (menu.subMenu) {
-    setTimeout(() => {
+    // comprobamos si estamos en la pagina correspondiente al menu
+    if (menu.pageName === router.currentRoute.value.name) {
       menu.activeDropdown = !menu.activeDropdown
-    }, 200)
+      return
+    }
+    // si no estamos en la pagina correspondiente al menu, redirigimos a la pagina correspondiente
     router.push({
       name: menu.pageName
     })

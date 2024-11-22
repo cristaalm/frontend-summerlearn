@@ -1,9 +1,10 @@
-import { ref } from 'vue'
+import { ref, inject } from 'vue'
 import { deleteObjective } from '@/services/actividades/deleteObjective'
 
-export function useDialogDeleteObjective({ showToast, objectives }) {
+export function useDialogDeleteObjective({ objectives }) {
   const dialogStatusDeleteObjective = ref(false)
   const activityToDelete = ref('')
+  const showToast = inject('showToast')
 
   const openDeleteModalObjective = (id) => {
     activityToDelete.value = id
@@ -19,18 +20,18 @@ export function useDialogDeleteObjective({ showToast, objectives }) {
           (objective) => objective.id !== activityToDelete.value
         )
         setTimeout(() => {
-          showToast('Objetivo eliminado exitosamente.') // Use showToast for success message
+          showToast({ message: 'Objetivo eliminado exitosamente.', type: 'success' }) // Use showToast for success message
         }, 1000)
       } else {
         setTimeout(() => {
-          showToast('Error al eliminar la objectivo.') // Use showToast for error message
+          showToast({ message: 'Error al eliminar la objectivo.', type: 'error' }) // Use showToast for error message
         }, 1000)
       }
       dialogStatusDeleteObjective.value = false
       activityToDelete.value = null
     } catch (error) {
       console.error('Error deleting activity:', error)
-      showToast('Error al eliminar la objective.') // Use showToast for error message
+      showToast({ message: 'Error al eliminar la objective.', type: 'error' }) // Use showToast for error message
     }
   }
 

@@ -1,3 +1,5 @@
+import { watch } from 'vue'
+
 export function useValidation({ password, confirm_password, status, valid }) {
   const validate = () => {
     const validForm = Object.keys(status.value).every((key) => status.value[key].value)
@@ -28,6 +30,9 @@ export function useValidation({ password, confirm_password, status, valid }) {
     status.value.confirm_password.error = false
     validate()
   }
+  watch([password, confirm_password], () => {
+    validationConfirmPassword()
+  })
 
   return {
     validationConfirmPassword,

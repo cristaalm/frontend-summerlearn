@@ -1,8 +1,8 @@
 // services/bills/getExcel.js
-import { Baseurl } from '@/../global'
+import { Baseurl } from '@/utils/global'
 
 export const getExcel = async () => {
-  const response = await fetch(`${Baseurl}/donations/exportar-excel/`, {
+  const response = await fetch(`${Baseurl}donations/exportar-excel/`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',

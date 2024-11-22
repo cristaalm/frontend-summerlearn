@@ -1,5 +1,5 @@
 import { ref } from 'vue'
-import { Baseurl } from '@/../global'
+import { Baseurl } from '@/utils/global'
 
 export function useWeeklyDonations() {
   const donationsWeek = ref([])

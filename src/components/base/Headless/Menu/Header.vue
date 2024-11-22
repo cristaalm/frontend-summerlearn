@@ -13,9 +13,7 @@ interface HeaderProps {
   as?: string | object
 }
 
-const { as } = withDefaults(defineProps<HeaderProps>(), {
-  as: 'div'
-})
+const { as = 'div' } = defineProps<HeaderProps>()
 
 const attrs = useAttrs()
 const computedClass = computed(() =>

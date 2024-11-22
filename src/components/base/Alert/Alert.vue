@@ -5,10 +5,12 @@ export default {
 </script>
 
 <script setup lang="ts">
+import DismissButton from './DismissButton.vue'
+import Lucide from '@/components/base/Lucide'
 import _ from 'lodash'
 import { twMerge } from 'tailwind-merge'
 import { TransitionRoot } from '@headlessui/vue'
-import { computed, ref, type HTMLAttributes, useAttrs } from 'vue'
+import { computed, ref, type HTMLAttributes, useAttrs, watch } from 'vue'
 
 type Variant =
   | 'primary'
@@ -33,18 +35,41 @@ type Variant =
   | 'soft-danger'
   | 'soft-dark'
 
-interface AlertProps extends /* @vue-ignore */ HTMLAttributes {
-  as?: string | object
+interface AlertProps {
   dismissible?: boolean
   variant?: Variant
-  onShow?: () => {}
-  onShown?: () => {}
-  onHide?: () => {}
-  onHidden?: () => {}
+  message: string
 }
 
-const { as, dismissible, variant, ...props } = withDefaults(defineProps<AlertProps>(), {
-  as: 'div'
+const { dismissible, variant, message = '' } = defineProps<AlertProps>()
+
+// Define los íconos para cada variante
+const iconMap = {
+  'primary': 'CheckCircle',  // Puedes ajustar estos íconos según tus preferencias
+  'secondary': 'Info',
+  'success': 'CheckCircle',
+  'warning': 'AlertTriangle',
+  'pending': 'Clock',
+  'danger': 'AlertTriangle',
+  'dark': 'Moon',
+  'outline-primary': 'CheckCircle',
+  'outline-danger': 'AlertTriangle',
+  'outline-success': 'CheckCircle',
+  'outline-warning': 'AlertTriangle',
+  'outline-pending': 'Clock',
+  'outline-dark': 'Moon',
+  'soft-primary': 'CheckCircle',
+  'soft-secondary': 'Info',
+  'soft-success': 'CheckCircle',
+  'soft-warning': 'AlertTriangle',
+  'soft-pending': 'Clock',
+  'soft-danger': 'AlertTriangle',
+  'soft-dark': 'Moon'
+}
+
+// Computa el ícono basado en el `variant`
+const computedIcon = computed(() => {
+  return iconMap[variant] || 'Info' // Devuelve un ícono predeterminado si no hay coincidencia
 })
 
 const attrs = useAttrs()
@@ -53,7 +78,7 @@ const show = ref<boolean>(true)
 // Main Colors
 const primary = [
   'bg-primary border-primary text-white', // Default
-  'dark:border-primary' // Dark
+  'dark:bg-darkmode-800 dark:border-transparent dark:text-slate-300' // Dark mode
 ]
 const secondary = [
   'bg-secondary/70 border-secondary/70 text-slate-500', // Default
@@ -61,19 +86,19 @@ const secondary = [
 ]
 const success = [
   'bg-success border-success text-slate-900', // Default
-  'dark:border-success' // Dark mode
+  'dark:bg-success dark:border-transparent dark:text-slate-300' // Dark mode
 ]
 const warning = [
   'bg-warning border-warning text-slate-900', // Default
-  'dark:border-warning' // Dark mode
+  'dark:bg-warning dark:border-transparent dark:text-slate-300' // Dark mode
 ]
 const pending = [
   'bg-pending border-pending text-white', // Default
-  'dark:border-pending' // Dark mode
+  'dark:bg-pending dark:border-transparent dark:text-slate-300' // Dark mode
 ]
 const danger = [
   'bg-danger border-danger text-white', // Default
-  'dark:border-danger' // Dark mode
+  'dark:bg-danger dark:border-transparent dark:text-slate-300' // Dark mode
 ]
 const dark = [
   'bg-dark border-dark text-white', // Default
@@ -82,31 +107,31 @@ const dark = [
 
 // Outline
 const outlinePrimary = [
-  'border-primary text-primary', // Default
-  'dark:border-primary' // Dark mode
+  'border-primary text-primary bg-primary/10', // Default
+  'dark:border-primary dark:bg-primary/10 dark:text-slate-400' // Dark mode
 ]
 const outlineSecondary = [
-  'border-secondary text-slate-500', // Default
-  'dark:border-darkmode-100/40 dark:text-slate-300' // Dark mode
+  'border-secondary text-slate-900 bg-secondary', // Default
+  'dark:border-darkmode-100 dark:text-slate-300 dark:bg-darkmode-500' // Dark mode
 ]
 const outlineSuccess = [
-  'border-success text-success dark:border-success', // Default
-  'dark:border-success' // Dark mode
+  'border-success text-success bg-success/10', // Default
+  'dark:border-success dark:bg-success/10 dark:text-slate-400' // Dark mode
 ]
 const outlineWarning = [
-  'border-warning text-warning', // Default
-  'dark:border-warning' // Dark mode
+  'border-warning text-warning bg-warning/10', // Default
+  'dark:border-warning dark:bg-warning/10 dark:text-slate-400' // Dark mode
 ]
 const outlinePending = [
-  'border-pending text-pending', // Default
-  'dark:border-pending' // Dark mode
+  'border-pending text-pending bg-pending/10', // Default
+  'dark:border-pending dark:bg-pending/10 dark:text-slate-400' // Dark mode
 ]
 const outlineDanger = [
-  'border-danger text-danger', // Default
-  'dark:border-danger' // Dark mode
+  'border-danger text-danger bg-danger/10', // Default
+  'dark:border-danger dark:bg-danger/10 dark:text-slate-400' // Dark mode
 ]
 const outlineDark = [
-  'border-dark text-dark', // Default
+  'border-dark text-dark bg-dark/10', // Default
   'dark:border-darkmode-800 dark:text-slate-300' // Dark mode
 ]
 
@@ -140,6 +165,7 @@ const softDark = [
   'dark:bg-darkmode-800/30 dark:border-darkmode-800/60 dark:text-slate-300' // Dark mode
 ]
 
+
 const computedClass = computed(() =>
   twMerge([
     'relative border rounded-md px-5 py-4',
@@ -168,27 +194,28 @@ const computedClass = computed(() =>
     typeof attrs.class === 'string' && attrs.class
   ])
 )
+
+
+
+// Dismiss the alert
+const dismiss = () => {
+  show.value = false
+}
 </script>
 
 <template>
-  <TransitionRoot
-    as="template"
-    :show="show"
-    enter="transition-all ease-linear duration-150"
-    enterFrom="invisible opacity-0 translate-y-1"
-    enterTo="visible opacity-100 translate-y-0"
-    leave="transition-all ease-linear duration-150"
-    leaveFrom="visible opacity-100 translate-y-0"
-    leaveTo="invisible opacity-0 translate-y-1"
-  >
-    <component :is="as" role="alert" :class="computedClass" v-bind="_.omit(attrs, 'class')">
-      <slot
-        :dismiss="
-          () => {
-            show = false
-          }
-        "
-      ></slot>
-    </component>
+  <TransitionRoot as="template" :show="show" enter="transition-all ease-linear duration-150"
+    enterFrom="invisible opacity-0 translate-y-1" enterTo="visible opacity-100 translate-y-0"
+    leave="transition-all ease-linear duration-150" leaveFrom="visible opacity-100 translate-y-0"
+    leaveTo="invisible opacity-0 translate-y-1">
+    <div :class="`flex items-center ${computedClass}`">
+      <Lucide :icon="computedIcon" class="stroke-[0.8] w-7 h-7 mr-2" />
+      <div class="ml-1 mr-8">
+        <span>{{ message }}</span>
+      </div>
+      <DismissButton type="button" class="btn-close" @click="dismiss" v-if="dismissible">
+        <Lucide icon="X" class="w-5 h-5" />
+      </DismissButton>
+    </div>
   </TransitionRoot>
 </template>

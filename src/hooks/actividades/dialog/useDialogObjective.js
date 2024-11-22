@@ -1,11 +1,11 @@
-import { ref } from 'vue'
-// import { addObjective } from '../../../services/actividades/addObjective'
+import { ref, inject } from 'vue'
 import { addObjective } from '@/services/actividades/addObjective'
 
-export function useDialogObjective({ showToast, actividades }) {
+export function useDialogObjective({ actividades }) {
   const dialogStatusObjective = ref(false)
   const dialogStatusObjectiveAdd = ref(false)
   const objectiveToAdd = ref('')
+  const showToast = inject('showToast')
 
   const openObjectiveModal = (id) => {
     objectiveToAdd.value = id
@@ -27,18 +27,18 @@ export function useDialogObjective({ showToast, actividades }) {
           (actividad) => actividad.id !== objectiveToAdd.value
         )
         setTimeout(() => {
-          showToast('Objetivo agregado exitosamente.') // Use showToast for success message
+          showToast({ message: 'Objetivo agregado exitosamente.', type: 'success' }) // Use showToast for success message
         }, 1000)
       } else {
         setTimeout(() => {
-          showToast('Error al agregar objectivo a la actividad.') // Use showToast for error message
+          showToast({ message: 'Error al agregar objectivo a la actividad.', type: 'error' }) // Use showToast for error message
         }, 1000)
       }
       dialogStatusObjective.value = false
       objectiveToAdd.value = null
     } catch (error) {
       console.error('Error deleting activity:', error)
-      showToast('Error al eliminar la actividad.') // Use showToast for error message
+      showToast({ message: 'Error al eliminar la actividad.', type: 'error' }) // Use showToast for error message
     }
   }
 

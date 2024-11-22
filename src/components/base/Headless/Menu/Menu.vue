@@ -14,9 +14,7 @@ interface MenuProps extends /* @vue-ignore */ ExtractProps<typeof HeadlessMenu> 
   as?: string | object
 }
 
-const { as } = withDefaults(defineProps<MenuProps>(), {
-  as: 'div'
-})
+const { as = 'div' } = defineProps<MenuProps>()
 
 const attrs = useAttrs()
 const computedClass = computed(() =>

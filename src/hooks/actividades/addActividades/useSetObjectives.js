@@ -1,6 +1,5 @@
 import { ref } from 'vue'
-import { useRouter } from 'vue-router'
-import { Baseurl } from '@/../global'
+import { Baseurl } from '@/utils/global'
 
 /**
  * Hook para agregar un objetivo.
@@ -16,7 +15,6 @@ import { Baseurl } from '@/../global'
  */
 
 export function useSetObjectives() {
-  const router = useRouter()
   const setObjectiveLoading = ref(false)
   const setObjectiveError = ref('')
   const setObjectiveSuccess = ref('')
@@ -38,11 +36,8 @@ export function useSetObjectives() {
         })
       })
 
-      const data = await response.json()
       if (response.ok) {
         setObjectiveSuccess.value = 'El objetivo se registró correctamente.'
-        // router.push({ name: 'activities' }) // Redirigir después del éxito
-        console.log('Objetivo registrado con éxito')
       } else {
         setObjectiveError.value = 'Hubo un problema con la solicitud'
       }

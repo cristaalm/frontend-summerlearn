@@ -1,21 +1,28 @@
-import { ref } from 'vue'
+import { ref, inject } from 'vue'
 import { getAreas } from '@/services/areas/areas'
 
 export function useAreas() {
   const areas = ref([])
-  const loading = ref(false)
-  const error = ref(null)
+  const loadingAreas = ref(false)
+  const errorAreas = ref(null)
+  const firstLoad = ref(true)
+  const showToast = inject('showToast')
 
   const loadAreas = async () => {
-    loading.value = true
+    if (loadingAreas.value) return
+    if (firstLoad.value) {
+      loadingAreas.value = true
+      firstLoad.value = false
+    }
     try {
       areas.value = await getAreas()
     } catch (e) {
-      error.value = e
+      errorAreas.value = e
+      showToast({ message: 'Error al cargar las áreas', type: 'error' })
     } finally {
-      loading.value = false
+      loadingAreas.value = false
     }
   }
 
-  return { areas, loading, error, loadAreas }
+  return { areas, loadingAreas, errorAreas, loadAreas }
 }

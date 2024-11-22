@@ -1,4 +1,4 @@
-import { Baseurl } from '@/../global'
+import { Baseurl } from '@/utils/global'
 
 export const getPrograms = async () => {
   const response = await fetch(`${Baseurl}programs/`, {
@@ -10,7 +10,6 @@ export const getPrograms = async () => {
   })
   const json = await response.json()
   const programs = json
-  // console.log(programs);
 
   programs.sort((a, b) => a.programs_id - b.programs_id) // Ordenar por id ASC
 

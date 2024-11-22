@@ -1,21 +1,28 @@
-import { ref } from 'vue'
+import { ref, inject } from 'vue'
 import { getUsers } from '@/services/users/getUsersByStatusThree'
 
 export function useUserRequest() {
-  const users = ref([])
-  const loading = ref(false)
-  const error = ref(null)
+  const usersRequest = ref([])
+  const loadingUsersRequest = ref(false)
+  const fisrtLoad = ref(true)
+  const errorUsersRequest = ref(null)
+  const showToast = inject('showToast')
 
-  const loadUsers = async () => {
-    loading.value = true
+  const loadUsersRequest = async () => {
+    if (loadingUsersRequest.value) return
+    if (fisrtLoad.value) {
+      loadingUsersRequest.value = true
+      fisrtLoad.value = false
+    }
     try {
-      users.value = await getUsers()
+      usersRequest.value = await getUsers()
     } catch (e) {
-      error.value = e
+      errorUsersRequest.value = e
+      showToast({ message: 'Error al cargar los usuarios', type: 'error' })
     } finally {
-      loading.value = false
+      loadingUsersRequest.value = false
     }
   }
 
-  return { users, loading, error, loadUsers }
+  return { usersRequest, loadingUsersRequest, errorUsersRequest, loadUsersRequest }
 }

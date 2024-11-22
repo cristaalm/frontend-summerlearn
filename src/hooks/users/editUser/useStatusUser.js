@@ -1,6 +1,8 @@
-import { Baseurl } from '@/../global'
+import { inject } from 'vue'
+import { Baseurl } from '@/utils/global'
 
-export function useStatusUser({ showToast }) {
+export function useStatusUser() {
+  const showToast = inject('showToast')
   const updateStatus = async ({ user }) => {
     //? ############# Copy Object #############
 
@@ -9,7 +11,8 @@ export function useStatusUser({ showToast }) {
 
     //? ############# Change Status #############
 
-    userRef.status = userRef.status == 1 ? 2 : 1
+    userRef.status = userRef.status == 4 ? 2 : userRef.status // si es rechazado lo paso a inactivo
+    userRef.status = userRef.status == 1 ? 2 : 1 // si es activo lo paso a inactivo y viceversa
 
     //? ############# Fetching Data #############
 
@@ -26,13 +29,14 @@ export function useStatusUser({ showToast }) {
       })
       if (!response.ok) {
         userRef.status = userRef.status === 2 ? 1 : 2
-        showToast('Error al actualizar el estado del usuario.')
+        showToast({ message: 'Error al actualizar el estado del usuario.', type: 'error' })
+      } else {
+        showToast({ message: 'Estado del usuario actualizado exitosamente.', type: 'success' })
       }
-      showToast('Estado del usuario actualizado exitosamente.')
     } catch (e) {
       console.error('Error:', e)
       userRef.status = userRef.status === 2 ? 1 : 2
-      showToast('Error al actualizar el estado del usuario.')
+      showToast({ message: 'Error al actualizar el estado del usuario.', type: 'error' })
     }
 
     return userRef

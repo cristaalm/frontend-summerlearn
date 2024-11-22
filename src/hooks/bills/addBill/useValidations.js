@@ -19,11 +19,14 @@ export function useValidations({ status, concept, amount, selectMultiple }) {
 
   const validateInputAmount = (e) => {
     const { value } = e.target
-    const regex = /^$|^\d+(\.\d{1,2})?$/
+    const regex = /^\d*\.?\d{0,2}$/
+
+    // Permitir el valor si es válido (número entero o con hasta dos decimales)
     if (regex.test(value)) {
       lastAmount.value = value
     } else {
-      amount.value = lastAmount.value
+      // Si el valor no es válido, revertir al último valor permitido
+      e.target.value = lastAmount.value
     }
   }
 

@@ -1,25 +1,12 @@
-import { ref } from 'vue'
+import { ref, inject } from 'vue'
 import { useRouter } from 'vue-router'
-import { Baseurl } from '@/../global'
-
-/**
- * Hook para agregar una actividad.
- *
- * @returns {Object} Retorna un objeto con las propiedades `setActividadesLoading`, `setActividadesError` y la función `addActividades`.
- * @property {Ref<boolean>} setActividadesLoading - Indica si la operación de agregar actividad está en curso.
- * @property {Ref<string>} setActividadesError - Contiene el mensaje de error si ocurre un problema.
- * @property {Function} addActividades - Función asíncrona para agregar una actividad.
- * @param {Object} actividad - Objeto que contiene la información para agregar.
- * @param {string} actividad.name - Nombre de la actividad.
- * @param {string} actividad.description - Descripción asociada a la actividad.
- * @param {string} actividad.responsible - Responsable asociado a la actividad.
- * @param {string} actividad.program - Programa asociado a la actividad.
- */
+import { Baseurl } from '@/utils/global'
 
 export function useSetActividades() {
   const router = useRouter()
   const setActividadesLoading = ref(false)
   const setActividadesError = ref('')
+  const showToast = inject('showToast')
 
   const addActividades = async ({ actividad }) => {
     setActividadesLoading.value = true
@@ -34,15 +21,15 @@ export function useSetActividades() {
         body: JSON.stringify({
           activities_name: actividad.name,
           activities_description: actividad.description,
-          activities_date: new Date().toISOString().split('T')[0], // obtener la fecha actual en formato YYYY-MM-DD
+          activities_date: actividad.date.split('/').reverse().join('-'),
           activities_status: true,
           activities_user: actividad.responsible,
           activities_program: actividad.program
         })
       })
 
-      const data = await response.json()
       if (response.ok) {
+        showToast({ message: 'Actividad creada con éxito', type: 'success', persistente: true })
         router.push({ name: 'activities' })
       } else {
         setActividadesError.value = 'Hubo un problema con la solicitud'

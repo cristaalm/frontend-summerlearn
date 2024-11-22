@@ -10,7 +10,6 @@ export function useObjectives() {
     loadingObjectives.value = true
     try {
       objectives.value = await getObjectivesById(id_activity) // Pasa el id_activity
-      // console.log(objectives)
     } catch (e) {
       errorObjectives.value = e
     } finally {

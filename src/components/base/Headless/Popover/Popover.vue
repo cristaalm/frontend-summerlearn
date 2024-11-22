@@ -14,9 +14,7 @@ interface PopoverProps extends /* @vue-ignore */ ExtractProps<typeof HeadlessPop
   as?: string | object
 }
 
-const { as } = withDefaults(defineProps<PopoverProps>(), {
-  as: 'div'
-})
+const { as = 'div' } = defineProps<PopoverProps>()
 
 const attrs = useAttrs()
 const computedClass = computed(() =>
@@ -27,7 +25,7 @@ const computedClass = computed(() =>
 <template>
   <HeadlessPopover as="template" v-slot="{ close }">
     <component :is="as" :class="computedClass" v-bind="_.omit(attrs, 'class')">
-      <slot :close="close"></slot
-    ></component>
+      <slot :close="close"></slot>
+    </component>
   </HeadlessPopover>
 </template>

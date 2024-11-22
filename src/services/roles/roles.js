@@ -1,4 +1,4 @@
-import { Baseurl } from '@/../global'
+import { Baseurl } from '@/utils/global'
 
 export const getRoles = async () => {
   const response = await fetch(`${Baseurl}rol/`, {

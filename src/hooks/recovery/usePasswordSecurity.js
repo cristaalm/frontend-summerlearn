@@ -1,4 +1,6 @@
-export function usePasswordSecurity({ status, password }) {
+import { watch } from 'vue'
+
+export function usePasswordSecurity({ status, password, confirm_password }) {
   const validatePassword = () => {
     const { value } = password
     const passwordRegex = status.value.password.Regex
@@ -100,6 +102,10 @@ export function usePasswordSecurity({ status, password }) {
       status.value.password.error = true
     }
   }
+
+  watch(password, () => {
+    validatePassword()
+  })
 
   return {
     validatePassword

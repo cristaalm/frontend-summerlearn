@@ -5,7 +5,6 @@ import { useDonationSearch } from './useSearchDonations'
 import { useWeeklyDonations } from './useWeeklyDonations'
 import { useExportExcel } from './exports/useExportExcel'
 import { useExportPDF } from './exports/useExportPDF'
-import { useToast } from './useToast'
 
 export {
   useDonations,
@@ -14,6 +13,5 @@ export {
   useDonationSearch,
   useWeeklyDonations,
   useExportExcel,
-  useExportPDF,
-  useToast
+  useExportPDF
 }

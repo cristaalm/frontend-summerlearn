@@ -1,10 +1,11 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { Baseurl } from '@/../global'
+import { Baseurl } from '@/utils/global'
 
 export function useAuth() {
   const router = useRouter()
   const loading = ref(false)
+  const loginSuccess = ref('')
   const error = ref('')
 
   const loginUser = async ({ email, password }) => {
@@ -23,10 +24,17 @@ export function useAuth() {
       })
       const data = await response.json()
       if (response.ok) {
+        loginSuccess.value = 'Inicio de sesión exitoso'
         localStorage.setItem('access_token', data.access)
         localStorage.setItem('refresh_token', data.refresh)
-        router.push({ name: 'dashboard' })
+        setTimeout(() => {
+          router.push({ name: 'dashboard' })
+        }, 3000)
       } else {
+        if (data.error == 'User is not active') {
+          error.value = 'Cuenta no activa'
+          return
+        }
         error.value = 'Correo electrónico o contraseña incorrectos'
       }
     } catch (e) {
@@ -40,6 +48,7 @@ export function useAuth() {
   return {
     loading,
     error,
+    loginSuccess,
     loginUser
   }
 }

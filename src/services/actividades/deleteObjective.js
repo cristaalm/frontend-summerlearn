@@ -1,4 +1,4 @@
-import { Baseurl } from '@/../global'
+import { Baseurl } from '@/utils/global'
 
 export const deleteObjective = async (objetivoId) => {
   try {
@@ -11,7 +11,6 @@ export const deleteObjective = async (objetivoId) => {
     })
 
     if (response.status === 204 || response.status === 200) {
-      console.log('Objetivo eliminada con éxito')
       return true
     } else {
       const errorResponse = await response.json()

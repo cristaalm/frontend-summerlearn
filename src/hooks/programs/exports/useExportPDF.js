@@ -1,15 +1,16 @@
 // hooks/bills/useExportExcel.js
-import { ref } from 'vue'
+import { ref, inject } from 'vue'
 import { getPDF } from '@/services/programs/getPdf'
 
-export function useExportPDF({ showToast }) {
+export function useExportPDF() {
   const loadingExportPDF = ref(false)
   const errorExportPDF = ref('')
+  const showToast = inject('showToast')
 
   const loadExportPDF = async () => {
     loadingExportPDF.value = true
     errorExportPDF.value = ''
-    showToast('Generando archivo PDF...')
+    showToast({ message: 'Generando archivo PDF...', type: 'info' })
 
     try {
       const blob = await getPDF()
@@ -30,7 +31,7 @@ export function useExportPDF({ showToast }) {
     } catch (error) {
       console.error(error)
       errorExportPDF.value = 'Error al exportar a PDF'
-      showToast(errorExportPDF.value)
+      showToast({ message: errorExportPDF.value, type: 'error' })
     } finally {
       loadingExportPDF.value = false
     }

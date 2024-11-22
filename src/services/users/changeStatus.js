@@ -1,4 +1,4 @@
-import { Baseurl } from '@/../global'
+import { Baseurl } from '@/utils/global'
 
 export const changeStatus = async (userIdSub, statusId) => {
   try {
@@ -15,7 +15,6 @@ export const changeStatus = async (userIdSub, statusId) => {
     })
 
     if (response.status === 204 || response.status === 200) {
-      console.log('Usuario actualizado con éxito.')
       return true // Successful update
     } else {
       const errorResponse = await response.json()
@@ -39,7 +38,6 @@ export const deleteUser = async (userIdSub) => {
     })
 
     if (response.status === 204 || response.status === 200) {
-      console.log('Usuario eliminado con éxito.') // Changed message to reflect deletion
       return true // Successful deletion
     } else {
       const errorResponse = await response.json()

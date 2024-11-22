@@ -1,9 +1,10 @@
-import { ref } from 'vue'
+import { ref, inject } from 'vue'
 import { deleteActividad } from '@/services/actividades/deleteActivities'
 
-export function useDialogDelete({ showToast, actividades }) {
+export function useDialogDelete({ actividades }) {
   const dialogStatusDelete = ref(false)
   const activityToDelete = ref('')
+  const showToast = inject('showToast')
 
   const openDeleteModal = (id) => {
     activityToDelete.value = id
@@ -19,18 +20,18 @@ export function useDialogDelete({ showToast, actividades }) {
           (actividad) => actividad.id !== activityToDelete.value
         )
         setTimeout(() => {
-          showToast('Actividad eliminada exitosamente.') // Use showToast for success message
+          showToast({ message: 'Actividad eliminada exitosamente.', type: 'success' }) // Use showToast for success message
         }, 1000)
       } else {
         setTimeout(() => {
-          showToast('Error al eliminar la actividad.') // Use showToast for error message
+          showToast({ message: 'Error al eliminar la actividad.', type: 'error' }) // Use showToast for error message
         }, 1000)
       }
       dialogStatusDelete.value = false
       activityToDelete.value = null
     } catch (error) {
       console.error('Error deleting activity:', error)
-      showToast('Error al eliminar la actividad.') // Use showToast for error message
+      showToast({ message: 'Error al eliminar la actividad.', type: 'error' }) // Use showToast for error message
     }
   }
 

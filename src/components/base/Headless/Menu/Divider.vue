@@ -13,9 +13,7 @@ interface DividerProps {
   as?: string | object
 }
 
-const { as } = withDefaults(defineProps<DividerProps>(), {
-  as: 'div'
-})
+const { as = 'div' } = defineProps<DividerProps>()
 
 const attrs = useAttrs()
 const computedClass = computed(() =>

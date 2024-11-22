@@ -1,6 +1,6 @@
 // hooks/bills/addBill/useMultiDonations.js
 import { ref, watch } from 'vue'
-import { Baseurl } from '@/../global'
+import { Baseurl } from '@/utils/global'
 
 export function useMultiDonations({ status, selectMultiple, amount, donations }) {
   const isValid = ref(false) // Estado de validación
