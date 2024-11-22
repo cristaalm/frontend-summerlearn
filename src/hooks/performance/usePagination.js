@@ -17,7 +17,6 @@ export function usePagination(items, initialPageSize = 10) {
     currentPage.value = page
   }
 
-
   const changePageSize = (size) => {
     if (size > 0) {
       pageSize.value = size

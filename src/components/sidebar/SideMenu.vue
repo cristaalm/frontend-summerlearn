@@ -43,26 +43,28 @@ const showToast = inject('showToast');
 const { photoUser, loadingUserPhoto } = inject('userPhoto');
 // @ts-ignore
 const { user } = inject('user');
-// @ts-ignore
-const { chats } = inject('socket');
-// @ts-ignore
-const notification = computed(() => chats.value.findIndex((chat) => chat.seenChat === false) !== -1);
 
-watch(notification, (value) => {
-  if (value) {
-    // si tiene notificaciones, contamos cuantos chats tiene nuevos mensajes
-    document.title = `🔴SummerLearn`;
-    // @ts-ignore
-    showToast({
-      message: `Tienes mensajes sin leer`,
-      type: "info"
-    });
-  } else {
-    document.title = "SummerLearn";
-  }
-}, { immediate: true });
+if (status == 1) {
+  // @ts-ignore
+  const { chats } = inject('socket');
+  // @ts-ignore
+  const notification = computed(() => chats.value.findIndex((chat) => chat.seenChat === false) !== -1);
 
+  watch(notification, (value) => {
+    if (value) {
+      // si tiene notificaciones, contamos cuantos chats tiene nuevos mensajes
+      document.title = `🔴SummerLearn`;
+      // @ts-ignore
+      showToast({
+        message: `Tienes mensajes sin leer`,
+        type: "info"
+      });
+    } else {
+      document.title = "SummerLearn";
+    }
+  }, { immediate: true });
 
+}
 
 // ? ############################ DARK MODE ############################
 

@@ -28,13 +28,16 @@ const { actividadesSubscribed, loadingActividadesSubscribed, errorActividadesSub
 const { programs, loadingPrograms, errorPrograms, loadPrograms } = inject('programs')
 
 const filteredPerformance = computed(() => { // prueba a recargar y ver si ya funciona ok
-  if (currentUserRol != 4) return performance;
+  console.log(performance)
+  if (currentUserRol != 4) return performance.value;
   if (!actividadesSubscribed.value || actividadesSubscribed.value.length === 0) return [];
 
   // Extraemos los IDs de actividades suscritas
   const subscribedActivityIds = actividadesSubscribed.value.map(activity => activity.id);
 
   // Filtramos las performances que coinciden con esas actividades aqui es donde se hace eso
+
+  console.log(performance.value.filter(item => subscribedActivityIds.includes(item.activity.id)))
   return performance.value.filter(item => subscribedActivityIds.includes(item.activity.id));
 });
 
@@ -178,58 +181,68 @@ onMounted(() => {
                   </Table.Thead>
 
                   <Table.Tbody v-if="!loadingPerformance && !errorPerformance">
-                    <template v-for="item in filteredPerformance" :key="item.id">
-                      <Table.Tr>
-                        <Table.Td class="text-center text-black dark:text-slate-200">{{ item.child.name }}</Table.Td>
-                        <Table.Td class="text-center text-black dark:text-slate-200">{{ item.activity.name }}</Table.Td>
-                        <Table.Td class="text-center text-black dark:text-slate-200">
-                          <template v-if="currentUserRol == 4">
-                            <div id="addCalf" v-if="item.value == null">
-                              <input type="text"
-                                class="w-20 mr-2 rounded-lg border-gray-200 border-2 text-center text-black dark:text-slate-200 dark:bg-transparent dark:border-slate-400"
-                                @input="handleInput(item.id)" v-model="nota[item.id]" />/ {{ notamax }}
-                            </div>
-                            <div id="addCalf" v-else :class="{
-                              'text-red-500 dark:text-red-400': item.value < 5,
-                              'text-yellow-500': item.value >= 5 && item.value < 7,
-                              'text-green-500': item.value >= 7
-                            }">
-                              {{ item.value }}/{{ notamax }}
-                            </div>
-                          </template>
-                          <template v-else>
-                            <div :class="{
-                              'text-red-500 dark:text-red-400': item.value < 5 && item.value !== null,
-                              'text-yellow-500': item.value === null || (item.value >= 5 && item.value < 7),
-                              'text-green-500': item.value >= 7
-                            }">
-                              {{ item.value == null ? 'Pendiente' : `${item.value} / ${notamax}` }}
-                            </div>
-                          </template>
-                        </Table.Td>
-                        <Table.Td id="btnIndividual" class="text-center text-black dark:text-slate-200"
-                          v-if="currentUserRol == 4">
-                          <Button v-if="item.value == null" variant="outline-success" :class="`w-full px-10 md:w-auto font-bold ${loadings[item.id]
-                            ? 'border-warning text-warning'
-                            : valid[item.id] && item.value == null
-                              ? 'border-green text-green dark:text-slate-200'
-                              : 'border-gray-500 text-gray-500'
-                            }`" :disabled="!valid[item.id] ||
-                            loadings[item.id] ||
-                            item.value != null
-                            " @click="() => updateScoreHandler(item.id)">
-                            <Lucide v-if="!loadings[item.id] && item.value == null" icon="Check"
-                              class="stroke-[1.3] w-4 h-4 mr-2" />
-                            <LoadingIcon v-if="loadings[item.id] && item.value == null" icon="tail-spin"
-                              class="stroke-[1.3] w-4 h-4 mr-2 -ml-2" color="black" />
+                    <template v-if="filteredPerformance.length">
+                      <template v-for="item in filteredItems" :key="item.id">
+                        <Table.Tr>
+                          <Table.Td class="text-center text-black dark:text-slate-200">{{ item.child.name }}</Table.Td>
+                          <Table.Td class="text-center text-black dark:text-slate-200">{{ item.activity.name }}
+                          </Table.Td>
+                          <Table.Td class="text-center text-black dark:text-slate-200">
+                            <template v-if="currentUserRol == 4">
+                              <div id="addCalf" v-if="item.value == null">
+                                <input type="text"
+                                  class="w-20 mr-2 rounded-lg border-gray-200 border-2 text-center text-black dark:text-slate-200 dark:bg-transparent dark:border-slate-400"
+                                  @input="handleInput(item.id)" v-model="nota[item.id]" />/ {{ notamax }}
+                              </div>
+                              <div id="addCalf" v-else :class="{
+                                'text-red-500 dark:text-red-400': item.value < 5,
+                                'text-yellow-500': item.value >= 5 && item.value < 7,
+                                'text-green-500': item.value >= 7
+                              }">
+                                {{ item.value }}/{{ notamax }}
+                              </div>
+                            </template>
+                            <template v-else>
+                              <div :class="{
+                                'text-red-500 dark:text-red-400': item.value < 5 && item.value !== null,
+                                'text-yellow-500': item.value === null || (item.value >= 5 && item.value < 7),
+                                'text-green-500': item.value >= 7
+                              }">
+                                {{ item.value == null ? 'Pendiente' : `${item.value} / ${notamax}` }}
+                              </div>
+                            </template>
+                          </Table.Td>
+                          <Table.Td id="btnIndividual" class="text-center text-black dark:text-slate-200"
+                            v-if="currentUserRol == 4">
+                            <Button v-if="item.value == null" variant="outline-success" :class="`w-full px-10 md:w-auto font-bold ${loadings[item.id]
+                              ? 'border-warning text-warning'
+                              : valid[item.id] && item.value == null
+                                ? 'border-green text-green dark:text-slate-200'
+                                : 'border-gray-500 text-gray-500'
+                              }`" :disabled="!valid[item.id] ||
+                                loadings[item.id] ||
+                                item.value != null
+                                " @click="() => updateScoreHandler(item.id)">
+                              <Lucide v-if="!loadings[item.id] && item.value == null" icon="Check"
+                                class="stroke-[1.3] w-4 h-4 mr-2" />
+                              <LoadingIcon v-if="loadings[item.id] && item.value == null" icon="tail-spin"
+                                class="stroke-[1.3] w-4 h-4 mr-2 -ml-2" color="black" />
 
-                            <span v-if="!loadings[item.id] && item.value == null">Calificar</span>
-                            <span v-else-if="loadings[item.id] && item.value == null">Calificando</span>
-                          </Button>
-                          <span v-else class="flex flex-row items-center justify-center text-success">
-                            <Lucide icon="CheckCircle" class="stroke-[1.3] w-4 h-4 mr-2" />
-                            Calificado
-                          </span>
+                              <span v-if="!loadings[item.id] && item.value == null">Calificar</span>
+                              <span v-else-if="loadings[item.id] && item.value == null">Calificando</span>
+                            </Button>
+                            <span v-else class="flex flex-row items-center justify-center text-success">
+                              <Lucide icon="CheckCircle" class="stroke-[1.3] w-4 h-4 mr-2" />
+                              Calificado
+                            </span>
+                          </Table.Td>
+                        </Table.Tr>
+                      </template>
+                    </template>
+                    <template v-else>
+                      <Table.Tr>
+                        <Table.Td class="text-center" colspan="4">
+                          <div class="text-red-500">No se encontraron resultados</div>
                         </Table.Td>
                       </Table.Tr>
                     </template>

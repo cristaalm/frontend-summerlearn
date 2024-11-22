@@ -103,7 +103,9 @@ if ((role === 4 || role == 5) && status != 3) {
   loadings.push(loadingSub)
   provide('areasInSubs', { areasSub, loadingSub, errorSub, loadAreasSub })
   onMounted(() => loadAreasSub())
+}
 
+if ((role === 4 || role === 5 || role === 1)) {
   const { actividadesSubscribed, loadingActividadesSubscribed, errorActividadesSubscribed, loadActividadesSubscribed } = useActividadesSubscribed()
   loadings.push(loadingActividadesSubscribed)
   provide('actividadesSubscribed', { actividadesSubscribed, loadingActividadesSubscribed, errorActividadesSubscribed, loadActividadesSubscribed })
@@ -142,10 +144,11 @@ if ((role === 1 || role === 2 || role === 4 || role === 5) && status != 3) {
   onMounted(() => loadChildrens())
 
   const { performance, loadingPerformance, loadPerformance, errorPerformance } = usePerformance()
-  if (role === 4){ // si el rol es voluntario
+  if (role === 4) { // si el rol es voluntario
     loadings.push(loadingPerformance) // va esperar a que termine de cargar los performance
   }
   provide('performance', { performance, loadingPerformance, loadPerformance, errorPerformance })
+  loadings.push(loadingPerformance)
   onMounted(() => loadPerformance())
 
   const { programas, loadingProgram, loadProgram } = useProgramsActividades()
@@ -177,16 +180,17 @@ onMounted(() => {
 // ? ############################ SOCKET ############################
 
 import { useWebSocket } from '@/hooks/chat'
-const { mountedSocket, unmountedSocket, chats, messages, loadingChats, loadingMessages, newMessage, sendMessage, isTyping, loadingSendMessage, changeSeen, contacts, loadingContacts } = useWebSocket()
-provide('socket', { chats, messages, loadingChats, loadingMessages, newMessage, sendMessage, isTyping, loadingSendMessage, changeSeen, contacts, loadingContacts })
+if (status == 1) {
+  const { mountedSocket, unmountedSocket, chats, messages, loadingChats, loadingMessages, newMessage, sendMessage, isTyping, loadingSendMessage, changeSeen, contacts, loadingContacts } = useWebSocket()
+  provide('socket', { chats, messages, loadingChats, loadingMessages, newMessage, sendMessage, isTyping, loadingSendMessage, changeSeen, contacts, loadingContacts })
 
-onMounted(() => {
-  mountedSocket()
-})
-onUnmounted(() => {
-  unmountedSocket()
-})
-
+  onMounted(() => {
+    mountedSocket()
+  })
+  onUnmounted(() => {
+    unmountedSocket()
+  })
+}
 // Observa cuando todos los estados de carga sean `false`
 watch(
   loadings,
