@@ -151,6 +151,10 @@ const handleDayChange = async () => {
 const id_actividad = ref(null)
 const schedulesList = ref([])
 
+import { EditActivitiesModal } from '@/components/Dashboard/activities/'
+import { useDialogEditActivity } from '@/hooks/actividades/dialog'
+const { ModalEditActivity, activityInfoProvideEdit, setModalEditActivity } = useDialogEditActivity()
+
 const guardarId = (id) => {
   id_actividad.value = id
   loadObjectives(id_actividad.value)
@@ -165,6 +169,9 @@ onMounted(async () => {
 </script>
 
 <template>
+  <EditActivitiesModal :ModalEditActivity="ModalEditActivity" :setModalEditActivity="setModalEditActivity"
+    :infoActivity="activityInfoProvideEdit" />
+
   <!-- BEGIN: Modal Content -->
   <Dialog :open="dialogStatusDelete" @close="() => {
     dialogStatusDelete.value = false
@@ -250,9 +257,10 @@ onMounted(async () => {
                   class="w-5 py-4 font-medium border-t bg-slate-50 dark:bg-transparent border-slate-200/60 text-slate-500 dark:text-slate-200">
                   Objetivo
                 </Table.Td>
-                <Table.Td
-                  class="w-5 py-4 font-medium border-t bg-slate-50 dark:bg-transparent border-slate-200/60 text-slate-500 dark:text-slate-200">
-                </Table.Td>
+                <!-- <Table.Td
+                  class="w-5 py-4 font-medium border-t bg-slate-50 dark:bg-transparent border-slate-200/60 text-slate-500 dark:text-slate-200"
+                >
+                </Table.Td> -->
               </Table.Tr>
             </Table.Thead>
 
@@ -295,7 +303,7 @@ onMounted(async () => {
                       {{ objective.description }}
                     </div>
                   </Table.Td>
-
+                  <!-- 
                   <Table.Td class="relative py-4 border-dashed dark:bg-darkmode-600 dark:text-slate-200">
                     <div class="flex items-center justify-end">
                       <Menu class="h-5 abosolute top-0">
@@ -317,7 +325,7 @@ onMounted(async () => {
                         </Menu.Items>
                       </Menu>
                     </div>
-                  </Table.Td>
+                  </Table.Td> -->
                 </Table.Tr>
               </template>
             </Table.Tbody>
@@ -671,10 +679,11 @@ onMounted(async () => {
                     class="w-5 py-4 font-medium border-t bg-slate-50 dark:bg-transparent border-slate-200/60 text-slate-500 dark:text-slate-200 whitespace-normal">
                     Nombre
                   </Table.Td>
-                  <Table.Td
-                    class="w-5 py-4 font-medium border-t bg-slate-50 dark:bg-transparent border-slate-200/60 text-slate-500 dark:text-slate-200 whitespace-normal">
+                  <!-- <Table.Td
+                    class="w-5 py-4 font-medium border-t bg-slate-50 dark:bg-transparent border-slate-200/60 text-slate-500 dark:text-slate-200 whitespace-normal"
+                  >
                     Fecha
-                  </Table.Td>
+                  </Table.Td> -->
                   <Table.Td
                     class="w-5 py-4 font-medium border-t bg-slate-50 dark:bg-transparent border-slate-200/60 text-slate-500 dark:text-slate-200 whitespace-normal">
                     Programa
@@ -736,11 +745,11 @@ onMounted(async () => {
                         {{ actividades.name }}
                       </div>
                     </Table.Td>
-                    <Table.Td class="py-4 border-dashed dark:bg-darkmode-600 dark:text-slate-200">
+                    <!-- <Table.Td class="py-4 border-dashed dark:bg-darkmode-600 dark:text-slate-200">
                       <div href="" class="font-medium whitespace-normal">
                         {{ actividades.date }}
                       </div>
-                    </Table.Td>
+                    </Table.Td> -->
                     <Table.Td class="py-4 border-dashed dark:bg-darkmode-600 dark:text-slate-200">
                       <div href="" class="font-medium whitespace-normal">
                         {{ actividades.program_name }}
@@ -769,7 +778,10 @@ onMounted(async () => {
                               class="w-5 h-5 stroke-black dark:stroke-slate-200 fill-black dark:fill-slate-200" />
                           </Menu.Button>
                           <Menu.Items class="w-40">
-                            <Menu.Item class="text-warning dark:text-yellow-300">
+                            <Menu.Item class="text-warning dark:text-yellow-300" @click="() => {
+                              setModalEditActivity({ open: true, activityInfo: actividades })
+                            }
+                              ">
                               <Lucide icon="CheckSquare" class="w-4 h-4 mr-2 dark:stroke-yellow-300" />
                               Editar
                             </Menu.Item>

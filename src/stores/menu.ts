@@ -189,7 +189,7 @@ export const useMenuStore = defineStore('menu', {
             'GESTIÓN DE PROGRAMAS',
             {
               icon: 'BookMarked',
-              pageName: 'book_son',
+              pageName: 'programsActivities',
               title: 'Programas'
             },
             'CONTACTOS',
@@ -204,7 +204,7 @@ export const useMenuStore = defineStore('menu', {
           menuItems = []
           console.warn('Rol desconocido:', role)
           clearLocalStorage()
-          router.push('/login')
+          router.push({ name: 'login' })
           break
       }
 

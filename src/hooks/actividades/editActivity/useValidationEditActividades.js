@@ -1,5 +1,5 @@
 import { ref, watch, inject } from 'vue'
-export function useValidationAddActividades() {
+export function useValidationEditActividades() {
   const status = ref({
     name: {
       error: false,

@@ -4,79 +4,89 @@ import 'driver.js/dist/driver.css'
 import { nextTick } from 'vue'
 import { Baseurl } from '@/utils/global'
 
-export const startTourDonor = async (router, id, formattedMenu, activeMobileMenu, showToast) => {
+export const startTourBenef = async (router, id, formattedMenu, activeMobileMenu, showToast) => {
   const driverObj = driver({
     showProgress: true,
     steps: [
       {
+        // 0
         popover: {
-          title: 'Bienvenidos al perfil de donador',
-
-          onNextClick: () => {
-            router
-              .push({ name: 'dashboard' })
-              .then(() => {
-                // Espera que la nueva vista se haya montado
-                nextTick(() => {
-                  driverObj.moveNext()
-                })
-              })
-              .catch((err) => {
-                console.error('Error al cambiar de ruta:', err)
-              })
+          prevBtnText: 'Anterior',
+          nextBtnText: 'Siguiente',
+          title: 'Bienvenidos a tu perfil de Beneficiario',
+          onPopoverRender: () => {
+            router.push({ name: 'dashboard' }).then(() => {})
           }
         }
       },
       {
-        element: '#graficaBarra',
+        // 1
+        element: '#containerChildren',
         popover: {
-          title: 'Grafica de barras',
-          description: 'En esta grafica podras ver tus donaciones de manera mas general.'
+          prevBtnText: 'Anterior',
+          nextBtnText: 'Siguiente',
+          title: 'Niños registrados',
+          description: 'Aquí podrás ver tus hijos registrados en la plataforma.',
+          onNextClick: () => {
+            // verificamos si existe un id llamado children
+            if (document.getElementById('children')) {
+              // si existe, lo seleccionamos, continuamos con el tour normal
+              driverObj.moveNext()
+            } else {
+              // si no existe, saltamos al siguiente paso
+              driverObj.moveTo(5)
+            }
+          }
         }
       },
       {
-        element: '#filtrarFecha',
+        // 2
+        element: '#btnGrade',
         popover: {
-          title: 'Filtrar por fecha',
-          description: 'Puedes seleccionar para filtrar por dias, semanas y meses.'
+          prevBtnText: 'Anterior',
+          nextBtnText: 'Siguiente',
+          title: 'Botón de calificaciones',
+          description: 'Aquí podrás ver las calificaciones de tus hijos.'
         }
       },
       {
-        element: '#barraDonaciones',
+        // 3
+        element: '#btnEdit',
         popover: {
-          title: 'Barras de donaciones',
-          description: 'Aqui se mostrara las donacion dependiendo a la opcion seleccionada.'
+          prevBtnText: 'Anterior',
+          nextBtnText: 'Siguiente',
+          title: 'Botón de editar',
+          description: 'Aquí podrás editar los datos de tus hijos.'
         }
       },
       {
-        element: '#graficaDona',
+        // 4
+        element: '#btnDelete',
         popover: {
-          title: 'Grafica de dona',
-          description:
-            'En esta seccion mostrara la relacion entre tus donaciones y los gastos hechos con ellas mismas.'
+          prevBtnText: 'Anterior',
+          nextBtnText: 'Siguiente',
+          title: 'Botón de eliminar',
+          description: 'Aquí podrás eliminar a tus hijos de la plataforma.'
         }
       },
       {
-        element: '#relacionDonaciones',
+        // 5
+        element: '#btnAddChild',
         popover: {
-          title: 'Relacion de donaciones',
-          description:
-            'Se mostrara en azul tus donaciones y en verde los gastos hecho con ellas y aparte cuanto de tus donaciones estan disponible.'
-        }
-      },
-      {
-        element: '#ultimasDonaciones',
-        popover: {
-          title: 'Ultimas donaciones',
-          description: 'Aqui se muestran las ultimas 6 donaciones.'
-        }
-      },
-      {
-        element: '#formatoDonacion',
-        popover: {
-          title: 'Formato de donaciones',
-          description:
-            'Se te mostrara la ultima donacion con su concepto, el monto y la fecha de realizacion.',
+          prevBtnText: 'Anterior',
+          nextBtnText: 'Siguiente',
+          title: 'Botón de agregar hijo',
+          description: 'Aquí podrás agregar a tus hijos a la plataforma.',
+          onPrevClick: () => {
+            // verificamos si existe un id llamado btnDelete
+            if (document.getElementById('btnDelete')) {
+              // si existe, lo seleccionamos, continuamos con el tour normal
+              driverObj.movePrevious()
+            } else {
+              // si no existe, saltamos al paso anterior
+              driverObj.moveTo(1)
+            }
+          },
           onNextClick: () => {
             activeMobileMenu.value = true
             setTimeout(() => {
@@ -86,13 +96,16 @@ export const startTourDonor = async (router, id, formattedMenu, activeMobileMenu
         }
       },
       {
-        element: '#sideBar-donations',
+        // 6
+        element: '#sideBar-programsActivities',
         popover: {
-          title: 'Donaciones',
-          description: 'Entramos al apartado de donaciones.',
+          prevBtnText: 'Anterior',
+          nextBtnText: 'Siguiente',
+          title: 'Menú de programas',
+          description: 'En este menú podrás ver los programas disponibles para tus hijos.',
           onNextClick: () => {
             activeMobileMenu.value = false
-            router.push({ name: 'donations' }).then(() => {
+            router.push({ name: 'programsActivities' }).then(() => {
               driverObj.moveNext()
             })
           },
@@ -107,87 +120,20 @@ export const startTourDonor = async (router, id, formattedMenu, activeMobileMenu
         }
       },
       {
-        element: '#donacionSemanal',
+        // 7
+        element: '#containerProgramsActivities',
         popover: {
-          title: 'Donaciones semanales',
-          description: 'Se mostrara estadisticas de las donaciones de la semana.',
+          prevBtnText: 'Anterior',
+          nextBtnText: 'Siguiente',
+          title: 'Programas y actividades',
+          description:
+            'Aquí podrás ver los programas y actividades disponibles para tus hijos por área.',
           onPrevClick: () => {
             activeMobileMenu.value = true
             setTimeout(() => {
               driverObj.movePrevious()
             }, 100)
           },
-          onNextClick: () => {
-            driverObj.moveNext()
-          }
-        }
-      },
-      {
-        element: '#estadisticasDonaciones',
-        popover: {
-          title: 'Estadisticas de donaciones',
-          description: 'Se muestra las donaciones de Lunes a Viernes.',
-          onNextClick: () => {
-            driverObj.moveNext()
-          }
-        }
-      },
-      {
-        element: '#barDonaciones',
-        popover: {
-          title: 'Barras de donaciones',
-          description:
-            'Aqui se mostrara inforamacion relevante, como cantidad de donaciones, monto total, ultima donacion y la ultima fecha.',
-          onNextClick: () => {
-            driverObj.moveNext()
-          }
-        }
-      },
-      {
-        element: '#historialDonaciones',
-        popover: {
-          title: 'Historial de donaciones',
-          description: 'Se muestran el historia de todas tus donaciones.',
-          onNextClick: () => {
-            driverObj.moveNext()
-          }
-        }
-      },
-      {
-        element: '#buscarDonaciones',
-        popover: {
-          title: 'Buscar donaciones',
-          description: 'Aqui podras buscar la donacion por su concepto.',
-          onNextClick: () => {
-            driverObj.moveNext()
-          }
-        }
-      },
-      {
-        element: '#exportarDonaciones',
-        popover: {
-          title: 'Exportar donaciones',
-          description: 'Aqui podras exportar en PDF o Excel tu historia de donaciones.',
-          onNextClick: () => {
-            driverObj.moveNext()
-          }
-        }
-      },
-      {
-        element: '#donacion',
-        popover: {
-          title: 'Donacion',
-          description: 'Aqui se mostrar todas tu donaciones.',
-          onNextClick: () => {
-            driverObj.moveNext()
-          }
-        }
-      },
-      {
-        element: '#agregarDonacion',
-        popover: {
-          title: 'Agregar donacion',
-          description: 'En este boton podras hacer una nueva donacion.',
           onNextClick: () => {
             activeMobileMenu.value = true
             setTimeout(() => {
@@ -212,7 +158,7 @@ export const startTourDonor = async (router, id, formattedMenu, activeMobileMenu
           onPrevClick: () => {
             activeMobileMenu.value = false
             setTimeout(() => {
-              router.push({ name: 'donations' }).then(() => {
+              router.push({ name: 'programsActivities' }).then(() => {
                 driverObj.movePrevious()
               })
             }, 100)

@@ -4,17 +4,17 @@ import 'driver.js/dist/driver.css'
 import { nextTick } from 'vue'
 import { Baseurl } from '@/utils/global'
 
-export const startTourDonor = async (router, id, formattedMenu, activeMobileMenu, showToast) => {
+export const startTourVolun = async (router, id, formattedMenu, activeMobileMenu, showToast) => {
   const driverObj = driver({
     showProgress: true,
     steps: [
       {
         popover: {
-          title: 'Bienvenidos al perfil de donador',
+          title: 'Bienvenidos al perfil de voluntario',
 
           onNextClick: () => {
             router
-              .push({ name: 'dashboard' })
+              .push('/dashboard')
               .then(() => {
                 // Espera que la nueva vista se haya montado
                 nextTick(() => {
@@ -28,55 +28,40 @@ export const startTourDonor = async (router, id, formattedMenu, activeMobileMenu
         }
       },
       {
-        element: '#graficaBarra',
+        element: '#PanelVoluntario',
         popover: {
-          title: 'Grafica de barras',
-          description: 'En esta grafica podras ver tus donaciones de manera mas general.'
+          title: 'Vista de actividades',
+          description: 'En esta seccion veras las actividades en las que estas suscrito.'
         }
       },
       {
-        element: '#filtrarFecha',
+        element: '#buscarActividades',
         popover: {
-          title: 'Filtrar por fecha',
-          description: 'Puedes seleccionar para filtrar por dias, semanas y meses.'
+          title: 'Buscar actividades',
+          description: 'Puedes buscar las actividades.'
         }
       },
       {
-        element: '#barraDonaciones',
+        element: '#filtrarActividades',
         popover: {
-          title: 'Barras de donaciones',
-          description: 'Aqui se mostrara las donacion dependiendo a la opcion seleccionada.'
+          title: 'Filtro de actividades',
+          description: 'Aqui se puede filtrar las actividades dependiendo al area.'
         }
       },
       {
-        element: '#graficaDona',
+        element: '#cardActividades',
         popover: {
-          title: 'Grafica de dona',
+          title: 'Tarjeta de actividades',
           description:
-            'En esta seccion mostrara la relacion entre tus donaciones y los gastos hechos con ellas mismas.'
+            'Puedes ver con mas detalle la informacion del programa como el horario, el objetivo y los niños suscrito a esa actividad.'
         }
       },
       {
-        element: '#relacionDonaciones',
+        element: '#suscritoActividades',
         popover: {
-          title: 'Relacion de donaciones',
+          title: 'Suscribirse a actividades',
           description:
-            'Se mostrara en azul tus donaciones y en verde los gastos hecho con ellas y aparte cuanto de tus donaciones estan disponible.'
-        }
-      },
-      {
-        element: '#ultimasDonaciones',
-        popover: {
-          title: 'Ultimas donaciones',
-          description: 'Aqui se muestran las ultimas 6 donaciones.'
-        }
-      },
-      {
-        element: '#formatoDonacion',
-        popover: {
-          title: 'Formato de donaciones',
-          description:
-            'Se te mostrara la ultima donacion con su concepto, el monto y la fecha de realizacion.',
+            'En este boton podras suscribirte a una actividad si es que no te has suscrito.',
           onNextClick: () => {
             activeMobileMenu.value = true
             setTimeout(() => {
@@ -86,13 +71,13 @@ export const startTourDonor = async (router, id, formattedMenu, activeMobileMenu
         }
       },
       {
-        element: '#sideBar-donations',
+        element: '#sideBar-performance',
         popover: {
-          title: 'Donaciones',
-          description: 'Entramos al apartado de donaciones.',
+          title: 'Desempeño',
+          description: 'Entramos al apartado de desempeño.',
           onNextClick: () => {
             activeMobileMenu.value = false
-            router.push({ name: 'donations' }).then(() => {
+            router.push({ name: 'performance' }).then(() => {
               driverObj.moveNext()
             })
           },
@@ -107,10 +92,10 @@ export const startTourDonor = async (router, id, formattedMenu, activeMobileMenu
         }
       },
       {
-        element: '#donacionSemanal',
+        element: '#filtrarCalf',
         popover: {
-          title: 'Donaciones semanales',
-          description: 'Se mostrara estadisticas de las donaciones de la semana.',
+          title: 'Buscar alumnos',
+          description: 'En este campo podras buscar el nombre del estudiante.',
           onPrevClick: () => {
             activeMobileMenu.value = true
             setTimeout(() => {
@@ -123,71 +108,43 @@ export const startTourDonor = async (router, id, formattedMenu, activeMobileMenu
         }
       },
       {
-        element: '#estadisticasDonaciones',
+        element: '#table-performance',
         popover: {
-          title: 'Estadisticas de donaciones',
-          description: 'Se muestra las donaciones de Lunes a Viernes.',
-          onNextClick: () => {
-            driverObj.moveNext()
-          }
-        }
-      },
-      {
-        element: '#barDonaciones',
-        popover: {
-          title: 'Barras de donaciones',
+          title: 'Tabla de desempeño de los alumnos',
           description:
-            'Aqui se mostrara inforamacion relevante, como cantidad de donaciones, monto total, ultima donacion y la ultima fecha.',
+            'Se muestra la tabla donde salen todos los alumnos y se muestran el nombre, la actividad y la calificacion correspondiente.',
           onNextClick: () => {
             driverObj.moveNext()
           }
         }
       },
       {
-        element: '#historialDonaciones',
+        element: '#addCalf',
         popover: {
-          title: 'Historial de donaciones',
-          description: 'Se muestran el historia de todas tus donaciones.',
+          title: 'Calificaciones',
+          description:
+            'Aqui se mostrara las calificaciones o podras asignar calificaciones si es que no se le ha asignado una.',
           onNextClick: () => {
             driverObj.moveNext()
           }
         }
       },
       {
-        element: '#buscarDonaciones',
+        element: '#btnIndividual',
         popover: {
-          title: 'Buscar donaciones',
-          description: 'Aqui podras buscar la donacion por su concepto.',
+          title: 'Boton de calificaciones',
+          description:
+            'En este boton podras asignar la calificacion de un solo alumno, si en caso de que ya tenga una, solo mostrara un texto de calificado.',
           onNextClick: () => {
             driverObj.moveNext()
           }
         }
       },
       {
-        element: '#exportarDonaciones',
+        element: '#btnAll',
         popover: {
-          title: 'Exportar donaciones',
-          description: 'Aqui podras exportar en PDF o Excel tu historia de donaciones.',
-          onNextClick: () => {
-            driverObj.moveNext()
-          }
-        }
-      },
-      {
-        element: '#donacion',
-        popover: {
-          title: 'Donacion',
-          description: 'Aqui se mostrar todas tu donaciones.',
-          onNextClick: () => {
-            driverObj.moveNext()
-          }
-        }
-      },
-      {
-        element: '#agregarDonacion',
-        popover: {
-          title: 'Agregar donacion',
-          description: 'En este boton podras hacer una nueva donacion.',
+          title: 'Guardad todas las calificaciones',
+          description: 'Aqui podras asignar calificaciones a todo los alumnos en general.',
           onNextClick: () => {
             activeMobileMenu.value = true
             setTimeout(() => {
@@ -212,7 +169,7 @@ export const startTourDonor = async (router, id, formattedMenu, activeMobileMenu
           onPrevClick: () => {
             activeMobileMenu.value = false
             setTimeout(() => {
-              router.push({ name: 'donations' }).then(() => {
+              router.push({ name: 'performance' }).then(() => {
                 driverObj.movePrevious()
               })
             }, 100)

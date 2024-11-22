@@ -24,7 +24,7 @@ watch(selectedChatIndex, (newValue) => {
 
 <template>
     <template v-if="!loadingChats && chats.length > 0">
-        <div class="h-[530px] gap-1 flex flex-col">
+        <div class="h-[530px] gap-1 flex flex-col" id="listaConversaciones">
             <template v-if="filteredChats.length > 0" v-for="chat in filteredChats" :key="chat.id">
                 <div @click="selectChat(chat.id)" :class="{
                     'bg-blue-100 dark:bg-slate-700': selectedChatIndex === chat.id,

@@ -305,19 +305,19 @@ const handleOpenModal = (activityId, activityNameValue) => {
   <!-- END: Modal Content -->
 
   <div class="mt-3.5 px-4 py-8">
-    <div class="flex flex-col box box--stacked">
+    <div class="flex flex-col box box--stacked" id="PanelVoluntario">
       <div class="flex flex-col p-5 sm:items-center sm:flex-row gap-y-2">
-        <div>
-          <div class="relative">
+        <div id="buscarActividades">
+          <div class="relative" >
             <Lucide icon="Search"
               class="absolute inset-y-0 left-0 z-10 w-4 h-4 my-auto ml-3 stroke-[1.3] text-slate-500" />
             <FormInput v-model="searchQuery" type="text" placeholder="Buscar nombre de actividad..."
               class="pl-9 sm:w-72 rounded-[0.5rem] dark:text-slate-200" />
           </div>
         </div>
-        <div class="flex flex-col sm:flex-row gap-x-3 gap-y-2 sm:ml-auto">
+        <div class="flex flex-col sm:flex-row gap-x-3 gap-y-2 sm:ml-auto" id="filtrarActividades">
           <Popover class="inline-block" v-slot="{ close }">
-            <Popover.Button :as="Button" variant="outline-primary" class="w-full sm:w-auto">
+            <Popover.Button :as="Button" variant="outline-primary" class="w-full sm:w-auto" >
               <Lucide icon="ArrowDownWideNarrow" class="stroke-[1.3] w-4 h-4 mr-2" />
               Filtrar
               <div
@@ -383,15 +383,15 @@ const handleOpenModal = (activityId, activityNameValue) => {
         <div v-if="!loadingActividadesSubscribed && totalPages > 0" class="w-full px-4 py-6">
           <div class="grid grid-cols-12 gap-y-10 gap-x-6 text-base">
             <template v-for="actividad in paginatedItems" :key="actividad.id">
-              <div class="flex flex-col dark:bg-[#1e293b] col-span-12 p-5 md:col-span-6 xl:col-span-4 box box--stacked">
+              <div class="flex flex-col dark:bg-[#1e293b] col-span-12 p-5 md:col-span-6 xl:col-span-4 box box--stacked" id="cardActividades">
                 <span class="pr-3 p-1 mr-2 font-medium text-primary text-[0.94rem] dark:text-white" href="#">
                   {{ actividad.name }}
                 </span>
                 <div class="mt-1 mb-5 leading-relaxed text-justify p-1">
                   {{ actividad.description }}
                 </div>
-                <Menu class="absolute top-0 right-0 mt-5 mr-5">
-                  <Menu.Button class="w-5 h-5 text-slate-500">
+                <Menu class="absolute top-0 right-0 mt-5 mr-5" id="tresPuntos">
+                  <Menu.Button class="w-5 h-5 text-slate-500" >
                     <Lucide icon="MoreVertical" class="w-5 h-5 stroke-slate-400/70 fill-slate-400/70" />
                   </Menu.Button>
                   <Menu.Items class="w-40">
@@ -402,6 +402,7 @@ const handleOpenModal = (activityId, activityNameValue) => {
                       ">
                       <Lucide icon="CheckCircle" class="w-4 h-4 mr-2 stroke-[1.3]" />
                       Ver objetivos
+                      
                     </Menu.Item>
                     <Menu.Item v-if="role === 4" class="dark:text-green-400 text-green" @click="() => {
                       handleOpenModal(actividad.id, actividad.name)
@@ -448,14 +449,14 @@ const handleOpenModal = (activityId, activityNameValue) => {
                       </a>
                     </div>
                   </div>
-                  <div class="dark:text-white flex items-center justify-between pt-4 border-t border-slate-200/80">
+                  <div class="dark:text-white flex items-center justify-between pt-4 border-t border-slate-200/80" id="suscritoActividades">
                     <div class="text-xs">
                       <div v-if="!actividad.sus" class="pr-2 text-sm">
                         ¡Haz clic aquí para suscribirte y no te lo pierdas!
                       </div>
                       <div v-else class="pr-2 text-sm">¡Ya estás suscrito! Te esperamos.</div>
                     </div>
-                    <div v-if="!actividad.sus">
+                    <div v-if="!actividad.sus" >
                       <Button variant="outline-primary"
                         class="px-4 ml-auto border-primary/50 flex items-center dark:border-white dark:text-white"
                         @click="() => {
