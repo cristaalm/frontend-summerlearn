@@ -64,7 +64,7 @@ onUnmounted(() => {
         </div>
         <div class="relative w-full h-[300px] sm:h-[400px] lg:h-[500px] overflow-hidden rounded-lg shadow-lg z-20">
           <img :src="images[currentImageIndex]" alt="Carrusel"
-            class="mx-auto shadow-xl aspect-video overflow-hidden rounded-xl object-cover sm:w-full lg:order-last lg:aspect-square w-[550] h-[550] z-20" />
+            class="mx-auto shadow-xl aspect-video overflow-hidden rounded-xl object-cover sm:w-full lg:order-last lg:aspect-square h-[300px] sm:h-[400px] lg:h-[500px] z-20" />
         </div>
 
       </div>
